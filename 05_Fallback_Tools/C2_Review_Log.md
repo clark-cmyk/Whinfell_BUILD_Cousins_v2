@@ -58,8 +58,10 @@
 
 **Reviewers:** Basis Avenger + Risk Warden  
 **Facilitator:** TempLibby  
-**Status:** **Submitted — awaiting facilitation**  
-**Submitted:** June 26, 2026
+**Status:** **Active — awaiting reviewer feedback**  
+**Submitted:** June 26, 2026  
+**Activated:** June 26, 2026  
+**Target:** Sign-off today (Basis Avenger + Risk Warden)
 
 ### Submission Package
 
