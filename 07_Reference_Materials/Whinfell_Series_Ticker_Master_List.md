@@ -1,82 +1,88 @@
 # Whinfell Series & Ticker Master List
 
 **Deliverable:** C3  
-**Version:** 0.9 (Draft — pending review)  
+**Version:** 1.0 (Draft)  
 **Owner:** Bridge  
 **Last Updated:** June 26, 2026  
-**Status:** Self Review Complete — Peer Review next  
+**Status:** In Progress — aligned to facilitated kickoff brief  
 **Maintained by:** BUILD Cousins (Bridge)
 
 ---
 
 ## Purpose
 
-Single source of truth for all market data series used in the Whinfell Transmission Map Credit Confirmation Score (C1), fallback Excel dashboard (C2), and Comet workspace panels.
+Single source of truth for every ticker/series used in the Whinfell Transmission Map — Credit Confirmation Score (8 components), Basis Edge Meter, and Futures Leadership panels.
 
 ---
 
-## Master List
+## A. Whinfell Score Components (8)
 
-| ID | C1 Component | Display Name | Ticker / Series | Platform | Field | Windows | Used In | Notes |
-|----|--------------|--------------|-----------------|----------|-------|---------|---------|-------|
-| S01 | 1 — HY spread trend | HY OAS (Option-Adjusted Spread) | `HY OAS` (ICE BofA US High Yield Index OAS) | Koyfin | Spread (bp) | 5D Δ, 20D Δ | Comet, C1 | Primary. Tightening = spread falling |
-| S02 | 1 — HY spread trend | HYG Price Return (proxy) | `HYG` | Koyfin / Barchart | Price % chg | 1D, 5D, 1M | C2, Comet | Proxy when OAS delayed; rising HYG ≈ tightening |
-| S03 | 2 — IG spread trend | IG OAS | `IG OAS` (ICE BofA US Corporate Index OAS) | Koyfin | Spread (bp) | 5D Δ, 20D Δ | Comet, C1 | Primary. Stable = ≤2 bp over 20D |
-| S04 | 2 — IG spread trend | LQD Price Return (proxy) | `LQD` | Koyfin / Barchart | Price % chg | 1D, 5D, 1M | C2, Comet | Proxy when OAS delayed |
-| S05 | 3 — HY−IG differential | HY minus IG OAS Spread | Derived: S01 − S03 | Koyfin / derived | Spread (bp) | 5D Δ, 20D Δ | Comet, C1 | Narrowing = bullish |
-| S06 | 4 — HYG/LQD ratio | HYG ÷ LQD Relative Ratio | Derived: `HYG` / `LQD` | Koyfin / Barchart | Ratio | 5D direction | Comet, C1, C2 | Rising ratio = risk-on credit |
-| S07 | 5 — Financials vs Defensives | Financials Sector ETF | `XLF` | Koyfin / Barchart | Price % chg | 1D, 5D, 20D | Comet, C1, C2 | vs defensives |
-| S08 | 5 — Financials vs Defensives | Utilities Sector ETF | `XLU` | Koyfin / Barchart | Price % chg | 1D, 5D, 20D | Comet, C1 | Defensive benchmark |
-| S09 | 5 — Financials vs Defensives | Consumer Staples ETF | `XLP` | Koyfin / Barchart | Price % chg | 1D, 5D, 20D | Comet, C1 | Defensive benchmark (alt/complement to XLU) |
-| S10 | 6 — Curve impulse | 2s10s Treasury Spread | `USGG2Y10Y` or `T10Y2Y` | Koyfin / FRED | Yield spread | Level + 5D Δ | Comet, C1 | FRED: T10Y2Y (10Y − 2Y) |
-| S11 | 6 — Curve impulse | 10-Year Treasury Yield | `US10Y` / `DGS10` | Koyfin / FRED | Yield (%) | 3M Δ | Comet, C1 | 3m10y impulse component |
-| S12 | 6 — Curve impulse | 2-Year Treasury Yield | `US2Y` / `DGS2` | Koyfin / FRED | Yield (%) | 5D Δ | Comet, C1 | Front-end context for steepener classification |
-| S13 | 7 — Equity breadth | Russell 2000 ETF | `IWM` or index `RUT` | Koyfin / Barchart | Price % chg | 5D vs SPX | Comet, C1 | Small-cap participation |
-| S14 | 7 — Equity breadth | S&P 500 ETF | `SPY` | Koyfin / Barchart | Price % chg | 1D, 5D | Comet, C1, C2 | Benchmark for breadth |
-| S15 | 7 — Equity breadth | Industrials Sector ETF | `XLI` | Koyfin / Barchart | Price % chg | 5D | Comet, C1 | Cyclical participation signal |
-| S16 | 8 — BTC / High-beta | Bitcoin ETF | `IBIT` | Koyfin / Barchart | Price % chg | 1D, 5D vs SPY | Comet, C1, C2 | High-beta confirmation |
-| S17 | 8 — BTC / High-beta | Nasdaq 100 ETF (alt high-beta) | `QQQ` | Koyfin / Barchart | Price % chg | 5D | Comet, C1 | Secondary high-beta reference |
+| Component | Primary Ticker/Series | Fallback / Proxy | Time Window | Koyfin / Barchart Source | Maintenance Note |
+|-----------|----------------------|------------------|-------------|--------------------------|------------------|
+| **HY Spread Trend** | `HY OAS` (ICE BofA US High Yield Index OAS) | `HYG` price return (1D, 5D, 1M) | 5D Δ, 20D Δ | Koyfin: search "HY OAS" · Barchart: `HYG` | Tightening = spread falling. Proxy at half-weight per C1 §5. Confirm exact Koyfin series ID from Comet. |
+| **IG Spread Trend** | `IG OAS` (ICE BofA US Corporate Index OAS) | `LQD` price return (1D, 5D, 1M) | 5D Δ, 20D Δ | Koyfin: search "IG OAS" · Barchart: `LQD` | Stable = ≤2 bp over 20D. Confirm exact Koyfin series ID from Comet. |
+| **HY−IG Differential** | Derived: HY OAS − IG OAS | `HYG`/`LQD` ratio direction | 5D Δ, 20D Δ | Koyfin: derived from OAS series | Narrowing = bullish. If OAS unavailable, use ratio trend only. |
+| **HYG / LQD Ratio** | Derived: `HYG` ÷ `LQD` | — | 5D direction | Koyfin: `HYG`, `LQD` · Barchart: `HYG`, `LQD` | Rising ratio = risk-on credit. Used in C2 Market Inputs. |
+| **Financials vs Defensives** | `XLF` vs `XLU` + `XLP` relative return | `XLF` vs `XLU` only | 1D, 5D, 20D | Koyfin / Barchart: `XLF`, `XLU`, `XLP` | Outperformance = bullish. C2 pre-loads XLF returns. |
+| **Curve Impulse (2s10s + 3m10y)** | `T10Y2Y` (2s10s spread) + `DGS10` (10Y yield) | `USGG2Y10Y` (Koyfin) · `DGS2` for front-end context | 5D Δ (spread), 3M Δ (10Y) | Koyfin: `USGG2Y10Y`, `US10Y` · FRED: `T10Y2Y`, `DGS10`, `DGS2` | Distinguish bull steepener vs bear steepener. If unavailable, score 0 + flag. |
+| **Equity Breadth** | `IWM` (or `RTY`) vs `SPY` relative + `XLI` cyclical participation | `RUT` index vs `SPX` | 5D relative | Koyfin / Barchart: `IWM`, `SPY`, `XLI` | Confirm RTY vs IWM with live Comet panel. Industrials leading = constructive breadth signal. |
+| **BTC / High-Beta** | `IBIT` vs `SPY` relative return | `QQQ` as alt high-beta | 1D, 5D | Koyfin / Barchart: `IBIT`, `SPY`, `QQQ` | Divergence = IBIT lagging on risk-on days. C2 pre-loads IBIT. |
 
 ---
 
-## Platform Reference Keys
+## B. Basis Edge Meter
 
-| Platform | Identifier Format | Access |
-|----------|-------------------|--------|
-| **Koyfin** | Ticker search (e.g., `HYG`, `HY OAS`) | Comet workspace / Koyfin terminal |
-| **Barchart** | Symbol (e.g., `HYG`) | Barchart quote pages |
-| **FRED** | Series ID (e.g., `T10Y2Y`, `DGS10`, `DGS2`) | fred.stlouisfed.org |
+| Component | Primary Ticker/Series | Fallback / Proxy | Time Window | Koyfin / Barchart Source | Maintenance Note |
+|-----------|----------------------|------------------|-------------|--------------------------|------------------|
+| **Client Basis — Energy** | `CL` (WTI front month) vs cash/refinery margin context | `USO` ETF vs `CL` futures | 5D, 20D | Koyfin / Barchart: `CL1!` or `CL` | Basis Edge Meter right column. Client Basis favored when Score 45–79. |
+| **Client Basis — Refined Products** | `RB` (RBOB) − `CL` crack spread | `XLE` sector relative vs `SPY` | 5D | Koyfin / Barchart: `RB`, `CL` | Crack widening/narrowing for product basis context. |
+| **Outright Basis — Credit** | `HYG`/`LQD` ratio + HY OAS direction | `HYG` 5D% alone | 5D, 20D | Koyfin: OAS + ETFs | Outright Basis allowed when Score ≥65. Tie to C1 Components 1–4. |
+| **Basis Edge Signal (composite)** | Derived from Score band + credit/futures alignment | Manual checklist in C2 Dashboard | Daily | C2 `Basis Trade Readiness` section | Client Basis ✓ at Score ≥45; Outright ✓ at ≥65; Aggressive gross ✓ at ≥80. |
 
 ---
 
-## Proxy Hierarchy (when primary unavailable)
+## C. Futures Leadership
 
-| Component | Primary | Fallback 1 | Fallback 2 |
-|-----------|---------|------------|------------|
-| HY spread | S01 (HY OAS) | S02 (HYG returns) | Half-weight mixed + flag |
-| IG spread | S03 (IG OAS) | S04 (LQD returns) | Half-weight mixed + flag |
-| HY−IG diff | S05 (derived OAS) | S06 (HYG/LQD ratio direction) | Neutral (0 pts) |
-| Curve | S10 + S11 | S12 for context only | 0 pts + flag |
+| Component | Primary Ticker/Series | Fallback / Proxy | Time Window | Koyfin / Barchart Source | Maintenance Note |
+|-----------|----------------------|------------------|-------------|--------------------------|------------------|
+| **Equity Index Leadership** | `ES` (S&P 500 E-mini) vs `NQ` (Nasdaq) relative | `SPY` vs `QQQ` ETF | 1D, 5D | Koyfin / Barchart: `ES1!`, `NQ1!` | Leadership rotation signals risk appetite shift. |
+| **Small Cap Leadership** | `RTY` (Russell 2000 E-mini) vs `ES` | `IWM` vs `SPY` | 5D | Koyfin / Barchart: `RTY1!`, `ES1!` | Aligns with Equity Breadth component. Confirm Comet symbol. |
+| **Rates Leadership** | `ZN` (10Y note) vs `ZB` (30Y bond) relative | `T10Y2Y` spread direction | 5D | Koyfin / Barchart: `ZN1!`, `ZB1!` | Rates leading equities = macro-driven session. |
+| **Commodity Leadership** | `CL` (WTI) vs `GC` (Gold) relative | `USO` vs `GLD` ETF | 5D | Koyfin / Barchart: `CL1!`, `GC1!` | Risk-on = CL leading; risk-off = GC leading. |
+| **Crypto Leadership** | `IBIT` vs `ES` relative | `BTC` spot vs `SPY` | 1D, 5D | Koyfin / Barchart: `IBIT`, `ES1!` | Ties to BTC/High-beta score component. |
 
-Per C1 Section 5 Missing Data Rules.
+---
+
+## Proxy Hierarchy Summary
+
+| If unavailable… | Use… | Then… |
+|-----------------|------|-------|
+| HY OAS | HYG returns | Half-weight mixed signal + flag |
+| IG OAS | LQD returns | Half-weight mixed signal + flag |
+| HY−IG OAS differential | HYG/LQD ratio direction | Half-weight or neutral |
+| 2s10s / 10Y data | 0 points on curve component | Flag in calculation log |
+| Futures continuous (`ES1!`) | ETF equivalent (`SPY`) | Note substitution in log |
+| ≥2 components at 0 | — | Low-confidence reading per C1 §5 |
+
+---
+
+## Open Items (pending live workspace confirm)
+
+| # | Item | Owner | Action |
+|---|------|-------|--------|
+| 1 | Exact Koyfin series ID — HY OAS panel | Bridge | Request from TempLibby / Comet workspace |
+| 2 | Exact Koyfin series ID — IG OAS panel | Bridge | Request from TempLibby / Comet workspace |
+| 3 | RTY vs IWM — breadth panel symbol | Bridge | Confirm with live dashboard |
+| 4 | Basis Edge Meter — exact futures month codes in Comet | Bridge | Confirm CL/RB/RB crack series IDs |
 
 ---
 
 ## Maintenance Protocol
 
-1. **On Comet series change:** Bridge updates this file within 1 business day
-2. **Version bump:** Log changes in `01_Strategy_Docs/Progress_Log.md`
-3. **Review cadence:** Re-validate quarterly or on any Transmission Map framework update
-
----
-
-## Open Items (for Arena / Comet confirmation)
-
-| Item | Status | Action |
-|------|--------|--------|
-| Exact Koyfin series ID for HY OAS panel | Pending Comet workspace confirm | Verify against live dashboard |
-| Exact Koyfin series ID for IG OAS panel | Pending Comet workspace confirm | Verify against live dashboard |
-| RTY vs IWM — which is used in Comet breadth panel | Assumed IWM/SPY | Confirm with live workspace |
+1. **On Comet series change:** Bridge updates within 1 business day
+2. **Version bump:** Log in `01_Strategy_Docs/Progress_Log.md`
+3. **Review cadence:** Quarterly or on Transmission Map framework update
+4. **Share with desk:** This file + `08_Deliverables/` copies post sign-off
 
 ---
 
@@ -84,7 +90,7 @@ Per C1 Section 5 Missing Data Rules.
 
 | Gate | Status | Date |
 |------|--------|------|
-| Self Review | ✅ **Pass** | June 26, 2026 |
-| Peer Review | Next | — |
-| Arena Review | Not started | — |
+| Self Review | In Progress | June 26, 2026 |
+| Peer Review | Not started | — |
+| Arena Review | Not started | Integration Dynamo + Macro Guardian |
 | TempLibby Sign-off | Not started | — |
