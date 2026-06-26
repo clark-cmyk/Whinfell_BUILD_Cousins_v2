@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Whinfell Operator Dashboard — C4.5 v1.0</title>
+  <title>Whinfell Operator Dashboard — C4.6 Draft</title>
   <style>
     :root {
       --bg: #0f1419; --surface: #1a2332; --surface2: #243044; --border: #2d3a4f;
@@ -28,9 +28,10 @@
       background: var(--surface2); border: 1px solid var(--border); color: var(--text);
       padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;
     }
-    .btn:hover { background: var(--border); }
+    .btn:hover:not(:disabled) { background: var(--border); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
     .btn-primary { background: var(--accent-dim); border-color: var(--accent); }
-    .btn-primary:hover { background: var(--accent); }
+    .btn-primary:hover:not(:disabled) { background: var(--accent); }
     .how-to-use {
       flex-shrink: 0; background: rgba(61, 139, 253, 0.08);
       border-bottom: 1px solid var(--border); padding: 10px 16px;
@@ -41,7 +42,7 @@
       flex-shrink: 0; background: var(--surface2);
       border-bottom: 1px solid var(--border); padding: 10px 16px;
     }
-    .settings-bar h2 {
+    .settings-bar h2, .section-label {
       font-size: 11px; font-weight: 700; color: var(--accent);
       text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;
     }
@@ -49,7 +50,7 @@
       display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: end;
     }
     @media (max-width: 800px) { .settings-grid { grid-template-columns: 1fr; } }
-    .settings-field label {
+    .settings-field label, .field label {
       display: block; font-size: 10px; color: var(--muted);
       margin-bottom: 3px; font-weight: 600;
     }
@@ -73,10 +74,10 @@
     .status-panel {
       flex: 1; display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      padding: 32px 28px; text-align: center; gap: 18px;
+      padding: 24px 20px; text-align: center; gap: 14px;
     }
     .status-panel.koyfin { border-right: 1px solid var(--border); }
-    .status-icon { font-size: 40px; opacity: 0.85; }
+    .status-icon { font-size: 36px; opacity: 0.85; }
     .status-label { font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; }
     .status-url {
       font-size: 11px; color: #6eb6ff; word-break: break-all;
@@ -90,23 +91,54 @@
     .btn-live {
       background: linear-gradient(180deg, #3d8bfd 0%, #1d5fbf 100%);
       border: 1px solid #5ca0ff; color: #fff; font-weight: 700;
-      font-size: 16px; padding: 16px 40px; border-radius: 10px; cursor: pointer;
-      box-shadow: 0 4px 20px rgba(61, 139, 253, 0.45); min-width: 260px;
+      font-size: 15px; padding: 14px 36px; border-radius: 10px; cursor: pointer;
+      box-shadow: 0 4px 20px rgba(61, 139, 253, 0.45); min-width: 240px;
     }
     .btn-live:hover { filter: brightness(1.1); transform: translateY(-1px); }
     .status-hint { font-size: 11px; color: var(--muted); max-width: 340px; line-height: 1.55; }
     .utility {
       flex-shrink: 0; background: var(--surface);
-      border-top: 1px solid var(--border); max-height: 42vh;
+      border-top: 1px solid var(--border); max-height: 48vh;
       display: flex; flex-direction: column;
     }
-    .utility-tabs { display: flex; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+    .wtm-intake {
+      flex-shrink: 0; padding: 12px 16px 10px;
+      background: linear-gradient(180deg, rgba(61,139,253,0.12) 0%, var(--surface) 100%);
+      border-bottom: 1px solid var(--border);
+    }
+    .wtm-intake-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr) auto; gap: 10px; align-items: end;
+    }
+    @media (max-width: 1000px) { .wtm-intake-grid { grid-template-columns: 1fr 1fr; } }
+    .field input, .field select, .field textarea {
+      width: 100%; background: var(--surface2); border: 1px solid var(--border);
+      color: var(--text); padding: 8px 10px; border-radius: 6px; font-size: 13px;
+    }
+    .field textarea { min-height: 60px; resize: vertical; font-family: var(--font); }
+    .score-badge {
+      display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px;
+      border-radius: 8px; font-size: 13px; font-weight: 600;
+      background: var(--surface2); border: 1px solid var(--border); width: 100%;
+    }
+    .score-badge input { width: 56px; text-align: center; background: var(--bg); border: 1px solid var(--border); color: var(--text); border-radius: 4px; padding: 4px; }
+    .zone-green { border-color: var(--green); color: var(--green); }
+    .zone-amber { border-color: var(--amber); color: var(--amber); }
+    .zone-red { border-color: var(--red); color: var(--red); }
+    .wtm-summary-bar {
+      flex-shrink: 0; padding: 8px 16px; background: var(--bg);
+      border-bottom: 1px solid var(--border); font-size: 12px; line-height: 1.5;
+    }
+    .wtm-summary-bar .label { font-size: 10px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; }
+    .wtm-summary-bar .text { color: var(--text); font-weight: 500; }
+    .wtm-summary-bar .text.muted { color: var(--muted); font-weight: 400; font-style: italic; }
+    .utility-tabs { display: flex; border-bottom: 1px solid var(--border); flex-shrink: 0; overflow-x: auto; }
     .tab {
-      padding: 10px 18px; font-size: 12px; font-weight: 500; color: var(--muted);
-      cursor: pointer; border-bottom: 2px solid transparent;
+      padding: 9px 16px; font-size: 11px; font-weight: 500; color: var(--muted);
+      cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap;
     }
     .tab:hover { color: var(--text); }
     .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .tab.gate-blocked-tab { opacity: 0.5; }
     .utility-body { overflow-y: auto; padding: 14px 16px; flex: 1; }
     .panel { display: none; } .panel.active { display: block; }
     .workflow-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
@@ -134,26 +166,46 @@
       border-radius: 6px; border: 1px solid var(--border);
       font-family: "SF Mono", Consolas, monospace;
     }
+    .prompt-card.btc-prompt { border-color: rgba(245, 166, 35, 0.4); }
     .copied { color: var(--green) !important; }
     .risk-grid {
       display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 12px; align-items: end;
     }
-    .field label { display: block; font-size: 11px; color: var(--muted); margin-bottom: 4px; }
-    .field input, .field select, .field textarea {
-      width: 100%; background: var(--surface2); border: 1px solid var(--border);
-      color: var(--text); padding: 8px 10px; border-radius: 6px; font-size: 13px;
-    }
-    .field textarea { min-height: 60px; resize: vertical; font-family: var(--font); }
-    .score-badge {
-      display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px;
-      border-radius: 8px; font-size: 13px; font-weight: 600;
+    .btc-card {
       background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px; transition: opacity 0.2s;
     }
-    .score-badge input { width: 56px; text-align: center; }
-    .zone-green { border-color: var(--green); color: var(--green); }
-    .zone-amber { border-color: var(--amber); color: var(--amber); }
-    .zone-red { border-color: var(--red); color: var(--red); }
+    .btc-card.gate-blocked {
+      opacity: 0.45; pointer-events: none; filter: grayscale(0.6);
+    }
+    .btc-card.gate-blocked .gate-banner { display: block; }
+    .gate-banner {
+      display: none; padding: 8px 12px; margin-bottom: 12px;
+      background: rgba(245, 101, 101, 0.15); border: 1px solid var(--red);
+      border-radius: 6px; font-size: 11px; font-weight: 700; color: var(--red); text-align: center;
+    }
+    .btc-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 12px; align-items: end; margin-bottom: 14px;
+    }
+    .arb-output {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 14px 0;
+    }
+    .arb-metric {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px; text-align: center;
+    }
+    .arb-metric .val { font-size: 22px; font-weight: 700; color: var(--accent); }
+    .arb-metric .lbl { font-size: 10px; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .gate-status-pill {
+      display: inline-block; padding: 6px 14px; border-radius: 20px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.04em;
+    }
+    .gate-status-pill.blocked { background: rgba(245,101,101,0.2); color: var(--red); border: 1px solid var(--red); }
+    .gate-status-pill.client { background: rgba(245,166,35,0.2); color: var(--amber); border: 1px solid var(--amber); }
+    .gate-status-pill.outright { background: rgba(61,221,140,0.2); color: var(--green); border: 1px solid var(--green); }
+    .btc-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 12px; }
     .daily-rule {
       margin-top: 10px; padding: 10px 12px; background: var(--bg);
       border: 1px solid var(--amber); border-radius: 6px;
@@ -165,6 +217,11 @@
       border-radius: 6px; font-size: 11px; color: var(--muted); line-height: 1.55;
     }
     .url-instructions ol { margin: 6px 0 0 18px; }
+    .intake-summary-line {
+      font-size: 11px; color: var(--muted); margin-top: 8px; padding-top: 8px;
+      border-top: 1px solid var(--border); line-height: 1.5;
+    }
+    .intake-summary-line strong { color: var(--text); }
   </style>
 </head>
 <body>
@@ -172,7 +229,7 @@
 <header>
   <div>
     <h1>Whinfell Operator Dashboard</h1>
-    <div class="meta">C4.5 v1.0 · Control Surface · No iframes · Koyfin + Barchart open in live tabs</div>
+    <div class="meta">C4.6 Draft · WTM Action Layer · No iframes · Gate-enforced BTC module</div>
   </div>
   <div class="header-actions">
     <button class="btn btn-primary" id="btnSave">Save Settings</button>
@@ -181,10 +238,11 @@
 
 <div class="how-to-use">
   <strong>How to Use:</strong>
-  1) Open this dashboard ·
-  2) Click <strong>Open Live Koyfin</strong> + <strong>Open Live Barchart</strong> (dedicated tabs) ·
-  3) Use this window as your <strong>control surface</strong> — 5-min workflow, prompts, Gross Risk ·
-  4) Arrange side-by-side or on second monitor
+  1) Set <strong>WTM Regime &amp; Posture</strong> from Koyfin ·
+  2) Open Live Koyfin + Barchart tabs ·
+  3) Check gate status before BTC options/calendar arb ·
+  4) Run WTM Prompts A–E ·
+  5) Update Gross Risk
 </div>
 
 <section class="settings-bar">
@@ -217,7 +275,7 @@
       <div class="status-url" id="displayUrlKoyfin">No URL saved — set above and Save Settings</div>
       <div class="status-meta">Last opened: <strong id="lastOpenedKoyfin">Never</strong></div>
       <button class="btn-live" id="btnOpenKoyfin">Open Live Koyfin ↗</button>
-      <p class="status-hint">Opens your saved Koyfin workspace in a new browser tab. Read data there; run prompts and update risk here.</p>
+      <p class="status-hint">Read Transmission State + Whinfell Score here → enter in WTM panel below.</p>
     </div>
   </div>
   <div class="pane">
@@ -231,53 +289,122 @@
       <div class="status-url" id="displayUrlBarchart">No URL saved — set above and Save Settings</div>
       <div class="status-meta">Last opened: <strong id="lastOpenedBarchart">Never</strong></div>
       <button class="btn-live" id="btnOpenBarchart">Open Live Barchart ↗</button>
-      <p class="status-hint">Opens your saved Barchart page in a new tab for futures leadership and basis execution.</p>
+      <p class="status-hint">Futures leadership + basis inputs for WTM Prompt C and BTC calendar arb.</p>
     </div>
   </div>
 </section>
 
 <section class="utility">
+  <div class="wtm-intake">
+    <div class="section-label">WTM Regime &amp; Posture — Intake &amp; Gate Logic</div>
+    <div class="wtm-intake-grid">
+      <div class="field">
+        <label for="transmissionState">Transmission State</label>
+        <select id="transmissionState">
+          <option value="">— Select from Koyfin —</option>
+          <option value="normal">Normal</option>
+          <option value="constructive">Constructive</option>
+          <option value="fragile">Fragile</option>
+          <option value="stressed">Stressed</option>
+          <option value="impaired">Impaired</option>
+          <option value="risk-off">Risk-Off</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="whinfellScore">Whinfell Score</label>
+        <div class="score-badge" id="scoreBadge">
+          <input type="number" id="whinfellScore" min="0" max="100" placeholder="58" />
+          <span id="scoreZone">—</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="confidence">Confidence</label>
+        <select id="confidence">
+          <option value="">— Select —</option>
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="deskPosture">Desk Posture</label>
+        <select id="deskPosture">
+          <option value="">— Select —</option>
+          <option value="full">Full Gross (80+)</option>
+          <option value="selective">Selective (65–79)</option>
+          <option value="light">Light Gross (45–64)</option>
+          <option value="defensive">Defensive (&lt;45)</option>
+          <option value="flat">Flat / No New Risk</option>
+        </select>
+      </div>
+      <div>
+        <button class="btn btn-primary" id="btnSave3" style="width:100%">Save</button>
+      </div>
+    </div>
+    <div class="intake-summary-line" id="intakeSummaryLine"><strong>Regime summary:</strong> Enter WTM fields above</div>
+  </div>
+
+  <div class="wtm-summary-bar">
+    <div class="label">WTM Decision Summary</div>
+    <div class="text muted" id="wtmDecisionSummary">Complete WTM intake to generate decision summary.</div>
+  </div>
+
   <div class="utility-tabs">
-    <div class="tab active" data-tab="workflow">5-Min Morning Workflow</div>
-    <div class="tab" data-tab="prompts">Saved Agentic Prompts (6)</div>
-    <div class="tab" data-tab="risk">Gross Risk Controls</div>
+    <div class="tab active" data-tab="workflow">5-Min Workflow</div>
+    <div class="tab" data-tab="btc" id="tabBtc">BTC Options &amp; Calendar Arb</div>
+    <div class="tab" data-tab="prompts">WTM Prompts A–E</div>
+    <div class="tab" data-tab="risk">Gross Risk</div>
     <div class="tab" data-tab="tickers">Quick Tickers</div>
     <div class="tab" data-tab="setup">Setup Help</div>
   </div>
   <div class="utility-body">
     <div class="panel active" id="panel-workflow">
       <div class="workflow-grid">
-        <div class="wf-step"><div class="min">MIN 1</div><div class="action">Open Live Koyfin → read Score + Transmission</div><div class="tool">Koyfin tab</div></div>
+        <div class="wf-step"><div class="min">MIN 1</div><div class="action">Open Koyfin → set WTM Regime &amp; Posture</div><div class="tool">WTM intake panel</div></div>
         <div class="wf-step"><div class="min">MIN 2</div><div class="action">Scan Liquidity, Rates, Credit</div><div class="tool">Koyfin tab</div></div>
-        <div class="wf-step"><div class="min">MIN 3</div><div class="action">Open Live Barchart → Futures + Basis</div><div class="tool">Barchart tab</div></div>
-        <div class="wf-step"><div class="min">MIN 4</div><div class="action">Run Prompts ① + ②</div><div class="tool">Prompts tab below</div></div>
-        <div class="wf-step"><div class="min">MIN 5</div><div class="action">Update Gross Risk + posture</div><div class="tool">Gross Risk tab</div></div>
+        <div class="wf-step"><div class="min">MIN 3</div><div class="action">Barchart → Futures + Basis</div><div class="tool">Barchart tab</div></div>
+        <div class="wf-step"><div class="min">MIN 4</div><div class="action">Check BTC gate → Run WTM A + B</div><div class="tool">Prompts tab</div></div>
+        <div class="wf-step"><div class="min">MIN 5</div><div class="action">Update Gross Risk + Decision Summary</div><div class="tool">Gross Risk tab</div></div>
       </div>
-      <p class="ticker-ref" style="margin-top:14px">This dashboard = control surface. Koyfin + Barchart = live data tabs. Keep all three open.</p>
+      <p class="ticker-ref" style="margin-top:14px"><strong>Gate rule:</strong> Score &lt; 50 blocks all BTC options/calendar arb actions.</p>
     </div>
-    <div class="panel" id="panel-prompts"><div class="prompt-list" id="promptList"></div></div>
-    <div class="panel" id="panel-risk">
-      <div class="risk-grid">
-        <div class="field">
-          <label>Whinfell Score (from Koyfin)</label>
-          <div class="score-badge" id="scoreBadge">
-            <input type="number" id="whinfellScore" min="0" max="100" placeholder="58" />
-            <span id="scoreZone">—</span>
+
+    <div class="panel" id="panel-btc">
+      <div class="btc-card" id="btcCard">
+        <div class="gate-banner" id="btcGateBanner">⛔ BTC MODULE BLOCKED — Whinfell Score &lt; 50</div>
+        <div class="section-label" style="margin-bottom:12px">BTC Options &amp; Calendar Arb</div>
+        <p class="ticker-ref" style="margin-bottom:12px">ArbScore helper: enter near/far calendar basis (bps). Formula: ΔBasis = Basis2 − Basis1 · ArbScore = clamp(50 + ΔBasis × 5, 0–100).</p>
+        <div class="btc-grid">
+          <div class="field"><label for="basis1">Basis1 — Near / Front (bps)</label><input type="number" id="basis1" step="0.1" placeholder="e.g. 12.5" /></div>
+          <div class="field"><label for="basis2">Basis2 — Far / Back (bps)</label><input type="number" id="basis2" step="0.1" placeholder="e.g. 18.0" /></div>
+          <div class="field"><label for="btcStructure">Structure Type</label>
+            <select id="btcStructure">
+              <option value="calendar">Calendar Spread</option>
+              <option value="options">BTC Options</option>
+              <option value="combo">Calendar + Options</option>
+            </select>
           </div>
         </div>
+        <div class="arb-output">
+          <div class="arb-metric"><div class="val" id="deltaBasis">—</div><div class="lbl">ΔBasis (bps)</div></div>
+          <div class="arb-metric"><div class="val" id="arbScore">—</div><div class="lbl">ArbScore</div></div>
+          <div class="arb-metric"><div class="val" id="gateStatusLabel" style="font-size:14px">—</div><div class="lbl">Regime Gate</div></div>
+        </div>
+        <div class="btc-actions">
+          <span class="gate-status-pill" id="gateStatusPill">—</span>
+          <button class="btn" id="btnCopyPrompt3b">Copy Prompt ③b — BTC Calendar Arb Agent</button>
+          <button class="btn" id="btnOpenIbit">Open IBIT on Barchart ↗</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="panel-prompts"><div class="prompt-list" id="promptList"></div></div>
+
+    <div class="panel" id="panel-risk">
+      <div class="risk-grid">
         <div class="field"><label>Gross Risk — Book A ($mm)</label><input type="number" id="grossA" step="0.1" /></div>
         <div class="field"><label>Gross Risk — Book B ($mm)</label><input type="number" id="grossB" step="0.1" /></div>
         <div class="field"><label>Total Gross</label><input type="text" id="grossTotal" readonly /></div>
-        <div class="field">
-          <label>Approved Posture</label>
-          <select id="posture">
-            <option value="">— Select —</option>
-            <option value="full">Full gross (80+)</option>
-            <option value="selective">Selective (65–79)</option>
-            <option value="light">Light gross (45–64)</option>
-            <option value="defensive">Defensive (&lt;45)</option>
-          </select>
-        </div>
         <div class="field">
           <label>Basis Preference</label>
           <select id="basisPref">
@@ -289,73 +416,147 @@
         </div>
         <div class="field" style="grid-column:1/-1">
           <label>Watch Items / Handover</label>
-          <textarea id="handoverNote" placeholder="Score, bias, risks…"></textarea>
+          <textarea id="handoverNote" placeholder="Score, bias, risks, BTC gate status…"></textarea>
         </div>
       </div>
-      <div class="daily-rule"><strong>Daily Rule:</strong> Update Gross Risk after morning review and after any material trade.</div>
+      <div class="daily-rule"><strong>Daily Rule:</strong> Update Gross Risk after morning review and after any material trade. Desk Posture set in WTM intake panel above.</div>
     </div>
+
     <div class="panel" id="panel-tickers">
       <p class="ticker-ref" style="margin-bottom:10px">C3 Master List — click to open Barchart:</p>
       <div id="tickerChips" style="display:flex;flex-wrap:wrap;gap:6px;"></div>
     </div>
+
     <div class="panel" id="panel-setup">
       <div class="url-instructions">
-        <strong>One-Time Setup</strong>
+        <strong>C4.6 WTM Action Layer</strong>
         <ol>
-          <li>Copy your Koyfin Whinfell workspace URL → paste in settings bar → Save</li>
-          <li>Copy your Barchart futures/basis URL → paste → Save</li>
-          <li>Each morning: open this file → Open Live Koyfin + Open Live Barchart</li>
-          <li>Use bottom tabs for workflow, prompts, and Gross Risk</li>
+          <li>Set <strong>WTM Regime &amp; Posture</strong> from Koyfin each morning</li>
+          <li>Review <strong>WTM Decision Summary</strong> — gates enforce BTC actions automatically</li>
+          <li>Score &lt; 50 → BTC module blocked · 50–64 → client-only · 65+ → outright allowed</li>
+          <li>Use <strong>BTC Options &amp; Calendar Arb</strong> tab for ArbScore + Prompt ③b</li>
+          <li>Run <strong>WTM Prompts A–E</strong> — copy on click</li>
         </ol>
-        <p style="margin-top:10px"><strong>Architecture:</strong> No iframes. Live sites open in dedicated tabs. This file is the control surface.</p>
+        <p style="margin-top:10px"><strong>Architecture:</strong> No iframes. Control surface + WTM gates + action layer.</p>
       </div>
     </div>
   </div>
 </section>
 
 <script>
-const STORAGE_KEY = 'whinfell_operator_v1';
+const STORAGE_KEY = 'whinfell_operator_v2';
+const STORAGE_KEY_V1 = 'whinfell_operator_v1';
 const DEFAULTS = {
   urlKoyfin: 'https://app.koyfin.com/',
   urlBarchart: 'https://www.barchart.com/futures/major-commodities',
 };
 
+const TRANSMISSION_LABELS = {
+  normal: 'Normal', constructive: 'Constructive', fragile: 'Fragile',
+  stressed: 'Stressed', impaired: 'Impaired', 'risk-off': 'Risk-Off',
+};
+const POSTURE_LABELS = {
+  full: 'Full Gross', selective: 'Selective', light: 'Light Gross',
+  defensive: 'Defensive', flat: 'Flat / No New Risk',
+};
+const CONFIDENCE_LABELS = { high: 'High', medium: 'Medium', low: 'Low' };
+
+const PROMPT_3B = `WTM Prompt ③b — BTC Calendar Arb Agent
+
+Context: Whinfell Transmission Model intake is complete. Use the following for BTC calendar spread / options evaluation.
+
+Inputs required:
+- Transmission State, Whinfell Score, Confidence, Desk Posture
+- Basis1 (near), Basis2 (far), ΔBasis, ArbScore
+- Regime gate status (blocked / client-only / outright allowed)
+
+Task:
+1) Confirm regime gate permits the proposed BTC structure
+2) Evaluate calendar arb attractiveness from ΔBasis and ArbScore
+3) Recommend client basis vs outright (respect gate: client-only if Score 50–64)
+4) State max size, key risks, and invalidation levels
+5) Output one-line WTM action: EXECUTE / WATCH / BLOCKED`;
+
 const PROMPTS = [
-  { id: '①', title: 'Transmission State + Whinfell Score Read', text: `Using current Koyfin data, summarize: Transmission State Banner, Whinfell Score (numeric + zone), one-sentence positioning for gross and basis.` },
-  { id: '②', title: 'Credit Confirmation Deep Dive', text: `Score all 8 Credit Confirmation components. Manual calc from base 50. Recommend Client vs Outright Basis.` },
-  { id: '③', title: 'Futures Leadership + Basis Edge', text: `Using Barchart: which asset leads? Aligned with credit? Client Basis vs Outright opportunities?` },
-  { id: '④', title: 'Gross Risk Posture Decision', text: `Given Whinfell Score and Book A/B gross, recommend hold/add/reduce. State max gross ceiling.` },
-  { id: '⑤', title: 'Divergence Check', text: `Cross-check credit vs equities vs crypto vs Financials. Top 3 divergences and which signal to trust.` },
-  { id: '⑥', title: 'Shift Handover Note', text: `Score, zone, bias, gross risk, basis preference, top 3 watch items, prompts run today.` },
+  { id: 'A', title: 'WTM Transmission + Score Validation', text: `WTM Prompt A — Transmission State + Whinfell Score Read
+
+Using current Koyfin Whinfell Transmission Map data:
+1) Read Transmission State Banner — classify: Normal / Constructive / Fragile / Stressed / Impaired / Risk-Off
+2) Report Whinfell Score (numeric + zone: Green / Amber / Red)
+3) State Confidence (High / Medium / Low) based on cross-asset alignment
+4) Recommend Desk Posture (Full / Selective / Light / Defensive / Flat)
+5) One-sentence WTM positioning for gross exposure and basis preference` },
+  { id: 'B', title: 'WTM Credit Confirmation Deep Dive', text: `WTM Prompt B — Credit Confirmation Deep Dive
+
+Score all 8 Credit Confirmation components from base 50 (see C1 logic).
+Report: component scores, net adjustment, final manual score vs dashboard score.
+Recommend: Client Basis vs Outright Basis given current transmission state.
+Flag any component diverging >1 zone from Whinfell Score.` },
+  { id: 'C', title: 'WTM Futures Leadership + Basis Edge', text: `WTM Prompt C — Futures Leadership + Basis Edge
+
+Using Barchart futures/basis data:
+1) Which asset class leads risk appetite today?
+2) Is leadership aligned with credit confirmation and WTM transmission state?
+3) Client Basis vs Outright opportunities — rank top 3
+4) Basis Edge Meter read — favorable / neutral / avoid outright` },
+  { id: 'D', title: 'WTM Gross Risk Posture Decision', text: `WTM Prompt D — Gross Risk Posture Decision
+
+Given: Whinfell Score, Desk Posture, Book A/B gross ($mm), regime gate status.
+Recommend: hold / add / reduce gross. State max gross ceiling.
+Align basis preference with WTM gate (blocked BTC if Score < 50).` },
+  { id: 'E', title: 'WTM Divergence + Shift Handover', text: `WTM Prompt E — Divergence Check + Shift Handover
+
+1) Cross-check credit vs equities vs crypto (IBIT) vs Financials — top 3 divergences
+2) Which WTM signal to trust when divergent?
+3) Handover note: Score, zone, Desk Posture, gross risk, basis pref, BTC gate, top 3 watch items, prompts run today.` },
+  { id: '③b', title: 'BTC Calendar Arb Agent', text: PROMPT_3B, btc: true },
 ];
+
 const TICKERS = ['HYG','LQD','XLF','XLU','SPY','IWM','IBIT','CL','RB','ES','RTY','GC'];
 
 function loadSettings() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    let raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) {
+      const v1raw = localStorage.getItem(STORAGE_KEY_V1);
+      if (v1raw) {
+        const v1 = JSON.parse(v1raw);
+        return { ...DEFAULTS, ...v1, _migrated: true };
+      }
+    }
     return raw ? { ...DEFAULTS, ...JSON.parse(raw) } : { ...DEFAULTS };
   } catch { return { ...DEFAULTS }; }
 }
 
-function saveSettings() {
-  const data = {
+function collectFormData() {
+  return {
     urlKoyfin: document.getElementById('urlKoyfin').value,
     urlBarchart: document.getElementById('urlBarchart').value,
+    transmissionState: document.getElementById('transmissionState').value,
     whinfellScore: document.getElementById('whinfellScore').value,
+    confidence: document.getElementById('confidence').value,
+    deskPosture: document.getElementById('deskPosture').value,
+    basis1: document.getElementById('basis1').value,
+    basis2: document.getElementById('basis2').value,
+    btcStructure: document.getElementById('btcStructure').value,
     grossA: document.getElementById('grossA').value,
     grossB: document.getElementById('grossB').value,
-    posture: document.getElementById('posture').value,
     basisPref: document.getElementById('basisPref').value,
     handoverNote: document.getElementById('handoverNote').value,
     lastOpenedKoyfin: document.getElementById('lastOpenedKoyfin').dataset.ts || null,
     lastOpenedBarchart: document.getElementById('lastOpenedBarchart').dataset.ts || null,
     savedAt: new Date().toISOString(),
   };
+}
+
+function saveSettings() {
+  const data = collectFormData();
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   document.getElementById('saveStatus').textContent = 'Saved · ' + new Date().toLocaleString();
   document.getElementById('saveStatus').classList.add('ok');
   updateStatusPanels();
-  ['btnSave','btnSave2'].forEach(id => {
+  updateWtmLogic();
+  ['btnSave','btnSave2','btnSave3'].forEach(id => {
     const b = document.getElementById(id);
     const o = b.textContent; b.textContent = 'Saved ✓';
     setTimeout(() => b.textContent = o, 1200);
@@ -365,15 +566,23 @@ function saveSettings() {
 function applySettings(s) {
   document.getElementById('urlKoyfin').value = s.urlKoyfin || DEFAULTS.urlKoyfin;
   document.getElementById('urlBarchart').value = s.urlBarchart || DEFAULTS.urlBarchart;
-  if (s.whinfellScore != null) document.getElementById('whinfellScore').value = s.whinfellScore;
+  if (s.transmissionState) document.getElementById('transmissionState').value = s.transmissionState;
+  if (s.whinfellScore != null && s.whinfellScore !== '') document.getElementById('whinfellScore').value = s.whinfellScore;
+  if (s.confidence) document.getElementById('confidence').value = s.confidence;
+  if (s.deskPosture) document.getElementById('deskPosture').value = s.deskPosture;
+  else if (s.posture) document.getElementById('deskPosture').value = s.posture;
+  if (s.basis1 != null && s.basis1 !== '') document.getElementById('basis1').value = s.basis1;
+  if (s.basis2 != null && s.basis2 !== '') document.getElementById('basis2').value = s.basis2;
+  if (s.btcStructure) document.getElementById('btcStructure').value = s.btcStructure;
   if (s.grossA != null) document.getElementById('grossA').value = s.grossA;
   if (s.grossB != null) document.getElementById('grossB').value = s.grossB;
-  if (s.posture) document.getElementById('posture').value = s.posture;
   if (s.basisPref) document.getElementById('basisPref').value = s.basisPref;
   if (s.handoverNote) document.getElementById('handoverNote').value = s.handoverNote;
   setLastOpened('lastOpenedKoyfin', s.lastOpenedKoyfin);
   setLastOpened('lastOpenedBarchart', s.lastOpenedBarchart);
-  updateGrossTotal(); updateScoreZone(); updateStatusPanels();
+  updateGrossTotal();
+  updateWtmLogic();
+  updateStatusPanels();
   if (s.savedAt) {
     document.getElementById('saveStatus').textContent = 'Saved · ' + new Date(s.savedAt).toLocaleString();
     document.getElementById('saveStatus').classList.add('ok');
@@ -382,13 +591,8 @@ function applySettings(s) {
 
 function setLastOpened(elId, iso) {
   const el = document.getElementById(elId);
-  if (iso) {
-    el.textContent = new Date(iso).toLocaleString();
-    el.dataset.ts = iso;
-  } else {
-    el.textContent = 'Never';
-    delete el.dataset.ts;
-  }
+  if (iso) { el.textContent = new Date(iso).toLocaleString(); el.dataset.ts = iso; }
+  else { el.textContent = 'Never'; delete el.dataset.ts; }
 }
 
 function updateStatusPanels() {
@@ -412,9 +616,46 @@ function openLive(source) {
   const now = new Date().toISOString();
   setLastOpened(lastId, now);
   const s = loadSettings();
+  Object.assign(s, collectFormData());
   s[lastId] = now;
   if (isKoyfin) s.urlKoyfin = url; else s.urlBarchart = url;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...s, savedAt: s.savedAt || now }));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
+}
+
+function getScoreZone(v) {
+  if (isNaN(v)) return '—';
+  if (v >= 80) return 'Green';
+  if (v >= 65) return 'Amber · Constructive';
+  if (v >= 45) return 'Amber · Fragile';
+  if (v >= 25) return 'Red · Impaired';
+  return 'Red · Risk-Off';
+}
+
+function getBtcGate(score) {
+  if (isNaN(score)) return { key: 'unknown', label: 'SET SCORE', pillClass: 'blocked', blocked: true };
+  if (score < 50) return { key: 'blocked', label: 'BLOCKED', pillClass: 'blocked', blocked: true };
+  if (score < 65) return { key: 'client', label: 'CLIENT-ONLY', pillClass: 'client', blocked: false };
+  return { key: 'outright', label: 'OUTRIGHT ALLOWED', pillClass: 'outright', blocked: false };
+}
+
+function calcArb(b1, b2) {
+  if (b1 === '' || b2 === '' || isNaN(b1) || isNaN(b2)) return { delta: null, arb: null };
+  const delta = parseFloat(b2) - parseFloat(b1);
+  const arb = Math.min(100, Math.max(0, 50 + delta * 5));
+  return { delta, arb };
+}
+
+function updateScoreZone() {
+  const v = parseInt(document.getElementById('whinfellScore').value, 10);
+  const el = document.getElementById('scoreZone');
+  const badge = document.getElementById('scoreBadge');
+  badge.classList.remove('zone-green','zone-amber','zone-red');
+  const zone = getScoreZone(v);
+  el.textContent = zone;
+  if (isNaN(v)) return;
+  if (v >= 80) badge.classList.add('zone-green');
+  else if (v >= 45) badge.classList.add('zone-amber');
+  else badge.classList.add('zone-red');
 }
 
 function updateGrossTotal() {
@@ -423,29 +664,76 @@ function updateGrossTotal() {
   document.getElementById('grossTotal').value = (a + b).toFixed(1) + ' $mm';
 }
 
-function updateScoreZone() {
-  const v = parseInt(document.getElementById('whinfellScore').value, 10);
-  const el = document.getElementById('scoreZone');
-  const badge = document.getElementById('scoreBadge');
-  badge.classList.remove('zone-green','zone-amber','zone-red');
-  if (isNaN(v)) { el.textContent = '—'; return; }
-  if (v >= 80) { el.textContent = 'Green'; badge.classList.add('zone-green'); }
-  else if (v >= 65) { el.textContent = 'Amber · Constructive'; badge.classList.add('zone-amber'); }
-  else if (v >= 45) { el.textContent = 'Amber · Fragile'; badge.classList.add('zone-amber'); }
-  else if (v >= 25) { el.textContent = 'Red · Impaired'; badge.classList.add('zone-red'); }
-  else { el.textContent = 'Red · Risk-Off'; badge.classList.add('zone-red'); }
+function updateWtmLogic() {
+  updateScoreZone();
+  const tx = document.getElementById('transmissionState').value;
+  const score = parseInt(document.getElementById('whinfellScore').value, 10);
+  const conf = document.getElementById('confidence').value;
+  const posture = document.getElementById('deskPosture').value;
+  const b1 = document.getElementById('basis1').value;
+  const b2 = document.getElementById('basis2').value;
+  const gate = getBtcGate(score);
+  const { delta, arb } = calcArb(b1, b2);
+
+  const txLabel = TRANSMISSION_LABELS[tx] || '—';
+  const confLabel = CONFIDENCE_LABELS[conf] || '—';
+  const postLabel = POSTURE_LABELS[posture] || '—';
+  const zone = getScoreZone(score);
+
+  const intakeParts = [];
+  if (tx) intakeParts.push(txLabel);
+  if (!isNaN(score)) intakeParts.push(`Score ${score} (${zone})`);
+  if (conf) intakeParts.push(`${confLabel} confidence`);
+  if (posture) intakeParts.push(postLabel);
+  intakeParts.push(`BTC gate: ${gate.label}`);
+  document.getElementById('intakeSummaryLine').innerHTML =
+    '<strong>Regime summary:</strong> ' + (intakeParts.length > 1 ? intakeParts.join(' · ') : 'Enter WTM fields above');
+
+  const summaryEl = document.getElementById('wtmDecisionSummary');
+  if (!tx && isNaN(score)) {
+    summaryEl.textContent = 'Complete WTM intake to generate decision summary.';
+    summaryEl.classList.add('muted');
+  } else {
+    let summary = `WTM: ${txLabel} transmission`;
+    if (!isNaN(score)) summary += ` · Score ${score} (${zone})`;
+    if (conf) summary += ` · ${confLabel} confidence`;
+    if (posture) summary += ` · Posture: ${postLabel}`;
+    summary += ` · BTC: ${gate.label}`;
+    if (delta !== null) summary += ` · ΔBasis ${delta.toFixed(1)} bps · ArbScore ${arb.toFixed(0)}`;
+    if (gate.blocked) summary += ' · ACTION: No BTC options/calendar arb';
+    else if (gate.key === 'client') summary += ' · ACTION: Client basis only for BTC structures';
+    else if (gate.key === 'outright') summary += ' · ACTION: Outright BTC structures permitted if ArbScore supports';
+    summaryEl.textContent = summary;
+    summaryEl.classList.remove('muted');
+  }
+
+  document.getElementById('deltaBasis').textContent = delta !== null ? delta.toFixed(1) : '—';
+  document.getElementById('arbScore').textContent = arb !== null ? arb.toFixed(0) : '—';
+  document.getElementById('gateStatusLabel').textContent = gate.label;
+  const pill = document.getElementById('gateStatusPill');
+  pill.textContent = gate.label;
+  pill.className = 'gate-status-pill ' + gate.pillClass;
+
+  const btcCard = document.getElementById('btcCard');
+  const tabBtc = document.getElementById('tabBtc');
+  btcCard.classList.toggle('gate-blocked', gate.blocked);
+  tabBtc.classList.toggle('gate-blocked-tab', gate.blocked);
+  document.getElementById('btnCopyPrompt3b').disabled = gate.blocked;
 }
 
 function renderPrompts() {
   document.getElementById('promptList').innerHTML = PROMPTS.map(p => `
-    <div class="prompt-card"><header><h3>Prompt ${p.id} — ${p.title}</h3>
-    <button class="btn copy-btn" data-text="${encodeURIComponent(p.text)}">Copy</button></header>
-    <pre>${p.text}</pre></div>`).join('');
+    <div class="prompt-card${p.btc ? ' btc-prompt' : ''}">
+      <header><h3>WTM Prompt ${p.id} — ${p.title}</h3>
+      <button class="btn copy-btn" data-text="${encodeURIComponent(p.text)}">Copy</button></header>
+      <pre>${p.text}</pre>
+    </div>`).join('');
   document.querySelectorAll('.copy-btn').forEach(btn => {
     btn.addEventListener('click', async () => {
       await navigator.clipboard.writeText(decodeURIComponent(btn.dataset.text));
       btn.textContent = 'Copied ✓';
-      setTimeout(() => btn.textContent = 'Copy', 2000);
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
     });
   });
 }
@@ -456,6 +744,11 @@ function renderTickers() {
   document.querySelectorAll('#tickerChips .btn').forEach(btn => {
     btn.onclick = () => window.open(`https://www.barchart.com/stocks/quotes/${btn.dataset.t}`, '_blank');
   });
+}
+
+function markUnsaved() {
+  document.getElementById('saveStatus').textContent = 'Unsaved — click Save Settings';
+  document.getElementById('saveStatus').classList.remove('ok');
 }
 
 document.querySelectorAll('.tab').forEach(tab => {
@@ -469,21 +762,29 @@ document.querySelectorAll('.tab').forEach(tab => {
 
 document.getElementById('btnSave').onclick = saveSettings;
 document.getElementById('btnSave2').onclick = saveSettings;
+document.getElementById('btnSave3').onclick = saveSettings;
 document.getElementById('btnOpenKoyfin').onclick = () => openLive('koyfin');
 document.getElementById('btnOpenBarchart').onclick = () => openLive('barchart');
-['urlKoyfin','urlBarchart'].forEach(id => {
-  document.getElementById(id).onchange = () => {
-    updateStatusPanels();
-    document.getElementById('saveStatus').textContent = 'Unsaved — click Save Settings';
-    document.getElementById('saveStatus').classList.remove('ok');
-  };
+document.getElementById('btnCopyPrompt3b').onclick = async () => {
+  await navigator.clipboard.writeText(PROMPT_3B);
+  const b = document.getElementById('btnCopyPrompt3b');
+  b.textContent = 'Copied ✓';
+  setTimeout(() => b.textContent = 'Copy Prompt ③b — BTC Calendar Arb Agent', 2000);
+};
+document.getElementById('btnOpenIbit').onclick = () => window.open('https://www.barchart.com/stocks/quotes/IBIT', '_blank');
+
+['urlKoyfin','urlBarchart'].forEach(id => document.getElementById(id).onchange = () => { updateStatusPanels(); markUnsaved(); });
+['transmissionState','confidence','deskPosture','basis1','basis2','btcStructure','basisPref','handoverNote'].forEach(id => {
+  document.getElementById(id).onchange = () => { updateWtmLogic(); markUnsaved(); };
 });
-['grossA','grossB'].forEach(id => document.getElementById(id).oninput = updateGrossTotal);
-document.getElementById('whinfellScore').oninput = updateScoreZone;
+['grossA','grossB'].forEach(id => document.getElementById(id).oninput = () => { updateGrossTotal(); markUnsaved(); });
+document.getElementById('whinfellScore').oninput = () => { updateWtmLogic(); markUnsaved(); };
+['basis1','basis2'].forEach(id => document.getElementById(id).oninput = () => { updateWtmLogic(); markUnsaved(); });
 
 applySettings(loadSettings());
 renderPrompts();
 renderTickers();
+updateWtmLogic();
 </script>
 </body>
 </html>
