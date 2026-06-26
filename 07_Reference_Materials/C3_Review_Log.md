@@ -72,10 +72,24 @@ Deliverable restructured to facilitated kickoff spec:
 
 **Reviewers:** Integration Dynamo (Lead), Macro Guardian  
 **Facilitator:** TempLibby  
-**Status:** **Active — facilitated now**  
+**Status:** **Active — structured review in progress**  
 **Submitted:** June 26, 2026  
 **Activated:** June 26, 2026  
-**Target:** Sign-off today → proceed to C4
+**Target:** Sign-off today → unblock C4.5 Peer Review
+
+### Arena Review Focus (requested)
+
+1. Completeness — 8 Score components + Basis Edge + Futures Leadership  
+2. Accuracy — primary tickers, fallbacks, time windows, sources  
+3. Usability — proxy hierarchy + maintenance protocol for desk  
+4. Gaps / recommended changes before sign-off  
+5. 4 flagged open series IDs (HY OAS, IG OAS, RTY vs IWM, Basis futures codes)
+
+### Submission Package
+
+1. `Whinfell_Series_Ticker_Master_List.md` (v1.0)  
+2. `C3_Kickoff_Brief.md`  
+3. `C3_Review_Log.md`
 
 ### Submission Package
 
