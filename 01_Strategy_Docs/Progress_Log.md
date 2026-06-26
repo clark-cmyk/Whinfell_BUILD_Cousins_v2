@@ -27,5 +27,6 @@
 - **June 26, 2026** — C4.5 official kickoff (TempLibby). Draft v1.0 aligned to 60/40 layout → `08_Deliverables/`. **Self Review ready.**
 - **June 26, 2026** — C3 Arena Review **facilitated** (Integration Dynamo + Macro Guardian). C4.5 v0.2: default URL settings bar + localStorage per TempLibby clarification.
 - **June 26, 2026** — C4.5 Self Review ✅ (v0.2). TempLibby positive feedback on settings bar. URL fields kept flexible pending final Comet URLs. Peer Review queued post-C3.
+- **June 26, 2026** — C4.5 **v0.3** priority push: Refresh All Panes, URL setup guide, optional auto-refresh. Peer Review ready on C3 sign-off; Arena target 24–48h.
 - BUILD Cousins maintain TODO list in `01_Strategy_Docs/BUILD_TODO_List.md`.
 - All work follows Self Review → Peer Review → Arena Review process.

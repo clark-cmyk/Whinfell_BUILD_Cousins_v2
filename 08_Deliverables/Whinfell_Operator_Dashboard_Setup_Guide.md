@@ -2,7 +2,7 @@
 
 **Deliverable:** C4.5  
 **Main file:** `Whinfell_Operator_Dashboard.html`  
-**Version:** 0.2 (Draft)  
+**Version:** 0.3 (Draft)  
 **Lead:** Bridge (Edge, Forge Master, Clarity)  
 **Date:** June 26, 2026
 
@@ -40,7 +40,17 @@ open ~/Desktop/Whinfell_BUILD_Cousins/08_Deliverables/Whinfell_Operator_Dashboar
 3. Click **Reload Panes** if needed after saving
 4. If iframe is blocked → click **Open ↗** per pane; keep dashboard open for bottom utilities
 
-**v0.2:** Dedicated default URL fields + save timestamp + unsaved-changes indicator.
+**v0.3:** Prominent **↻ Refresh All Panes** · optional 5-min auto-refresh · URL Setup Help tab.
+
+## Refresh Panes
+
+- Click **↻ Refresh All Panes** (header or settings bar) each morning or after market moves
+- Optional: enable **Auto-refresh every 5 min** (reloads iframe src; may not work if site blocks embed — use Open ↗)
+
+## Visual Reference vs Daily Cockpit
+
+- **Perplexity dashboard** — visual reference
+- **This local HTML file** — primary daily operations cockpit
 
 ---
 

@@ -11,7 +11,7 @@
 | # | Deliverable | Priority | Status | Owner | Target Date | Notes |
 |---|-------------|----------|--------|-------|-------------|-------|
 | C3 | Exact Series & Ticker Master List | **Medium** | **Arena Review (Active)** | Bridge | 2 days | Facilitated — Integration Dynamo + Macro Guardian; target sign-off today |
-| **C4.5** | Simple Local Split-Screen Operator Dashboard | **High** | **Peer Review (queued)** | Bridge + Edge + Forge Master + Clarity | 2 days | Self Review ✅ v0.2 — awaiting C3 sign-off then Peer → Arena |
+| **C4.5** | Simple Local Split-Screen Operator Dashboard | **High** | **Peer Review (ready)** | Bridge + Edge + Forge Master + Clarity | 24–48h | v0.3 shipped — Peer on C3 sign-off → Arena (Integration Dynamo + Visual Vanguard + Forge Master) |
 | C4 | Structured Testing of the 6 Refined Prompts | Medium | Not Started | Precision | 7 days | - |
 | C5 | Quick Reference Card (One-Pager) | Medium | Not Started | Hammer + Precision | 5 days | - |
 
