@@ -10,7 +10,7 @@
 
 | # | Deliverable | Priority | Status | Owner | Target Date | Notes |
 |---|-------------|----------|--------|-------|-------------|-------|
-| C1 | Whinfell Credit Confirmation Score – Full Calculation Logic | **High** | **Self Review** | Blueprint + Edge | 3 days | v1.0 complete in `04_Score_Calculation/` — pending Peer + Arena Review |
+| C1 | Whinfell Credit Confirmation Score – Full Calculation Logic | **High** | **Arena Review** | Blueprint + Edge | 3 days | Self + Peer passed — submitted to Macro Guardian + Risk Warden |
 | C2 | Fallback Excel / Google Sheet Dashboard | High | Not Started | Edge + Safeguard | 4–5 days | Blocked on C1 logic |
 | C3 | Exact Series & Ticker Master List | Medium | Not Started | Bridge | 2 days | Arena feedback: elevate priority in v1.1 |
 | C4 | Structured Testing of the 6 Refined Prompts | Medium | Not Started | Precision | 7 days | - |

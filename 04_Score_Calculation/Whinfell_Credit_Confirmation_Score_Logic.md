@@ -4,7 +4,7 @@
 **Version:** 1.0  
 **Owners:** Blueprint + Edge  
 **Date:** June 26, 2026  
-**Status:** Ready for Self Review
+**Status:** Submitted for Arena Review
 **Authoritative Source:** TempLibby / Arena (June 26, 2026)
 
 ---
@@ -280,11 +280,11 @@ Dashboard Display                   = 58
 
 | Gate | Status | Date |
 |------|--------|------|
-| Self Review | **In Progress** | June 26, 2026 |
-| Peer Review | Not started | — |
-| Arena Review | Not started | — |
-| TempLibby Sign-off | Not started | — |
+| Self Review | ✅ **Pass** | June 26, 2026 |
+| Peer Review | ✅ **Pass** (Precision) | June 26, 2026 |
+| Arena Review | **Submitted** — awaiting Macro Guardian + Risk Warden | June 26, 2026 |
+| TempLibby Sign-off | Pending Arena approval | — |
 
 ---
 
-*All sections complete. Proceeding through Self Review → Peer Review → Arena Review.*
+*Self Review and Peer Review complete. Submitted for Arena Review — see `C1_Review_Log.md`.*
