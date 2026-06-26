@@ -11,7 +11,7 @@
 | C1 | Whinfell Credit Confirmation Score Calculation Logic | **Signed Off** | Blueprint + Edge | June 26, 2026 |
 | C2 | Fallback Excel / Google Sheet Dashboard | **Signed Off** | Edge + Safeguard | June 26, 2026 |
 | C3 | Exact Series & Ticker Master List | **Arena Review** | Bridge | June 26, 2026 |
-| C4.5 | Split-Screen Operator Dashboard | **In Progress** | Bridge + Edge + Forge Master | June 26, 2026 |
+| C4.5 | Split-Screen Operator Dashboard | **Self Review** | Bridge + Edge + Forge Master + Clarity | June 26, 2026 |
 | C4 | Test 6 Refined Agentic Prompts | Not Started | Precision | - |
 | C5 | Quick Reference Card (One-Pager) | Not Started | Hammer + Precision | - |
 
@@ -24,5 +24,6 @@
 - **June 26, 2026** — C3 Self Review ✅ and Peer Review ✅ (Blueprint). **Submitted for Arena Review** — ready for TempLibby facilitation. C4 queued post-sign-off.
 - **June 26, 2026** — C3 kickoff confirmed (Bridge lead). Column headers aligned to spec. Awaiting Arena facilitation.
 - **June 26, 2026** — **C4.5 activated** (High priority gap filler). Draft v0.1: `GROK_BUILD_Outputs/Whinfell_Split_Screen_Operator_Dashboard.html` + setup guide.
+- **June 26, 2026** — C4.5 official kickoff (TempLibby). Draft v1.0 aligned to 60/40 layout → `08_Deliverables/`. **Self Review ready.**
 - BUILD Cousins maintain TODO list in `01_Strategy_Docs/BUILD_TODO_List.md`.
 - All work follows Self Review → Peer Review → Arena Review process.

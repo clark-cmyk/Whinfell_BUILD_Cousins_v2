@@ -1,0 +1,9 @@
+C4.5 deliverables moved to 08_Deliverables/ (official location per TempLibby kickoff):
+
+  08_Deliverables/Whinfell_Operator_Dashboard.html
+  08_Deliverables/Whinfell_Operator_Dashboard_Setup_Guide.md
+  08_Deliverables/C4.5_Kickoff_Brief.md
+  08_Deliverables/C4.5_Review_Log.md
+
+Earlier draft retained here for reference:
+  Whinfell_Split_Screen_Operator_Dashboard.html (superseded)
