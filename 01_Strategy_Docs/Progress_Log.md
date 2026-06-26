@@ -26,13 +26,14 @@
 | C1_Whinfell_Credit_Confirmation_Score_Logic.md | 1.0 | Signed Off |
 | C2_Whinfell_Credit_Score_Fallback.xlsx | 0.1 | Signed Off |
 | C3_Whinfell_Series_Ticker_Master_List.md | 1.0 | Signed Off |
-| **Whinfell_Operator_Dashboard.html** | **1.0** | **Signed Off (no-iframe)** |
+| **Whinfell_Operator_Dashboard.html** | **1.0** | **Shipped to Desk** |
+| C4.5_Desk_Announcement_Memo.md | 1.0 | Ready to Send |
 
 ---
 
 ## Notes
 
-- **June 26, 2026** — C4.5 v1.0 final ship (`2e7d7f3`): no-iframe control surface. Self → Peer → Arena (VV + FM + ID) → TempLibby approved.
+- **June 26, 2026** — **C4.5 SHIPPED TO DESK.** TempLibby final sign-off. Announcement memo ready (`C4.5_Desk_Announcement_Memo.md`). Ship `2e7d7f3`.
 - **June 26, 2026** — File path confirmed: `08_Deliverables/Whinfell_Operator_Dashboard.html` (not GROK_BUILD_Outputs).
 - **June 26, 2026** — Next: C4 (Prompt Testing), C5 (Quick Reference Card).
 - **June 26, 2026** — Architecture pivot: removed Koyfin/Barchart iframes; status panels + Open Live buttons + last-opened timestamps.
