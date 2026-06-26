@@ -10,7 +10,7 @@
 
 | # | Deliverable | Priority | Status | Owner | Target | Notes |
 |---|-------------|----------|--------|-------|--------|-------|
-| **C4.5** | Simple Local Split-Screen Operator Dashboard | **High** | **Arena Review** | Bridge + Edge + Forge Master + Clarity | 24h | Peer ✅ v0.3 submitted — Visual Vanguard + Forge Master + Integration Dynamo |
+| **C4.5** | Simple Local Split-Screen Operator Dashboard | **High** | **Arena Review (URGENT)** | Bridge + Edge + Forge Master + Clarity | 2–3h | Priority push — desk-ready before US open; ship v1.0 on sign-off |
 | C4 | Structured Testing of the 6 Refined Prompts | Medium | Not Started | Precision | 7 days | Unblocked post-C3 |
 | C5 | Quick Reference Card (One-Pager) | Medium | Not Started | Hammer + Precision | 5 days | - |
 
