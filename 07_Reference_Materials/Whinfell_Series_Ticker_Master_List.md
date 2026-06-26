@@ -1,10 +1,10 @@
 # Whinfell Series & Ticker Master List
 
 **Deliverable:** C3  
-**Version:** 1.0 (Draft)  
+**Version:** 1.0  
 **Owner:** Bridge  
 **Last Updated:** June 26, 2026  
-**Status:** In Progress — aligned to facilitated kickoff brief  
+**Status:** Submitted for Arena Review
 **Maintained by:** BUILD Cousins (Bridge)
 
 ---
@@ -90,7 +90,7 @@ Single source of truth for every ticker/series used in the Whinfell Transmission
 
 | Gate | Status | Date |
 |------|--------|------|
-| Self Review | In Progress | June 26, 2026 |
-| Peer Review | Not started | — |
-| Arena Review | Not started | Integration Dynamo + Macro Guardian |
+| Self Review | ✅ **Pass** | June 26, 2026 |
+| Peer Review | ✅ **Pass** (Blueprint) | June 26, 2026 |
+| Arena Review | **Submitted** — Integration Dynamo + Macro Guardian | June 26, 2026 |
 | TempLibby Sign-off | Not started | — |

@@ -10,7 +10,7 @@
 
 | # | Deliverable | Priority | Status | Owner | Target Date | Notes |
 |---|-------------|----------|--------|-------|-------------|-------|
-| C3 | Exact Series & Ticker Master List | **Medium** | **In Progress** | Bridge | 2 days | Facilitated kickoff — 8 Score + Basis + Futures Leadership; Self Review underway |
+| C3 | Exact Series & Ticker Master List | **Medium** | **Arena Review** | Bridge | 2 days | Self + Peer passed — submitted to Integration Dynamo + Macro Guardian |
 | C4 | Structured Testing of the 6 Refined Prompts | Medium | Not Started | Precision | 7 days | - |
 | C5 | Quick Reference Card (One-Pager) | Medium | Not Started | Hammer + Precision | 5 days | - |
 
