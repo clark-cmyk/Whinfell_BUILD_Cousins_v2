@@ -8,11 +8,10 @@
 
 ## Current Status
 
-| # | Deliverable | Priority | Status | Owner | Target | Notes |
-|---|-------------|----------|--------|-------|--------|-------|
-| **C4.5** | Simple Local Split-Screen Operator Dashboard | **High** | **Arena Review (URGENT)** | Bridge + Edge + Forge Master + Clarity | 2–3h | Priority push — desk-ready before US open; ship v1.0 on sign-off |
-| C4 | Structured Testing of the 6 Refined Prompts | Medium | Not Started | Precision | 7 days | Unblocked post-C3 |
-| C5 | Quick Reference Card (One-Pager) | Medium | Not Started | Hammer + Precision | 5 days | - |
+| # | Deliverable | Priority | Status | Owner | Notes |
+|---|-------------|----------|--------|-------|-------|
+| C4 | Structured Testing of the 6 Refined Prompts | Medium | Not Started | Precision | Unblocked |
+| C5 | Quick Reference Card (One-Pager) | Medium | Not Started | Hammer + Precision | - |
 
 ---
 
@@ -21,12 +20,12 @@
 | # | Deliverable | Completed On | Notes |
 |---|-------------|--------------|-------|
 | Plan | BUILD Cousins Operating Plan v1.0 | June 26, 2026 | Approved |
-| C1 | Whinfell Credit Confirmation Score Logic | June 26, 2026 | Signed Off — `08_Deliverables/` |
-| C2 | Fallback Excel Dashboard | June 26, 2026 | Signed Off — `08_Deliverables/` |
-| C3 | Exact Series & Ticker Master List | June 26, 2026 | **Signed Off** — `08_Deliverables/C3_Whinfell_Series_Ticker_Master_List.md` |
+| C1 | Whinfell Credit Confirmation Score Logic | June 26, 2026 | Signed Off |
+| C2 | Fallback Excel Dashboard | June 26, 2026 | Signed Off |
+| C3 | Exact Series & Ticker Master List | June 26, 2026 | Signed Off |
+| **C4.5** | Split-Screen Operator Dashboard | June 26, 2026 | **v1.0 Shipped to desk** |
 
 ---
 
 ## Notes
-- **June 26, 2026** — C3 Arena approved & signed off (Integration Dynamo, Macro Guardian).
-- **June 26, 2026** — C4.5 Peer Review ✅ — submitted for Arena Review (24h target).
+- **June 26, 2026** — C4.5 Arena approved (Visual Vanguard, Forge Master, Integration Dynamo). TempLibby sign-off. **Shipped v1.0.**

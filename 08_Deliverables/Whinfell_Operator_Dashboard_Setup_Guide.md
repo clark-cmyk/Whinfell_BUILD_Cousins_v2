@@ -2,55 +2,44 @@
 
 **Deliverable:** C4.5  
 **Main file:** `Whinfell_Operator_Dashboard.html`  
-**Version:** 0.3 (Draft)  
-**Lead:** Bridge (Edge, Forge Master, Clarity)  
-**Date:** June 26, 2026
+**Version:** 1.0 (Signed Off June 26, 2026)  
+**Lead:** Bridge (Edge, Forge Master, Clarity)
 
 ---
 
-## Purpose
-
-Single browser window for daily Whinfell desk operations — workaround for Comet split-screen limitation.
-
-| Zone | Width | Content |
-|------|-------|---------|
-| Left | ~60% | Koyfin Whinfell Transmission Map |
-| Right | ~40% | Barchart futures / basis execution |
-| Bottom | Full width | Prompts · 5-min workflow · Gross Risk |
-
----
-
-## Open Daily
+## Open Daily (Desk Command)
 
 ```bash
 open ~/Desktop/Whinfell_BUILD_Cousins/08_Deliverables/Whinfell_Operator_Dashboard.html
 ```
 
-1. Use Chrome or Edge — bookmark for one-click access  
-2. Full screen recommended (`Cmd + Ctrl + F` on macOS)
+Or double-click the file in Finder. Bookmark in Chrome/Edge for one-click access.
+
+---
+
+## What This Is
+
+Single browser window for Whinfell desk operations:
+
+| Zone | Width | Content |
+|------|-------|---------|
+| Left | ~60% | Koyfin Whinfell Transmission Map |
+| Right | ~40% | Barchart futures / basis execution |
+| Bottom | Full | Prompts · 5-min workflow · Gross Risk |
+
+**Perplexity dashboard** = visual reference · **This file** = primary daily cockpit
 
 ---
 
 ## First-Time Setup (~2 min)
 
-1. In the **Preferred Default URLs** bar (top of page):
-   - Paste your **Koyfin Whinfell workspace URL**
-   - Paste your **Barchart futures / basis page URL**
-2. Click **Save Settings** — stores defaults in browser `localStorage` (loads automatically next open)
-3. Click **Reload Panes** if needed after saving
-4. If iframe is blocked → click **Open ↗** per pane; keep dashboard open for bottom utilities
+1. Paste **Koyfin Whinfell workspace URL** in the Default URLs bar  
+2. Paste **Barchart futures/basis URL** in the right field  
+3. Click **Save Settings** (persists in browser localStorage)  
+4. Click **↻ Refresh All Panes** each morning  
+5. If iframe blocked → use **Open ↗** buttons; keep dashboard open for utilities
 
-**v0.3:** Prominent **↻ Refresh All Panes** · optional 5-min auto-refresh · URL Setup Help tab.
-
-## Refresh Panes
-
-- Click **↻ Refresh All Panes** (header or settings bar) each morning or after market moves
-- Optional: enable **Auto-refresh every 5 min** (reloads iframe src; may not work if site blocks embed — use Open ↗)
-
-## Visual Reference vs Daily Cockpit
-
-- **Perplexity dashboard** — visual reference
-- **This local HTML file** — primary daily operations cockpit
+Optional: enable **Auto-refresh every 5 min** for iframe reload.
 
 ---
 
@@ -58,33 +47,28 @@ open ~/Desktop/Whinfell_BUILD_Cousins/08_Deliverables/Whinfell_Operator_Dashboar
 
 | Min | Action |
 |-----|--------|
-| 1 | Transmission State Banner + Whinfell Score (Koyfin) |
-| 2 | Liquidity, Rates, Credit Confirmation (Koyfin) |
+| 1 | Transmission State + Whinfell Score (Koyfin) |
+| 2 | Liquidity, Rates, Credit Confirmation |
 | 3 | Futures Leadership + Basis Edge (Barchart) |
-| 4 | Run Prompts ① + ② (copy from bottom panel) |
-| 5 | Set posture + update Gross Risk fields |
+| 4 | Copy Prompts ① + ② to agent |
+| 5 | Update Gross Risk + posture |
 
 **Daily Rule:** Update Gross Risk after morning review and after any material trade.
 
 ---
 
-## Bottom Panel
+## Bottom Panel Tabs
 
-- **5-Min Morning Workflow** — step-by-step checklist  
-- **Saved Agentic Prompts (6)** — copy-paste to agent  
-- **Gross Risk Controls** — Book A/B, score, posture, handover  
-- **Quick Tickers** — C3 master list shortcuts to Barchart
-
----
-
-## Review Gates
-
-Self Review (Bridge) → Peer (Blueprint + Clarity) → Arena (Integration Dynamo + Visual Vanguard) → TempLibby sign-off
+- **5-Min Morning Workflow** — checklist  
+- **Saved Agentic Prompts (6)** — copy-paste  
+- **Gross Risk Controls** — Book A/B, score, handover  
+- **Quick Tickers** — C3 master list shortcuts  
+- **URL Setup Help** — detailed instructions
 
 ---
 
 ## References
 
-- `07_Reference_Materials/Whinfell_Series_Ticker_Master_List.md`
+- `08_Deliverables/C3_Whinfell_Series_Ticker_Master_List.md`
 - `08_Deliverables/C1_Whinfell_Credit_Confirmation_Score_Logic.md`
 - `08_Deliverables/C2_Whinfell_Credit_Score_Fallback.xlsx`
