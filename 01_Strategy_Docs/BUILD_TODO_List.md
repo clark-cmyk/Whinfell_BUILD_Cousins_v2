@@ -10,7 +10,7 @@
 
 | # | Deliverable | Priority | Status | Owner | Notes |
 |---|-------------|----------|--------|-------|-------|
-| **Transmission Control P1** | WTM Prompts + Gross Risk + BTC + Signal Tracer | **High** | **Draft — Self Review PASS** | Bridge + Edge + Precision | Ready for review |
+| **Transmission Control P1** | WTM Prompts + Gross Risk + BTC + Signal Tracer | **High** | **Aligned — Arena PASS** | Bridge + Edge + Precision | Awaiting TempLibby |
 | C4 | Structured Testing of the 6 Refined Prompts | Medium | Not Started | Precision | Unblocked |
 | C5 | Quick Reference Card (One-Pager) | Medium | Not Started | Hammer + Precision | - |
 
@@ -46,6 +46,7 @@ open ~/Desktop/Whinfell_BUILD_Cousins/08_Deliverables/Whinfell_Operator_Dashboar
 ---
 
 ## Notes
+- **June 26, 2026** — **Transmission Control Phase 1 aligned** — Peer + Arena PASS. Awaiting TempLibby sign-off.
 - **June 26, 2026** — **Transmission Control Phase 1 draft** — Self Review PASS. Awaiting review sign-off.
 - **June 26, 2026** — **Transmission Control Phase 0 signed off** by TempLibby. Phase 1 scope approved.
 - **June 26, 2026** — **C4.5 v1.1** on Operator Dashboard: WTM intake, gate banners, Prompts A–E.

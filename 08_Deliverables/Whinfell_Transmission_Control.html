@@ -28,6 +28,9 @@
     .tab-active { color: #3d8bfd; border-bottom: 2px solid #3d8bfd; }
     .panel-hidden { display: none; }
     .tracer-bar { transition: width 0.3s ease, background-color 0.3s ease; }
+    .horizon-up { color: #3dd68c; }
+    .horizon-flat { color: #8b9cb3; }
+    .horizon-down { color: #f56565; }
   </style>
 </head>
 <body class="bg-wtm-bg text-slate-100 font-sans h-screen flex flex-col overflow-hidden">
@@ -36,9 +39,9 @@
     <div class="flex-1 px-5 py-3 flex flex-col justify-center gap-0.5">
       <div class="flex items-center gap-2.5 flex-wrap">
         <h1 class="text-[15px] font-semibold tracking-tight">Whinfell Transmission Control</h1>
-        <span class="text-[9px] font-bold uppercase tracking-wider text-wtm-accent bg-wtm-accent/10 border border-wtm-accent/30 px-2 py-0.5 rounded">Phase 1 Draft</span>
+        <span class="text-[9px] font-bold uppercase tracking-wider text-wtm-accent bg-wtm-accent/10 border border-wtm-accent/30 px-2 py-0.5 rounded">Phase 1 Aligned</span>
       </div>
-      <p class="text-[11px] text-wtm-muted">Execution layer · Prompts · Gross Risk · Signal Tracer</p>
+      <p class="text-[11px] text-wtm-muted">WTM Action Layer · Prompts · Gross Risk · Signal Tracer</p>
     </div>
     <div class="flex items-center gap-2 px-5 py-2.5 sm:border-l border-wtm-border bg-black/20 shrink-0 flex-wrap justify-end">
       <span id="saveIndicator" class="text-[10px] text-wtm-muted">—</span>
@@ -125,27 +128,34 @@
           <button id="btnBarchart" type="button" class="w-full py-2 rounded-lg bg-gradient-to-b from-wtm-accent to-blue-700 text-sm font-bold hover:brightness-110">Open Barchart ↗</button>
         </div>
         <div id="cardBtcOptions" class="bg-wtm-card border border-wtm-border border-l-4 border-l-wtm-border rounded-lg p-4">
-          <div class="flex justify-between gap-2 mb-2">
+          <div class="flex justify-between gap-2 mb-1">
             <div><p class="text-[9px] font-bold uppercase text-wtm-accent">Layer 2</p><h3 class="text-sm font-bold">BTC Options Workflow</h3></div>
             <span id="chipL2" class="text-[10px] font-extrabold uppercase px-2 py-1 rounded border border-wtm-border text-wtm-muted shrink-0">—</span>
           </div>
-          <p class="text-[10px] text-wtm-muted mb-3">Vol surface + structure evaluation. Gated by WTM intake.</p>
+          <p id="noteL2" class="text-[10px] text-wtm-muted mb-3">Vol surface + structure evaluation. Gated by WTM intake.</p>
           <button id="btnCopyL2" type="button" class="text-xs px-3 py-1.5 rounded border border-wtm-border bg-wtm-bg hover:bg-wtm-border w-full">Copy Layer 2 Prompt</button>
         </div>
         <div id="cardBtcCalendar" class="bg-wtm-card border border-wtm-border border-l-4 border-l-wtm-border rounded-lg p-4">
-          <div class="flex justify-between gap-2 mb-2">
+          <div class="flex justify-between gap-2 mb-1">
             <div><p class="text-[9px] font-bold uppercase text-wtm-accent">Layer 3</p><h3 class="text-sm font-bold">BTC Calendar Arb Agent</h3></div>
             <span id="chipL3" class="text-[10px] font-extrabold uppercase px-2 py-1 rounded border border-wtm-border text-wtm-muted shrink-0">—</span>
           </div>
-          <p class="text-[10px] text-wtm-muted mb-3">Calendar spread arb agent. Blocked when Score &lt; 50.</p>
+          <p id="noteL3" class="text-[10px] text-wtm-muted mb-2">Calendar spread arb agent. Blocked when Score &lt; 50.</p>
+          <div class="grid grid-cols-3 gap-2 mb-2">
+            <label class="block"><span class="text-[9px] text-wtm-muted uppercase">Near Month</span>
+              <input id="l3NearMonth" type="text" placeholder="e.g. Jul" class="w-full mt-0.5 bg-wtm-bg border border-wtm-border rounded px-2 py-1 text-[10px]" /></label>
+            <label class="block"><span class="text-[9px] text-wtm-muted uppercase">Far Month</span>
+              <input id="l3FarMonth" type="text" placeholder="e.g. Dec" class="w-full mt-0.5 bg-wtm-bg border border-wtm-border rounded px-2 py-1 text-[10px]" /></label>
+            <label class="block"><span class="text-[9px] text-wtm-muted uppercase">Basis Spread</span>
+              <input id="l3BasisSpread" type="text" placeholder="manual" class="w-full mt-0.5 bg-wtm-bg border border-wtm-border rounded px-2 py-1 text-[10px]" /></label>
+          </div>
           <button id="btnCopyL3" type="button" class="text-xs px-3 py-1.5 rounded border border-wtm-border bg-wtm-bg hover:bg-wtm-border w-full">Copy Layer 3 Prompt</button>
         </div>
       </div>
     </div>
   </main>
 
-  <!-- Bottom utility: Prompts | Gross Risk | Signal Tracer -->
-  <section class="shrink-0 border-t border-wtm-border bg-wtm-surface flex flex-col max-h-[44vh] min-h-[200px]">
+  <section class="shrink-0 border-t border-wtm-border bg-wtm-surface flex flex-col max-h-[48vh] min-h-[220px]">
     <div class="flex border-b border-wtm-border overflow-x-auto shrink-0" id="tabBar">
       <button type="button" data-tab="prompts" class="tab-btn tab-active px-4 py-2.5 text-[11px] font-medium text-wtm-muted whitespace-nowrap">WTM Prompts A–E</button>
       <button type="button" data-tab="risk" class="tab-btn px-4 py-2.5 text-[11px] font-medium text-wtm-muted whitespace-nowrap">Gross Risk</button>
@@ -154,13 +164,15 @@
     <div class="flex-1 overflow-y-auto p-4">
       <div id="panel-prompts" class="space-y-2" data-panel="prompts"></div>
       <div id="panel-risk" class="panel-hidden" data-panel="risk">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
-          <label class="block"><span class="text-[10px] text-wtm-muted uppercase font-semibold">Book A ($mm)</span>
-            <input id="grossA" type="number" step="0.1" class="w-full mt-1 bg-wtm-bg border border-wtm-border rounded px-3 py-2 text-sm" /></label>
-          <label class="block"><span class="text-[10px] text-wtm-muted uppercase font-semibold">Book B ($mm)</span>
-            <input id="grossB" type="number" step="0.1" class="w-full mt-1 bg-wtm-bg border border-wtm-border rounded px-3 py-2 text-sm" /></label>
-          <label class="block"><span class="text-[10px] text-wtm-muted uppercase font-semibold">Total Gross</span>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-2">
+          <label class="block"><span class="text-[10px] text-wtm-muted uppercase font-semibold">Book A Gross (%)</span>
+            <input id="grossA" type="number" step="0.1" min="0" class="w-full mt-1 bg-wtm-bg border border-wtm-border rounded px-3 py-2 text-sm" /></label>
+          <label class="block"><span class="text-[10px] text-wtm-muted uppercase font-semibold">Book B Gross (%)</span>
+            <input id="grossB" type="number" step="0.1" min="0" class="w-full mt-1 bg-wtm-bg border border-wtm-border rounded px-3 py-2 text-sm" /></label>
+          <label class="block"><span class="text-[10px] text-wtm-muted uppercase font-semibold">Total Gross (%)</span>
             <input id="grossTotal" type="text" readonly class="w-full mt-1 bg-wtm-card border border-wtm-border rounded px-3 py-2 text-sm text-wtm-accent font-bold" /></label>
+          <label class="block"><span class="text-[10px] text-wtm-muted uppercase font-semibold">Capital Base ($mm)</span>
+            <input id="capitalBaseMm" type="number" step="0.1" min="0" placeholder="optional" class="w-full mt-1 bg-wtm-bg border border-wtm-border rounded px-3 py-2 text-sm" /></label>
           <label class="block"><span class="text-[10px] text-wtm-muted uppercase font-semibold">Approved Posture</span>
             <select id="posture" class="w-full mt-1 bg-wtm-bg border border-wtm-border rounded px-3 py-2 text-sm">
               <option value="">— Auto from Score —</option>
@@ -171,30 +183,48 @@
               <option value="flat">Flat / No New Risk</option>
             </select></label>
         </div>
-        <p id="postureHint" class="text-[10px] text-wtm-muted mb-2">Posture links to Whinfell Score zone and gate status.</p>
+        <p id="grossMmHint" class="text-[10px] text-wtm-muted mb-1">—</p>
+        <p id="postureHint" class="text-[10px] text-wtm-muted mb-1">Posture links to Whinfell Score zone and gate status.</p>
+        <p id="postureWarning" class="hidden text-[10px] font-semibold text-wtm-amber bg-amber-500/10 border border-wtm-amber/40 rounded px-2 py-1 mb-2">Posture exceeds gate band — confirm intentional.</p>
         <label class="block"><span class="text-[10px] text-wtm-muted uppercase font-semibold">Handover / Watch Items</span>
           <textarea id="handoverNote" rows="2" placeholder="Gate, regime, risks…" class="w-full mt-1 bg-wtm-bg border border-wtm-border rounded px-3 py-2 text-sm resize-y"></textarea></label>
       </div>
       <div id="panel-tracer" class="panel-hidden" data-panel="tracer">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <div>
-            <p class="text-[10px] font-bold uppercase text-wtm-accent mb-2">Transmission Ladder — Tabular</p>
-            <table class="w-full text-[11px] border border-wtm-border rounded-lg overflow-hidden">
-              <thead class="bg-wtm-card text-wtm-muted uppercase text-[9px]"><tr><th class="text-left p-2">Stage</th><th class="text-left p-2">Status</th></tr></thead>
-              <tbody id="tracerTableBody" class="divide-y divide-wtm-border"></tbody>
+        <div class="flex flex-wrap gap-2 mb-3 items-center">
+          <span class="text-[10px] font-bold uppercase text-wtm-accent">Shock Scenarios</span>
+          <button type="button" data-shock="creditWidening" class="shock-btn text-[10px] px-2 py-1 rounded border border-wtm-border bg-wtm-card hover:bg-wtm-border">Credit Widening</button>
+          <button type="button" data-shock="curveInversion" class="shock-btn text-[10px] px-2 py-1 rounded border border-wtm-border bg-wtm-card hover:bg-wtm-border">Curve Inversion</button>
+          <button type="button" data-shock="btcDecoupling" class="shock-btn text-[10px] px-2 py-1 rounded border border-wtm-border bg-wtm-card hover:bg-wtm-border">BTC Decoupling</button>
+          <button type="button" data-shock="volSpike" class="shock-btn text-[10px] px-2 py-1 rounded border border-wtm-border bg-wtm-card hover:bg-wtm-border">Vol Spike</button>
+          <button type="button" id="btnClearShock" class="text-[10px] px-2 py-1 rounded border border-wtm-red/50 text-wtm-red bg-red-500/10 hover:bg-red-500/20">Clear Shock</button>
+          <span id="activeShockLabel" class="text-[10px] text-wtm-muted ml-auto">No active shock</span>
+        </div>
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-4">
+          <div class="xl:col-span-2 overflow-x-auto">
+            <p class="text-[10px] font-bold uppercase text-wtm-accent mb-2">Horizon Matrix — Operator Marked</p>
+            <table class="w-full text-[10px] border border-wtm-border rounded-lg overflow-hidden min-w-[480px]">
+              <thead class="bg-wtm-card text-wtm-muted uppercase text-[9px]">
+                <tr><th class="text-left p-2">Stage</th><th class="p-2">1d</th><th class="p-2">5d</th><th class="p-2">20d</th><th class="p-2">60d</th><th class="p-2">Net</th></tr>
+              </thead>
+              <tbody id="tracerHorizonBody" class="divide-y divide-wtm-border"></tbody>
             </table>
+            <p class="text-[9px] text-wtm-muted mt-1">↑ confirming · → neutral · ↓ impairing · Phase 2 auto-fill placeholder</p>
           </div>
           <div>
-            <p class="text-[10px] font-bold uppercase text-wtm-accent mb-2">Snapshot — Visual</p>
-            <div class="bg-wtm-card border border-wtm-border rounded-lg p-4">
-              <div class="flex justify-between text-[10px] text-wtm-muted mb-1"><span>Whinfell Score</span><span id="tracerScoreLabel">—</span></div>
+            <p class="text-[10px] font-bold uppercase text-wtm-accent mb-2">Transmission Chain</p>
+            <div class="bg-wtm-card border border-wtm-border rounded-lg p-3 mb-3">
+              <div id="tracerChain" class="flex items-center justify-between gap-1 text-[9px] flex-wrap"></div>
+              <p id="tracerOverall" class="text-[10px] text-wtm-muted mt-2 text-center">Overall health: —</p>
+            </div>
+            <p class="text-[10px] font-bold uppercase text-wtm-accent mb-2">Whinfell Score</p>
+            <div class="bg-wtm-card border border-wtm-border rounded-lg p-3">
+              <div class="flex justify-between text-[10px] text-wtm-muted mb-1"><span>Score</span><span id="tracerScoreLabel">—</span></div>
               <div class="h-3 bg-wtm-bg rounded-full overflow-hidden border border-wtm-border mb-1 relative">
                 <div id="tracerScoreBar" class="h-full bg-wtm-accent tracer-bar" style="width:0%"></div>
                 <div class="absolute top-0 bottom-0 w-px bg-wtm-red/60" style="left:50%"></div>
                 <div class="absolute top-0 bottom-0 w-px bg-wtm-amber/60" style="left:65%"></div>
               </div>
-              <div class="flex justify-between text-[8px] text-wtm-muted mb-4"><span>0</span><span>50</span><span>65</span><span>100</span></div>
-              <div id="tracerBars" class="space-y-2"></div>
+              <div class="flex justify-between text-[8px] text-wtm-muted"><span>0</span><span>50</span><span>65</span><span>100</span></div>
             </div>
           </div>
         </div>
@@ -205,11 +235,19 @@
   <div id="toast" class="fixed bottom-4 right-4 max-w-sm px-4 py-3 rounded-lg border border-wtm-border bg-wtm-card text-xs shadow-xl translate-y-20 opacity-0 transition-all z-50 pointer-events-none"></div>
 
 <script>
-/** Whinfell Transmission Control — Phase 1 · Storage v1 */
+/** Whinfell Transmission Control — Phase 1 Aligned · Storage v1 (schema 2) */
 
 const STORAGE_KEY = 'whinfell_transmission_control_v1';
 const LEGACY_KEYS = ['whinfell_transmission_control_v0', 'whinfell_operator_v1_1'];
-const DEFAULTS = { urlKoyfin: 'https://app.koyfin.com/', urlBarchart: 'https://www.barchart.com/futures/major-commodities' };
+const STATE_VERSION = 2;
+const HORIZONS = ['d1', 'd5', 'd20', 'd60'];
+const HORIZON_LABELS = { d1: '1d', d5: '5d', d20: '20d', d60: '60d' };
+const HORIZON_DISPLAY = { up: '↑', flat: '→', down: '↓', '': '—' };
+const HORIZON_SCORE = { up: 1, flat: 0, down: -1, '': 0 };
+
+const DEFAULTS = {
+  urls: { koyfin: 'https://app.koyfin.com/', barchart: 'https://www.barchart.com/futures/major-commodities' },
+};
 
 const TX_META = {
   normal: { label: 'Normal', chip: 'bg-emerald-500/15 text-wtm-green border-wtm-green' },
@@ -219,43 +257,92 @@ const TX_META = {
 };
 
 const LADDER = [
-  { id: 'liquidity', name: 'Liquidity & Rates', sub: '2Y/10Y · curve shape' },
-  { id: 'credit', name: 'Credit Confirmation', sub: 'HY/IG · Whinfell Score' },
-  { id: 'breadth', name: 'Equity Breadth', sub: 'SPY · IWM · participation' },
-  { id: 'highbeta', name: 'High-Beta / BTC', sub: 'IBIT vs QQQ/SPY' },
-  { id: 'basis', name: 'Basis & Term Structure', sub: 'Futures curve · contango' },
+  { id: 'liquidity', name: 'Liquidity & Rates', short: 'Liq', sub: '2Y/10Y · curve shape' },
+  { id: 'credit', name: 'Credit Confirmation', short: 'Credit', sub: 'HY/IG · Whinfell Score' },
+  { id: 'breadth', name: 'Equity Breadth', short: 'Breadth', sub: 'SPY · IWM · participation' },
+  { id: 'highbeta', name: 'High-Beta / BTC', short: 'BTC', sub: 'IBIT vs QQQ/SPY' },
+  { id: 'basis', name: 'Basis & Term Structure', short: 'Basis', sub: 'Futures curve · contango' },
 ];
 
-const STATUS_COLORS = { confirming: 'bg-wtm-green', mixed: 'bg-wtm-amber', impairing: 'bg-wtm-red', neutral: 'bg-wtm-border' };
+const POSTURE_LABELS = { full: 'Full Gross', selective: 'Selective', light: 'Light Gross', defensive: 'Defensive', flat: 'Flat' };
+const POSTURE_RANK = { flat: 0, defensive: 1, light: 2, selective: 3, full: 4 };
+
+const SHOCKS = {
+  creditWidening: { label: 'Credit Widening', effects: { credit: { d1: 'down', d5: 'down' }, liquidity: { d1: 'down', d5: 'down' } } },
+  curveInversion: { label: 'Curve Inversion', effects: { liquidity: { d1: 'down', d5: 'down' }, breadth: { d1: 'flat', d5: 'flat' } } },
+  btcDecoupling: { label: 'BTC Decoupling', effects: { highbeta: { d1: 'down', d5: 'down' }, basis: { d1: 'flat', d5: 'flat' } } },
+  volSpike: { label: 'Vol Spike', effects: { highbeta: { d1: 'down', d5: 'down' }, basis: { d1: 'down', d5: 'down' } } },
+};
 
 const PROMPT_L2 = `WTM Layer 2 — BTC Options Workflow\n\nContext: Whinfell Transmission Model intake complete.\n- Whinfell Score: [from intake]\n- Transmission State: [from intake]\n- Regime Tag: [from intake]\n- Gate Status: [Allowed / Tight Risk Band / NO NEW BTC RISK]\n\nTask:\n1) Confirm gate permits BTC options activity (if Tight Risk Band → reduced sizing only)\n2) Map IBIT/BTC vol surface vs credit transmission alignment\n3) Recommend structure: covered / spread / collar — with max notional\n4) State invalidation: score threshold, vol spike, credit impairment\n5) Output: EXECUTE (sized) / WATCH / BLOCKED`;
 
-const PROMPT_L3 = `WTM Layer 3 — BTC Calendar Arb Agent\n\nContext: Whinfell Transmission Model intake complete.\n- Whinfell Score: [from intake]\n- Transmission State: [from intake]\n- Regime Tag: [from intake]\n- Gate Status: [Allowed / Tight Risk Band / NO NEW BTC RISK]\n\nTask:\n1) Verify gate status permits calendar arb (BLOCKED if Score < 50)\n2) Read near vs far BTC basis from Barchart — compute attractiveness\n3) Rank calendar spread opportunities vs WTM transmission read\n4) If Tight Risk Band: client basis structures only, reduced size\n5) Output one-line action: EXECUTE / WATCH / BLOCKED with size and risks`;
+const PROMPT_L3_BASE = `WTM Layer 3 — BTC Calendar Arb Agent\n\nContext: Whinfell Transmission Model intake complete.\n- Whinfell Score: [from intake]\n- Transmission State: [from intake]\n- Regime Tag: [from intake]\n- Gate Status: [Allowed / Tight Risk Band / NO NEW BTC RISK]\n\nTask:\n1) Verify gate status permits calendar arb (BLOCKED if Score < 50)\n2) Read near vs far BTC basis from Barchart — compute attractiveness\n3) Rank calendar spread opportunities vs WTM transmission read\n4) If Tight Risk Band: client basis structures only, reduced size\n5) Output one-line action: EXECUTE / WATCH / BLOCKED with size and risks`;
 
 const PROMPTS = [
-  { id: 'A', title: 'WTM Transmission Read & Regime Classification', desc: 'Classify today\u2019s overall regime and key signals.', text: `Using the current Whinfell Transmission Map (regime banner, Whinfell Score, credit inputs, rates, breadth, futures leadership, and BTC/IBIT behavior), classify today\u2019s transmission state.\n\n1. State: Risk-On, Fragile Risk-On, Neutral, Risk-Off, or Crisis.\n2. Whinfell Score and zone (Green / Amber / Red).\n3. Top 2 confirming signals and top 2 disconfirming signals.\n4. One-line desk posture recommendation and what would cause an upgrade or downgrade.\n\nBe concise and transmission-focused.` },
-  { id: 'B', title: 'WTM Posture & Gross-Risk Recommendation', desc: 'Set daily gross risk and sizing.', text: `Using current Whinfell Score, transmission state, and desk posture, recommend gross risk and position sizing for today.\n\n1. Recommended gross risk range (% of capital deployed).\n2. Max per-trade risk (% and dollar amount).\n3. Max concurrent trades.\n4. For a candidate trade (entry, stop, target, account size), calculate: contract/share count, notional, risk $, reward $, and R-multiple.\n\nKeep sizing conservative and aligned with the current Whinfell regime.` },
-  { id: 'C', title: 'WTM Trade Evaluation & Ranking', desc: 'Evaluate and rank candidate trades.', text: `Given a list of candidate trades (tickers, direction, setup), evaluate each through the Whinfell lens and rank them.\n\nFor each trade:\n- Regime fit\n- Basis/term-structure alignment\n- Liquidity and edge\n- Transmission confirmation\n\nOutput a ranked list: Core, Tactical, Watchlist, with one-line justification and WTM Trade Score (0\u2013100). Flag any trades that should be banned due to regime mismatch.` },
-  { id: 'D', title: 'WTM Income Projection from Current Book', desc: 'Project income scenarios.', text: `Using the current book (positions, sizes, key levels) and Whinfell regime, build projected income scenarios for the next session/week.\n\n1. Base, favorable, and adverse scenarios with estimated P&L ($ and % of capital).\n2. Key drivers (carry, basis, directional, convexity).\n3. One-line income posture statement.\n\nBe realistic and tie directly to the current Whinfell Score and transmission state.` },
-  { id: 'E', title: 'WTM Divergence & Risk Compression', desc: 'Diagnose divergences and recommend risk actions.', text: `When the tape diverges from Whinfell transmission signals, diagnose and recommend risk compression.\n\n1. Describe key divergences (credit vs equities, BTC vs SPY, futures vs regime, etc.).\n2. Classify as transient or regime-threatening.\n3. Recommend concrete actions: reduce gross, rotate, tighten stops, or exit.\n4. State what evidence would justify re-expanding risk.\n\nBe concise and action-oriented.` },
+  { id: 'A', title: 'WTM Transmission Read & Regime Classification', desc: 'Classify today\u2019s overall regime and key signals.',
+    inputs: 'WTM map, Whinfell Score, credit, rates, breadth, futures, BTC/IBIT',
+    outputs: 'Regime state, score zone, confirming/disconfirming signals, posture rec',
+    text: `Using the current Whinfell Transmission Map (regime banner, Whinfell Score, credit inputs, rates, breadth, futures leadership, and BTC/IBIT behavior), classify today\u2019s transmission state.\n\n1. State: Risk-On, Fragile Risk-On, Neutral, Risk-Off, or Crisis.\n2. Whinfell Score and zone (Green / Amber / Red).\n3. Top 2 confirming signals and top 2 disconfirming signals.\n4. One-line desk posture recommendation and what would cause an upgrade or downgrade.\n\nBe concise and transmission-focused.` },
+  { id: 'B', title: 'WTM Posture & Gross-Risk Recommendation', desc: 'Set daily gross risk and sizing.',
+    inputs: 'Whinfell Score, transmission state, desk posture, capital base',
+    outputs: 'Gross risk %, per-trade sizing, concurrent trade limits, R-multiple calc',
+    text: `Using current Whinfell Score, transmission state, and desk posture, recommend gross risk and position sizing for today.\n\n1. Recommended gross risk range (% of capital deployed).\n2. Max per-trade risk (% and dollar amount).\n3. Max concurrent trades.\n4. For a candidate trade (entry, stop, target, account size), calculate: contract/share count, notional, risk $, reward $, and R-multiple.\n\nKeep sizing conservative and aligned with the current Whinfell regime.` },
+  { id: 'C', title: 'WTM Trade Evaluation & Ranking', desc: 'Evaluate and rank candidate trades.',
+    inputs: 'Candidate trade list, WTM regime, transmission ladder read',
+    outputs: 'Ranked Core / Tactical / Watchlist, WTM Trade Score, ban flags',
+    text: `Given a list of candidate trades (tickers, direction, setup), evaluate each through the Whinfell lens and rank them.\n\nFor each trade:\n- Regime fit\n- Basis/term-structure alignment\n- Liquidity and edge\n- Transmission confirmation\n\nOutput a ranked list: Core, Tactical, Watchlist, with one-line justification and WTM Trade Score (0\u2013100). Flag any trades that should be banned due to regime mismatch.` },
+  { id: 'D', title: 'WTM Income Projection from Current Book', desc: 'Project income scenarios.',
+    inputs: 'Current book, sizes, key levels, Whinfell regime',
+    outputs: 'Base/favorable/adverse P&L scenarios, income posture statement',
+    text: `Using the current book (positions, sizes, key levels) and Whinfell regime, build projected income scenarios for the next session/week.\n\n1. Base, favorable, and adverse scenarios with estimated P&L ($ and % of capital).\n2. Key drivers (carry, basis, directional, convexity).\n3. One-line income posture statement.\n\nBe realistic and tie directly to the current Whinfell Score and transmission state.` },
+  { id: 'E', title: 'WTM Divergence & Risk Compression', desc: 'Diagnose divergences and recommend risk actions.',
+    inputs: 'Tape behavior vs WTM signals, cross-asset divergences',
+    outputs: 'Divergence diagnosis, compression actions, re-expansion criteria',
+    text: `When the tape diverges from Whinfell transmission signals, diagnose and recommend risk compression.\n\n1. Describe key divergences (credit vs equities, BTC vs SPY, futures vs regime, etc.).\n2. Classify as transient or regime-threatening.\n3. Recommend concrete actions: reduce gross, rotate, tighten stops, or exit.\n4. State what evidence would justify re-expanding risk.\n\nBe concise and action-oriented.` },
 ];
 
-let postureManual = false;
+let appState = createEmptyState();
+let preShockSnapshot = null;
 
 function el(id) { return document.getElementById(id); }
 
+function createEmptyHorizons() {
+  const h = {};
+  LADDER.forEach(row => { h[row.id] = { d1: '', d5: '', d20: '', d60: '' }; });
+  return h;
+}
+
+function createEmptyState() {
+  return {
+    version: STATE_VERSION,
+    intake: { whinfellScore: '', transmissionState: '', regimeTag: '' },
+    grossRisk: { bookA: '', bookB: '', capitalBaseMm: '', posture: '', postureManual: false, handoverNote: '' },
+    tracer: { horizons: createEmptyHorizons(), activeShock: null },
+    btcL3: { nearMonth: '', farMonth: '', basisSpread: '' },
+    urls: { ...DEFAULTS.urls },
+    meta: { savedAt: null, lastKoyfin: null, lastBarchart: null },
+  };
+}
+
 function evaluateGate(score) {
-  if (Number.isNaN(score)) return { key: 'unknown', label: '—', chipLabel: '—', bannerTitle: 'Enter Whinfell Score', bannerSub: 'WTM intake drives BTC module access', bannerBg: 'bg-wtm-surface', bannerTitleCls: 'text-wtm-muted', bannerSubCls: 'text-wtm-muted', glow: '', chipCls: 'border-wtm-border text-wtm-muted bg-wtm-bg', borderAccent: 'border-l-wtm-border', blocked: true };
-  if (score < 50) return { key: 'blocked', label: 'NO NEW BTC RISK', chipLabel: 'BLOCKED', bannerTitle: 'NO NEW BTC RISK', bannerSub: 'Score < 50 · BTC modules disabled', bannerBg: 'bg-red-500/10', bannerTitleCls: 'text-wtm-red', bannerSubCls: 'text-red-300/70', glow: 'gate-glow-red', chipCls: 'border-wtm-red text-wtm-red bg-red-500/15', borderAccent: 'border-l-wtm-red', blocked: true };
-  if (score < 65) return { key: 'tight', label: 'Tight Risk Band', chipLabel: 'Tight Risk', bannerTitle: 'Tight Risk Band', bannerSub: 'Score 50–64 · Reduced BTC sizing', bannerBg: 'bg-amber-500/10', bannerTitleCls: 'text-wtm-amber', bannerSubCls: 'text-amber-200/70', glow: 'gate-glow-amber', chipCls: 'border-wtm-amber text-wtm-amber bg-amber-500/15', borderAccent: 'border-l-wtm-amber', blocked: false };
-  return { key: 'allowed', label: 'Allowed', chipLabel: 'Allowed', bannerTitle: 'Allowed', bannerSub: 'Score ≥ 65 · Full BTC access', bannerBg: 'bg-emerald-500/10', bannerTitleCls: 'text-wtm-green', bannerSubCls: 'text-emerald-200/70', glow: 'gate-glow-green', chipCls: 'border-wtm-green text-wtm-green bg-emerald-500/15', borderAccent: 'border-l-wtm-green', blocked: false };
+  if (Number.isNaN(score)) return { key: 'unknown', label: '—', chipLabel: '—', bannerTitle: 'Enter Whinfell Score', bannerSub: 'WTM intake drives BTC module access', bannerBg: 'bg-wtm-surface', bannerTitleCls: 'text-wtm-muted', bannerSubCls: 'text-wtm-muted', glow: '', chipCls: 'border-wtm-border text-wtm-muted bg-wtm-bg', borderAccent: 'border-l-wtm-border', blocked: true, tight: false };
+  if (score < 50) return { key: 'blocked', label: 'NO NEW BTC RISK', chipLabel: 'BLOCKED', bannerTitle: 'NO NEW BTC RISK', bannerSub: 'Score < 50 · BTC modules disabled', bannerBg: 'bg-red-500/10', bannerTitleCls: 'text-wtm-red', bannerSubCls: 'text-red-300/70', glow: 'gate-glow-red', chipCls: 'border-wtm-red text-wtm-red bg-red-500/15', borderAccent: 'border-l-wtm-red', blocked: true, tight: false };
+  if (score < 65) return { key: 'tight', label: 'Tight Risk Band', chipLabel: 'Tight Risk', bannerTitle: 'Tight Risk Band', bannerSub: 'Score 50–64 · Reduced BTC sizing only', bannerBg: 'bg-amber-500/10', bannerTitleCls: 'text-wtm-amber', bannerSubCls: 'text-amber-200/70', glow: 'gate-glow-amber', chipCls: 'border-wtm-amber text-wtm-amber bg-amber-500/15', borderAccent: 'border-l-wtm-amber', blocked: false, tight: true };
+  return { key: 'allowed', label: 'Allowed', chipLabel: 'Allowed', bannerTitle: 'Allowed', bannerSub: 'Score ≥ 65 · Full BTC access', bannerBg: 'bg-emerald-500/10', bannerTitleCls: 'text-wtm-green', bannerSubCls: 'text-emerald-200/70', glow: 'gate-glow-green', chipCls: 'border-wtm-green text-wtm-green bg-emerald-500/15', borderAccent: 'border-l-wtm-green', blocked: false, tight: false };
+}
+
+function deriveGate(state) {
+  const score = parseInt(state.intake.whinfellScore, 10);
+  const gate = evaluateGate(score);
+  const zone = scoreZone(score);
+  return { ...gate, zone, score };
 }
 
 function scoreZone(score) {
-  if (Number.isNaN(score)) return { text: '—', cls: 'border-wtm-border text-wtm-muted' };
-  if (score >= 65) return { text: 'Green', cls: 'border-wtm-green text-wtm-green bg-emerald-500/10' };
-  if (score >= 50) return { text: 'Amber', cls: 'border-wtm-amber text-wtm-amber bg-amber-500/10' };
-  return { text: 'Red', cls: 'border-wtm-red text-wtm-red bg-red-500/10' };
+  if (Number.isNaN(score)) return { text: '—', key: 'unknown' };
+  if (score >= 65) return { text: 'Green', key: 'green' };
+  if (score >= 50) return { text: 'Amber', key: 'amber' };
+  return { text: 'Red', key: 'red' };
 }
 
 function suggestPosture(score) {
@@ -264,6 +351,37 @@ function suggestPosture(score) {
   if (score >= 65) return 'selective';
   if (score >= 50) return 'light';
   return 'defensive';
+}
+
+function deriveGrossTotal(state) {
+  return (parseFloat(state.grossRisk.bookA) || 0) + (parseFloat(state.grossRisk.bookB) || 0);
+}
+
+function postureGateMismatch(gate, posture, score) {
+  const rank = POSTURE_RANK[posture] ?? -1;
+  if (gate.key === 'blocked' && rank >= POSTURE_RANK.light) return true;
+  if (gate.key === 'tight' && rank >= POSTURE_RANK.selective) return true;
+  if (gate.key === 'allowed' && posture === 'defensive' && !Number.isNaN(score) && score >= 65) return true;
+  return false;
+}
+
+function sumHorizons(stageHorizons) {
+  return HORIZONS.reduce((sum, h) => sum + (HORIZON_SCORE[stageHorizons[h] || ''] || 0), 0);
+}
+
+function computeTracerSummary(horizons) {
+  const stageNets = LADDER.map(row => sumHorizons(horizons[row.id] || {}));
+  const chainHealth = stageNets.map((n, i) => i === 0 ? null : n - stageNets[i - 1]);
+  const overall = stageNets.reduce((a, b) => a + b, 0);
+  const weakestIdx = stageNets.length ? stageNets.indexOf(Math.min(...stageNets)) : -1;
+  return { stageNets, chainHealth, overall, weakestIdx };
+}
+
+function chainArrow(delta) {
+  if (delta === null) return '';
+  if (delta >= 2) return { sym: '⇄', cls: 'text-wtm-green' };
+  if (delta <= -2) return { sym: '⚠', cls: 'text-wtm-red' };
+  return { sym: '→', cls: 'text-wtm-muted' };
 }
 
 const PARSE_PATTERNS = [
@@ -289,153 +407,317 @@ function parsePerplexityText(text) {
   return result;
 }
 
-function collectState() {
-  const tracer = {};
-  LADDER.forEach(row => { tracer[row.id] = el('tracer-' + row.id)?.value || ''; });
+function normalizeLegacyState(raw) {
+  if (!raw || typeof raw !== 'object') return createEmptyState();
+  if (raw.version === STATE_VERSION && raw.intake) return { ...createEmptyState(), ...raw, tracer: { ...createEmptyState().tracer, ...raw.tracer, horizons: { ...createEmptyHorizons(), ...(raw.tracer?.horizons || {}) } } };
+
+  const s = createEmptyState();
+  s.intake.whinfellScore = raw.whinfellScore ?? raw.intake?.whinfellScore ?? '';
+  s.intake.transmissionState = raw.transmissionState ?? raw.intake?.transmissionState ?? '';
+  s.intake.regimeTag = raw.regimeTag ?? raw.intake?.regimeTag ?? '';
+  s.grossRisk.bookA = raw.grossA ?? raw.grossRisk?.bookA ?? '';
+  s.grossRisk.bookB = raw.grossB ?? raw.grossRisk?.bookB ?? '';
+  s.grossRisk.capitalBaseMm = raw.capitalBaseMm ?? raw.grossRisk?.capitalBaseMm ?? '';
+  s.grossRisk.posture = raw.posture ?? raw.grossRisk?.posture ?? '';
+  s.grossRisk.postureManual = !!(raw.postureManual ?? raw.grossRisk?.postureManual);
+  s.grossRisk.handoverNote = raw.handoverNote ?? raw.grossRisk?.handoverNote ?? '';
+  s.urls.koyfin = raw.urlKoyfin ?? raw.urls?.koyfin ?? DEFAULTS.urls.koyfin;
+  s.urls.barchart = raw.urlBarchart ?? raw.urls?.barchart ?? DEFAULTS.urls.barchart;
+  s.meta.lastKoyfin = raw.lastKoyfin ?? raw.meta?.lastKoyfin ?? null;
+  s.meta.lastBarchart = raw.lastBarchart ?? raw.meta?.lastBarchart ?? null;
+  s.meta.savedAt = raw.savedAt ?? raw.meta?.savedAt ?? null;
+  s.btcL3 = { ...s.btcL3, ...(raw.btcL3 || {}) };
+
+  if (raw.tracer?.horizons) {
+    s.tracer.horizons = { ...createEmptyHorizons(), ...raw.tracer.horizons };
+  } else if (raw.tracer && typeof raw.tracer === 'object') {
+    LADDER.forEach(row => {
+      const legacy = raw.tracer[row.id];
+      if (!legacy) return;
+      const mapped = { confirming: 'up', mixed: 'flat', impairing: 'down', neutral: 'flat' }[legacy] || '';
+      if (mapped) s.tracer.horizons[row.id].d1 = mapped;
+    });
+  }
+  s.tracer.activeShock = raw.tracer?.activeShock ?? null;
+  return s;
+}
+
+function buildStateFromDOM() {
+  const horizons = createEmptyHorizons();
+  LADDER.forEach(row => {
+    HORIZONS.forEach(h => {
+      const sel = el(`hz-${row.id}-${h}`);
+      if (sel) horizons[row.id][h] = sel.value;
+    });
+  });
   return {
-    whinfellScore: el('whinfellScore').value, transmissionState: el('transmissionState').value, regimeTag: el('regimeTag').value,
-    urlKoyfin: el('urlKoyfin').value, urlBarchart: el('urlBarchart').value,
-    grossA: el('grossA').value, grossB: el('grossB').value, posture: el('posture').value, handoverNote: el('handoverNote').value,
-    postureManual, tracer, lastKoyfin: el('lastKoyfin').dataset.ts || null, lastBarchart: el('lastBarchart').dataset.ts || null,
-    savedAt: new Date().toISOString(),
+    version: STATE_VERSION,
+    intake: {
+      whinfellScore: el('whinfellScore').value,
+      transmissionState: el('transmissionState').value,
+      regimeTag: el('regimeTag').value,
+    },
+    grossRisk: {
+      bookA: el('grossA').value,
+      bookB: el('grossB').value,
+      capitalBaseMm: el('capitalBaseMm').value,
+      posture: el('posture').value,
+      postureManual: appState.grossRisk.postureManual,
+      handoverNote: el('handoverNote').value,
+    },
+    tracer: { horizons, activeShock: appState.tracer.activeShock },
+    btcL3: {
+      nearMonth: el('l3NearMonth').value,
+      farMonth: el('l3FarMonth').value,
+      basisSpread: el('l3BasisSpread').value,
+    },
+    urls: { koyfin: el('urlKoyfin').value, barchart: el('urlBarchart').value },
+    meta: {
+      savedAt: new Date().toISOString(),
+      lastKoyfin: el('lastKoyfin').dataset.ts || null,
+      lastBarchart: el('lastBarchart').dataset.ts || null,
+    },
   };
+}
+
+function applyStateToDOM(state) {
+  appState = normalizeLegacyState(state);
+  el('whinfellScore').value = appState.intake.whinfellScore;
+  el('transmissionState').value = appState.intake.transmissionState;
+  el('regimeTag').value = appState.intake.regimeTag;
+  el('urlKoyfin').value = appState.urls.koyfin || DEFAULTS.urls.koyfin;
+  el('urlBarchart').value = appState.urls.barchart || DEFAULTS.urls.barchart;
+  el('grossA').value = appState.grossRisk.bookA;
+  el('grossB').value = appState.grossRisk.bookB;
+  el('capitalBaseMm').value = appState.grossRisk.capitalBaseMm;
+  el('posture').value = appState.grossRisk.posture;
+  el('handoverNote').value = appState.grossRisk.handoverNote;
+  el('l3NearMonth').value = appState.btcL3.nearMonth;
+  el('l3FarMonth').value = appState.btcL3.farMonth;
+  el('l3BasisSpread').value = appState.btcL3.basisSpread;
+  LADDER.forEach(row => {
+    HORIZONS.forEach(h => {
+      const sel = el(`hz-${row.id}-${h}`);
+      if (sel) sel.value = appState.tracer.horizons[row.id]?.[h] || '';
+    });
+  });
+  setLastOpened('lastKoyfin', appState.meta.lastKoyfin);
+  setLastOpened('lastBarchart', appState.meta.lastBarchart);
+  if (appState.meta.savedAt) setSaveIndicator('Saved · ' + new Date(appState.meta.savedAt).toLocaleString(), true);
+  renderAll();
 }
 
 function loadState() {
   try {
     for (const key of [STORAGE_KEY, ...LEGACY_KEYS]) {
       const raw = localStorage.getItem(key);
-      if (raw) return { ...DEFAULTS, ...JSON.parse(raw) };
+      if (raw) return normalizeLegacyState(JSON.parse(raw));
     }
   } catch { /* */ }
-  return { ...DEFAULTS };
+  return createEmptyState();
 }
 
-function saveState() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(collectState()));
+function persistState() {
+  appState = buildStateFromDOM();
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
   setSaveIndicator('Saved · ' + new Date().toLocaleString(), true);
   flashSave();
-}
-
-function applyState(s) {
-  el('whinfellScore').value = s.whinfellScore ?? '';
-  el('transmissionState').value = s.transmissionState ?? '';
-  el('regimeTag').value = s.regimeTag ?? '';
-  el('urlKoyfin').value = s.urlKoyfin || DEFAULTS.urlKoyfin;
-  el('urlBarchart').value = s.urlBarchart || DEFAULTS.urlBarchart;
-  el('grossA').value = s.grossA ?? '';
-  el('grossB').value = s.grossB ?? '';
-  el('posture').value = s.posture ?? '';
-  el('handoverNote').value = s.handoverNote ?? '';
-  postureManual = !!s.postureManual;
-  if (s.tracer) LADDER.forEach(row => { const n = el('tracer-' + row.id); if (n && s.tracer[row.id]) n.value = s.tracer[row.id]; });
-  setLastOpened('lastKoyfin', s.lastKoyfin);
-  setLastOpened('lastBarchart', s.lastBarchart);
-  if (s.savedAt) setSaveIndicator('Saved · ' + new Date(s.savedAt).toLocaleString(), true);
-  renderAll();
 }
 
 function renderPrompts() {
   el('panel-prompts').innerHTML = PROMPTS.map(p => `
     <div class="bg-wtm-card border border-wtm-border rounded-lg p-3">
       <div class="flex justify-between items-start gap-2 mb-2">
-        <div><p class="text-xs font-bold">Prompt ${p.id} – ${p.title}</p><p class="text-[10px] text-wtm-muted">${p.desc}</p></div>
-        <button type="button" class="copy-prompt text-[10px] px-2 py-1 rounded border border-wtm-border shrink-0" data-text="${encodeURIComponent(p.text)}">Copy</button>
+        <div>
+          <p class="text-xs font-bold">Prompt ${p.id} – ${p.title}</p>
+          <p class="text-[10px] text-wtm-muted">${p.desc}</p>
+        </div>
+        <button type="button" class="copy-prompt text-[10px] px-2 py-1 rounded border border-wtm-border shrink-0" data-text="${encodeURIComponent(p.text)}">Copy Prompt</button>
       </div>
-      <pre class="text-[10px] text-wtm-muted whitespace-pre-wrap bg-wtm-bg border border-wtm-border rounded p-2 max-h-24 overflow-y-auto">${p.text}</pre>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2 text-[9px]">
+        <div class="bg-wtm-bg border border-wtm-border rounded px-2 py-1"><span class="text-wtm-accent font-bold uppercase">Inputs:</span> ${p.inputs}</div>
+        <div class="bg-wtm-bg border border-wtm-border rounded px-2 py-1"><span class="text-wtm-accent font-bold uppercase">Outputs:</span> ${p.outputs}</div>
+      </div>
+      <pre class="text-[10px] text-wtm-muted whitespace-pre-wrap bg-wtm-bg border border-wtm-border rounded p-2 max-h-20 overflow-y-auto">${p.text}</pre>
     </div>`).join('');
   document.querySelectorAll('.copy-prompt').forEach(btn => {
     btn.onclick = async () => {
       await navigator.clipboard.writeText(decodeURIComponent(btn.dataset.text));
       btn.textContent = 'Copied ✓';
-      setTimeout(() => btn.textContent = 'Copy', 2000);
+      setTimeout(() => btn.textContent = 'Copy Prompt', 2000);
     };
   });
 }
 
-function renderTracerTable() {
-  el('tracerTableBody').innerHTML = LADDER.map(row => `
-    <tr class="bg-wtm-bg/50"><td class="p-2"><div class="font-semibold">${row.name}</div><div class="text-[9px] text-wtm-muted">${row.sub}</div></td>
-    <td class="p-2"><select id="tracer-${row.id}" class="tracer-select w-full bg-wtm-card border border-wtm-border rounded px-2 py-1 text-[11px]">
-      <option value="">—</option><option value="confirming">Confirming</option><option value="mixed">Mixed</option><option value="impairing">Impairing</option><option value="neutral">Neutral</option>
-    </select></td></tr>`).join('');
-  document.querySelectorAll('.tracer-select').forEach(sel => {
+function renderTracerHorizonTable() {
+  el('tracerHorizonBody').innerHTML = LADDER.map(row => `
+    <tr class="bg-wtm-bg/50" data-stage="${row.id}">
+      <td class="p-2"><div class="font-semibold">${row.name}</div><div class="text-[9px] text-wtm-muted">${row.sub}</div></td>
+      ${HORIZONS.map(h => `<td class="p-1 text-center">
+        <select id="hz-${row.id}-${h}" class="hz-select w-full bg-wtm-card border border-wtm-border rounded px-1 py-0.5 text-[10px] text-center">
+          <option value="">—</option><option value="up">↑</option><option value="flat">→</option><option value="down">↓</option>
+        </select></td>`).join('')}
+      <td class="p-2 text-center font-bold" id="net-${row.id}">—</td>
+    </tr>`).join('');
+  document.querySelectorAll('.hz-select').forEach(sel => {
     sel.onchange = () => { renderTracerVisual(); markDirty(); };
   });
 }
 
-function renderTracerBars() {
-  el('tracerBars').innerHTML = LADDER.map(row => `
-    <div><div class="flex justify-between text-[9px] text-wtm-muted mb-0.5"><span>${row.name}</span><span id="tracer-lbl-${row.id}">—</span></div>
-    <div class="h-2 bg-wtm-bg rounded border border-wtm-border overflow-hidden"><div id="tracer-bar-${row.id}" class="tracer-bar h-full bg-wtm-border" style="width:0%"></div></div></div>`).join('');
-}
-
-function statusWidth(status) {
-  return { confirming: 85, mixed: 50, impairing: 20, neutral: 35, '': 0 }[status] ?? 0;
-}
-
 function renderTracerVisual() {
-  const score = parseInt(el('whinfellScore').value, 10);
-  const zone = scoreZone(score);
+  const state = buildStateFromDOM();
+  const { score, zone } = deriveGate(state);
+  const summary = computeTracerSummary(state.tracer.horizons);
+
   el('tracerScoreLabel').textContent = Number.isNaN(score) ? '—' : `${score} (${zone.text})`;
   el('tracerScoreBar').style.width = (Number.isNaN(score) ? 0 : score) + '%';
   el('tracerScoreBar').className = `h-full tracer-bar ${Number.isNaN(score) ? 'bg-wtm-border' : score >= 65 ? 'bg-wtm-green' : score >= 50 ? 'bg-wtm-amber' : 'bg-wtm-red'}`;
-  LADDER.forEach(row => {
-    const st = el('tracer-' + row.id)?.value || '';
-    const bar = el('tracer-bar-' + row.id);
-    const lbl = el('tracer-lbl-' + row.id);
-    if (bar) { bar.style.width = statusWidth(st) + '%'; bar.className = `tracer-bar h-full ${STATUS_COLORS[st] || 'bg-wtm-border'}`; }
-    if (lbl) lbl.textContent = st || '—';
+
+  LADDER.forEach((row, i) => {
+    const netEl = el(`net-${row.id}`);
+    const net = summary.stageNets[i];
+    if (netEl) {
+      netEl.textContent = net > 0 ? `+${net}` : String(net);
+      netEl.className = `p-2 text-center font-bold ${i === summary.weakestIdx && net < 0 ? 'text-wtm-red' : net > 0 ? 'text-wtm-green' : net < 0 ? 'text-wtm-amber' : 'text-wtm-muted'}`;
+    }
   });
+
+  const chain = el('tracerChain');
+  chain.innerHTML = LADDER.map((row, i) => {
+    const net = summary.stageNets[i];
+    const nodeCls = i === summary.weakestIdx && net < 0 ? 'border-wtm-red text-wtm-red bg-red-500/15' : net > 0 ? 'border-wtm-green text-wtm-green bg-emerald-500/10' : 'border-wtm-border text-wtm-muted bg-wtm-bg';
+    const arrow = i > 0 ? chainArrow(summary.chainHealth[i]) : null;
+    const arrowHtml = arrow ? `<span class="${arrow.cls} font-bold px-0.5">${arrow.sym}</span>` : '';
+    return `${arrowHtml}<span class="px-1.5 py-0.5 rounded border text-[8px] font-bold ${nodeCls}">${row.short}</span>`;
+  }).join('');
+
+  const healthLabel = summary.overall > 4 ? 'Strong' : summary.overall > 0 ? 'Constructive' : summary.overall < -4 ? 'Impaired' : summary.overall < 0 ? 'Fragile' : 'Mixed';
+  el('tracerOverall').textContent = `Overall health: ${healthLabel} (net ${summary.overall > 0 ? '+' : ''}${summary.overall})`;
+
+  const shockLabel = state.tracer.activeShock && SHOCKS[state.tracer.activeShock];
+  el('activeShockLabel').textContent = shockLabel ? `Active: ${shockLabel.label}` : 'No active shock';
 }
 
-function updateGrossTotal() {
-  const t = (parseFloat(el('grossA').value) || 0) + (parseFloat(el('grossB').value) || 0);
-  el('grossTotal').value = t.toFixed(1) + ' $mm';
-}
+function updateGrossDisplay(state, gate) {
+  const total = deriveGrossTotal(state);
+  el('grossTotal').value = total.toFixed(1) + '%';
+  const base = parseFloat(state.grossRisk.capitalBaseMm);
+  const mmHint = el('grossMmHint');
+  if (!Number.isNaN(base) && base > 0) {
+    const mmTotal = (total / 100) * base;
+    const mmA = ((parseFloat(state.grossRisk.bookA) || 0) / 100) * base;
+    const mmB = ((parseFloat(state.grossRisk.bookB) || 0) / 100) * base;
+    mmHint.textContent = `≈ ${mmTotal.toFixed(1)} $mm total (A: ${mmA.toFixed(1)}, B: ${mmB.toFixed(1)}) at ${base} $mm capital base`;
+  } else {
+    mmHint.textContent = 'Optional: enter Capital Base ($mm) to show $mm equivalent';
+  }
 
-function linkPosture(score, gate) {
-  const suggested = suggestPosture(score);
-  const hint = el('postureHint');
-  if (!postureManual && suggested) el('posture').value = suggested;
-  const labels = { full: 'Full Gross', selective: 'Selective', light: 'Light Gross', defensive: 'Defensive', flat: 'Flat' };
-  hint.textContent = `Linked: Score ${Number.isNaN(score) ? '—' : score} · Gate: ${gate.label} · Suggested: ${labels[suggested] || '—'}`;
+  let posture = state.grossRisk.posture;
+  if (!state.grossRisk.postureManual) {
+    const suggested = suggestPosture(gate.score);
+    if (suggested) { posture = suggested; el('posture').value = suggested; }
+  }
+  el('postureHint').textContent = `Linked: Score ${Number.isNaN(gate.score) ? '—' : gate.score} · Gate: ${gate.label} · Posture: ${POSTURE_LABELS[posture] || '—'}`;
+
+  const warn = postureGateMismatch(gate, posture, gate.score);
+  el('postureWarning').classList.toggle('hidden', !warn);
 }
 
 function renderAll() {
-  const score = parseInt(el('whinfellScore').value, 10);
-  const gate = evaluateGate(score);
-  const zone = scoreZone(score);
+  const state = buildStateFromDOM();
+  const gate = deriveGate(state);
+  const zone = gate.zone;
+
   const banner = el('gateBanner');
   banner.className = `shrink-0 px-5 py-3.5 text-center border-b border-wtm-border transition-all ${gate.bannerBg} ${gate.glow}`;
   el('gateBannerTitle').textContent = gate.bannerTitle;
   el('gateBannerTitle').className = `text-lg font-extrabold tracking-wide uppercase ${gate.bannerTitleCls}`;
   el('gateBannerSub').textContent = gate.bannerSub;
   el('gateBannerSub').className = `text-[11px] mt-1 font-medium ${gate.bannerSubCls}`;
+
   el('scoreZoneChip').textContent = zone.text;
-  el('scoreZoneChip').className = `text-[9px] font-bold uppercase px-2 py-2 rounded border self-center ${zone.cls}`;
+  el('scoreZoneChip').className = `text-[9px] font-bold uppercase px-2 py-2 rounded border self-center ${zone.key === 'green' ? 'border-wtm-green text-wtm-green bg-emerald-500/10' : zone.key === 'amber' ? 'border-wtm-amber text-wtm-amber bg-amber-500/10' : zone.key === 'red' ? 'border-wtm-red text-wtm-red bg-red-500/10' : 'border-wtm-border text-wtm-muted'}`;
+
   el('gateStatusChip').textContent = gate.label;
   el('gateStatusChip').className = `mt-1 min-h-[38px] flex items-center justify-center rounded-md border text-xs font-extrabold uppercase ${gate.chipCls}`;
-  const tx = el('transmissionState').value;
+
+  const tx = state.intake.transmissionState;
   const tc = el('txChip');
   if (tx && TX_META[tx]) { tc.textContent = TX_META[tx].label; tc.className = `text-[9px] font-bold uppercase px-2 py-2 rounded border shrink-0 self-center ${TX_META[tx].chip}`; }
   else { tc.textContent = '—'; tc.className = 'text-[9px] font-bold uppercase px-2 py-2 rounded border border-wtm-border text-wtm-muted shrink-0 self-center'; }
-  [['cardBtcOptions','chipL2'],['cardBtcCalendar','chipL3']].forEach(([c, ch]) => {
-    const card = el(c), chip = el(ch);
+
+  [['cardBtcOptions','chipL2','noteL2'],['cardBtcCalendar','chipL3','noteL3']].forEach(([c, ch, note]) => {
+    const card = el(c), chip = el(ch), noteEl = el(note);
     chip.textContent = gate.chipLabel;
     chip.className = `text-[10px] font-extrabold uppercase px-2 py-1 rounded border shrink-0 ${gate.chipCls}`;
     card.classList.remove('border-l-wtm-border','border-l-wtm-red','border-l-wtm-amber','border-l-wtm-green','card-blocked');
     card.classList.add(gate.borderAccent);
     card.classList.toggle('card-blocked', gate.blocked);
+    if (gate.blocked) noteEl.textContent = 'BLOCKED — Score < 50. No new BTC risk.';
+    else if (gate.tight) noteEl.textContent = 'Tight Risk Band — reduced sizing only. Client structures preferred.';
+    else if (c === 'cardBtcOptions') noteEl.textContent = 'Vol surface + structure evaluation. Full BTC access.';
+    else noteEl.textContent = 'Calendar spread arb agent. Full BTC access.';
   });
+
   el('btnCopyL2').disabled = gate.blocked;
   el('btnCopyL3').disabled = gate.blocked;
-  const k = el('urlKoyfin').value.trim(), b = el('urlBarchart').value.trim();
-  el('urlDisplayKoyfin').textContent = k || 'No URL saved';
-  el('urlDisplayBarchart').textContent = b || 'No URL saved';
-  updateGrossTotal();
-  linkPosture(score, gate);
+
+  el('urlDisplayKoyfin').textContent = state.urls.koyfin?.trim() || 'No URL saved';
+  el('urlDisplayBarchart').textContent = state.urls.barchart?.trim() || 'No URL saved';
+
+  updateGrossDisplay(state, gate);
   renderTracerVisual();
+}
+
+function applyShock(shockId) {
+  const shock = SHOCKS[shockId];
+  if (!shock) return;
+  if (!preShockSnapshot) {
+    preShockSnapshot = JSON.parse(JSON.stringify(buildStateFromDOM().tracer.horizons));
+  }
+  LADDER.forEach(row => {
+    const effects = shock.effects[row.id];
+    if (!effects) return;
+    HORIZONS.forEach(h => {
+      if (effects[h]) {
+        const sel = el(`hz-${row.id}-${h}`);
+        if (sel) sel.value = effects[h];
+      }
+    });
+  });
+  appState.tracer.activeShock = shockId;
+  renderTracerVisual();
+  markDirty();
+  showToast(`Shock applied: ${shock.label}`);
+}
+
+function clearShock() {
+  if (preShockSnapshot) {
+    LADDER.forEach(row => {
+      HORIZONS.forEach(h => {
+        const sel = el(`hz-${row.id}-${h}`);
+        if (sel && preShockSnapshot[row.id]) sel.value = preShockSnapshot[row.id][h] || '';
+      });
+    });
+    preShockSnapshot = null;
+  }
+  appState.tracer.activeShock = null;
+  renderTracerVisual();
+  markDirty();
+  showToast('Shock cleared');
+}
+
+function buildL3Prompt() {
+  const state = buildStateFromDOM();
+  const { nearMonth, farMonth, basisSpread } = state.btcL3;
+  let extra = '';
+  if (nearMonth || farMonth || basisSpread) {
+    extra = '\n\nManual spread inputs:\n';
+    if (nearMonth) extra += `- Near Month: ${nearMonth}\n`;
+    if (farMonth) extra += `- Far Month: ${farMonth}\n`;
+    if (basisSpread) extra += `- Basis Spread: ${basisSpread}\n`;
+  }
+  return PROMPT_L3_BASE + extra;
 }
 
 function setLastOpened(id, iso) {
@@ -448,7 +730,7 @@ function setSaveIndicator(t, ok) { el('saveIndicator').textContent = t; el('save
 function flashSave() { const b = el('btnSave'), o = b.textContent; b.textContent = 'Saved ✓'; setTimeout(() => b.textContent = o, 1200); }
 function markDirty() { setSaveIndicator('Unsaved changes', false); }
 
-function showToast(msg, type) {
+function showToast(msg) {
   const t = el('toast'); t.textContent = msg; t.classList.remove('translate-y-20','opacity-0');
   clearTimeout(t._t); t._t = setTimeout(() => t.classList.add('translate-y-20','opacity-0'), 3000);
 }
@@ -475,24 +757,25 @@ async function copyText(text, btn, label) {
   setTimeout(() => btn.textContent = o || label, 2000);
 }
 
-/* Events */
-el('btnSave').onclick = saveState;
+el('btnSave').onclick = persistState;
 el('btnImport').onclick = importFromPerplexity;
-el('btnKoyfin').onclick = () => { const u = el('urlKoyfin').value.trim(); if (!u) return showToast('Set URL'); window.open(u,'_blank','noopener'); setLastOpened('lastKoyfin', new Date().toISOString()); };
-el('btnBarchart').onclick = () => { const u = el('urlBarchart').value.trim(); if (!u) return showToast('Set URL'); window.open(u,'_blank','noopener'); setLastOpened('lastBarchart', new Date().toISOString()); };
+el('btnKoyfin').onclick = () => { const u = el('urlKoyfin').value.trim(); if (!u) return showToast('Set URL'); window.open(u,'_blank','noopener'); setLastOpened('lastKoyfin', new Date().toISOString()); markDirty(); };
+el('btnBarchart').onclick = () => { const u = el('urlBarchart').value.trim(); if (!u) return showToast('Set URL'); window.open(u,'_blank','noopener'); setLastOpened('lastBarchart', new Date().toISOString()); markDirty(); };
 el('btnCopyL2').onclick = () => copyText(PROMPT_L2, el('btnCopyL2'), 'Copy Layer 2 Prompt');
-el('btnCopyL3').onclick = () => copyText(PROMPT_L3, el('btnCopyL3'), 'Copy Layer 3 Prompt');
+el('btnCopyL3').onclick = () => copyText(buildL3Prompt(), el('btnCopyL3'), 'Copy Layer 3 Prompt');
+el('btnClearShock').onclick = clearShock;
+document.querySelectorAll('.shock-btn').forEach(b => b.onclick = () => applyShock(b.dataset.shock));
 document.querySelectorAll('.tab-btn').forEach(b => b.onclick = () => switchTab(b.dataset.tab));
-['whinfellScore','regimeTag','urlKoyfin','urlBarchart','grossA','grossB','handoverNote'].forEach(id => {
-  el(id).addEventListener(id.includes('Score') || id === 'regimeTag' || id.startsWith('gross') ? 'input' : 'input', () => { renderAll(); markDirty(); });
+
+['whinfellScore','regimeTag','urlKoyfin','urlBarchart','grossA','grossB','capitalBaseMm','handoverNote','l3NearMonth','l3FarMonth','l3BasisSpread'].forEach(id => {
+  el(id).addEventListener('input', () => { renderAll(); markDirty(); });
 });
 el('transmissionState').onchange = () => { renderAll(); markDirty(); };
-el('posture').onchange = () => { postureManual = !!el('posture').value; markDirty(); };
+el('posture').onchange = () => { appState.grossRisk.postureManual = !!el('posture').value; renderAll(); markDirty(); };
 
 renderPrompts();
-renderTracerTable();
-renderTracerBars();
-applyState(loadState());
+renderTracerHorizonTable();
+applyStateToDOM(loadState());
 </script>
 </body>
 </html>
