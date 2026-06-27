@@ -15,9 +15,10 @@
 | C3 | Series & Ticker Master List | **Signed Off** | Bridge | June 26, 2026 |
 | C4.5 | Operator Dashboard | **Shipped to Desk** | Bridge + Edge | June 26, 2026 |
 | **Transmission Control** | Phase 1.2 | **Signed Off** | Bridge + Precision | June 26, 2026 |
-| **C4** | Prompt Testing | **Complete** | Precision | June 26, 2026 |
-| **C5** | Quick Reference Card v1.2 | **Complete** | Hammer + Precision | June 26, 2026 |
-| **Transmission Control** | Phase 2 Draft | **Shipped** | Bridge + Edge + Spark | June 26, 2026 |
+| **C4** | Prompt Testing | **Signed Off** | Precision | June 26, 2026 |
+| **C5** | Quick Reference Card v1.2 | **Signed Off** | Hammer + Precision | June 26, 2026 |
+| **Transmission Control** | Phase 2 | **Production Rollout** | Bridge + Edge + Spark | June 26, 2026 |
+| Phase 2.1 | Refinements from desk feedback | **Standing by** | Bridge | June 26, 2026 |
 
 ---
 
@@ -25,17 +26,19 @@
 
 | File | Version | Status |
 |------|---------|--------|
-| **Whinfell_Transmission_Control.html** | **Phase 2 Draft** | Sprint shipped — health, snapshots, scenario loop, BTC scan |
-| **Whinfell_Quick_Reference_Card_v1.2.docx** | **1.2** | Print-ready desk aid |
-| **Whinfell_Phase2_Signal_Intelligence_Spec.md** | **2.0** | Refined spec + implementation notes |
-| **C4_Test_Results_Summary.md** | 1.0 | 20/20 PASS |
-| Whinfell_Transmission_Control.html (P1.2 baseline) | v1.2 | Signed off `c9d9b63` |
+| **Whinfell_Transmission_Control.html** | **v1.2 + Phase 2** | **Production rollout — desk** |
+| **Whinfell_Quick_Reference_Card_v1.2.docx** | **1.2** | **Production — print at desk** |
+| **Whinfell_Expanded_Operators_Guide_v1.2.md** | **1.2** | **Master reference** |
+| **Desk_Feedback_Log.md** | 1.0 | Active — collect feedback |
+| Whinfell_Phase2_Signal_Intelligence_Spec.md | 2.0 | Spec reference |
+| C4_Test_Results_Summary.md | 1.0 | 20/20 PASS |
 | Whinfell_Operator_Dashboard.html | v1.1 | Legacy cockpit |
 
 ---
 
 ## Notes
 
-- **June 26, 2026** — **Sprint acceleration COMPLETE.** C4 (20/20 tests), C5 (Quick Reference v1.2), Phase 2 draft (P2a+P2b). Arena self-review PASS. Standing by for desk feedback.
-- **June 26, 2026** — **Transmission Control Phase 1.2 SIGNED OFF** (`c9d9b63`).
+- **June 26, 2026** — **PRODUCTION SIGN-OFF** — C4.5 v1.2 + Phase 2 approved for desk rollout (TempLibby). Standing by for feedback · Phase 2.1 queued.
+- **June 26, 2026** — Sprint complete: C4, C5, Phase 2 (`1a33bee`).
+- **June 26, 2026** — Phase 1.2 signed off (`c9d9b63`). WTM EXPORT v2.0.
 - **June 26, 2026** — Architecture: Perplexity = Research · Transmission Control = Execution & State.

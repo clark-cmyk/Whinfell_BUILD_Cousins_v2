@@ -181,9 +181,10 @@ Prompt A updated to require v2.0 block at end of research responses.
 
 ## Phase 2 — Signal Intelligence Draft (Sprint)
 
-**Version:** Phase 2 Draft (schema v3)  
+**Version:** Phase 2 Production Rollout (schema v3)  
 **Date:** June 26, 2026  
-**Status:** Sprint shipped — Arena self-review PASS · awaiting desk feedback
+**Sprint commit:** `1a33bee`  
+**Status:** **APPROVED FOR DESK ROLLOUT** — TempLibby production sign-off
 
 | Item | Status |
 |------|--------|
@@ -197,6 +198,19 @@ Prompt A updated to require v2.0 block at end of research responses.
 | WTC-2.0 export | ✅ |
 
 **Spec:** `Whinfell_Phase2_Signal_Intelligence_Spec.md`
+
+### TempLibby Production Sign-Off (Sprint)
+
+**Status:** **APPROVED — Desk Rollout**  
+**Date:** June 26, 2026
+
+> C4: 20/20 PASS. C5: Quick Reference v1.2 print-ready. Phase 2 draft shipped. Gaps (WTC-2.0 full round-trip, scenario loop scope) acceptable for initial deployment. Phase 2.1 follows desk feedback.
+
+**Desk rollout package:**
+- `Whinfell_Transmission_Control.html`
+- `Whinfell_Quick_Reference_Card_v1.2.docx`
+- `Whinfell_Expanded_Operators_Guide_v1.2.md`
+- `Desk_Feedback_Log.md`
 
 ---
 
