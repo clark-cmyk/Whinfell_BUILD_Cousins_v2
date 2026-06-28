@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import ast
 import json
 import sys
 import unittest
@@ -122,6 +123,44 @@ class TestSQ3Scoring(unittest.TestCase):
         )
         self.assertIn("components", d)
         self.assertIn("normalized_inputs", d)
+
+    def test_sq3_package_isolated_from_global(self):
+        """SQ3 module must not depend on Global score logic; scoring must not touch data/global/."""
+        import china_policy_track.sq3 as sq3_module
+
+        sq3_path = REPO_ROOT / "china_policy_track/sq3.py"
+        sq3_source = sq3_path.read_text(encoding="utf-8")
+        tree = ast.parse(sq3_source, filename=str(sq3_path))
+        forbidden = {"04_Score_Calculation", "Credit_Confirmation", "Whinfell_Credit_Confirmation"}
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                for alias in node.names:
+                    self.assertFalse(
+                        any(marker in alias.name for marker in forbidden),
+                        f"forbidden import: {alias.name}",
+                    )
+            elif isinstance(node, ast.ImportFrom):
+                module = node.module or ""
+                self.assertFalse(
+                    any(marker in module for marker in forbidden),
+                    f"forbidden import from: {module}",
+                )
+        for marker in forbidden:
+            self.assertNotIn(marker, sq3_source)
+
+        global_files = sorted((REPO_ROOT / "data/global").rglob("*"))
+        mtimes_before = {p: p.stat().st_mtime for p in global_files if p.is_file()}
+
+        text = (REPO_ROOT / "china_policy_track/examples/sample_perplexity_export.txt").read_text()
+        raw = json.loads(
+            (REPO_ROOT / "china_policy_track/examples/sample_koyfin_export.json").read_text()
+        )
+        for payload in (text, raw):
+            score_input(payload)
+
+        for path, mtime in mtimes_before.items():
+            self.assertEqual(path.stat().st_mtime, mtime, f"SQ3 scoring modified {path}")
+        self.assertEqual(sq3_module.__name__, "china_policy_track.sq3")
 
 
 if __name__ == "__main__":
