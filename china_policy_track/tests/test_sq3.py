@@ -19,6 +19,7 @@ from china_policy_track.sq3 import (
     calculate_sq3,
     interpret_sq3_band,
     normalize_state_control_impulse,
+    score_from_mapping,
     score_input,
     score_observation,
 )
@@ -73,6 +74,27 @@ class TestSQ3Scoring(unittest.TestCase):
         self.assertTrue(first.interpretation_band)
         self.assertEqual(first.sq3_score, second.sq3_score)
         self.assertEqual(first.interpretation_band, second.interpretation_band)
+
+    def test_score_from_mapping_koyfin_dict(self):
+        raw = json.loads(
+            (REPO_ROOT / "china_policy_track/examples/sample_koyfin_export.json").read_text()
+        )
+        first = score_from_mapping(raw)
+        second = score_from_mapping(raw)
+        self.assertGreaterEqual(first.sq3_score, 0)
+        self.assertLessEqual(first.sq3_score, 100)
+        self.assertTrue(first.interpretation_band)
+        self.assertIn(first.interpretation_band, VALID_BANDS)
+        self.assertEqual(first.sq3_score, second.sq3_score)
+        self.assertEqual(first.interpretation_band, second.interpretation_band)
+
+    def test_score_from_mapping_observation_object(self):
+        obs = self._load_perplexity_obs()
+        result = score_from_mapping(obs)
+        self.assertGreaterEqual(result.sq3_score, 0)
+        self.assertLessEqual(result.sq3_score, 100)
+        self.assertTrue(result.interpretation_band)
+        self.assertEqual(result.sq3_score, score_observation(obs).sq3_score)
 
     def test_score_input_end_to_end(self):
         text = (REPO_ROOT / "china_policy_track/examples/sample_perplexity_export.txt").read_text()

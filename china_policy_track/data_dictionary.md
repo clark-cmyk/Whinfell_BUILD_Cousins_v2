@@ -251,7 +251,7 @@ Weights and band thresholds live in `china_policy_track/sq3.py` as top-level con
 from pathlib import Path
 import json
 from china_policy_track.data_parser import parse_input
-from china_policy_track.sq3 import score_observation, score_input
+from china_policy_track.sq3 import score_observation, score_from_mapping, score_input
 
 # From Perplexity export text
 text = Path("china_policy_track/examples/sample_perplexity_export.txt").read_text()
@@ -263,9 +263,10 @@ print(result.sq3_score, result.interpretation_band)
 result = score_input(text)
 print(result.to_dict())
 
-# From Koyfin JSON dict
+# From Koyfin JSON dict (pre-parsed mapping — no re-parse)
 data = json.loads(Path("china_policy_track/examples/sample_koyfin_export.json").read_text())
-result = score_input(data)
+result = score_from_mapping(data)
+print(result.sq3_score, result.interpretation_band)
 ```
 
 Output always includes `sq3_score` (int 0–100) and `interpretation_band` (str). `SQ3ScoreResult.to_dict()` adds weighted components and normalized inputs for audit.
