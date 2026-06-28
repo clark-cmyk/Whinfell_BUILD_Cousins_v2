@@ -75,17 +75,6 @@ KOYFIN_C_BLOCK = textwrap.dedent(
 ).strip()
 
 
-def _preflight_repo() -> None:
-    """Reset tracked workspace noise before evidence capture."""
-    subprocess.run(
-        ["git", "checkout", "--", ".DS_Store"],
-        cwd=REPO_ROOT,
-        capture_output=True,
-        text=True,
-        check=False,
-    )
-
-
 def _run_python_c_block(block: str) -> tuple[int, str, str]:
     proc = subprocess.run(
         [sys.executable, "-c", block],
@@ -194,7 +183,6 @@ def main(argv: list[str] | None = None) -> int:
         print("usage: python3 -m china_policy_track.verify_sq3_goal <scratch_dir>", file=sys.stderr)
         return 2
 
-    _preflight_repo()
     scratch = Path(args[0])
     scratch.mkdir(parents=True, exist_ok=True)
 
@@ -202,7 +190,6 @@ def main(argv: list[str] | None = None) -> int:
     write_sq3_methodology(scratch / "sq3_methodology.txt")
     test_rc = write_china_tests(scratch / "china_tests.log")
     write_global_isolation(scratch / "global_isolation.txt")
-    _preflight_repo()
 
     print(f"verify_sq3_goal_ok scratch={scratch}")
     print(f"artifacts: sq3_output.log sq3_methodology.txt china_tests.log global_isolation.txt")

@@ -124,10 +124,20 @@ def run_git_isolation_checks(repo_root: Path | None = None) -> list[tuple[str, s
     sq3_parent_range = f"{SQ3_BASE_REF}..{SQ3_RANGE_END}"
 
     checks: list[tuple[str, str]] = []
+    checks.append(
+        (
+            "NOTE: SQ3 deliverable scope = git diff with -- china_policy_track/ path filter. "
+            "Full-range diff may include repo-hygiene files outside that filter.",
+            "",
+        )
+    )
     for cmd in (
+        ["git", "diff", "--name-only", sq3_parent_range],
         ["git", "diff", "--name-only", sq3_parent_range, "--", "china_policy_track/"],
         ["git", "diff", sq3_parent_range, "--", "04_Score_Calculation/"],
         ["git", "diff", sq3_parent_range, "--", "data/global/"],
+        ["git", "ls-files", ".DS_Store"],
+        ["git", "status", "--porcelain"],
         ["git", "ls-tree", "-r", SQ3_BASE_REF, "--", "data/global/"],
         ["git", "ls-tree", "-r", SQ3_RANGE_END, "--", "data/global/"],
     ):
@@ -173,6 +183,30 @@ def verify_global_blob_parity(repo_root: Path | None = None) -> dict[str, dict[s
 def format_git_isolation_report(checks: list[tuple[str, str]]) -> str:
     lines = ["=== Verification plan step 4: Global isolation ==="]
     for cmd, output in checks:
+        if cmd.startswith("NOTE:"):
+            lines.append(cmd)
+            continue
         lines.append(f"--- Command: {cmd} ---")
         lines.append(output if output else "(empty)")
     return "\n".join(lines) + "\n"
+
+
+def assert_sq3_deliverable_scope(repo_root: Path | None = None) -> list[str]:
+    """Return china_policy_track paths changed in SQ3 range; assert scope constraints."""
+    root = repo_root or REPO_ROOT
+    sq3_parent_range = f"{SQ3_BASE_REF}..{SQ3_RANGE_END}"
+    _, china_out = _run_cmd(
+        ["git", "diff", "--name-only", sq3_parent_range, "--", "china_policy_track/"],
+        cwd=root,
+    )
+    china_paths = [p for p in china_out.splitlines() if p.strip()]
+    if not china_paths:
+        raise AssertionError("no china_policy_track paths in SQ3 deliverable scope")
+    for path in china_paths:
+        if not path.startswith("china_policy_track/"):
+            raise AssertionError(f"non-package path in SQ3 deliverable scope: {path}")
+
+    _, ls_ds = _run_cmd(["git", "ls-files", ".DS_Store"], cwd=root)
+    if ls_ds.strip():
+        raise AssertionError(f".DS_Store still tracked: {ls_ds!r}")
+    return china_paths

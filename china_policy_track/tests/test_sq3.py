@@ -22,6 +22,7 @@ from china_policy_track.package_isolation import (
     run_git_isolation_checks,
     scan_production_imports,
     verify_global_blob_parity,
+    assert_sq3_deliverable_scope,
 )
 from china_policy_track.sq3 import (
     INTERPRETATION_BANDS,
@@ -140,8 +141,22 @@ class TestSQ3Scoring(unittest.TestCase):
         checks = run_git_isolation_checks(REPO_ROOT)
         by_cmd = {cmd: out for cmd, out in checks}
 
-        china_cmd = next(c for c in by_cmd if "diff --name-only" in c and "china_policy_track/" in c)
-        self.assertTrue(by_cmd[china_cmd].strip(), "expected china_policy_track changes in SQ3 range")
+        china_cmd = next(
+            c
+            for c in by_cmd
+            if c.startswith("git diff --name-only")
+            and c.endswith("-- china_policy_track/")
+        )
+        china_paths = [p for p in by_cmd[china_cmd].splitlines() if p.strip()]
+        self.assertTrue(china_paths, "expected china_policy_track changes in SQ3 deliverable scope")
+        for path in china_paths:
+            self.assertTrue(path.startswith("china_policy_track/"), path)
+
+        scope_paths = assert_sq3_deliverable_scope(REPO_ROOT)
+        self.assertEqual(set(scope_paths), set(china_paths))
+
+        ls_ds_cmd = "git ls-files .DS_Store"
+        self.assertEqual(by_cmd[ls_ds_cmd].strip(), "")
 
         score_diff = next(c for c in by_cmd if "04_Score_Calculation/" in c and "diff " in c)
         global_diff = next(c for c in by_cmd if "data/global/" in c and "diff " in c and "name-only" not in c)
