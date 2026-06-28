@@ -204,6 +204,74 @@ Pipeline: `parse_input` → `ChinaPolicyObservation` → `write_observations` �
 
 ---
 
+## SQ3 Scoring Methodology
+
+**SQ3** is the China Policy composite score (0–100) with an interpretation band. It is independent of the Global **Whinfell Credit Confirmation Score** (no shared code or weights).
+
+### Dimension weights
+
+| Dimension | Weight | Scalar input |
+|-----------|--------|--------------|
+| Policy Hierarchy & Strength | **35%** | `policy_strength` (0–100) |
+| State Control Impulse | **35%** | `impulse_score` (-100..+100) |
+| Growth & Market Impulse | **30%** | `growth_impulse_score` (0–100) |
+
+### Normalization (per dimension)
+
+1. **Policy Hierarchy** — use `policy_strength` directly (already 0–100).
+2. **State Control Impulse** — signed score is inverted onto 0–100: higher state control lowers the sub-score.
+   - Formula: `state_normalized = (100 - clamp(impulse_score, -100, 100)) / 2`
+   - Examples: `+100 → 0`, `0 → 50`, `-100 → 100`
+3. **Growth & Market** — use `growth_impulse_score` directly (already 0–100).
+
+### Composite formula
+
+```
+SQ3 = round(clamp(
+    0.35 * policy_normalized
+  + 0.35 * state_normalized
+  + 0.30 * growth_normalized,
+  0, 100))
+```
+
+Weights and band thresholds live in `china_policy_track/sq3.py` as top-level constants for single-edit tuning.
+
+### Interpretation bands
+
+| SQ3 range | Band | Desk read |
+|-----------|------|-----------|
+| 0–49 | **Impaired** | Hostile policy transmission; elevated state control dominates |
+| 50–64 | **Mixed / Fragile** | Offsetting dimensions; selective engagement only |
+| 65–79 | **Constructive** | Net supportive policy read; normal sizing |
+| 80–100 | **Strong** | Aligned hierarchy, growth impulse, manageable state control |
+
+### Usage (structured input)
+
+```python
+from pathlib import Path
+import json
+from china_policy_track.data_parser import parse_input
+from china_policy_track.sq3 import score_observation, score_input
+
+# From Perplexity export text
+text = Path("china_policy_track/examples/sample_perplexity_export.txt").read_text()
+obs = parse_input(text)
+result = score_observation(obs)
+print(result.sq3_score, result.interpretation_band)
+
+# One-step parse + score
+result = score_input(text)
+print(result.to_dict())
+
+# From Koyfin JSON dict
+data = json.loads(Path("china_policy_track/examples/sample_koyfin_export.json").read_text())
+result = score_input(data)
+```
+
+Output always includes `sq3_score` (int 0–100) and `interpretation_band` (str). `SQ3ScoreResult.to_dict()` adds weighted components and normalized inputs for audit.
+
+---
+
 ## Module Layout
 
 | File | Role |
@@ -214,3 +282,4 @@ Pipeline: `parse_input` → `ChinaPolicyObservation` → `write_observations` �
 | `data_parser.py` | Perplexity + dict export parsers |
 | `storage.py` | Parquet read/write (China paths only) |
 | `ingest.py` | CLI entry point |
+| `sq3.py` | SQ3 scoring engine (weights, bands, public API) |
