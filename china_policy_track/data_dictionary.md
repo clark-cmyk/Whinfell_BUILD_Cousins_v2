@@ -122,7 +122,41 @@ assert gm.liquidity_impulse == "stable"
 
 ## CHINA POLICY EXPORT v1.0 (Perplexity handoff)
 
-Mirrors the Global track `WTM EXPORT v2.0` label-block pattern:
+Mirrors the Global track `WTM EXPORT v2.0` label-block pattern used in Transmission Control (`08_Deliverables/Whinfell_Transmission_Control.html`).
+
+### Pattern alignment with WTM EXPORT v2.0
+
+| Step | Global (`WTM EXPORT v2.0`) | China (`CHINA POLICY EXPORT v1.0`) |
+|------|---------------------------|-------------------------------------|
+| Header | `--- WTM EXPORT v2.0 ---` | `--- CHINA POLICY EXPORT v1.0 ---` |
+| Extract block | `extractWtmExportV20(text)` — regex header, slice until next `--- WTM EXPORT` | `extract_china_export_block(text)` — same slice logic |
+| Parse labels | `parseWtmExportV20(block)` — line regex per field | `parse_labeled_block(block)` — `_LABEL_PATTERNS` regex list |
+| Normalize | Maps into dashboard state object | Maps into `ChinaPolicyObservation` via `from_mapping` |
+| Storage | Browser local state (HTML dashboard) | `data/china_policy/v1/china_policy_observations.parquet` |
+
+Global parser reference (JavaScript):
+
+```javascript
+// Whinfell_Transmission_Control.html — extract + label-regex parse
+function extractWtmExportV20(text) {
+  const start = text.search(/---\s*WTM EXPORT v2\.0\s*---/i);
+  if (start < 0) return null;
+  const rest = text.slice(start).replace(/^---\s*WTM EXPORT v2\.0\s*---\s*/i, '');
+  const end = rest.search(/\n---\s*WTM EXPORT/i);
+  return (end >= 0 ? rest.slice(0, end) : rest).trim();
+}
+```
+
+China equivalent (Python):
+
+```python
+# china_policy_track/data_parser.py
+block = extract_china_export_block(text)  # same header/slice pattern
+fields = parse_labeled_block(block)       # regex per labeled line
+obs = ChinaPolicyObservation.from_mapping(fields)
+```
+
+Export block format:
 
 ```
 --- CHINA POLICY EXPORT v1.0 ---

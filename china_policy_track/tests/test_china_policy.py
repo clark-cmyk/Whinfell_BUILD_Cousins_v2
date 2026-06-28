@@ -24,8 +24,12 @@ from china_policy_track.models import (
     build_observation_from_dimensions,
 )
 from china_policy_track.schema import china_policy_parquet_schema, schema_metadata_dict
-from china_policy_track.storage import read_observations, write_observations
-from china_policy_track.version import SCHEMA_VERSION, TRACK_ID
+from china_policy_track.storage import (
+    default_parquet_path,
+    read_observations,
+    write_observations,
+)
+from china_policy_track.version import CHINA_DATA_ROOT, PARQUET_FILENAME, SCHEMA_VERSION, TRACK_ID
 
 
 class TestChinaPolicyModels(unittest.TestCase):
@@ -58,6 +62,12 @@ class TestChinaPolicyModels(unittest.TestCase):
 
 
 class TestChinaPolicyParquet(unittest.TestCase):
+    def test_default_parquet_path_layout(self):
+        path = default_parquet_path(REPO_ROOT)
+        self.assertEqual(path.name, PARQUET_FILENAME)
+        self.assertIn(CHINA_DATA_ROOT, str(path))
+        self.assertTrue(str(path).endswith("data/china_policy/v1/china_policy_observations.parquet"))
+
     def test_write_read_roundtrip(self):
         obs = build_observation_from_dimensions(
             observation_id="pq-001",
@@ -125,6 +135,42 @@ class TestChinaPolicyIngestion(unittest.TestCase):
             table = pq.read_table(out)
             self.assertEqual(table.num_rows, 2)
             self.assertTrue(all(t == TRACK_ID for t in table.column("track_id").to_pylist()))
+
+    def test_ingest_cli_default_path(self):
+        """CLI without --output writes to data/china_policy/v1/ (isolated from data/global/)."""
+        out = default_parquet_path(REPO_ROOT)
+        if out.exists():
+            out.unlink()
+        global_stub = REPO_ROOT / "data/global/v1/global_observations.parquet"
+        global_mtime = global_stub.stat().st_mtime if global_stub.exists() else None
+
+        inputs = [
+            REPO_ROOT / "china_policy_track/examples/sample_perplexity_export.txt",
+            REPO_ROOT / "china_policy_track/examples/sample_koyfin_export.json",
+        ]
+        for i, inp in enumerate(inputs):
+            cmd = [
+                sys.executable,
+                "-m",
+                "china_policy_track.ingest",
+                "--input",
+                str(inp),
+            ]
+            if i == 0:
+                cmd.append("--no-append")
+            proc = subprocess.run(
+                cmd,
+                cwd=str(REPO_ROOT),
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(proc.returncode, 0, proc.stderr)
+            self.assertIn(str(out), proc.stdout)
+
+        self.assertTrue(out.exists())
+        self.assertEqual(len(read_observations(out)), 2)
+        if global_mtime is not None:
+            self.assertEqual(global_stub.stat().st_mtime, global_mtime)
 
 
 if __name__ == "__main__":

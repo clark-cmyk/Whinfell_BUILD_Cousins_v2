@@ -4,6 +4,8 @@
 **Schema version:** `1.0.0`  
 **Track ID:** `china_policy`
 
+Coexists alongside Global track storage at `data/global/v1/global_observations.parquet`. China ingestion never writes to `data/global/`.
+
 Ingest via:
 
 ```bash
