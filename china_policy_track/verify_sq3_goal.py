@@ -202,6 +202,7 @@ def main(argv: list[str] | None = None) -> int:
     write_sq3_methodology(scratch / "sq3_methodology.txt")
     test_rc = write_china_tests(scratch / "china_tests.log")
     write_global_isolation(scratch / "global_isolation.txt")
+    _preflight_repo()
 
     print(f"verify_sq3_goal_ok scratch={scratch}")
     print(f"artifacts: sq3_output.log sq3_methodology.txt china_tests.log global_isolation.txt")
