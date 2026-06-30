@@ -697,6 +697,18 @@ window.DICTIONARY_BADGE_DEFAULT = {
       background: linear-gradient(180deg, rgba(244,246,248,.98), rgba(244,246,248,.92));
     }
     [data-theme="light"] .hydration-banner-body { color: #4a5564; }
+    .desk-doc-link { color: var(--wtm-accent, #5eb3ff); text-decoration: none; font-weight: 600; }
+    .desk-doc-link:hover { text-decoration: underline; }
+    .desk-docs-group { margin-top: 0.5rem; }
+    .desk-docs-group-title {
+      font-size: 9px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--wtm-accent, #5eb3ff); margin-bottom: 0.25rem;
+    }
+    .desk-docs-list { list-style: none; padding: 0; margin: 0; }
+    .desk-docs-list li { margin: 0.2rem 0; line-height: 1.35; }
+    .desk-docs-audience { font-size: 8px; color: var(--wtm-muted); margin-left: 0.25rem; }
+    .header-dictionary-badge { text-decoration: none; cursor: pointer; }
+    .header-dictionary-badge:hover { text-decoration: underline; }
     [data-theme="light"] .cockpit-unhydrated-overlay {
       background: rgba(244,246,248,.72);
       border-color: rgba(176,125,26,.45);
@@ -2253,7 +2265,8 @@ window.DICTIONARY_BADGE_DEFAULT = {
       <p id="headerRegimeSub" class="console-regime-sub">Import hydration or enter intake to populate regime summary.</p>
       <div class="console-tech-meta">
         <span id="tcConsoleBuildBadge" class="header-build-badge text-[8px] font-bold text-wtm-green bg-emerald-500/10 border border-wtm-green/35 px-2 py-0.5 rounded" title="Operator-console build — hard-refresh if stale">—</span>
-        <span id="ddVersionBadge" class="header-dictionary-badge text-[9px] font-bold text-wtm-muted bg-wtm-card border border-wtm-border px-2 py-0.5 rounded"></span>
+        <a id="ddVersionBadge" href="https://github.com/clark-cmyk/Whinfell_BUILD_Cousins/blob/main/whinfell_pipeline/data_dictionary.yaml" target="_blank" rel="noopener noreferrer" class="header-dictionary-badge text-[9px] font-bold text-wtm-muted bg-wtm-card border border-wtm-border px-2 py-0.5 rounded"></a>
+        <button type="button" id="btnDeskDocs" class="text-[9px] font-bold text-wtm-accent bg-wtm-accent/10 border border-wtm-accent/35 px-2 py-0.5 rounded hover:bg-wtm-accent/20" title="Open desk documentation links">Docs</button>
         <button type="button" id="btnWorkspaceToggle" class="header-workspace-toggle text-[9px] font-bold text-wtm-accent bg-wtm-accent/10 border border-wtm-accent/35 px-2 py-0.5 rounded hover:bg-wtm-accent/20">Node Cockpits</button>
       </div>
     </div>
@@ -2291,6 +2304,7 @@ window.DICTIONARY_BADGE_DEFAULT = {
       <section class="signal-detail-section"><h3>Gate state</h3><div id="whyGateState" class="why-body"></div></section>
       <section class="signal-detail-section"><h3>Shock</h3><div id="whyShock" class="why-body"></div></section>
       <section class="signal-detail-section"><h3>Freshness</h3><div id="whyFreshness" class="why-body"></div></section>
+      <section class="signal-detail-section"><h3>Desk documentation</h3><div id="signalDetailDocs" class="why-body desk-docs-compact"></div></section>
       <section class="signal-detail-section"><h3>Ingest audit</h3><div id="ingestProvenanceAudit" class="why-body signal-ingest-audit"></div></section>
       <section class="signal-detail-section"><h3>Hydration field log</h3><div id="hydrationFieldLog" class="why-body" data-agent-surface="hydration-field-log"></div></section>
       <section class="signal-detail-section"><h3>Data dictionary audit</h3><div id="dataDictionaryAudit" class="why-body" data-agent-surface="dd-audit"></div><div id="ddAuditDetail" class="dd-audit-detail zone-hidden" data-agent-surface="dd-audit-detail"></div></section>
@@ -2589,14 +2603,20 @@ window.DICTIONARY_BADGE_DEFAULT = {
             <p><strong class="text-slate-200">Freshness indicators:</strong> Colored dot + label (Fresh &lt;4h · Aging 4–24h · Stale &gt;24h) with source channel, snapshot ID, and data as-of under the chip. Data Provenance panel in the left rail carries full lineage detail.</p>
             <p><strong class="text-slate-200">Dual-track flow:</strong> Enter Global intake (left) from Koyfin / Prompt A. Enter China SQ3 dimensions or import <code class="text-[9px]">CHINA POLICY EXPORT v1.0</code>. Command bar shows both scores; gate considers Global for BTC access and SQ3 for China caution.</p>
             <p><strong class="text-slate-200">Track toggle:</strong> Both · Global · China filters visible clusters without hiding intake fields.</p>
-            <p><strong class="text-slate-200">WTM EXPORT v2.1 (locked):</strong> Canonical handshake — Global core + China SQ3 + optional Signal Tracer lines + provenance (Snapshot ID, Lineage Hash, Data As Of, Freshness). Spec: <code class="text-[9px]">whinfell_pipeline/WTM_EXPORT_v2.1_SPEC.md</code>.</p>
+            <p><strong class="text-slate-200">WTM EXPORT v2.1 (locked):</strong> Canonical handshake — Global core + China SQ3 + optional Signal Tracer lines + provenance (Snapshot ID, Lineage Hash, Data As Of, Freshness). Spec: <a href="https://github.com/clark-cmyk/Whinfell_BUILD_Cousins/blob/main/whinfell_pipeline/WTM_EXPORT_v2.1_SPEC.md" target="_blank" rel="noopener noreferrer" class="desk-doc-link">WTM_EXPORT_v2.1_SPEC.md</a> · <a href="https://github.com/clark-cmyk/Whinfell_BUILD_Cousins/blob/main/whinfell_pipeline/WTM_EXPORT_v2.2_SPEC.md" target="_blank" rel="noopener noreferrer" class="desk-doc-link">v2.2</a>.</p>
+            <p><strong class="text-slate-200">SQ3 (China track):</strong> Policy STR. (35%) + State IMP. (35%) + Growth IMP. (30%). Full math + dual-track gate: <a href="https://github.com/clark-cmyk/Whinfell_BUILD_Cousins/blob/main/08_Deliverables/Whinfell_SQ3_Reference_v1.0.md" target="_blank" rel="noopener noreferrer" class="desk-doc-link">SQ3 Reference v1.0</a>.</p>
             <p><strong class="text-slate-200">Daily CSV chain (Comet runbook):</strong> <code class="text-[9px]">python3 run_csv_download.py daily --operator desk --window 24h --hydrate-output data/hydration/latest.json</code> — copies Downloads → <code class="text-[9px]">staged_raw/</code> (never moves), writes <code class="text-[9px]">.meta.json</code> sidecars, quarantines bad files, emits manifests, then <code class="text-[9px]">collect</code> → Parquet and <code class="text-[9px]">hydrate</code>. Manual steps: <code class="text-[9px]">init</code> · <code class="text-[9px]">stage</code> · <code class="text-[9px]">collect</code> · <code class="text-[9px]">hydrate</code>. Alt: <code class="text-[9px]">python -m whinfell_pipeline.ingest --staged</code>.</p>
             <p><strong class="text-slate-200">Daily hydration (Comet runbook):</strong> <code class="text-[9px]">python3 run_csv_download.py daily --hydrate-output data/hydration/latest.json</code> then <strong>Import Latest Hydration Bundle</strong> (select that file). Status chip under the button confirms last import. Auto-populates Global intake, China policy, BTC bias + L3 basis when present, and tracer <em>suggestions</em> — never written to the horizon matrix until you Accept.</p>
             <p><strong class="text-slate-200">Hybrid Signal Tracer (2.2b):</strong> Import surfaces amber <strong>Suggestions Pending</strong> panel — <strong>Accept</strong> writes marks and shows green <strong>Operator Confirmed</strong>; <strong>Dismiss</strong> clears suggestions only. <strong>Manual Override</strong> or horizon edits after hydration set amber matrix chrome, command bar <strong>Override</strong>, and provenance <strong>Manual override active</strong>. Intake/gross/L3-only edits flip command bar <strong>Override</strong> without changing tracer flow. Matrix never auto-fills on import (<code class="text-[9px]">confirm_required</code>).</p>
             <p><strong class="text-slate-200">Progressive disclosure:</strong> Center pane keeps prompts collapsed until expanded; Gross Risk posture/capital/handover, shock config, and snapshots are in collapsible panels to reduce default density.</p>
             <p><strong class="text-slate-200">Freshness &amp; provenance:</strong> Command-bar chip + Data Provenance panel show snapshot ID, lineage hash, source channel, data as-of, and freshness (fresh &lt;4h · aging 4–24h · stale &gt;24h). Manual edits flag override until re-import.</p>
-            <p><strong class="text-slate-200">Gate:</strong> Global &lt;50 blocks BTC. SQ3 &lt;50 flags dual-track impairment.</p>
+            <p><strong class="text-slate-200">Gate:</strong> Global &lt;50 blocks BTC. SQ3 &lt;50 flags dual-track impairment. See <a href="https://github.com/clark-cmyk/Whinfell_BUILD_Cousins/blob/main/08_Deliverables/Whinfell_Desk_User_Manual_v1.0.md" target="_blank" rel="noopener noreferrer" class="desk-doc-link">Desk User Manual</a>.</p>
+            <p><strong class="text-slate-200">All desk docs:</strong> Expand <strong>Desk documentation</strong> below or click header <strong>Docs</strong>.</p>
           </div>
+        </details>
+        <details id="deskDocsPanel" class="rounded-lg border border-wtm-border bg-wtm-card/50 text-[10px] mt-2">
+          <summary class="px-3 py-2 font-bold uppercase text-wtm-accent cursor-pointer">Desk documentation</summary>
+          <div id="deskDocsList" class="px-3 pb-3 text-wtm-muted" data-agent-surface="desk-docs"></div>
         </details>
       </div>
     </aside>
@@ -2886,7 +2906,58 @@ const STORAGE_KEY = 'whinfell_transmission_control_v7';
 const LEGACY_KEYS = ['whinfell_transmission_control_v1', 'whinfell_transmission_control_v0', 'whinfell_operator_v1_1'];
 const STATE_VERSION = 7;
 /** Bump when operator-console UX changes — visible in header for reload verification. */
-const TC_CONSOLE_BUILD = '2.2-HYDRATION-AUDIT-2026-06-30';
+const TC_CONSOLE_BUILD = '2.2-DOCS-LINKS-2026-06-30';
+const DESK_GITHUB_BLOB = 'https://github.com/clark-cmyk/Whinfell_BUILD_Cousins/blob/main/';
+const DESK_GITHUB_RAW = 'https://raw.githubusercontent.com/clark-cmyk/Whinfell_BUILD_Cousins/main/';
+const DESK_PAGES_URL = 'https://clark-cmyk.github.io/Whinfell_BUILD_Cousins/';
+const DESK_REPO_URL = 'https://github.com/clark-cmyk/Whinfell_BUILD_Cousins';
+
+/** Canonical desk documentation catalog — paths relative to repo root on GitHub. */
+const DESK_DOC_CATALOG = [
+  { group: 'Start here', docs: [
+    { label: 'Desk User Manual v1.0', path: '08_Deliverables/Whinfell_Desk_User_Manual_v1.0.md', audience: 'all' },
+    { label: 'Live desk preview (auto-hydrated)', path: DESK_PAGES_URL, external: true },
+    { label: 'GitHub repo', path: DESK_REPO_URL, external: true },
+    { label: 'Latest hydration JSON', path: DESK_PAGES_URL + 'data/hydration/latest.json', external: true },
+    { label: 'Hydration field log JSON', path: DESK_PAGES_URL + 'data/hydration/hydration_log.json', external: true },
+  ]},
+  { group: 'Daily operations', docs: [
+    { label: 'Simple data update (Clark)', path: '08_Deliverables/Whinfell_Data_Update_Simple_Guide.md', audience: 'Clark' },
+    { label: 'Expanded Operators Guide v1.5', path: '08_Deliverables/Whinfell_Expanded_Operators_Guide_v1.5.md' },
+    { label: 'Quick Reference Card v1.5', path: '08_Deliverables/Whinfell_Quick_Reference_Card_v1.5.md' },
+    { label: 'Comet browser blueprint', path: '08_Deliverables/Comet_Browser_Operations_Blueprint.md', audience: 'Comet' },
+    { label: 'Perplexity + Comet collection', path: '08_Deliverables/Perplexity_Comet_Collection_Instructions.md', audience: 'Perplexity' },
+    { label: 'Comet shortcuts', path: '08_Deliverables/Comet_Shortcuts_WTM.md', audience: 'Comet' },
+    { label: 'Fast CSV collect guide', path: '08_Deliverables/Fast_CSV_Collect_Guide.md' },
+    { label: 'Perplexity Barchart/Koyfin playbook', path: '08_Deliverables/Perplexity_Barchart_Koyfin_Playbook.md', audience: 'Perplexity' },
+    { label: 'Perplexity full collect prompt', path: '08_Deliverables/Perplexity_Full_Collection_Prompt.txt', audience: 'Perplexity' },
+    { label: 'Grok operator prompt', path: '08_Deliverables/Whinfell_Grok_Operator_Prompt.txt', audience: 'Grok' },
+  ]},
+  { group: 'Scores · China · SQ3', docs: [
+    { label: 'SQ3 Reference v1.0', path: '08_Deliverables/Whinfell_SQ3_Reference_v1.0.md', audience: 'G-Quant' },
+    { label: 'Credit Confirmation Score (C1)', path: '04_Score_Calculation/Whinfell_Credit_Confirmation_Score_Logic.md', audience: 'G-Quant' },
+    { label: 'Interim node score weights', path: '04_Score_Calculation/Phase2_Interim_Node_Score_Weights.md' },
+    { label: 'Transmission ladder teach-in', path: '08_Deliverables/Whinfell_Transmission_Ladder_Teach_In.md' },
+    { label: 'Ladder deep dive (interactive)', path: 'whinfell-transmission-ladder-deep-dive.html', local: true },
+    { label: 'SQ3 engine (Python)', path: 'china_policy_track/sq3.py', audience: 'G-Quant' },
+  ]},
+  { group: 'Pipeline · specs', docs: [
+    { label: 'Master data dictionary', path: 'whinfell_pipeline/data_dictionary.yaml' },
+    { label: 'WTM EXPORT v2.1 spec', path: 'whinfell_pipeline/WTM_EXPORT_v2.1_SPEC.md' },
+    { label: 'WTM EXPORT v2.2 spec', path: 'whinfell_pipeline/WTM_EXPORT_v2.2_SPEC.md' },
+    { label: 'Phase 2 signal intelligence spec', path: '08_Deliverables/Whinfell_Phase2_Signal_Intelligence_Spec.md' },
+    { label: 'ARCH-3 WTM import criteria', path: '08_Deliverables/ARCH-3_WTM_Import_Core_Criteria.md' },
+    { label: 'Desk URLs (Comet wired)', path: 'whinfell_pipeline/desk_urls.yaml' },
+  ]},
+  { group: 'Mission surfaces · validation', docs: [
+    { label: 'Desk feedback log', path: '08_Deliverables/Desk_Feedback_Log.md' },
+    { label: 'UI audit spec', path: '08_Deliverables/whinfell_ui_audit_chunked.md' },
+    { label: 'Credit mission surface handoff', path: '08_Deliverables/Credit_Mission_Surface_Desk_Handoff.md' },
+    { label: 'Liquidity mission surface handoff', path: '08_Deliverables/Liquidity_Mission_Surface_Desk_Handoff.md' },
+    { label: 'TC review log', path: '08_Deliverables/Whinfell_Transmission_Control_Review_Log.md' },
+    { label: 'Series ticker master (C3)', path: '08_Deliverables/C3_Whinfell_Series_Ticker_Master_List.md' },
+  ]},
+];
 const HYDRATION_BUNDLE_VERSION = '1.2.0';
 const RV_HORIZONS = ['1m', '3m', '6m', '12m', '3y'];
 const RV_HORIZON_LABELS = { '1m': '1M', '3m': '3M', '6m': '6M', '12m': '12M', '3y': '3Y' };
@@ -3026,6 +3097,67 @@ function whyBullets(b1, b2, b3) {
 
 function escapeHtml(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function deskDocHref(entry) {
+  if (!entry) return DESK_REPO_URL;
+  if (entry.local) return 'whinfell-transmission-ladder-deep-dive.html';
+  const path = entry.path || '';
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  return DESK_GITHUB_BLOB + path.replace(/^\//, '');
+}
+
+function deskDocRawHref(path) {
+  if (!path || path.startsWith('http')) return deskDocHref({ path });
+  return DESK_GITHUB_RAW + path.replace(/^\//, '');
+}
+
+function deskDocAnchor(entry) {
+  const href = deskDocHref(entry);
+  const label = entry.label || entry.path || 'Doc';
+  const aud = entry.audience ? `<span class="desk-docs-audience">(${escapeHtml(entry.audience)})</span>` : '';
+  return `<a href="${escapeHtml(href)}" class="desk-doc-link" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>${aud}`;
+}
+
+function renderDeskDocsPanel() {
+  const node = el('deskDocsList');
+  if (!node) return;
+  const groups = DESK_DOC_CATALOG.map(grp => {
+    const items = (grp.docs || []).map(d => `<li>${deskDocAnchor(d)}</li>`).join('');
+    return `<div class="desk-docs-group"><div class="desk-docs-group-title">${escapeHtml(grp.group)}</div><ul class="desk-docs-list">${items}</ul></div>`;
+  }).join('');
+  node.innerHTML = `<p class="text-[9px] mb-2">All links open on GitHub or the live desk preview. Agents: append <code class="text-[8px]">?raw=1</code> or use raw.githubusercontent.com paths from the manual index.</p>${groups}`;
+}
+
+function renderSignalDetailDocs() {
+  const node = el('signalDetailDocs');
+  if (!node) return;
+  const picks = [
+    { label: 'Desk User Manual', path: '08_Deliverables/Whinfell_Desk_User_Manual_v1.0.md' },
+    { label: 'SQ3 Reference', path: '08_Deliverables/Whinfell_SQ3_Reference_v1.0.md' },
+    { label: 'Comet collection', path: '08_Deliverables/Perplexity_Comet_Collection_Instructions.md' },
+    { label: 'Feedback log', path: '08_Deliverables/Desk_Feedback_Log.md' },
+    { label: 'Live desk preview', path: DESK_PAGES_URL, external: true },
+  ];
+  const links = picks.map(d => deskDocAnchor(d)).join(' · ');
+  node.innerHTML = `<p>${links}</p><p class="text-[9px] mt-1"><a href="#" class="desk-doc-link" id="signalDetailDocsOpenAll">Open full doc index in left rail</a></p>`;
+  const openAll = el('signalDetailDocsOpenAll');
+  if (openAll) {
+    openAll.onclick = (e) => {
+      e.preventDefault();
+      openDeskDocsPanel();
+    };
+  }
+}
+
+function openDeskDocsPanel() {
+  const panel = el('deskDocsPanel');
+  const list = el('deskDocsList');
+  if (panel) {
+    panel.open = true;
+    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+  if (list) list.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 const EXECUTIVE_WHY_IDS = new Set([
@@ -6651,6 +6783,7 @@ function renderFlipchartState() {
 
 function renderSignalDetailTech(state) {
   const node = el('signalDetailTech');
+  renderSignalDetailDocs();
   renderIngestProvenanceAudit(state);
   renderHydrationFieldLog(state);
   renderDataDictionaryAudit(state);
@@ -6813,7 +6946,8 @@ function applyDataDictionaryBadge(meta, validated) {
   const badge = el('ddVersionBadge');
   if (!badge || !meta) return;
   badge.textContent = `Master Data Dictionary v${meta.version} · ${meta.status} · ${meta.alignment}`;
-  badge.title = `Master Data Dictionary (${meta.source || MASTER_DATA_DICTIONARY_META_URL}) — synced from whinfell_pipeline/data_dictionary.yaml`;
+  badge.href = deskDocHref({ path: 'whinfell_pipeline/data_dictionary.yaml' });
+  badge.title = `Open Master Data Dictionary on GitHub (${meta.source || MASTER_DATA_DICTIONARY_META_URL})`;
   badge.classList.toggle('text-emerald-400', validated);
   badge.classList.toggle('border-emerald-500/30', validated);
   badge.classList.toggle('bg-emerald-500/10', validated);
@@ -7229,7 +7363,7 @@ const DIAG_FAILURE_CODES = {
 
 const DD_AUDIT_REMEDIATION = {
   missing_source: 'Stage required CSV in whinfell_drop → bash scripts/normalize_whinfell_drop.sh → bash whinfell_daily_am.sh',
-  field_unmapped: 'Verify mapping in data_dictionary.yaml · re-export Koyfin/Barchart watchlist with required columns',
+  field_unmapped: 'Verify mapping in data_dictionary.yaml (header Docs → Master data dictionary) · re-export Koyfin/Barchart watchlist with required columns',
   transform_failed: 'Check staged_raw/quarantine logs · run retry_quarantine_normalize on failed files',
   sample_insufficient: 'Export wider Koyfin time-series (rates/equities) · confirm rv_history has ≥3 horizons',
   data_stale: 'Re-export WTM-Flows-Global.csv · confirm flows_sidecar.as_of matches today in latest.json',
@@ -9145,6 +9279,7 @@ el('btnWorkspaceToggle').onclick = () => {
   applyWorkspaceView(next);
   markDirty();
 };
+el('btnDeskDocs')?.addEventListener('click', () => openDeskDocsPanel());
 el('btnExportNode').onclick = () => {
   const cockpit = mergeNodeCockpit(activeNodeId(), buildStateFromDOM());
   const lines = [
@@ -9169,6 +9304,7 @@ document.addEventListener('keydown', handleCockpitKeyboard);
 
 const tcBuildBadge = el('tcConsoleBuildBadge');
 if (tcBuildBadge) tcBuildBadge.textContent = TC_CONSOLE_BUILD;
+renderDeskDocsPanel();
 renderPrompts();
 renderShockStageChecks();
 renderTracerHorizonTable();

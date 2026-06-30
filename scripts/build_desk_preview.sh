@@ -21,6 +21,9 @@ mkdir -p "$OUT/data/hydration"
 cp "$TC" "$OUT/index.html"
 cp "${ROOT}/08_Deliverables/desk_china_ladder_models.js" "$OUT/"
 cp "${ROOT}/08_Deliverables/data_dictionary_meta.json" "$OUT/"
+if [[ -f "${ROOT}/08_Deliverables/whinfell-transmission-ladder-deep-dive.html" ]]; then
+  cp "${ROOT}/08_Deliverables/whinfell-transmission-ladder-deep-dive.html" "$OUT/"
+fi
 
 HYDRATE_LOG="${ROOT}/data/hydration/hydration_log.json"
 if [[ -f "$HYDRATE" ]]; then
