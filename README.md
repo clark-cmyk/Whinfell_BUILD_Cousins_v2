@@ -19,4 +19,10 @@ Parallel execution team supporting the Whinfell Transmission Map build.
 - 08_Deliverables/Comet_Browser_Operations_Blueprint.md ← Backup views + shortcuts
 - whinfell_pipeline/      ← Ingest, hydrate, WTM EXPORT v2.1 spec
 
+## Naming authority
+
+**Master Data Dictionary v1.0 (Locked, June 29, 2026)** — [`01_Strategy_Docs/Master_Data_Dictionary_v1.0.md`](01_Strategy_Docs/Master_Data_Dictionary_v1.0.md) · machine registry: `whinfell_pipeline/data_dictionary.yaml`
+
+Phased roadmap: [`08_Deliverables/Whinfell_Phased_Development_Plan_v1.0.md`](08_Deliverables/Whinfell_Phased_Development_Plan_v1.0.md)
+
 This team works autonomously once the Operating Plan is approved.

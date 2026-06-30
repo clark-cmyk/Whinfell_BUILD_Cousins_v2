@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
-# Rename raw Barchart/Koyfin downloads → staged_raw filename contract.
+# Rename raw Barchart/Koyfin downloads → canonical staged filename contract.
+# Authority: Master Data Dictionary v1.0 (whinfell_pipeline/data_dictionary.yaml)
 # Usage: scripts/normalize_whinfell_drop.sh [drop_dir]
 # Default drop_dir: ~/Downloads/whinfell_drop
 set -euo pipefail

@@ -31,6 +31,11 @@ whinfell_pipeline/tests/*
 !scripts/morning_daily.sh
 !whinfell_pipeline/csv_download.py
 !whinfell_pipeline/verify_2_2_final.py
+!whinfell_pipeline/data_dictionary.yaml
+!whinfell_pipeline/data_dictionary.py
+!whinfell_pipeline/collection_manifest.yaml
+!whinfell_pipeline/tests/test_data_dictionary.py
+!whinfell_pipeline/tests/test_master_dictionary_tc.py
 !08_Deliverables/Comet_Browser_Operations_Blueprint.md
 !08_Deliverables/Whinfell_Expanded_Operators_Guide_v1.4.md
 staged_raw/**/*.csv

@@ -1,10 +1,11 @@
 # WTM Data Architecture Build Plan
 
-**Version:** 1.0.0  
-**Date:** June 28, 2026  
+**Version:** 1.0.0 (architecture) · **Master Data Dictionary v1.0 Locked** (June 29, 2026)  
+**Date:** June 29, 2026  
 **Owners:** BUILD Cousins (Integration Dynamo + Bridge + Clarity)  
-**Status:** Approved for implementation  
+**Status:** Phase 1 naming locked — implementation continues  
 **Machine registry:** [`whinfell_pipeline/data_dictionary.yaml`](../whinfell_pipeline/data_dictionary.yaml)  
+**Human authority:** [`Master_Data_Dictionary_v1.0.md`](Master_Data_Dictionary_v1.0.md)  
 **Loader:** [`whinfell_pipeline/data_dictionary.py`](../whinfell_pipeline/data_dictionary.py)
 
 ---

@@ -542,6 +542,7 @@
       <div class="flex items-center gap-2.5 flex-wrap">
         <h1 class="text-[15px] font-semibold tracking-tight">Whinfell Transmission Control</h1>
         <span class="text-[9px] font-bold uppercase tracking-wider text-wtm-accent bg-wtm-accent/10 border border-wtm-accent/30 px-2 py-0.5 rounded">Phase 2.2</span>
+        <span id="ddVersionBadge" class="text-[9px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 rounded" title="Master Data Dictionary authority — locked naming contract">Master Data Dictionary v1.0 · Locked · Aligned</span>
       </div>
       <p class="text-[11px] text-wtm-muted">Pipeline-authoritative command bar · Hybrid Signal Tracer · WTM EXPORT v2.1</p>
     </div>
@@ -1054,6 +1055,9 @@ const RESEARCH_EXPORT_FORMAT_LEGACY = 'WTM EXPORT v2.0';
 const CHINA_EXPORT_FORMAT = 'CHINA POLICY EXPORT v1.0';
 const CHINA_LADDER_EXPORT_FORMAT = 'CHINA LADDER EXPORT v1.1';
 const PIPELINE_BUNDLE_VERSION = '1.0.0';
+const MASTER_DATA_DICTIONARY_VERSION = '1.0';
+const MASTER_DATA_DICTIONARY_STATUS = 'Locked';
+const MASTER_DATA_DICTIONARY_ALIGNMENT = 'Aligned';
 const SQ3_WEIGHT_POLICY = 0.35;
 const SQ3_WEIGHT_STATE = 0.35;
 const SQ3_WEIGHT_GROWTH = 0.30;
@@ -4194,7 +4198,15 @@ function renderExecutionStatus(gate, state) {
   if (noteL3) noteL3.textContent = rule;
 }
 
+function renderDataDictionaryBadge() {
+  const badge = el('ddVersionBadge');
+  if (!badge) return;
+  badge.textContent = `Master Data Dictionary v${MASTER_DATA_DICTIONARY_VERSION} · ${MASTER_DATA_DICTIONARY_STATUS} · ${MASTER_DATA_DICTIONARY_ALIGNMENT}`;
+  badge.title = 'Master Data Dictionary authority — locked naming contract (refreshed on load/import)';
+}
+
 function renderAll() {
+  renderDataDictionaryBadge();
   const state = buildStateFromDOM();
   const gate = deriveGate(state);
   const zone = gate.zone;

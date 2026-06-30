@@ -1,7 +1,7 @@
 # Whinfell Desk Comet Shortcuts
 
 Supervised-mode morning collection contract for the Whinfell desk assistant.  
-Aligned with: `whinfell_pipeline/collection_manifest.yaml` · `whinfell_pipeline/data_dictionary.yaml`
+Aligned with: **Master Data Dictionary v1.0 (Locked)** · `whinfell_pipeline/collection_manifest.yaml` · `whinfell_pipeline/data_dictionary.yaml`
 
 ## Compound shortcut
 
@@ -30,7 +30,7 @@ ROLE C — Grok BUILD / pipeline (out of scope for Comet)
 Complete the daily Whinfell batch chain:
 
   REQUIRED exports (8 bulk screens, ~12 clicks):
-    Koyfin: rates, equities, credit (WhinPump), china_policy
+    Koyfin: rates, equities, credit (WTM-Credit-Confirmation), china_policy
     Barchart: futures_intraday, futures_daily
     Optional: koyfin daily time-series, btc_basis, crypto chart CSVs
 
@@ -43,7 +43,7 @@ Clark then imports bundle in Transmission Control.
 Success criteria in hydration bundle:
   • global: whinfell_score, transmission_state, btc_bias
   • china: sq3_score + china_ladder.horizons (5 stages) — requires china_policy CSV
-  • crypto_sleeve: btc/eth/xrp/sol spot snapshot (auto from WhinPump credit export)
+  • crypto_sleeve: btc/eth/xrp/sol spot snapshot (auto from WTM-Credit-Confirmation export)
   • execution: near_month / basis_spread when Barchart basis staged
 
 Target: 3–5 minutes, zero CSV parsing in browser.
@@ -63,7 +63,7 @@ Authority (read before acting):
 
 Crypto sleeve (first-class):
   Spot IDs: BTCUSD, ETHUSD, XRPUSD, SOLUSD
-  Snapshot: auto-ingested when credit/WhinPump is staged (no extra export required)
+  Snapshot: auto-ingested when credit (WTM-Credit-Confirmation) is staged (no extra export required)
   Optional chart exports → whinfell_drop:
     btc_price_chart_YYYYMMDD_HHMM.csv      (WTM-Crypto-Price)
     btc_correl_chart_YYYYMMDD_HHMM.csv     (WTM-Crypto-Correl)
@@ -90,7 +90,7 @@ STEP 0 — Load machine plan
 STEP 1 — Koyfin required (4 exports → whinfell_drop)
   1. WTM-Rates-Credit        → rates_YYYYMMDD_HHMM.csv
   2. WTM-Equities-Breadth    → equities_YYYYMMDD_HHMM.csv
-  3. WTM-Credit-Confirmation → credit_YYYYMMDD_HHMM.csv  (WhinPump — also feeds crypto snapshot)
+  3. WTM-Credit-Confirmation → credit_YYYYMMDD_HHMM.csv  (legacy vendor: koyfin_WhinPump* — feeds crypto snapshot)
   4. WTM-China-Policy        → china_policy_YYYYMMDD_HHMM.csv  (REQUIRED for china_ladder)
   Each: open saved view → ⋮ Export → CSV → save to whinfell_drop
   Assist if navigation fails: USGG2Y10Y, IWM, HYG, KWEB/CSI300
@@ -196,7 +196,7 @@ run one Python command, and report results. Ask Clark before terminal commands.
 Complete the daily Whinfell batch chain:
 
   REQUIRED exports (8 bulk screens, ~12 clicks):
-    Koyfin: rates, equities, credit (WhinPump), china_policy
+    Koyfin: rates, equities, credit (WTM-Credit-Confirmation), china_policy
     Barchart: futures_intraday, futures_daily
     Optional: koyfin daily time-series, btc_basis, crypto chart CSVs
 
@@ -209,7 +209,7 @@ Clark then imports bundle in Transmission Control.
 Success criteria in hydration bundle:
   • global: whinfell_score, transmission_state, btc_bias
   • china: sq3_score + china_ladder.horizons (5 stages) — requires china_policy CSV
-  • crypto_sleeve: btc/eth/xrp/sol spot snapshot (auto from WhinPump credit export)
+  • crypto_sleeve: btc/eth/xrp/sol spot snapshot (auto from WTM-Credit-Confirmation export)
   • execution: near_month / basis_spread when Barchart basis staged
 
 Target: 3–5 minutes, zero CSV parsing in browser.
@@ -232,7 +232,7 @@ Authority (read before acting):
 
 Crypto sleeve (first-class):
   Spot IDs: BTCUSD, ETHUSD, XRPUSD, SOLUSD
-  Snapshot: auto-ingested when credit/WhinPump is staged (no extra export required)
+  Snapshot: auto-ingested when credit (WTM-Credit-Confirmation) is staged (no extra export required)
   Optional chart exports → whinfell_drop:
     btc_price_chart_YYYYMMDD_HHMM.csv      (WTM-Crypto-Price)
     btc_correl_chart_YYYYMMDD_HHMM.csv     (WTM-Crypto-Correl)
@@ -262,7 +262,7 @@ STEP 0 — Load machine plan
 STEP 1 — Koyfin required (4 exports → whinfell_drop)
   1. WTM-Rates-Credit        → rates_YYYYMMDD_HHMM.csv
   2. WTM-Equities-Breadth    → equities_YYYYMMDD_HHMM.csv
-  3. WTM-Credit-Confirmation → credit_YYYYMMDD_HHMM.csv  (WhinPump — also feeds crypto snapshot)
+  3. WTM-Credit-Confirmation → credit_YYYYMMDD_HHMM.csv  (legacy vendor: koyfin_WhinPump* — feeds crypto snapshot)
   4. WTM-China-Policy        → china_policy_YYYYMMDD_HHMM.csv  (REQUIRED for china_ladder)
   Each: open saved view → ⋮ Export → CSV → save to whinfell_drop
   Assist if navigation fails: USGG2Y10Y, IWM, HYG, KWEB/CSI300

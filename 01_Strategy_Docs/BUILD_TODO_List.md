@@ -19,7 +19,11 @@
 | **Phase 2.2 Final** | Desk validation of browser blueprint | Medium | **Collecting** | Bridge | Blueprint + hydration UX shipped |
 | **2.2e** | Raw vendor CSV → WTM observation row transform | **High** | **Shipped** | Integration Dynamo | `whinfell_pipeline/raw_csv_transform.py` — auto on stage |
 | **Desk ops** | Document pre-stage rename in Operator Guide v1.5 | Medium | **Open** | Clarity | `normalize_whinfell_drop.sh` + canonical name table |
-| **Desk ops** | Clark first live CSV drop — report to TempLibby | High | **In progress** | Bridge | See Progress Log June 28 · Perplexity engaged |
+| **Desk ops** | Clark first live CSV drop — report to TempLibby | High | **In progress** | Bridge | Re-test with Master DD v1.0 canonical names |
+| **Phase 1** | Master Data Dictionary v1.0 + naming rectification | **High** | **Complete** | Bridge + Precision | `Master_Data_Dictionary_v1.0.md` · TC badge · tests PASS |
+| **Phase 2** | Node architecture redesign (5 trading cockpits) | High | **Planned** | Bridge + Edge + Clarity | Blocked on desk DD validation · see phased plan |
+| **Phase 3** | TC interface (full-screen Why, flip nav, margin module) | Medium | **Planned** | Clarity + Safeguard | Blocked on Phase 2 |
+| **Phase 4** | Validation & reliability gate | Medium | **Planned** | Hammer + Precision | After Phase 3 |
 
 ---
 
@@ -77,6 +81,7 @@
 | **Phase 2.2 Final** | Browser blueprint + hydration UX + E2E verify | June 27, 2026 | `verify_2_2_final` PASS |
 | **Daily Launcher** | `Whinfell_Daily_Launcher.py` + `whinfell_daily_am.sh` | June 27, 2026 | Tkinter one-click AM · live log |
 | **Session** | BUILD Cousins agent role adoption (`/arena /role /plan`) | June 29, 2026 | `BUILD_Cousins_Session_Activation.md` · 7/7 canon tests PASS · `25ed812` |
+| **Phase 1** | Master Data Dictionary v1.0 locked + naming alignment | June 29, 2026 | `data_dictionary.yaml` · TC badge · phased plan |
 
 ---
 
@@ -121,6 +126,7 @@ python3 -m whinfell_pipeline.verify_2_2_final
 ---
 
 ## Notes
+- **June 29, 2026** — **Phase 1 complete** — Master Data Dictionary v1.0 locked; naming aligned across YAML, Comet shortcuts, normalize script, TC badge. Phased plan v1.0 shipped. Phase 2–4 planned, not started.
 - **June 29, 2026** — **BUILD Cousins role adoption complete** — session activation shipped; canon test PASS; commit `25ed812`. **Standing by** for pasted full instructions or next priority item from table above.
 - **June 28, 2026** — **Desk CSV drop issue logged** — filename quarantine mitigated via `normalize_whinfell_drop.sh`; header/transform gap open (2.2e). TempLibby report block added above. Perplexity working on response.
 - **June 28, 2026** — **Desktop launcher fixed** — `deploy_desktop_launchers.sh` · use `Whinfell Daily AM.app` on Desktop.
