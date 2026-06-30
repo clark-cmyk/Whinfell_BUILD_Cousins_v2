@@ -20,7 +20,6 @@
 | **2.2e** | Raw vendor CSV → WTM observation row transform | **High** | **Shipped** | Integration Dynamo | `whinfell_pipeline/raw_csv_transform.py` — auto on stage |
 | **Desk ops** | Document pre-stage rename in Operator Guide v1.5 | Medium | **Open** | Clarity | `normalize_whinfell_drop.sh` + canonical name table |
 | **Desk ops** | Clark first live CSV drop — report to TempLibby | High | **In progress** | Bridge | See Progress Log June 28 · Perplexity engaged |
-| **Session** | BUILD Cousins agent role adoption | Medium | **Active** | BUILD Cousins | `08_Deliverables/BUILD_Cousins_Session_Activation.md` |
 
 ---
 
@@ -77,6 +76,7 @@
 | **C5 / Ops** | Quick Reference Card + Operator Guide v1.4 | June 27, 2026 | Daily CSV chain on desk |
 | **Phase 2.2 Final** | Browser blueprint + hydration UX + E2E verify | June 27, 2026 | `verify_2_2_final` PASS |
 | **Daily Launcher** | `Whinfell_Daily_Launcher.py` + `whinfell_daily_am.sh` | June 27, 2026 | Tkinter one-click AM · live log |
+| **Session** | BUILD Cousins agent role adoption (`/arena /role /plan`) | June 29, 2026 | `BUILD_Cousins_Session_Activation.md` · 7/7 canon tests PASS · `25ed812` |
 
 ---
 
@@ -121,7 +121,7 @@ python3 -m whinfell_pipeline.verify_2_2_final
 ---
 
 ## Notes
-- **June 29, 2026** — **BUILD Cousins session activated** — `/arena /role /plan` role adoption; Comet shortcut canon loaded; support-only mandate confirmed. Awaiting pasted full instructions for additional scoped work.
+- **June 29, 2026** — **BUILD Cousins role adoption complete** — session activation shipped; canon test PASS; commit `25ed812`. **Standing by** for pasted full instructions or next priority item from table above.
 - **June 28, 2026** — **Desk CSV drop issue logged** — filename quarantine mitigated via `normalize_whinfell_drop.sh`; header/transform gap open (2.2e). TempLibby report block added above. Perplexity working on response.
 - **June 28, 2026** — **Desktop launcher fixed** — `deploy_desktop_launchers.sh` · use `Whinfell Daily AM.app` on Desktop.
 - **June 27, 2026** — **Daily Launcher shipped** — `Whinfell_Daily_Launcher.py` runs `whinfell_daily_am.sh` with live log + status bar; fixed `--window` typo in AM script.

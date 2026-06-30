@@ -27,7 +27,7 @@
 | **Daily Launcher** | `Whinfell_Daily_Launcher.py` | **Shipped** | Hammer + Integration Dynamo | June 27, 2026 |
 | **Desk issue** | Staged CSV classifier / raw export naming | **Mitigated — header gap open** | Integration Dynamo | June 28, 2026 |
 | **Desk fix** | Desktop launcher double-click (`.app` / `.command`) | **Fixed** | Hammer | June 28, 2026 |
-| **Session** | BUILD Cousins role adoption (`/arena /role /plan`) | **Active** | BUILD Cousins | June 29, 2026 |
+| **Session** | BUILD Cousins role adoption (`/arena /role /plan`) | **Complete** | BUILD Cousins | June 29, 2026 |
 
 ---
 
