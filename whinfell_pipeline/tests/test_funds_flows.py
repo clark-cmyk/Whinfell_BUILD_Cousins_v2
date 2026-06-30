@@ -340,31 +340,70 @@ class TestHydrateFundsIntegration(unittest.TestCase):
         self.assertTrue(credit["enabled"])
         self.assertEqual(credit["aggregate"]["verdict"], "supportive")
 
-    def test_hydrate_cli_with_repo_sidecar_file(self):
+    def test_verification_plan_step5_cli_hydrate_twice_no_sidecar(self):
+        """Verification plan step 5: real CLI entry, twice, identical, no-flows degrade."""
         sidecar_path = REPO_ROOT / "data" / "flows" / "v1" / "latest_flows.json"
         sidecar_path.parent.mkdir(parents=True, exist_ok=True)
         had_file = sidecar_path.is_file()
         prior = sidecar_path.read_text(encoding="utf-8") if had_file else None
-        out = SCRATCH / "hydration_v120.json"
+        if sidecar_path.is_file():
+            sidecar_path.unlink()
+
+        out1 = SCRATCH / "hydration_v120.json"
+        out2 = SCRATCH / "hydration_v120_run2.json"
+        log_lines: list[str] = []
+        cmd = [sys.executable, "-m", "whinfell_pipeline.hydrate"]
+
         try:
-            sidecar_path.write_text(json.dumps(_supportive_credit_sidecar()), encoding="utf-8")
-            proc = subprocess.run(
-                [sys.executable, "-m", "whinfell_pipeline.hydrate", "-o", str(out)],
-                cwd=REPO_ROOT,
+            for idx, out_path in enumerate((out1, out2), start=1):
+                proc = subprocess.run(
+                    [*cmd, "-o", str(out_path)],
+                    cwd=REPO_ROOT,
+                    capture_output=True,
+                    text=True,
+                    check=False,
+                )
+                log_lines.append(f"=== hydrate_cli_run_{idx} ===")
+                log_lines.append(proc.stdout)
+                if proc.stderr:
+                    log_lines.append(proc.stderr)
+                self.assertEqual(proc.returncode, 0, proc.stderr)
+
+            bundle1 = json.loads(out1.read_text(encoding="utf-8"))
+            bundle2 = json.loads(out2.read_text(encoding="utf-8"))
+            self.assertEqual(bundle1, bundle2, "successive CLI hydrate outputs must be identical")
+
+            for bundle in (bundle1, bundle2):
+                self.assertEqual(bundle["hydration_version"], "1.2.0")
+                self.assertIn("flows_sidecar", bundle)
+                self.assertEqual(bundle["flows_sidecar"]["flows_status"], "unavailable")
+                credit_ff = bundle["node_cockpits"]["credit"]["funds_flows"]
+                self.assertIn("flows_meta", credit_ff)
+                self.assertFalse(credit_ff["enabled"])
+                self.assertEqual(credit_ff["flows_meta"]["flows_status"], "unavailable")
+                self.assertEqual(credit_ff["aggregate"]["verdict"], "neutral")
+
+            evidence_script = (
+                "import json,sys\n"
+                f"d=json.load(open({str(out1)!r}))\n"
+                "print(d.get('hydration_version'))\n"
+                "print('funds_flows' in d.get('node_cockpits',{}).get('credit',{}))\n"
+                "sys.stdout.flush()\n"
+            )
+            evidence = subprocess.run(
+                [sys.executable, "-c", evidence_script],
                 capture_output=True,
                 text=True,
                 check=False,
             )
-            self.assertEqual(proc.returncode, 0, proc.stderr)
-            bundle = json.loads(out.read_text(encoding="utf-8"))
-            self.assertEqual(bundle["hydration_version"], "1.2.0")
-            self.assertIn("flows_sidecar", bundle)
-            self.assertEqual(bundle["flows_sidecar"]["flows_status"], "ok")
-            credit = bundle["node_cockpits"]["credit"]["funds_flows"]
-            self.assertTrue(credit["enabled"])
-            self.assertEqual(credit["flows_meta"]["flows_status"], "ok")
-            self.assertEqual(credit["aggregate"]["verdict"], "supportive")
-            (SCRATCH / "hydrate_v12.log").write_text(proc.stdout + proc.stderr, encoding="utf-8")
+            log_lines.append("=== evidence_step6 ===")
+            log_lines.append(evidence.stdout)
+            self.assertEqual(evidence.returncode, 0, evidence.stderr)
+            evidence_lines = evidence.stdout.strip().splitlines()
+            self.assertEqual(evidence_lines[0], "1.2.0")
+            self.assertEqual(evidence_lines[1], "True")
+
+            (SCRATCH / "hydrate_v12.log").write_text("\n".join(log_lines) + "\n", encoding="utf-8")
         finally:
             if had_file and prior is not None:
                 sidecar_path.write_text(prior, encoding="utf-8")
