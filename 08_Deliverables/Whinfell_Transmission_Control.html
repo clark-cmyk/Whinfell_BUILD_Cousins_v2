@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -148,9 +148,9 @@ window.DICTIONARY_BADGE_DEFAULT = {
     }
     .node-coverage-mode {
       font-size: 10px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+      font-weight: 700;
+      text-transform: none;
+      letter-spacing: 0.01em;
     }
     .node-coverage-banner--degraded .node-coverage-mode { color: #f56565; }
     .node-coverage-banner--partial .node-coverage-mode { color: #f5a623; }
@@ -290,12 +290,19 @@ window.DICTIONARY_BADGE_DEFAULT = {
       background: linear-gradient(180deg, rgba(245,101,101,0.08), rgba(0,0,0,0.1));
     }
     .basis-tactical-eyebrow {
-      font-size: 8px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: none;
+      letter-spacing: 0.02em;
       color: rgba(158,197,240,0.75);
       margin-bottom: 4px;
+    }
+    #shockText {
+      font-size: 20px;
+      line-height: 1.15;
+    }
+    #gateText {
+      font-size: 26px;
     }
     .basis-tactical-sentence {
       margin: 0;
@@ -645,7 +652,7 @@ window.DICTIONARY_BADGE_DEFAULT = {
     .disclosure-panel > summary::before { content: '▸ '; color: #8b9cb3; }
     .disclosure-panel[open] > summary::before { content: '▾ '; }
 
-    :root {
+    :root, [data-theme="dark"] {
       --bg: #0f1318;
       --surface: #151b22;
       --surface-2: #1a222c;
@@ -658,6 +665,46 @@ window.DICTIONARY_BADGE_DEFAULT = {
       --blue: #4c8ed9;
       --radius: 14px;
       --gap: 12px;
+    }
+
+    [data-theme="light"] {
+      --bg: #f4f6f8;
+      --surface: #ffffff;
+      --surface-2: #eef1f4;
+      --border: rgba(26,34,44,.12);
+      --text: #1a222c;
+      --muted: #5a6570;
+      --amber: #b07d1a;
+      --green: #2d8a5c;
+      --red: #c44a4a;
+      --blue: #2f6fb8;
+    }
+
+    [data-theme="light"] body.bg-wtm-bg { background-color: #f4f6f8 !important; color: #1a222c !important; }
+    [data-theme="light"] .bg-wtm-bg { background-color: #f4f6f8 !important; }
+    [data-theme="light"] .bg-wtm-surface { background-color: #ffffff !important; }
+    [data-theme="light"] .bg-wtm-card { background-color: #eef1f4 !important; }
+    [data-theme="light"] .bg-wtm-bg\/60 { background-color: rgba(244,246,248,.85) !important; }
+    [data-theme="light"] .bg-black\/20 { background-color: rgba(0,0,0,.04) !important; }
+    [data-theme="light"] .bg-black\/25 { background-color: rgba(0,0,0,.05) !important; }
+    [data-theme="light"] .border-wtm-border { border-color: #d8dee6 !important; }
+    [data-theme="light"] .text-wtm-muted { color: #5a6570 !important; }
+    [data-theme="light"] .text-slate-100 { color: #1a222c !important; }
+    [data-theme="light"] .text-slate-200 { color: #2d3744 !important; }
+    [data-theme="light"] .text-blue-300 { color: #2f6fb8 !important; }
+    [data-theme="light"] .hover\:bg-wtm-border:hover { background-color: #d8dee6 !important; }
+    [data-theme="light"] .decision-strip {
+      background: linear-gradient(180deg, rgba(244,246,248,.98), rgba(244,246,248,.92));
+    }
+    [data-theme="light"] .hydration-banner-body { color: #4a5564; }
+    [data-theme="light"] .cockpit-unhydrated-overlay {
+      background: rgba(244,246,248,.72);
+      border-color: rgba(176,125,26,.45);
+    }
+    [data-theme="light"] .metric-card,
+    [data-theme="light"] .exec-card,
+    [data-theme="light"] .suggestion-tray {
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
     }
 
     .decision-strip {
@@ -691,23 +738,362 @@ window.DICTIONARY_BADGE_DEFAULT = {
     }
 
     .metric-card .label {
-      font-size: 12px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: .04em;
+      text-transform: none;
+      font-weight: 600;
       color: var(--muted);
     }
 
     .metric-card strong {
-      font-size: 30px;
+      font-size: 34px;
       line-height: 1;
       color: var(--text);
+      font-weight: 700;
       font-variant-numeric: tabular-nums;
     }
 
     .metric-card .meta {
       color: var(--muted);
-      font-size: 13px;
+      font-size: 12px;
+      line-height: 1.35;
     }
+
+    /* Console top bar — three zones */
+    .console-topbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) auto;
+      align-items: stretch;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      flex-shrink: 0;
+      gap: 0;
+    }
+    .console-topbar-zone {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+      padding: 10px 16px;
+      min-width: 0;
+    }
+    .console-topbar-zone--status {
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      background: rgba(0,0,0,.12);
+      align-items: center;
+      text-align: center;
+    }
+    .console-topbar-zone--actions {
+      align-items: flex-end;
+      justify-content: center;
+      background: rgba(0,0,0,.08);
+    }
+    .console-title-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .console-title {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 650;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+    .console-phase-badge {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: .03em;
+      color: var(--blue);
+      background: rgba(76,142,217,.1);
+      border: 1px solid rgba(76,142,217,.28);
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+    .console-regime-line {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.35;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .console-regime-sub {
+      font-size: 10px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .console-tech-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      margin-top: 2px;
+    }
+    .console-tech-meta .header-build-badge,
+    .console-tech-meta .header-dictionary-badge,
+    .console-tech-meta .header-workspace-toggle {
+      font-size: 8px !important;
+      font-weight: 600 !important;
+      text-transform: none !important;
+      letter-spacing: 0 !important;
+      opacity: 0.82;
+    }
+    .console-status-primary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .console-import-status {
+      font-size: 10px;
+      color: var(--muted);
+      line-height: 1.35;
+      max-width: 280px;
+    }
+    .console-save-state {
+      font-size: 10px;
+      color: var(--muted);
+    }
+    .console-actions-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+    .console-actions-row .btn-console {
+      font-size: 11px;
+      padding: 6px 11px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .console-actions-row .btn-console:hover { background: rgba(255,255,255,.06); }
+    .console-actions-row .btn-console--primary {
+      background: rgba(76,142,217,.18);
+      border-color: rgba(76,142,217,.45);
+      color: #9ec5f0;
+      font-weight: 600;
+    }
+    .console-actions-row .btn-console--accent {
+      background: rgba(76,142,217,.28);
+      border-color: rgba(76,142,217,.55);
+      color: #e8edf3;
+      font-weight: 650;
+    }
+    .console-actions-row .btn-console--save {
+      background: rgba(76,142,217,.75);
+      border-color: rgba(76,142,217,.85);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* KPI band */
+    .kpi-band {
+      padding: 12px 16px 10px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(15,19,24,.98), rgba(15,19,24,.9));
+    }
+    [data-theme="light"] .kpi-band {
+      background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(244,246,248,.95));
+    }
+    .kpi-band-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px 12px;
+      margin-bottom: 10px;
+    }
+    .kpi-band-toolbar .track-toggle {
+      text-transform: none;
+      font-weight: 600;
+      font-size: 10px;
+    }
+    .kpi-band-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 12px;
+      font-size: 10px;
+      color: var(--muted);
+    }
+    .kpi-band-meta strong { color: var(--text); font-weight: 600; }
+    .btn-signal-detail {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(76,142,217,.4);
+      background: rgba(76,142,217,.1);
+      color: #9ec5f0;
+      cursor: pointer;
+    }
+    .btn-signal-detail:hover { background: rgba(76,142,217,.18); }
+    .decision-strip {
+      padding: 0;
+      position: static;
+      background: transparent;
+      backdrop-filter: none;
+    }
+    .metric-card {
+      min-height: 100px;
+      padding: 16px 18px;
+    }
+    .metric-card .freshness-sub-cluster { margin-top: 2px; }
+
+    /* Panel zones */
+    .console-panel-zone {
+      border-bottom: 1px solid var(--border);
+    }
+    .console-panel-zone-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 6px 12px 4px;
+      background: rgba(0,0,0,.12);
+      border-bottom: 1px solid rgba(255,255,255,.04);
+    }
+    .console-panel-zone-label--inline {
+      flex-shrink: 0;
+      margin: 0;
+    }
+    .cockpit-decision-rail .console-panel-zone-label--inline {
+      border-bottom: 1px solid var(--border);
+    }
+    [data-theme="light"] .console-panel-zone-label {
+      background: rgba(0,0,0,.03);
+      border-bottom-color: rgba(0,0,0,.06);
+    }
+    .console-panel-zone--ladders .console-panel-zone-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding: 8px 12px 10px;
+    }
+    @media (max-width: 900px) {
+      .console-topbar { grid-template-columns: 1fr; }
+      .console-topbar-zone--status { border-left: none; border-right: none; border-top: 1px solid var(--border); }
+      .console-panel-zone--ladders .console-panel-zone-body { grid-template-columns: 1fr; }
+    }
+
+    /* Signal detail drawer */
+    .signal-detail-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: min(380px, 92vw);
+      height: 100vh;
+      z-index: 200;
+      background: var(--surface);
+      border-left: 1px solid var(--border);
+      box-shadow: -12px 0 40px rgba(0,0,0,.35);
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform .22s ease;
+    }
+    .signal-detail-drawer.is-open { transform: translateX(0); }
+    .signal-detail-drawer.zone-hidden { display: flex !important; }
+    .signal-detail-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 199;
+      background: rgba(0,0,0,.45);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .22s ease;
+    }
+    .signal-detail-backdrop.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .signal-detail-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .signal-detail-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .signal-detail-close {
+      font-size: 18px;
+      line-height: 1;
+      padding: 4px 8px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .signal-detail-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px 14px 20px;
+    }
+    .signal-detail-section {
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .signal-detail-section h3 {
+      margin: 0 0 6px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--blue);
+      letter-spacing: .03em;
+    }
+    .ingest-audit-table {
+      width: 100%;
+      margin-top: 8px;
+      border-collapse: collapse;
+      font-size: 9px;
+    }
+    .ingest-audit-table th,
+    .ingest-audit-table td {
+      border: 1px solid var(--border);
+      padding: 4px 6px;
+      text-align: left;
+      vertical-align: top;
+    }
+    .ingest-audit-table th {
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .signal-detail-tech {
+      margin-top: 12px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: rgba(0,0,0,.2);
+      border: 1px solid var(--border);
+      font-size: 9px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .why-details--secondary > summary {
+      text-transform: none;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0;
+      color: var(--muted);
+    }
+    .why-details--secondary > summary::before { content: '+ '; }
+    .why-details--secondary[open] > summary::before { content: '− '; }
 
     .metric-card .meta.amber { color: var(--amber); }
     .metric-card .meta.green { color: var(--green); }
@@ -1210,7 +1596,12 @@ window.DICTIONARY_BADGE_DEFAULT = {
       background: rgba(214,163,74,.12);
     }
 
+    .compare-card {
+      transition: opacity 150ms ease;
+    }
     .funds-flow-card {
+      transition: opacity 150ms ease, box-shadow 150ms ease;
+    }
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -1624,6 +2015,22 @@ window.DICTIONARY_BADGE_DEFAULT = {
       text-transform: uppercase;
     }
 
+    .focus-horizon-table--spot-fallback td.rv-horizon-na {
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .focus-horizon-table--spot-fallback tr.rv-horizon-row--spot td:not(.rv-horizon-na) {
+      color: var(--text);
+    }
+
+    .focus-horizon-note {
+      margin: 8px 0 0;
+      font-size: 10px;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+
     .cockpit-compare-layer {
       flex: 1;
       min-height: 0;
@@ -1648,40 +2055,247 @@ window.DICTIONARY_BADGE_DEFAULT = {
       font-weight: 700;
       text-transform: uppercase;
     }
+
+    /* UI audit P1 — semantic status chips (human legibility) */
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .status-chip--fresh { color: #3dd68c; background: rgba(61,221,140,0.12); border-color: rgba(61,221,140,0.45); }
+    .status-chip--aging { color: #f5a623; background: rgba(245,166,35,0.14); border-color: rgba(245,166,35,0.5); }
+    .status-chip--stale { color: #f56565; background: rgba(245,101,101,0.12); border-color: rgba(245,101,101,0.45); }
+    .status-chip--complete { color: #3dd68c; background: rgba(61,221,140,0.12); border-color: rgba(61,221,140,0.4); }
+    .status-chip--partial { color: #f5a623; background: rgba(245,166,35,0.14); border-color: rgba(245,166,35,0.45); }
+    .status-chip--impaired { color: #f56565; background: rgba(245,101,101,0.12); border-color: rgba(245,101,101,0.42); }
+    .status-chip--info { color: #9ec5f0; background: rgba(76,142,217,0.12); border-color: rgba(76,142,217,0.4); }
+    [data-theme="light"] .status-chip--fresh { color: #1f6b42; background: #e6f5ec; border-color: #9fd4b8; }
+    [data-theme="light"] .status-chip--aging { color: #8a5a0a; background: #fdf3e0; border-color: #e8c878; }
+    [data-theme="light"] .status-chip--stale { color: #9b2c2c; background: #fdeaea; border-color: #e8a0a0; }
+    [data-theme="light"] .status-chip--complete { color: #1f6b42; background: #e6f5ec; border-color: #9fd4b8; }
+    [data-theme="light"] .status-chip--partial { color: #8a5a0a; background: #fdf3e0; border-color: #e8c878; }
+    [data-theme="light"] .status-chip--impaired { color: #8b2e2e; background: #fdeaea; border-color: #e0a8a8; }
+    [data-theme="light"] .status-chip--info { color: #1e4f82; background: #e8f1fb; border-color: #a8c8e8; }
+    [data-theme="light"] .coverage-pill.coverage-check--ok {
+      color: #1f6b42; background: #e6f5ec; border-color: #9fd4b8;
+    }
+    [data-theme="light"] .coverage-pill.coverage-check--partial {
+      color: #8a5a0a; background: #fdf3e0; border-color: #e8c878;
+    }
+    [data-theme="light"] .coverage-pill.coverage-check--miss {
+      color: #8b2e2e; background: #fdeaea; border-color: #e0a8a8;
+    }
+    [data-theme="light"] .node-coverage-banner--complete .node-coverage-mode { color: #1f6b42; }
+    [data-theme="light"] .node-coverage-banner--partial .node-coverage-mode { color: #8a5a0a; }
+    [data-theme="light"] .node-coverage-banner--degraded .node-coverage-mode { color: #8b2e2e; }
+    [data-theme="light"] .diag-chip--warn { color: #8a5a0a; background: #fdf3e0; border-color: #e8c878; }
+    [data-theme="light"] .diag-chip--ok { color: #1f6b42; background: #e6f5ec; border-color: #9fd4b8; }
+    [data-theme="light"] .diag-chip--block { color: #8b2e2e; background: #fdeaea; border-color: #e0a8a8; }
+    [data-theme="light"] .diag-status { color: #5a6570; border-color: rgba(0,0,0,.08); background: #eef1f4; }
+
+    .impairment-driver-chip {
+      display: inline-flex;
+      margin-left: 6px;
+      font-size: 8px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid rgba(245,166,35,0.45);
+      background: rgba(245,166,35,0.1);
+      color: #f5a623;
+      vertical-align: middle;
+    }
+    [data-theme="light"] .impairment-driver-chip { color: #8a5a0a; background: #fdf3e0; border-color: #e8c878; }
+
+    /* UI audit P3 — flipchart state + shortcut discoverability */
+    .cockpit-actions-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 12px;
+      width: 100%;
+    }
+    .flipchart-state {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      color: var(--text);
+      min-width: 140px;
+    }
+    .flipchart-state strong { font-weight: 700; font-variant-numeric: tabular-nums; }
+    .flipchart-mode {
+      font-size: 8px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--blue);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid rgba(76,142,217,0.35);
+      background: rgba(76,142,217,0.08);
+    }
+    .flipchart-nav-btn {
+      font-size: 14px;
+      line-height: 1;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text);
+      cursor: pointer;
+    }
+    .flipchart-nav-btn:hover { border-color: var(--blue); color: var(--blue); }
+    .flipchart-position {
+      font-size: 10px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: var(--muted);
+      min-width: 3.5em;
+      text-align: center;
+    }
+    .keyboard-hint-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px 10px;
+      margin-left: auto;
+    }
+    .keyboard-hint { margin-left: 0; white-space: normal; max-width: 320px; line-height: 1.35; }
+    .shortcut-help-btn {
+      font-size: 10px;
+      font-weight: 800;
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--muted);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .shortcut-help-btn:hover { border-color: var(--blue); color: var(--blue); }
+
+    /* UI audit P4 — data dictionary audit table */
+    .dd-audit-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 9px;
+      margin-top: 6px;
+    }
+    .dd-audit-table th,
+    .dd-audit-table td {
+      text-align: left;
+      padding: 5px 6px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .dd-audit-table th {
+      font-size: 8px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+    }
+    .dd-audit-table td { color: var(--text); font-variant-numeric: tabular-nums; }
+    .dd-audit-row { cursor: pointer; }
+    .dd-audit-row:hover { background: rgba(76,142,217,0.08); }
+    .dd-audit-row--active { background: rgba(76,142,217,0.12); }
+    .dd-audit-detail {
+      margin-top: 8px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,0.12);
+      font-size: 9px;
+      line-height: 1.45;
+    }
+    [data-theme="light"] .dd-audit-detail { background: #f8fafb; }
+    .coverage-pill--clickable { cursor: pointer; }
+    .coverage-pill--clickable:hover { filter: brightness(1.08); }
+    .diag-failure-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 9px;
+      margin-top: 6px;
+    }
+    .diag-failure-table th,
+    .diag-failure-table td {
+      padding: 4px 6px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+    .diag-failure-table th {
+      font-size: 8px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .component-failure-strip { display: flex; flex-direction: column; gap: 6px; }
   </style>
 </head>
 <body class="bg-wtm-bg text-slate-100 font-sans h-screen flex flex-col overflow-hidden">
 
-  <header class="flex flex-col sm:flex-row sm:items-stretch border-b border-wtm-border bg-wtm-surface shrink-0">
-    <div class="flex-1 px-5 py-3 flex flex-col justify-center gap-0.5">
-      <div class="header-instrument-stack">
-        <div class="header-instrument-identity">
-          <h1 class="text-[15px] font-semibold tracking-tight">Whinfell Transmission Control</h1>
-          <span class="header-phase-badge text-[9px] font-bold uppercase tracking-wider text-wtm-accent bg-wtm-accent/10 border border-wtm-accent/30 px-2 py-0.5 rounded">Phase 2.2</span>
-        </div>
-        <div class="header-instrument-meta">
-          <span id="tcConsoleBuildBadge" class="header-build-badge text-[8px] font-bold uppercase tracking-wider text-wtm-green bg-emerald-500/10 border border-wtm-green/35 px-2 py-0.5 rounded" title="Operator-console build — hard-refresh if stale">—</span>
-          <span id="ddVersionBadge" class="header-dictionary-badge text-[9px] font-bold uppercase tracking-wider text-wtm-muted bg-wtm-card border border-wtm-border px-2 py-0.5 rounded"></span>
-          <span class="header-workspace-cluster">
-            <button type="button" id="btnWorkspaceToggle" class="header-workspace-toggle text-[9px] font-bold uppercase tracking-wider text-wtm-accent bg-wtm-accent/10 border border-wtm-accent/35 px-2 py-0.5 rounded hover:bg-wtm-accent/20">Node Cockpits</button>
-          </span>
-        </div>
+  <header class="console-topbar" aria-label="Console header">
+    <div class="console-topbar-zone console-topbar-zone--identity">
+      <div class="console-title-row">
+        <h1 class="console-title">Whinfell Transmission Control</h1>
+        <span class="console-phase-badge">Phase 2.2</span>
       </div>
-      <p class="text-[11px] text-wtm-muted">Phase 2 node cockpits · Pipeline command bar · WTM EXPORT v2.1</p>
+      <p id="headerRegimeLine" class="console-regime-line">—</p>
+      <p id="headerRegimeSub" class="console-regime-sub">Import hydration or enter intake to populate regime summary.</p>
+      <div class="console-tech-meta">
+        <span id="tcConsoleBuildBadge" class="header-build-badge text-[8px] font-bold text-wtm-green bg-emerald-500/10 border border-wtm-green/35 px-2 py-0.5 rounded" title="Operator-console build — hard-refresh if stale">—</span>
+        <span id="ddVersionBadge" class="header-dictionary-badge text-[9px] font-bold text-wtm-muted bg-wtm-card border border-wtm-border px-2 py-0.5 rounded"></span>
+        <button type="button" id="btnWorkspaceToggle" class="header-workspace-toggle text-[9px] font-bold text-wtm-accent bg-wtm-accent/10 border border-wtm-accent/35 px-2 py-0.5 rounded hover:bg-wtm-accent/20">Node Cockpits</button>
+      </div>
     </div>
-    <div class="flex items-center gap-2 px-5 py-2.5 sm:border-l border-wtm-border bg-black/20 shrink-0 flex-wrap justify-end">
-      <span id="saveIndicator" class="text-[10px] text-wtm-muted">—</span>
-      <button id="btnExport" type="button" class="text-xs px-3 py-1.5 rounded-md border border-wtm-border bg-wtm-card hover:bg-wtm-border">Export for Perplexity</button>
-      <button id="btnExportPipeline" type="button" class="text-xs px-3 py-1.5 rounded-md border border-wtm-green/40 text-wtm-green bg-emerald-500/10 hover:bg-emerald-500/20">Export Pipeline Bundle</button>
-      <div class="flex flex-col items-end gap-0.5">
-        <button id="btnImportHydration" type="button" title="Select data/hydration/latest.json after run_csv_download.py daily" class="text-xs px-3 py-1.5 rounded-md border border-wtm-accent/50 text-wtm-accent bg-wtm-accent/15 hover:bg-wtm-accent/25 font-semibold">Import Latest Hydration Bundle</button>
-        <span id="hydrationImportStatus" class="text-[9px] text-wtm-muted max-w-[220px] text-right leading-tight">No bundle imported · run daily chain first</span>
+    <div class="console-topbar-zone console-topbar-zone--status">
+      <div class="console-status-primary">
+        <span id="headerFreshnessDot" class="freshness-dot hidden" aria-hidden="true"></span>
+        <span id="headerFreshnessLabel">Freshness —</span>
+        <span id="cmdHydrationBadge" class="hidden text-[8px] font-semibold px-1.5 py-0.5 rounded border">—</span>
       </div>
-      <input id="hydrationFileInput" type="file" accept=".json,application/json" class="hidden" />
-      <button id="btnImport" type="button" class="text-xs px-3 py-1.5 rounded-md border border-wtm-border bg-wtm-card hover:bg-wtm-border">Import from Perplexity</button>
-      <button id="btnSave" type="button" class="text-xs px-3 py-1.5 rounded-md bg-wtm-accent/80 border border-wtm-accent hover:bg-wtm-accent font-medium">Save State</button>
+      <span id="hydrationImportStatus" class="console-import-status">No bundle imported</span>
+      <span id="saveIndicator" class="console-save-state">Unsaved</span>
+      <span id="headerImportTime" class="console-regime-sub"></span>
+    </div>
+    <div class="console-topbar-zone console-topbar-zone--actions">
+      <div class="console-actions-row">
+        <button id="btnImportHydration" type="button" title="Select data/hydration/latest.json after run_csv_download.py daily" class="btn-console btn-console--accent">Import hydration</button>
+        <input id="hydrationFileInput" type="file" accept=".json,application/json" class="hidden" />
+        <button id="btnImport" type="button" class="btn-console btn-console--primary">Import WTM</button>
+        <button id="btnExport" type="button" class="btn-console">Export</button>
+        <button id="btnExportPipeline" type="button" class="btn-console">Pipeline bundle</button>
+        <button id="btnSave" type="button" class="btn-console btn-console--save">Save</button>
+        <button type="button" id="btnTheme" class="btn-console" aria-pressed="false" title="Toggle dark / light console theme">Light mode</button>
+      </div>
     </div>
   </header>
+  <div id="signalDetailBackdrop" class="signal-detail-backdrop" aria-hidden="true"></div>
+  <aside id="signalDetailDrawer" class="signal-detail-drawer zone-hidden" aria-label="Signal explanations" aria-hidden="true">
+    <div class="signal-detail-head">
+      <span class="signal-detail-title">Signal detail</span>
+      <button type="button" id="btnCloseSignalDetail" class="signal-detail-close" aria-label="Close signal detail">×</button>
+    </div>
+    <div class="signal-detail-body">
+      <section class="signal-detail-section"><h3>Whinfell Score</h3><div id="whyWhinfellScore" class="why-body"></div></section>
+      <section class="signal-detail-section"><h3>Transmission</h3><div id="whyTransmission" class="why-body"></div></section>
+      <section class="signal-detail-section"><h3>Gate state</h3><div id="whyGateState" class="why-body"></div></section>
+      <section class="signal-detail-section"><h3>Shock</h3><div id="whyShock" class="why-body"></div></section>
+      <section class="signal-detail-section"><h3>Freshness</h3><div id="whyFreshness" class="why-body"></div></section>
+      <section class="signal-detail-section"><h3>Ingest audit</h3><div id="ingestProvenanceAudit" class="why-body signal-ingest-audit"></div></section>
+      <section class="signal-detail-section"><h3>Data dictionary audit</h3><div id="dataDictionaryAudit" class="why-body" data-agent-surface="dd-audit"></div><div id="ddAuditDetail" class="dd-audit-detail zone-hidden" data-agent-surface="dd-audit-detail"></div></section>
+      <div id="signalDetailTech" class="signal-detail-tech"></div>
+    </div>
+  </aside>
 
   <section id="hydrationBanner" class="hydration-banner zone-hidden" role="alert" aria-live="polite" aria-label="Hydration status">
     <div class="hydration-banner-inner">
@@ -1692,82 +2306,87 @@ window.DICTIONARY_BADGE_DEFAULT = {
     </div>
   </section>
 
-  <!-- Decision Strip + Command Bar -->
-  <section id="commandBar" class="shrink-0 border-b border-wtm-border bg-wtm-surface gate-glow-amber transition-all px-4 py-2">
-    <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-      <div class="flex items-center gap-1 shrink-0 border border-wtm-border rounded-md p-0.5 bg-wtm-bg">
-        <button type="button" data-track="both" class="track-toggle track-toggle-active text-[9px] font-bold uppercase px-2 py-1 rounded border border-transparent">Both</button>
-        <button type="button" data-track="global" class="track-toggle text-[9px] font-bold uppercase px-2 py-1 rounded border border-transparent text-wtm-muted">Global</button>
-        <button type="button" data-track="china" class="track-toggle text-[9px] font-bold uppercase px-2 py-1 rounded border border-transparent text-wtm-muted">China</button>
-      </div>
-      <div class="flex items-center gap-2 text-[10px] text-wtm-muted flex-wrap">
-        <span id="cmdTxState" class="hidden">—</span>
-        <span id="cmdRegime" class="truncate max-w-[200px]">—</span>
-        <span id="cmdSq3Score" class="tabular-nums">SQ3 —</span>
-        <span id="cmdSq3Band" class="text-[9px] font-bold uppercase">—</span>
-        <span id="cmdGrossRisk" class="tabular-nums text-wtm-accent">—</span>
-        <span id="cmdGrossPosture" class="text-[9px]">—</span>
-        <span id="cmdHydrationBadge" class="hidden text-[7px] font-bold uppercase px-1 py-0.5 rounded border">—</span>
-        <span id="sessionReadyChip" class="session-ready-chip zone-hidden" role="status" aria-live="polite">—</span>
-        <a href="whinfell-transmission-ladder-deep-dive.html" target="_blank" rel="noopener" class="text-[9px] text-wtm-accent hover:underline font-bold uppercase tracking-wide">Deep Dive</a>
-        <button type="button" id="btnToggleGateDetail" class="text-[9px] text-wtm-accent hover:underline">Gate detail</button>
-      </div>
-    </div>
-    <section class="decision-strip" aria-label="Master state">
-      <div id="scoreCard" class="metric-card score-card">
-        <span class="label">Whinfell Score</span>
-        <strong id="cmdWhinfellScore">—</strong>
-        <span id="cmdScoreZone" class="meta">—</span>
-        <details class="why-details" data-why-signal="whinfell-score"><summary>WHY</summary><div id="whyWhinfellScore" class="why-body"></div></details>
-      </div>
-      <div class="metric-card">
-        <span class="label">Transmission</span>
-        <strong id="txHealthValue">—</strong>
-        <span id="txHealthMeta" class="meta">—</span>
-        <details class="why-details" data-why-signal="transmission"><summary>WHY</summary><div id="whyTransmission" class="why-body"></div></details>
-      </div>
-      <div class="metric-card">
-        <span class="label">Gate State</span>
-        <strong id="gateText">—</strong>
-        <span id="cmdGateLabel" class="hidden">—</span>
-        <span id="gateChip" class="gate-chip">—</span>
-        <span id="gateHelperText" class="meta">—</span>
-        <span id="cmdGateSub" class="hidden">—</span>
-        <details class="why-details" data-why-signal="gate-state"><summary>WHY</summary><div id="whyGateState" class="why-body"></div></details>
-      </div>
-      <div class="metric-card">
-        <span class="label">Shock</span>
-        <strong id="shockText">No active shock</strong>
-        <span id="shockMeta" class="meta">Baseline regime</span>
-        <details class="why-details" data-why-signal="shock"><summary>WHY</summary><div id="whyShock" class="why-body"></div></details>
-      </div>
-      <div id="cmdFreshnessCluster" class="metric-card">
-        <span class="label">Freshness</span>
+  <!-- Command bar: KPI band + ladders -->
+  <section id="commandBar" class="shrink-0 border-b border-wtm-border bg-wtm-surface gate-glow-amber transition-all">
+    <div class="kpi-band">
+      <div class="kpi-band-toolbar">
+        <div class="flex items-center gap-1 shrink-0 border border-wtm-border rounded-md p-0.5 bg-wtm-bg">
+          <button type="button" data-track="both" class="track-toggle track-toggle-active text-[9px] font-bold px-2 py-1 rounded border border-transparent">Both</button>
+          <button type="button" data-track="global" class="track-toggle text-[9px] font-bold px-2 py-1 rounded border border-transparent text-wtm-muted">Global</button>
+          <button type="button" data-track="china" class="track-toggle text-[9px] font-bold px-2 py-1 rounded border border-transparent text-wtm-muted">China</button>
+        </div>
+        <div class="kpi-band-meta">
+          <span id="cmdTxState" class="hidden">—</span>
+          <span id="cmdRegime" class="hidden">—</span>
+          <span id="cmdSq3Score" class="tabular-nums">SQ3 —</span>
+          <span id="cmdSq3Band" class="text-[9px] font-semibold px-1.5 py-0.5 rounded border">—</span>
+          <span id="cmdGrossRisk" class="tabular-nums text-wtm-accent">—</span>
+          <span id="cmdGrossPosture" class="text-[9px]">—</span>
+          <span id="sessionReadyChip" class="session-ready-chip zone-hidden" role="status" aria-live="polite">—</span>
+        </div>
         <div class="flex items-center gap-2">
-          <span id="cmdFreshnessDot" class="freshness-dot hidden"></span>
-          <strong id="cmdFreshness">—</strong>
+          <button type="button" id="btnSignalDetail" class="btn-signal-detail">Signal detail</button>
+          <button type="button" id="btnToggleGateDetail" class="text-[10px] text-wtm-accent hover:underline font-semibold">Gate detail</button>
+          <a href="whinfell-transmission-ladder-deep-dive.html" target="_blank" rel="noopener" class="text-[10px] text-wtm-muted hover:text-wtm-accent font-semibold">Ladder deep dive</a>
         </div>
-        <span id="cmdFreshnessMeta" class="meta" title="">—</span>
-        <div id="cmdFreshnessSubCluster" class="freshness-sub-cluster" aria-label="Source freshness"></div>
-        <details class="why-details" data-why-signal="freshness"><summary>WHY</summary><div id="whyFreshness" class="why-body"></div></details>
       </div>
-    </section>
-    <div id="cmdLadderTracks" class="grid grid-cols-1 lg:grid-cols-2 gap-2 mt-2">
-      <div id="cmdGlobalCluster" class="rounded border border-wtm-border bg-wtm-bg/60 px-2.5 py-1.5 text-[9px] text-wtm-muted"></div>
-      <div id="cmdChinaCluster" class="rounded border border-wtm-border bg-wtm-bg/60 px-2.5 py-1.5 text-[9px] text-wtm-muted"></div>
+      <section class="decision-strip" aria-label="Primary KPIs">
+        <div id="scoreCard" class="metric-card score-card">
+          <span class="label">Whinfell Score</span>
+          <strong id="cmdWhinfellScore">—</strong>
+          <span id="cmdScoreZone" class="meta">—</span>
+        </div>
+        <div class="metric-card">
+          <span class="label">Transmission</span>
+          <strong id="txHealthValue">—</strong>
+          <span id="txHealthMeta" class="meta">—</span>
+        </div>
+        <div class="metric-card">
+          <span class="label">Gate state</span>
+          <strong id="gateText">—</strong>
+          <span id="cmdGateLabel" class="hidden">—</span>
+          <span id="gateChip" class="gate-chip">—</span>
+          <span id="gateHelperText" class="meta">—</span>
+          <span id="cmdGateSub" class="hidden">—</span>
+        </div>
+        <div class="metric-card">
+          <span class="label">Shock</span>
+          <strong id="shockText">No active shock</strong>
+          <span id="shockMeta" class="meta">Baseline regime</span>
+        </div>
+        <div id="cmdFreshnessCluster" class="metric-card">
+          <span class="label">Freshness</span>
+          <div class="flex items-center gap-2">
+            <span id="cmdFreshnessDot" class="freshness-dot hidden"></span>
+            <strong id="cmdFreshness">—</strong>
+          </div>
+          <span id="cmdFreshnessMeta" class="meta" title="">—</span>
+          <div id="cmdFreshnessSubCluster" class="freshness-sub-cluster" aria-label="Source freshness"></div>
+        </div>
+      </section>
     </div>
-    <div id="gateDetailPanel" class="hidden border-t border-wtm-border bg-black/25 px-0 py-2.5 mt-2">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 text-[10px]">
-        <div>
-          <p class="font-bold uppercase text-wtm-accent mb-1">Gate Explanation</p>
-          <ul id="gateExplainList" class="list-disc list-inside text-wtm-muted space-y-0.5"></ul>
-        </div>
-        <div>
-          <p class="font-bold uppercase text-wtm-accent mb-1">Unlock Conditions</p>
-          <ul id="gateUnlockList" class="list-disc list-inside text-wtm-muted space-y-0.5"></ul>
-        </div>
+    <div class="console-panel-zone console-panel-zone--ladders">
+      <div class="console-panel-zone-label">Ladders · Global + China</div>
+      <div id="cmdLadderTracks" class="console-panel-zone-body">
+        <div id="cmdGlobalCluster" class="rounded border border-wtm-border bg-wtm-bg/60 px-2.5 py-1.5 text-[10px] text-wtm-muted leading-relaxed"></div>
+        <div id="cmdChinaCluster" class="rounded border border-wtm-border bg-wtm-bg/60 px-2.5 py-1.5 text-[10px] text-wtm-muted leading-relaxed"></div>
       </div>
-      <p id="gateHealthSub" class="text-[9px] text-wtm-muted mt-2"></p>
+    </div>
+    <div id="gateDetailPanel" class="hidden console-panel-zone">
+      <div class="console-panel-zone-label">Gate detail</div>
+      <div class="px-3 py-2.5 bg-black/25">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 text-[10px]">
+          <div>
+            <p class="font-semibold text-wtm-accent mb-1">Gate explanation</p>
+            <ul id="gateExplainList" class="list-disc list-inside text-wtm-muted space-y-0.5"></ul>
+          </div>
+          <div>
+            <p class="font-semibold text-wtm-accent mb-1">Unlock conditions</p>
+            <ul id="gateUnlockList" class="list-disc list-inside text-wtm-muted space-y-0.5"></ul>
+          </div>
+        </div>
+        <p id="gateHealthSub" class="text-[9px] text-wtm-muted mt-2"></p>
+      </div>
     </div>
   </section>
 
@@ -1786,8 +2405,12 @@ window.DICTIONARY_BADGE_DEFAULT = {
   <!-- Phase 2 Node Cockpit Shell (UI-1) -->
   <section id="nodeCockpitZone" class="flex-1 min-h-0 flex flex-col overflow-hidden" aria-label="Node cockpit workspace">
     <nav id="nodeRail" class="node-rail" aria-label="Risk curve navigation"></nav>
-    <div id="nodeCoverageBanner" class="node-coverage-banner zone-hidden" role="status" aria-live="polite" aria-label="Hydration and coverage"></div>
-    <section id="postImportWorkflow" class="post-import-workflow zone-hidden" aria-label="Post-import workflow">
+    <div id="diagnosticsPanelZone" class="console-panel-zone console-panel-zone--diagnostics zone-hidden">
+      <div class="console-panel-zone-label">Data quality · coverage</div>
+      <div id="nodeCoverageBanner" class="node-coverage-banner zone-hidden" role="status" aria-live="polite" aria-label="Hydration and coverage"></div>
+    </div>
+    <section id="postImportWorkflow" class="post-import-workflow zone-hidden console-panel-zone" aria-label="Post-import workflow">
+      <div class="console-panel-zone-label">Workflow actions</div>
       <div class="post-import-workflow-inner">
         <span class="post-import-workflow-title">Desk checklist</span>
         <ol id="postImportSteps" class="post-import-steps"></ol>
@@ -1796,6 +2419,7 @@ window.DICTIONARY_BADGE_DEFAULT = {
     <div id="cockpitShell" class="flex-1 min-h-0 flex flex-col overflow-hidden">
       <div class="cockpit-main flex-1 min-h-0 grid grid-cols-1 xl:grid-cols-12 gap-px bg-wtm-border overflow-hidden">
         <div id="cockpitChartArea" class="cockpit-chart-area xl:col-span-8 bg-wtm-bg flex flex-col min-h-0 overflow-hidden">
+          <div class="console-panel-zone-label console-panel-zone-label--inline">Mission read · RV / Basis</div>
           <div id="basisTacticalBanner" class="basis-tactical-banner zone-hidden" aria-live="polite">
             <p class="basis-tactical-eyebrow">Basis mission read</p>
             <p id="basisTacticalSentence" class="basis-tactical-sentence">—</p>
@@ -1834,7 +2458,7 @@ window.DICTIONARY_BADGE_DEFAULT = {
       <div id="cockpitCompareLayer" class="cockpit-compare-layer zone-hidden" aria-label="Compare mode"></div>
       <div id="cockpitDetailBand" class="cockpit-detail-band shrink-0" aria-label="Component drivers"></div>
       <div id="cockpitActions" class="cockpit-actions shrink-0" aria-label="Cockpit actions">
-        <div class="operator-actions-strip">
+        <div class="cockpit-actions-inner">
           <div class="operator-actions-primary">
             <button type="button" id="btnHeresWhy" class="operator-action operator-action--why btn btn-primary">
               <span class="operator-action-label">Here's Why</span>
@@ -1849,7 +2473,17 @@ window.DICTIONARY_BADGE_DEFAULT = {
               <span class="operator-action-hint">Desk handoff bundle</span>
             </button>
           </div>
-          <span class="keyboard-hint">← → flip · 1–5 jump · f focus · c compare · Shift+click rail</span>
+          <div id="flipchartState" class="flipchart-state" aria-live="polite" data-agent-surface="flipchart-state">
+            <span class="flipchart-mode" id="flipchartMode">Flipchart</span>
+            <strong id="flipchartTitle">—</strong>
+          </div>
+          <div class="keyboard-hint-group">
+            <button type="button" id="btnFlipPrev" class="flipchart-nav-btn" title="Previous node (←)" aria-label="Previous node">‹</button>
+            <span id="flipchartPosition" class="flipchart-position" data-agent-field="flip-index">—</span>
+            <button type="button" id="btnFlipNext" class="flipchart-nav-btn" title="Next node (→)" aria-label="Next node">›</button>
+            <span class="keyboard-hint" id="keyboardHintText">← → flip · 1–5 jump · f focus · c compare</span>
+            <button type="button" id="btnShortcutHelp" class="shortcut-help-btn" title="Shift+click a rail tab (in Compare mode) to add/remove that node from the side-by-side Compare layer without leaving your current view.">?</button>
+          </div>
         </div>
       </div>
     </div>
@@ -1887,12 +2521,12 @@ window.DICTIONARY_BADGE_DEFAULT = {
               <span id="txChip" class="text-[9px] font-bold uppercase px-2 py-2 rounded border border-wtm-border text-wtm-muted shrink-0 self-center">—</span>
             </div>
             <p id="txMappingNote" class="tx-mapping-note">—</p>
-            <details class="why-details" data-why-signal="transmission-state-intake"><summary>WHY</summary><div id="whyTransmissionState" class="why-body"></div></details>
+            <details class="why-details why-details--secondary" data-why-signal="transmission-state-intake"><summary>Explain</summary><div id="whyTransmissionState" class="why-body"></div></details>
           </label>
           <label class="block">
             <span class="text-[10px] font-semibold text-wtm-muted uppercase">Regime Tag</span>
             <input id="regimeTag" type="text" list="regimePresets" placeholder="e.g. Fragile Risk-On" class="w-full mt-1 bg-wtm-bg border border-wtm-border rounded-md px-3 py-2 text-sm focus:outline-none focus:border-wtm-accent" />
-            <details class="why-details" data-why-signal="regime-tag"><summary>WHY</summary><div id="whyRegimeTag" class="why-body"></div></details>
+            <details class="why-details why-details--secondary" data-why-signal="regime-tag"><summary>Explain</summary><div id="whyRegimeTag" class="why-body"></div></details>
             <datalist id="regimePresets">
               <option value="Risk-On / Constructive"></option><option value="Fragile Risk-On"></option>
               <option value="Neutral / Range"></option><option value="Risk-Off / Compression"></option><option value="Crisis"></option>
@@ -1918,7 +2552,7 @@ window.DICTIONARY_BADGE_DEFAULT = {
             <span id="sq3ComputedDisplay" class="text-sm font-extrabold tabular-nums">—</span>
             <span id="sq3BandChip" class="text-[8px] font-bold uppercase px-1.5 py-0.5 rounded border border-wtm-border text-wtm-muted">—</span>
           </div>
-          <details class="why-details" data-why-signal="china-sq3"><summary>WHY</summary><div id="whyChinaSq3" class="why-body"></div></details>
+          <details class="why-details why-details--secondary" data-why-signal="china-sq3"><summary>Explain</summary><div id="whyChinaSq3" class="why-body"></div></details>
           <label class="block"><span class="text-[9px] text-wtm-muted uppercase">China Regime Tag</span>
             <input id="chinaRegimeTag" type="text" placeholder="optional" class="w-full mt-0.5 bg-wtm-bg border border-wtm-border rounded px-2 py-1.5 text-sm" /></label>
         </div>
@@ -2139,7 +2773,7 @@ window.DICTIONARY_BADGE_DEFAULT = {
               <input id="operatorConfidence" type="range" min="0" max="100" value="58" />
               <span id="operatorConfidenceValue">58</span>
             </div>
-            <details class="why-details" data-why-signal="operator-confidence"><summary>WHY</summary><div id="whyOperatorConfidence" class="why-body"></div></details>
+            <details class="why-details" data-why-signal="operator-confidence"><summary>Explain</summary><div id="whyOperatorConfidence" class="why-body"></div></details>
           </label>
           <label>
             Execution intent
@@ -2150,7 +2784,7 @@ window.DICTIONARY_BADGE_DEFAULT = {
               <option value="full_risk">full_risk</option>
             </select>
             <span id="executionIntentHint">—</span>
-            <details class="why-details" data-why-signal="execution-intent"><summary>WHY</summary><div id="whyExecutionIntent" class="why-body"></div></details>
+            <details class="why-details" data-why-signal="execution-intent"><summary>Explain</summary><div id="whyExecutionIntent" class="why-body"></div></details>
           </label>
           <div class="operator-grid-2">
             <label>
@@ -2175,7 +2809,7 @@ window.DICTIONARY_BADGE_DEFAULT = {
               <option value="steep contango">steep contango</option>
               <option value="stress backwardation">stress backwardation</option>
             </select>
-            <details class="why-details" data-why-signal="basis-regime"><summary>WHY</summary><div id="whyBasisRegime" class="why-body"></div></details>
+            <details class="why-details" data-why-signal="basis-regime"><summary>Explain</summary><div id="whyBasisRegime" class="why-body"></div></details>
           </label>
           <label>
             Key observation
@@ -2212,7 +2846,7 @@ window.DICTIONARY_BADGE_DEFAULT = {
             <div class="l3-action-full"><span class="l3-action-label">Reason</span><div id="l3ActionReason" class="l3-action-value">—</div></div>
             <div class="l3-action-full"><span class="l3-action-label">Key risk</span><div id="l3ActionKeyRisk" class="l3-action-value">—</div></div>
           </section>
-          <details class="why-details mb-2" data-why-signal="layer3-calendar-arb"><summary>WHY</summary><div id="whyLayer3Spread" class="why-body"></div></details>
+          <details class="why-details mb-2" data-why-signal="layer3-calendar-arb"><summary>Explain</summary><div id="whyLayer3Spread" class="why-body"></div></details>
           <p id="layer3ActionHint" class="hidden">—</p>
           <p class="text-[9px] font-bold uppercase text-wtm-muted mb-1">Spread inputs</p>
           <div class="grid grid-cols-3 gap-2 mb-2">
@@ -2251,7 +2885,7 @@ const STORAGE_KEY = 'whinfell_transmission_control_v7';
 const LEGACY_KEYS = ['whinfell_transmission_control_v1', 'whinfell_transmission_control_v0', 'whinfell_operator_v1_1'];
 const STATE_VERSION = 7;
 /** Bump when operator-console UX changes — visible in header for reload verification. */
-const TC_CONSOLE_BUILD = '2.2-MISSION-2026-06-29';
+const TC_CONSOLE_BUILD = '2.2-UI-AUDIT-2026-06-30';
 const HYDRATION_BUNDLE_VERSION = '1.2.0';
 const RV_HORIZONS = ['1m', '3m', '6m', '12m', '3y'];
 const RV_HORIZON_LABELS = { '1m': '1M', '3m': '3M', '6m': '6M', '12m': '12M', '3y': '3Y' };
@@ -3371,6 +4005,7 @@ function createEmptyHydration() {
     flows_health: null,
     china_as_of: null,
     barchart_as_of: null,
+    ingest_provenance: null,
   };
 }
 
@@ -3417,10 +4052,26 @@ function computeFreshnessFromIso(iso) {
 }
 
 function freshnessChipCls(status) {
-  if (status === 'fresh') return 'text-wtm-green';
-  if (status === 'aging') return 'text-wtm-amber';
-  if (status === 'stale') return 'text-wtm-red';
-  return 'text-wtm-muted';
+  const base = 'status-chip ';
+  if (status === 'fresh') return base + 'status-chip--fresh';
+  if (status === 'aging') return base + 'status-chip--aging';
+  if (status === 'stale') return base + 'status-chip--stale';
+  return base + 'status-chip--info';
+}
+
+function resolveImpairmentDriver(state, gate) {
+  const globalScore = Number(state?.intake?.whinfellScore);
+  const china = computeChinaLadderRead(state);
+  const globalImpaired = Number.isFinite(globalScore) && globalScore < 50;
+  const chinaImpaired = gate?.sq3Result && gate.sq3Score < 50;
+  if (globalImpaired && chinaImpaired) {
+    const globalDelta = 50 - globalScore;
+    const chinaDelta = 50 - gate.sq3Score;
+    return globalDelta >= chinaDelta ? 'Global score' : 'China SQ3';
+  }
+  if (globalImpaired) return 'Global score';
+  if (chinaImpaired) return 'China SQ3';
+  return '';
 }
 
 function gateStripTitle(gate) {
@@ -3501,6 +4152,7 @@ function buildGrokPayload(state) {
       layer3: { status: gate.code === 'open' ? 'open' : gate.code === 'reduced' ? 'reduced' : 'blocked', intent: op.executionIntent },
     },
     export_block: buildWtmExportV21FromState(state, gate, health),
+    ui_audit: buildUiAuditPayload(state),
   };
 }
 
@@ -4776,6 +5428,9 @@ function hydrateFromBundle(bundle, options = {}) {
       }
     }
   }
+  if (bundle.ingest_provenance) {
+    appState.hydration.ingest_provenance = bundle.ingest_provenance;
+  }
 
   renderAll();
   markDirty();
@@ -4796,6 +5451,29 @@ function importHydrationFile(file, options = {}) {
     }
   };
   reader.readAsText(file);
+}
+
+const DEPLOY_HYDRATION_URL = 'data/hydration/latest.json';
+
+async function tryAutoHydrateFromDeploy() {
+  if (location.protocol === 'file:') return false;
+  try {
+    if (new URLSearchParams(location.search).get('auto_hydrate') === '0') return false;
+  } catch (_) { /* ignore */ }
+  if (appState.provenance?.hydratedAt && appState.hydration?.node_cockpits) return false;
+  try {
+    const res = await fetch(`${DEPLOY_HYDRATION_URL}?_=${Date.now()}`);
+    if (!res.ok) return false;
+    const bundle = await res.json();
+    if (!bundle || bundle.validation_status === 'missing') return false;
+    const ok = hydrateFromBundle(bundle);
+    if (ok) {
+      try { sessionStorage.setItem('whinfell_hydration_prompt_v1', '1'); } catch (_) { /* ignore */ }
+    }
+    return !!ok;
+  } catch (_) {
+    return false;
+  }
 }
 
 function applyImportFields(fields) {
@@ -4992,8 +5670,10 @@ function buildStateFromDOM() {
       node_cockpits: appState.hydration?.node_cockpits || null,
       cockpit_context: appState.hydration?.cockpit_context || null,
       flows_sidecar: appState.hydration?.flows_sidecar || null,
+      flows_health: appState.hydration?.flows_health || null,
       china_as_of: appState.hydration?.china_as_of || null,
       barchart_as_of: appState.hydration?.barchart_as_of || null,
+      ingest_provenance: appState.hydration?.ingest_provenance || null,
     },
     navigation: { ...createEmptyNavigation(), ...(appState.navigation || {}) },
     chart: { ...createEmptyChartState(), ...(appState.chart || {}) },
@@ -5660,27 +6340,294 @@ function maybePromptFirstHydrationImport(state) {
 
 function renderHydrationImportStatus(state) {
   const node = el('hydrationImportStatus');
+  const timeNode = el('headerImportTime');
   if (!node) return;
   const assessment = assessHydrationSession(state);
   const prov = state?.provenance || createEmptyProvenance();
   if (assessment.level === 'missing') {
-    node.textContent = '⚠ No bundle imported — panels degraded';
-    node.className = 'text-[9px] hydration-import-status-critical max-w-[240px] text-right leading-tight';
+    node.textContent = 'No bundle imported — panels degraded';
+    node.className = 'console-import-status hydration-import-status-critical';
     node.title = 'Import data/hydration/latest.json after desk live session';
+    if (timeNode) timeNode.textContent = '';
+    renderSignalDetailTech(state);
     return;
   }
   if (assessment.level === 'stale' || assessment.level === 'incomplete') {
-    node.textContent = '⚠ Stale bundle — re-import v1.2.0';
-    node.className = 'text-[9px] hydration-import-status-warn max-w-[240px] text-right leading-tight';
+    node.textContent = 'Stale bundle — re-import recommended';
+    node.className = 'console-import-status hydration-import-status-warn';
     node.title = assessment.body;
+    if (timeNode) timeNode.textContent = prov.hydratedAt ? `Last import ${new Date(prov.hydratedAt).toLocaleString()}` : '';
+    renderSignalDetailTech(state);
     return;
   }
   const fresh = prov.freshnessStatus || computeFreshnessFromIso(prov.dataAsOf).status;
   const when = prov.hydratedAt ? new Date(prov.hydratedAt).toLocaleTimeString() : '—';
-  const snap = prov.snapshotId ? prov.snapshotId.slice(0, 18) : '—';
-  node.textContent = `✓ Imported ${when} · ${freshnessLabelFromStatus(fresh)} · ${snap}`;
-  node.className = `text-[9px] max-w-[240px] text-right leading-tight ${fresh === 'fresh' ? 'text-wtm-green' : fresh === 'stale' ? 'text-wtm-red' : 'text-wtm-amber'}`;
-  node.title = `Data as-of: ${prov.dataAsOf || '—'} · Source: ${prov.sourceChannel || '—'}`;
+  node.textContent = `Imported ${when} · ${freshnessLabelFromStatus(fresh)}`;
+  node.className = `console-import-status ${fresh === 'fresh' ? 'text-wtm-green' : fresh === 'stale' ? 'text-wtm-red' : 'text-wtm-amber'}`;
+  node.title = `Data as-of: ${prov.dataAsOf || '—'}`;
+  if (timeNode) {
+    const lineage = prov.lineageHash ? String(prov.lineageHash).replace(/^sha256:/, '').slice(0, 12) : '';
+    timeNode.textContent = lineage ? `Lineage ${lineage}…` : '';
+    timeNode.title = prov.lineageHash || prov.snapshotId || '';
+  }
+  renderSignalDetailTech(state);
+}
+
+function renderIngestProvenanceAudit(state) {
+  const node = el('ingestProvenanceAudit');
+  if (!node) return;
+  const ingest = state?.hydration?.ingest_provenance;
+  if (!ingest || !ingest.staged_count) {
+    node.textContent = 'Staged ingest routes appear after hydration import (ARCH-1 M3).';
+    return;
+  }
+  const kinds = ingest.output_kinds || {};
+  const kindSummary = Object.entries(kinds)
+    .map(([k, n]) => `${k}: ${n}`)
+    .join(' · ') || '—';
+  const rows = (ingest.entries || []).slice(0, 12).map(entry => {
+    const assets = (entry.canonical_assets || []).slice(0, 3).join(', ');
+    return `<tr>
+      <td>${escapeHtml(entry.filename || '')}</td>
+      <td>${escapeHtml(entry.source_class || '')}</td>
+      <td>${escapeHtml(entry.output_kind || '')}</td>
+      <td>${escapeHtml(assets || '—')}</td>
+    </tr>`;
+  }).join('');
+  const more = ingest.staged_count > 12
+    ? `<p class="text-[10px] text-wtm-muted mt-1">+ ${ingest.staged_count - 12} more staged files (48h window)</p>`
+    : '';
+  node.innerHTML = `
+    <p><strong>Primary output kind:</strong> ${escapeHtml(ingest.primary_output_kind || 'unknown')}</p>
+    <p><strong>Staged routes (${ingest.staged_count}):</strong> ${escapeHtml(kindSummary)}</p>
+    <table class="ingest-audit-table">
+      <thead><tr><th>File</th><th>Source class</th><th>Kind</th><th>Assets</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>${more}`;
+}
+
+function buildDataDictionaryAuditRows(state, filterScope) {
+  const rows = [];
+  const gate = deriveGate(state);
+  const cockpits = state?.hydration?.node_cockpits || {};
+  const globalFlows = resolveFlowsStatusFromState(state);
+  const flowsAsOf = state?.hydration?.flows_sidecar?.as_of || '';
+
+  if (globalFlows !== 'ok') {
+    rows.push({
+      id: 'flows-global',
+      scope: 'Global',
+      node: 'Flows',
+      status: globalFlows === 'unavailable' ? 'Missing' : 'Partial',
+      missing: 'WTM-Flows-Global.csv',
+      cause: globalFlows === 'unavailable' ? 'missing_source' : 'data_stale',
+      impact: 'Funds-flow sponsorship degraded on all nodes',
+      action: DD_AUDIT_REMEDIATION[globalFlows === 'unavailable' ? 'missing_source' : 'data_stale'],
+      meta: { flows_as_of: flowsAsOf },
+      auditScope: 'flows',
+    });
+  }
+
+  LADDER.forEach(row => {
+    const cockpit = cockpits[row.id];
+    if (!cockpit) return;
+    if (isHorizonNetFallback(cockpit) && !(cockpit.component_inputs || []).length) {
+      rows.push({
+        id: `${row.id}-horizon-fallback`,
+        scope: 'Global',
+        node: row.short,
+        status: 'Partial',
+        missing: 'C1-weighted components',
+        cause: 'derived_unavailable',
+        impact: 'Composite uses horizon-net fallback — mission read confidence reduced',
+        action: DD_AUDIT_REMEDIATION.derived_unavailable,
+        auditScope: row.id,
+      });
+    }
+    (cockpit.component_inputs || []).forEach((comp, i) => {
+      const cause = classifyComponentFailure(comp);
+      if (!cause) return;
+      const fc = DIAG_FAILURE_CODES[cause];
+      rows.push({
+        id: `${row.id}-comp-${i}`,
+        scope: 'Global',
+        node: row.short,
+        status: String(comp.value).toLowerCase() === 'unavailable' ? 'Missing' : 'Partial',
+        missing: comp.label || comp.asset_id || 'component',
+        cause,
+        impact: `Weakens ${row.short} mission read / component score`,
+        action: DD_AUDIT_REMEDIATION[cause],
+        meta: { source: comp.source, asset_id: comp.asset_id, code: fc?.code },
+        auditScope: row.id,
+        component: comp,
+      });
+    });
+  });
+
+  const china = computeChinaLadderRead(state);
+  if (china.weakestStage && gate?.sq3Result && gate.sq3Score < 65) {
+    rows.push({
+      id: 'china-ladder-weak',
+      scope: 'China',
+      node: 'Ladder',
+      status: 'Impaired',
+      missing: `${china.weakestStage} confirmation`,
+      cause: 'gate_suppressed',
+      impact: 'Pulls final adjusted China confidence down',
+      action: 'Inspect China credit confirmation inputs and SQ3 penalty logic',
+      auditScope: 'china',
+    });
+  }
+
+  if (!filterScope || filterScope === 'global' || filterScope === 'signals') return rows;
+  return rows.filter(r => r.auditScope === filterScope || (filterScope === 'flows' && r.id === 'flows-global'));
+}
+
+function renderDdAuditDetail(row) {
+  const detail = el('ddAuditDetail');
+  if (!detail || !row) {
+    detail?.classList.add('zone-hidden');
+    return;
+  }
+  const fc = DIAG_FAILURE_CODES[row.cause] || { code: 'DD-AUDIT', label: row.cause };
+  detail.classList.remove('zone-hidden');
+  detail.innerHTML = `
+    <p><strong>${escapeHtml(row.node)}</strong> · ${escapeHtml(row.missing)}</p>
+    <p><span class="status-chip status-chip--impaired">${escapeHtml(fc.code)}</span> ${escapeHtml(fc.label)}</p>
+    <p><strong>Impact:</strong> ${escapeHtml(row.impact)}</p>
+    <p><strong>Next action:</strong> ${escapeHtml(row.action)}</p>
+    ${row.meta?.source ? `<p><strong>Source:</strong> ${escapeHtml(row.meta.source)} · ${escapeHtml(row.meta.asset_id || '')}</p>` : ''}
+    ${row.meta?.flows_as_of ? `<p><strong>Flows as-of:</strong> ${escapeHtml(row.meta.flows_as_of)}</p>` : ''}`;
+}
+
+function renderDataDictionaryAudit(state, filterScope) {
+  const node = el('dataDictionaryAudit');
+  if (!node) return [];
+  const gate = deriveGate(state);
+  const rows = buildDataDictionaryAuditRows(state, filterScope);
+  if (!state?.provenance?.hydratedAt) {
+    node.textContent = 'Import hydration bundle to run data dictionary audit.';
+    return [];
+  }
+  if (!rows.length) {
+    node.innerHTML = '<p>All audited fields present for current 48h window. No remediation required.</p>';
+    el('ddAuditDetail')?.classList.add('zone-hidden');
+    return [];
+  }
+  const body = rows.map((row, i) => {
+    const fc = DIAG_FAILURE_CODES[row.cause] || { code: '—' };
+    return `<tr class="dd-audit-row" data-audit-row-id="${escapeHtml(row.id)}" data-agent-audit-row="${i}">
+      <td>${escapeHtml(row.scope)}</td>
+      <td>${escapeHtml(row.node)}</td>
+      <td>${escapeHtml(row.status)}</td>
+      <td>${escapeHtml(row.missing)}</td>
+      <td><span class="status-chip status-chip--impaired">${escapeHtml(fc.code)}</span></td>
+      <td>${escapeHtml(row.impact)}</td>
+    </tr>`;
+  }).join('');
+  node.innerHTML = `
+    <p>Click a row or coverage pill for remediation detail. Master Data Dictionary v1.0 governs field mapping.</p>
+    <table class="dd-audit-table">
+      <thead><tr><th>Scope</th><th>Node</th><th>Status</th><th>Missing</th><th>Cause</th><th>Impact</th></tr></thead>
+      <tbody>${body}</tbody>
+    </table>`;
+  node.querySelectorAll('.dd-audit-row').forEach(tr => {
+    tr.onclick = () => {
+      node.querySelectorAll('.dd-audit-row').forEach(r => r.classList.remove('dd-audit-row--active'));
+      tr.classList.add('dd-audit-row--active');
+      const hit = rows.find(r => r.id === tr.dataset.auditRowId);
+      renderDdAuditDetail(hit);
+    };
+  });
+  return rows;
+}
+
+function openDictionaryAudit(scope) {
+  const state = buildStateFromDOM();
+  setSignalDetailOpen(true);
+  renderDataDictionaryAudit(state, scope);
+  const rows = buildDataDictionaryAuditRows(state, scope);
+  const hit = rows.find(r => r.auditScope === scope) || rows[0];
+  if (hit) renderDdAuditDetail(hit);
+}
+
+function buildUiAuditPayload(state) {
+  const gate = deriveGate(state);
+  const mode = assessCockpitHydrationMode(state);
+  const checklist = buildCoverageChecklist(state);
+  const ddRows = buildDataDictionaryAuditRows(state);
+  const idx = nodeIndexById(activeNodeId());
+  const nav = state.navigation || appState.navigation || {};
+  return {
+    console_build: TC_CONSOLE_BUILD,
+    coverage_mode: mode.mode,
+    impairment_driver: resolveImpairmentDriver(state, gate),
+    coverage_checklist: checklist,
+    dictionary_audit_count: ddRows.length,
+    dictionary_audit_rows: ddRows.map(r => ({
+      scope: r.scope,
+      node: r.node,
+      status: r.status,
+      missing: r.missing,
+      cause_code: (DIAG_FAILURE_CODES[r.cause] || {}).code,
+      impact: r.impact,
+      next_action: r.action,
+    })),
+    flipchart: {
+      mode: nav.focus_mode ? 'focus' : nav.view_mode === 'compare' ? 'compare' : 'flipchart',
+      active_node: activeNodeId(),
+      position: idx >= 0 ? `${idx + 1}/${LADDER.length}` : null,
+    },
+  };
+}
+
+function renderFlipchartState() {
+  const idx = nodeIndexById(activeNodeId());
+  const row = idx >= 0 ? LADDER[idx] : null;
+  const nav = appState.navigation || {};
+  const modeLabel = nav.focus_mode ? 'Focus' : nav.view_mode === 'compare' ? 'Compare' : 'Flipchart';
+  const modeEl = el('flipchartMode');
+  const titleEl = el('flipchartTitle');
+  const posEl = el('flipchartPosition');
+  if (modeEl) modeEl.textContent = modeLabel;
+  if (titleEl) titleEl.textContent = row?.short || '—';
+  if (posEl) posEl.textContent = row ? `${idx + 1} / ${LADDER.length}` : '—';
+  const prevBtn = el('btnFlipPrev');
+  const nextBtn = el('btnFlipNext');
+  if (prevBtn) prevBtn.disabled = idx <= 0;
+  if (nextBtn) nextBtn.disabled = idx < 0 || idx >= LADDER.length - 1;
+}
+
+function renderSignalDetailTech(state) {
+  const node = el('signalDetailTech');
+  renderIngestProvenanceAudit(state);
+  renderDataDictionaryAudit(state);
+  if (!node) return;
+  const prov = state?.provenance || createEmptyProvenance();
+  if (!prov.hydratedAt && !prov.snapshotId) {
+    node.textContent = 'Technical metadata appears after hydration import.';
+    return;
+  }
+  const ingest = state?.hydration?.ingest_provenance;
+  const parts = [
+    prov.snapshotId ? `Snapshot: ${prov.snapshotId}` : null,
+    prov.lineageHash ? `Lineage: ${prov.lineageHash}` : null,
+    prov.dataAsOf ? `Data as-of: ${prov.dataAsOf}` : null,
+    prov.sourceChannel ? `Source: ${prov.sourceChannel}` : null,
+    ingest?.primary_output_kind ? `Output kind: ${ingest.primary_output_kind}` : null,
+  ].filter(Boolean);
+  node.innerHTML = parts.map(p => `<div>${escapeHtml(p)}</div>`).join('');
+}
+
+function setSignalDetailOpen(open) {
+  const drawer = el('signalDetailDrawer');
+  const backdrop = el('signalDetailBackdrop');
+  if (!drawer || !backdrop) return;
+  drawer.classList.toggle('is-open', open);
+  drawer.classList.toggle('zone-hidden', !open);
+  drawer.setAttribute('aria-hidden', open ? 'false' : 'true');
+  backdrop.classList.toggle('is-open', open);
+  backdrop.setAttribute('aria-hidden', open ? 'false' : 'true');
 }
 
 function renderCommandBar(state, gate) {
@@ -5732,9 +6679,32 @@ function renderCommandBar(state, gate) {
   el('cmdFreshness').className = freshnessChipCls(freshStatus);
   const dot = el('cmdFreshnessDot');
   dot.className = freshnessDotCls(freshStatus);
-  const snapMeta = metrics.snapshotId ? metrics.snapshotId : '';
-  el('cmdFreshnessMeta').textContent = snapMeta || (metrics.dataAsOf ? new Date(metrics.dataAsOf).toLocaleString() : 'No pipeline timestamp');
-  el('cmdFreshnessMeta').title = metrics.dataAsOf ? String(metrics.dataAsOf) : '';
+  const headerDot = el('headerFreshnessDot');
+  if (headerDot) headerDot.className = freshnessDotCls(freshStatus);
+  const headerFresh = el('headerFreshnessLabel');
+  if (headerFresh) {
+    const freshLabel = metrics.freshnessLabel || freshnessLabelFromStatus(freshStatus);
+    headerFresh.innerHTML = `<span class="${freshnessChipCls(freshStatus)}">${escapeHtml(freshLabel)}</span>`;
+  }
+  el('cmdFreshnessMeta').textContent = metrics.dataAsOf ? new Date(metrics.dataAsOf).toLocaleString() : 'No pipeline timestamp';
+  el('cmdFreshnessMeta').title = metrics.snapshotId ? `Snapshot: ${metrics.snapshotId}` : (metrics.dataAsOf ? String(metrics.dataAsOf) : '');
+  const regimeLine = el('headerRegimeLine');
+  if (regimeLine) {
+    regimeLine.textContent = metrics.regime
+      ? `${metrics.regime}`
+      : 'Regime pending';
+  }
+  const regimeSub = el('headerRegimeSub');
+  if (regimeSub) {
+    const txLabel = metrics.txState && TX_META[metrics.txState] ? TX_META[metrics.txState].label : (metrics.txState || '—');
+    const sq3 = metrics.sq3Score != null ? `SQ3 ${metrics.sq3Score}` : 'SQ3 —';
+    const band = metrics.sq3Band || '—';
+    const driver = resolveImpairmentDriver(state, gate);
+    const driverChip = driver
+      ? ` <span class="impairment-driver-chip" title="Primary impairment driver in Both view">Driver: ${escapeHtml(driver)}</span>`
+      : '';
+    regimeSub.innerHTML = `${escapeHtml(txLabel)} transmission · ${escapeHtml(String(sq3))} · ${escapeHtml(band)}${driverChip}`;
+  }
   const subCluster = el('cmdFreshnessSubCluster');
   if (subCluster) {
     subCluster.innerHTML = renderFreshnessSubClusterHtml(buildFreshnessSubCluster(state));
@@ -5992,7 +6962,9 @@ function flipNode(direction) {
   if (idx < 0) return;
   const next = direction < 0 ? Math.max(0, idx - 1) : Math.min(LADDER.length - 1, idx + 1);
   if (next === idx) return;
-  jumpToNode(LADDER[next].id);
+  const target = LADDER[next];
+  jumpToNode(target.id);
+  showToast(`Flipchart → ${target.short} (${next + 1}/${LADDER.length})`);
 }
 
 function setActiveNode(nodeId) {
@@ -6011,6 +6983,7 @@ function jumpToNode(nodeId) {
   appState.navigation.active_node_id = nodeId;
   if (appState.navigation.focus_mode) appState.navigation.focus_node_id = nodeId;
   renderNodeCockpitShell(buildStateFromDOM());
+  renderFlipchartState();
   markDirty();
 }
 
@@ -6192,14 +7165,46 @@ function matchBasisDiagnosticKey(label) {
   return hit ? hit.key : null;
 }
 
-function renderMissingDiagnostic(message) {
-  return `<div class="diag-row diag-row--muted">
-    <span class="diag-status">Unavailable</span>
-    <span class="diag-text">${escapeHtml(message)}</span>
+const DIAG_FAILURE_CODES = {
+  missing_source: { code: 'DD-MISS', label: 'Missing source file' },
+  field_unmapped: { code: 'DD-UNMAP', label: 'Field unmapped' },
+  transform_failed: { code: 'DD-XFORM', label: 'Transform failed' },
+  sample_insufficient: { code: 'DD-SAMPLE', label: 'Sample insufficient' },
+  data_stale: { code: 'DD-STALE', label: 'Data stale' },
+  gate_suppressed: { code: 'DD-GATE', label: 'Gate suppressed' },
+  derived_unavailable: { code: 'DD-DERIV', label: 'Derived signal unavailable' },
+};
+
+const DD_AUDIT_REMEDIATION = {
+  missing_source: 'Stage required CSV in whinfell_drop → bash scripts/normalize_whinfell_drop.sh → bash whinfell_daily_am.sh',
+  field_unmapped: 'Verify mapping in data_dictionary.yaml · re-export Koyfin/Barchart watchlist with required columns',
+  transform_failed: 'Check staged_raw/quarantine logs · run retry_quarantine_normalize on failed files',
+  sample_insufficient: 'Export wider Koyfin time-series (rates/equities) · confirm rv_history has ≥3 horizons',
+  data_stale: 'Re-export WTM-Flows-Global.csv · confirm flows_sidecar.as_of matches today in latest.json',
+  derived_unavailable: 'Rehydrate node derived stack · verify component_inputs populate from rv_history not horizon_fallback',
+  gate_suppressed: 'Review SQ3 / gate inputs — signal suppressed by policy layer',
+};
+
+function classifyComponentFailure(component) {
+  const val = String(component?.value || '').toLowerCase();
+  if (val === 'unavailable') {
+    if (component?.source === 'horizon_fallback') return 'derived_unavailable';
+    if (component?.source === 'rv_history') return 'transform_failed';
+    return 'field_unmapped';
+  }
+  if (component?.source === 'horizon_fallback') return 'sample_insufficient';
+  return null;
+}
+
+function renderMissingDiagnostic(message, failureKey = 'derived_unavailable') {
+  const fc = DIAG_FAILURE_CODES[failureKey] || DIAG_FAILURE_CODES.derived_unavailable;
+  return `<div class="diag-row diag-row--muted" data-failure-code="${fc.code}" data-agent-failure="${failureKey}">
+    <span class="diag-status status-chip status-chip--impaired">${fc.code}</span>
+    <span class="diag-text"><strong>${escapeHtml(fc.label)}</strong> — ${escapeHtml(message)}</span>
   </div>`;
 }
 
-const MISSION_SURFACE_NODES = new Set(['basis', 'credit']);
+const MISSION_SURFACE_NODES = new Set(['basis', 'credit', 'liquidity', 'breadth', 'highbeta']);
 
 const MISSION_NODE_CONFIG = {
   basis: {
@@ -6212,6 +7217,21 @@ const MISSION_NODE_CONFIG = {
     defaultSeriesLabel: 'HY OAS proxy',
     blockedPhrase: 'new credit RV is blocked under current gate.',
   },
+  liquidity: {
+    eyebrow: 'Liquidity mission read',
+    defaultSeriesLabel: 'US 2s10s spread',
+    blockedPhrase: 'new curve RV is blocked under current gate.',
+  },
+  breadth: {
+    eyebrow: 'Breadth mission read',
+    defaultSeriesLabel: 'IWM / SPY participation',
+    blockedPhrase: 'new breadth RV is blocked under current gate.',
+  },
+  highbeta: {
+    eyebrow: 'High-beta mission read',
+    defaultSeriesLabel: 'IBIT vs QQQ beta spread',
+    blockedPhrase: 'new BTC beta RV is blocked under current gate.',
+  },
 };
 
 function isMissionSurfaceNode(nodeId) {
@@ -6223,7 +7243,87 @@ function missionNodeConfig(nodeId) {
 }
 
 function isHorizonNetFallback(cockpit) {
-  return cockpit.composite_score_source === 'horizon_net_fallback';
+  return !!cockpit && cockpit.composite_score_source === 'horizon_net_fallback';
+}
+
+function resolveRvHorizonValueFallback(cockpit, series) {
+  if (!series?.horizons) return { mode: 'none' };
+
+  const available = RV_HORIZONS.filter(h => series.horizons[h]);
+  if (!available.length) return { mode: 'none' };
+
+  const values = available
+    .map(h => Number(series.horizons[h].current_value))
+    .filter(Number.isFinite);
+  if (!values.length) return { mode: 'none' };
+
+  const isNetFallback = isHorizonNetFallback(cockpit);
+  const allSame = values.length > 1 && values.every(v => v === values[0]);
+  if (allSame) {
+    const activeHorizon = cockpit.rv_basis?.active_horizon || appState.chart?.shared_horizon || '3m';
+    const primaryHorizon = available.includes(activeHorizon) ? activeHorizon : available[0];
+    const primaryHz = series.horizons[primaryHorizon];
+    return {
+      mode: 'spot',
+      primaryHorizon,
+      spotValue: values[0],
+      unit: primaryHz?.unit || '',
+      isNetFallback,
+    };
+  }
+
+  if (available.length < RV_HORIZONS.length) {
+    return { mode: 'limited', availableHorizons: available, isNetFallback };
+  }
+
+  if (isNetFallback) return { mode: 'net_fallback_only', isNetFallback: true };
+  return { mode: 'none' };
+}
+
+function buildRvHorizonEvidenceMarkup(cockpit, series) {
+  if (!series) {
+    return {
+      tableClass: 'focus-horizon-table',
+      rows: '<tr><td colspan="5">No horizon data</td></tr>',
+      note: '',
+    };
+  }
+
+  const fallback = resolveRvHorizonValueFallback(cockpit, series);
+  const rows = RV_HORIZONS.map(h => {
+    const hz = series.horizons?.[h];
+    if (!hz) {
+      return `<tr class="rv-horizon-row--na"><td>${RV_HORIZON_LABELS[h]}</td><td class="rv-horizon-na">N/A</td><td class="rv-horizon-na">—</td><td class="rv-horizon-na">—</td><td class="rv-horizon-na">—</td></tr>`;
+    }
+
+    let valueCell;
+    if (fallback.mode === 'spot') {
+      valueCell = h === fallback.primaryHorizon
+        ? `${hz.current_value} ${hz.unit || ''}`
+        : '<span class="rv-horizon-na" title="Single spot reading — applies to all lookbacks">—</span>';
+    } else {
+      valueCell = `${hz.current_value} ${hz.unit || ''}`;
+    }
+
+    const rowCls = fallback.mode === 'spot' && h !== fallback.primaryHorizon ? ' class="rv-horizon-row--spot"' : '';
+    return `<tr${rowCls}><td>${RV_HORIZON_LABELS[h]}</td><td>${valueCell}</td><td>${hz.percentile}</td><td>Q${hz.quartile}</td><td class="${richnessClass(hz.richness_label)}">${hz.richness_label}</td></tr>`;
+  }).join('');
+
+  let note = '';
+  if (fallback.mode === 'spot') {
+    const hzLabel = RV_HORIZON_LABELS[fallback.primaryHorizon] || fallback.primaryHorizon;
+    note = `<p class="focus-horizon-note">Single spot reading on ${hzLabel} — percentile and quartile vary by lookback.${fallback.isNetFallback ? ' Composite score uses horizon-net fallback.' : ''}</p>`;
+  } else if (fallback.mode === 'limited') {
+    note = `<p class="focus-horizon-note">Limited horizon coverage — missing lookbacks shown as N/A.${fallback.isNetFallback ? ' Composite score uses horizon-net fallback.' : ''}</p>`;
+  } else if (fallback.isNetFallback) {
+    note = '<p class="focus-horizon-note">Composite score uses horizon-net fallback.</p>';
+  }
+
+  const tableClass = fallback.mode === 'spot'
+    ? 'focus-horizon-table focus-horizon-table--spot-fallback'
+    : 'focus-horizon-table';
+
+  return { tableClass, rows, note, fallback };
 }
 
 function resolveMissionGateChipLabel(gate) {
@@ -6251,7 +7351,7 @@ function buildMissionTacticalLead(cockpit, hz, series, gate, health) {
 }
 
 function buildMissionChinaSuffix(cockpit, state, gate) {
-  if (cockpit.node_id !== 'credit' || !gate?.sq3Result) return '';
+  if (!isMissionSurfaceNode(cockpit.node_id) || !gate?.sq3Result) return '';
   if (!(gate.chinaCaution || gate.sq3Score < 50)) return '';
   const sq3Band = String(gate.sq3Band || gate.sq3Result?.interpretationBand || '').toLowerCase();
   if (sq3Band.includes('impaired') || sq3Band.includes('fragile') || sq3Band.includes('mixed')) {
@@ -6313,7 +7413,7 @@ function buildMissionImplicationChips(cockpit, gate) {
   const ffStatus = ff.flows_meta?.flows_status || 'unavailable';
   const chips = [];
 
-  if (cockpit.node_id === 'credit' && isHorizonNetFallback(cockpit)) {
+  if (isHorizonNetFallback(cockpit)) {
     chips.push({ label: 'Composite fallback', cls: 'impl-chip--warn' });
   } else {
     chips.push({ label: humanizeValue(cockpit.band || '—'), cls: 'impl-chip--signal' });
@@ -6332,7 +7432,7 @@ function buildMissionImplicationChips(cockpit, gate) {
     cls: gate.blocked ? 'impl-chip--block' : gate.tight ? 'impl-chip--warn' : 'impl-chip--ok',
   });
 
-  if (cockpit.node_id === 'credit' && cockpit.is_weakest_link) {
+  if (cockpit.is_weakest_link) {
     chips.push({ label: 'Weakest link', cls: 'impl-chip--warn' });
   }
 
@@ -6462,7 +7562,7 @@ function buildSignalDiagnostics(cockpit, state, gate) {
     const obs = cockpit.key_observation ? ` ${cockpit.key_observation}` : '';
     signalInterp = cockpit.node_id === 'credit'
       ? `Credit composite uses horizon-net fallback (not C1-weighted components).${obs}`
-      : `${cockpit.display_name || 'Node'} composite from horizon-net fallback — component inputs not populated.${obs}`;
+      : `${cockpit.display_name || 'Node'} composite from horizon-net fallback — weighted components not populated.${obs}`;
   }
   const signalImpl = gate.blocked
     ? 'Do not initiate new risk — observe and maintain.'
@@ -6526,26 +7626,32 @@ function buildSignalDiagnostics(cockpit, state, gate) {
 }
 
 function renderComponentDiagnostics(cockpit, inputs) {
-  if (!inputs.length) return '';
-  if (cockpit.node_id !== 'basis') {
-    return inputs.map(c => `
-      <span class="cockpit-component-chip" title="weight ${c.weight ?? '—'}">
-        ${escapeHtml(c.label || c.asset_id || '')} <strong>${escapeHtml(humanizeValue(c.value))}</strong>${c.unit ? ' ' + escapeHtml(c.unit) : ''}
-        ${c.direction ? ` ${HORIZON_DISPLAY[c.direction] || ''}` : ''}
-      </span>`).join('');
+  if (!inputs.length) {
+    if (isHorizonNetFallback(cockpit)) {
+      return renderMissingDiagnostic(
+        'Composite uses horizon-net fallback — C1-weighted components not populated.',
+        'derived_unavailable',
+      );
+    }
+    return '';
   }
-  return inputs.map(c => {
+  const rows = inputs.map(c => {
     const val = String(c.value || '').toLowerCase();
     if (val !== 'unavailable') {
-      return `<span class="cockpit-component-chip" title="weight ${c.weight ?? '—'}">
-        ${escapeHtml(c.label || '')} <strong>${escapeHtml(humanizeValue(c.value))}</strong>
+      const partial = c.source === 'horizon_fallback';
+      const chip = `<span class="cockpit-component-chip${partial ? ' cockpit-component-chip--partial' : ''}" title="weight ${c.weight ?? '—'} · source ${escapeHtml(c.source || '—')}${partial ? ' · partial sample' : ''}">
+        ${escapeHtml(c.label || c.asset_id || '')} <strong>${escapeHtml(humanizeValue(c.value))}</strong>${c.unit ? ' ' + escapeHtml(c.unit) : ''}
+        ${c.direction ? ` ${HORIZON_DISPLAY[c.direction] || ''}` : ''}
+        ${partial ? ' <span class="status-chip status-chip--partial">fallback</span>' : ''}
       </span>`;
+      return chip;
     }
-    const key = matchBasisDiagnosticKey(c.label);
+    const key = cockpit.node_id === 'basis' ? matchBasisDiagnosticKey(c.label) : null;
     const msg = (key && BASIS_MISSING_MESSAGES[key])
-      || `${c.label || 'Diagnostic'} unavailable — affects conviction.`;
-    return renderMissingDiagnostic(msg);
-  }).join('');
+      || `${c.label || 'Diagnostic'} unavailable — affects conviction, not gate eligibility.`;
+    return renderMissingDiagnostic(msg, classifyComponentFailure(c) || 'derived_unavailable');
+  });
+  return `<div class="component-failure-strip">${rows.join('')}</div>`;
 }
 
 function basisValueToY(value, domain, pad, plotH) {
@@ -6604,6 +7710,20 @@ function nodeFlowsCoverageStatus(cockpits, nodeId) {
   return 'miss';
 }
 
+function nodeSignalReadiness(cockpit) {
+  if (!cockpit) return 'miss';
+  const inputs = cockpit.component_inputs || [];
+  if (!inputs.length) {
+    if (isHorizonNetFallback(cockpit)) return 'partial';
+    return 'miss';
+  }
+  const unavailable = inputs.filter(c => String(c.value).toLowerCase() === 'unavailable').length;
+  const fallbackCount = inputs.filter(c => c.source === 'horizon_fallback').length;
+  if (unavailable > 0) return unavailable >= inputs.length ? 'miss' : 'partial';
+  if (fallbackCount > Math.floor(inputs.length / 2)) return 'partial';
+  return 'ok';
+}
+
 function assessCockpitHydrationMode(state) {
   const prov = state?.provenance || createEmptyProvenance();
   const hydration = state?.hydration || createEmptyHydration();
@@ -6621,25 +7741,38 @@ function assessCockpitHydrationMode(state) {
   }
 
   const globalFlows = resolveFlowsStatusFromState(state);
-  const nodeStatuses = COVERAGE_NODE_KEYS.map(([id]) => nodeFlowsCoverageStatus(cockpits, id));
-  const allFlowsOk = globalFlows === 'ok' && nodeStatuses.every(s => s === 'ok');
+  const nodeFlowStatuses = COVERAGE_NODE_KEYS.map(([id]) => nodeFlowsCoverageStatus(cockpits, id));
+  const nodeSignalStatuses = COVERAGE_NODE_KEYS.map(([id]) => nodeSignalReadiness(cockpits[id]));
+  const allFlowsOk = globalFlows === 'ok' && nodeFlowStatuses.every(s => s === 'ok');
+  const allSignalsOk = nodeSignalStatuses.every(s => s === 'ok');
+  const anySignalGap = nodeSignalStatuses.some(s => s !== 'ok');
 
-  if (allFlowsOk) {
+  if (allFlowsOk && allSignalsOk) {
     return {
       mode: 'complete',
       title: 'Complete',
-      headline: 'Hydration + flows — all panels eligible.',
+      headline: 'Hydration + flows + derived signals — all panels eligible.',
       tradable: 'Trade reads: rich/cheap, directional vs RV, sponsorship, gate.',
       blocked: '',
+    };
+  }
+
+  if (allFlowsOk && anySignalGap) {
+    return {
+      mode: 'partial',
+      title: 'Partial',
+      headline: 'Flows present but derived diagnostics incomplete — mission read confidence reduced.',
+      tradable: 'RV history, ladder, gate, and partial sponsorship — cap size.',
+      blocked: 'Unavailable component signals are blocked, not neutral.',
     };
   }
 
   return {
     mode: 'partial',
     title: 'Partial',
-    headline: 'Hydration loaded, flows missing — RV active, sponsorship blocked, size capped.',
+    headline: 'Hydration loaded, flows or signals missing — RV active, sponsorship blocked, size capped.',
     tradable: 'RV history, ladder, and gate reads — half size or less.',
-    blocked: 'Missing flows are blocked, not neutral.',
+    blocked: 'Missing flows/signals are blocked, not neutral.',
   };
 }
 
@@ -6647,12 +7780,20 @@ function buildCoverageChecklist(state) {
   const cockpits = state?.hydration?.node_cockpits;
   const globalFlows = resolveFlowsStatusFromState(state);
   const historyOk = cockpits && LADDER.some(r => nodeHasRvHistory(cockpits[r.id]));
+  const signalStatuses = COVERAGE_NODE_KEYS.map(([id]) => nodeSignalReadiness(cockpits?.[id]));
+  const signalsOk = signalStatuses.every(s => s === 'ok');
+  const signalsPartial = signalStatuses.some(s => s === 'partial');
   const items = [
-    { key: 'history', label: 'History', status: historyOk ? 'ok' : 'miss' },
-    { key: 'flows', label: 'Flows', status: globalFlows === 'ok' ? 'ok' : (globalFlows === 'unavailable' ? 'miss' : 'partial') },
+    { key: 'history', label: 'History', status: historyOk ? 'ok' : 'miss', auditScope: 'global' },
+    { key: 'flows', label: 'Flows', status: globalFlows === 'ok' ? 'ok' : (globalFlows === 'unavailable' ? 'miss' : 'partial'), auditScope: 'flows' },
+    { key: 'signals', label: 'Signals', status: signalsOk ? 'ok' : (signalsPartial || signalStatuses.some(s => s === 'partial') ? 'partial' : 'miss'), auditScope: 'signals' },
   ];
   COVERAGE_NODE_KEYS.forEach(([id, label]) => {
-    items.push({ key: id, label, status: nodeFlowsCoverageStatus(cockpits, id) });
+    const flowSt = nodeFlowsCoverageStatus(cockpits, id);
+    const sigSt = nodeSignalReadiness(cockpits?.[id]);
+    const combined = flowSt === 'miss' || sigSt === 'miss' ? 'miss'
+      : (flowSt === 'partial' || sigSt === 'partial') ? 'partial' : 'ok';
+    items.push({ key: id, label, status: combined, auditScope: id });
   });
   return items;
 }
@@ -6661,7 +7802,8 @@ function renderCoverageChecklistHtml(items) {
   return items.map(item => {
     const mark = item.status === 'ok' ? '✓' : item.status === 'partial' ? '◐' : '✕';
     const cls = item.status === 'ok' ? 'coverage-check--ok' : item.status === 'partial' ? 'coverage-check--partial' : 'coverage-check--miss';
-    return `<span class="coverage-pill ${cls}" title="${escapeHtml(item.label)} ${item.status}">${escapeHtml(item.label)} ${mark}</span>`;
+    const code = item.status === 'ok' ? 'ready' : item.status === 'partial' ? 'partial' : 'missing';
+    return `<button type="button" class="coverage-pill coverage-pill--clickable ${cls}" data-audit-scope="${escapeHtml(item.auditScope || item.key)}" data-coverage-status="${code}" title="${escapeHtml(item.label)}: ${item.status} — click for dictionary audit">${escapeHtml(item.label)} ${mark}</button>`;
   }).join('');
 }
 
@@ -6735,6 +7877,11 @@ function renderNodeCoverageBanner(cockpit, state) {
       ${contextLines}
       <div class="coverage-pill-grid" aria-label="Coverage checklist">${checklist}</div>`;
   banner.classList.remove('zone-hidden');
+  banner.querySelectorAll('[data-audit-scope]').forEach(btn => {
+    btn.onclick = () => openDictionaryAudit(btn.dataset.auditScope);
+  });
+  const diagZone = el('diagnosticsPanelZone');
+  if (diagZone) diagZone.classList.remove('zone-hidden');
 
   if (shell) {
     shell.classList.toggle('cockpit-mode-diagnostic', modeInfo.mode !== 'complete');
@@ -6996,7 +8143,8 @@ function renderFundsFlowSponsorshipCard(cockpit, opts = {}) {
     : variant === 'expanded' ? ' funds-flow-card--expanded' : '';
   const parts = [];
 
-  parts.push(`<div class="funds-flow-card-header"><h4 class="funds-flow-card-title">Funds Flow Sponsorship</h4></div>`);
+  const basketLabel = ff.basket_label ? ` · ${ff.basket_label}` : '';
+  parts.push(`<div class="funds-flow-card-header"><h4 class="funds-flow-card-title">Allocator sponsorship${escapeHtml(basketLabel)}</h4></div>`);
 
   if (meta.flows_status && meta.flows_status !== 'ok') {
     parts.push(`<span class="funds-flow-meta-chip">${escapeHtml(meta.flows_status)} · ${escapeHtml(formatFlowsSourceLabel(meta.flows_source))}</span>`);
@@ -7014,6 +8162,10 @@ function renderFundsFlowSponsorshipCard(cockpit, opts = {}) {
 
   if (showVerdict && aggregate.verdict) {
     parts.push(`<span class="funds-flow-verdict-badge ${fundsFlowVerdictClass(aggregate.verdict)}">${escapeHtml(aggregate.verdict)}</span>`);
+  }
+  if (aggregate.confidence_delta != null && aggregate.confidence_delta !== 0) {
+    const sign = aggregate.confidence_delta > 0 ? '+' : '';
+    parts.push(`<span class="funds-flow-meta-chip">confidence ${sign}${aggregate.confidence_delta}</span>`);
   }
 
   const pos = aggregate.positive_count ?? '—';
@@ -7126,9 +8278,11 @@ function renderCockpitDecisionRail(cockpit, state) {
   const domState = state || buildStateFromDOM();
   const derivedGate = deriveGate(domState);
 
+  const railZoneLabel = '<div class="console-panel-zone-label console-panel-zone-label--inline">Implications · preferred expression</div>';
+
   if (isMissionSurfaceNode(cockpit.node_id)) {
     rail.classList.add('cockpit-decision-rail--basis-mission');
-    rail.innerHTML = renderMissionImplicationRail(cockpit, domState, derivedGate);
+    rail.innerHTML = railZoneLabel + renderMissionImplicationRail(cockpit, domState, derivedGate);
     return;
   }
 
@@ -7137,7 +8291,7 @@ function renderCockpitDecisionRail(cockpit, state) {
   const flowsDetail = renderFundsFlowSponsorshipCard(cockpit, { variant: 'rail' });
   const showFlowsDetail = (cockpit.funds_flows?.flows_meta?.flows_status === 'ok'
     || cockpit.funds_flows?.flows_meta?.flows_status === 'partial');
-  rail.innerHTML = `
+  rail.innerHTML = `${railZoneLabel}
     ${blocks.signal}
     ${blocks.directional}
     ${blocks.relativeValue}
@@ -7362,9 +8516,14 @@ function renderCockpitChart(cockpit, state) {
   chartArea?.classList.toggle('cockpit-chart-area--basis-mission', isMission);
 
   el('cockpitChartTitle').textContent = series?.label || `${row?.short || 'Node'} · RV / Basis`;
-  el('cockpitChartSubtitle').textContent = series
+  const rvFallback = series ? resolveRvHorizonValueFallback(cockpit, series) : { mode: 'none' };
+  let chartSubtitle = series
     ? `${humanizeValue(series.quartile_direction || '')} · ${RV_HORIZON_LABELS[horizon] || horizon} lookback`
     : (cockpit.rv_basis?._fallback_mode ? 'RV quartiles require hydration — history not loaded' : 'No series populated');
+  if (rvFallback.mode === 'spot') {
+    chartSubtitle += ` · spot value shared across lookbacks`;
+  }
+  el('cockpitChartSubtitle').textContent = chartSubtitle;
 
   renderMissionTacticalBanner(cockpit, hz, series, domState, gate);
   renderMissionSummaryRows(cockpit, hz, series, domState, gate);
@@ -7482,11 +8641,7 @@ function renderFocusLayer(cockpit, state) {
   const seriesMap = cockpit.rv_basis?.series || {};
   const seriesId = cockpit.rv_basis?.active_series_id || Object.keys(seriesMap)[0];
   const series = seriesId ? seriesMap[seriesId] : null;
-  const horizonRows = series ? RV_HORIZONS.map(h => {
-    const hz = series.horizons?.[h];
-    if (!hz) return '';
-    return `<tr><td>${RV_HORIZON_LABELS[h]}</td><td>${hz.current_value} ${hz.unit || ''}</td><td>${hz.percentile}</td><td>Q${hz.quartile}</td><td class="${richnessClass(hz.richness_label)}">${hz.richness_label}</td></tr>`;
-  }).join('') : '<tr><td colspan="5">No horizon data</td></tr>';
+  const rvEvidence = buildRvHorizonEvidenceMarkup(cockpit, series);
   const flowsCard = renderFundsFlowSponsorshipCard(cockpit, { variant: 'expanded' });
   const changeMindFallback = cockpit.funds_flows?.interpretation?.change_mind_trigger || dir.invalidation || '—';
 
@@ -7503,7 +8658,7 @@ function renderFocusLayer(cockpit, state) {
     </div>
     <div class="cockpit-card"><h3>RV / Basis evidence</h3>
       <p class="cockpit-sub">${escapeHtml(series?.label || rv.structure || '')} · ${escapeHtml(series?.quartile_direction || '')}</p>
-      <table class="focus-horizon-table"><thead><tr><th>Horizon</th><th>Value</th><th>Pct</th><th>Q</th><th>Rich</th></tr></thead><tbody>${horizonRows}</tbody></table>
+      <table class="${rvEvidence.tableClass}"><thead><tr><th>Horizon</th><th>Value</th><th>Pct</th><th>Q</th><th>Rich</th></tr></thead><tbody>${rvEvidence.rows}</tbody></table>${rvEvidence.note}
     </div>
     <div class="cockpit-card"><h3>Drivers</h3>
       <p class="cockpit-sub">${(cockpit.component_inputs || []).map(c => `${escapeHtml(c.label || '')} ${c.value}`).join(' · ') || 'Horizon marks only — import hydration for feed.'}</p>
@@ -7549,6 +8704,7 @@ function renderNodeCockpitShell(state) {
 
   renderNodeRail(state);
   renderNodeCoverageBanner(mergeNodeCockpit(activeNodeId(), state), state);
+  renderFlipchartState();
 
   main?.classList.toggle('zone-hidden', focusOn || compareOn);
   detail?.classList.toggle('zone-hidden', focusOn || compareOn);
@@ -7593,6 +8749,7 @@ function handleCockpitKeyboard(e) {
   if (appState.ui?.workspaceView !== 'cockpit') return;
   if (isTypingTarget(e.target)) return;
   if (e.key === 'Escape') {
+    if (el('signalDetailDrawer')?.classList.contains('is-open')) { e.preventDefault(); setSignalDetailOpen(false); return; }
     if (appState.navigation?.focus_mode) { e.preventDefault(); exitFocusMode(); return; }
     if (appState.navigation?.view_mode === 'compare') { e.preventDefault(); toggleCompareMode(false); return; }
   }
@@ -7809,6 +8966,38 @@ async function copyText(text, btn, label) {
   setTimeout(() => btn.textContent = o || label, 2000);
 }
 
+const THEME_STORAGE_KEY = 'whinfell_tc_theme';
+
+function applyConsoleTheme(theme) {
+  const next = theme === 'light' ? 'light' : 'dark';
+  if (!document.documentElement?.setAttribute) return;
+  document.documentElement.setAttribute('data-theme', next);
+  const btn = el('btnTheme');
+  if (btn) {
+    btn.textContent = next === 'dark' ? 'Light mode' : 'Dark mode';
+    if (typeof btn.setAttribute === 'function') {
+      btn.setAttribute('aria-pressed', next === 'light' ? 'true' : 'false');
+    }
+  }
+  try { localStorage.setItem(THEME_STORAGE_KEY, next); } catch (_) { /* private browsing */ }
+}
+
+function initConsoleTheme() {
+  let stored = 'dark';
+  try { stored = localStorage.getItem(THEME_STORAGE_KEY) || 'dark'; } catch (_) { /* ignore */ }
+  applyConsoleTheme(stored);
+}
+
+initConsoleTheme();
+el('btnTheme')?.addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme') || 'dark';
+  applyConsoleTheme(current === 'dark' ? 'light' : 'dark');
+});
+
+el('btnSignalDetail')?.addEventListener('click', () => setSignalDetailOpen(true));
+el('btnCloseSignalDetail')?.addEventListener('click', () => setSignalDetailOpen(false));
+el('signalDetailBackdrop')?.addEventListener('click', () => setSignalDetailOpen(false));
+
 el('btnSave').onclick = persistState;
 el('btnExport').onclick = exportForPerplexity;
 el('btnExportPipeline').onclick = exportPipelineBundle;
@@ -7919,6 +9108,11 @@ el('btnExportNode').onclick = () => {
 };
 el('btnHeresWhy').onclick = () => toggleFocusMode();
 el('btnCompareMode').onclick = () => toggleCompareMode();
+el('btnFlipPrev')?.addEventListener('click', () => flipNode(-1));
+el('btnFlipNext')?.addEventListener('click', () => flipNode(1));
+el('btnShortcutHelp')?.addEventListener('click', () => {
+  showToast('Shift+click a rail tab while Compare is on to add/remove nodes (max 3) without leaving your current view.');
+});
 document.addEventListener('keydown', handleCockpitKeyboard);
 
 const tcBuildBadge = el('tcConsoleBuildBadge');
@@ -7934,36 +9128,42 @@ if (!appState.provenance?.hydratedAt || !appState.hydration?.node_cockpits) {
 }
 applyWorkspaceView(appState.ui?.workspaceView || 'cockpit');
 applyTrackView(appState.ui?.trackView || 'both');
-renderAll();
-maybePromptFirstHydrationImport(buildStateFromDOM());
-if (scenarioLoop.variants[0]) {
-  const s = buildStateFromDOM();
-  scenarioLoop.variants[0].whinfellScore = s.intake.whinfellScore;
-  scenarioLoop.variants[0].transmissionState = s.intake.transmissionState;
-  scenarioLoop.variants[0].regimeTag = s.intake.regimeTag;
-  renderScenarioColumns();
-}
-renderSnapshotList();
+tryAutoHydrateFromDeploy().finally(() => {
+  renderAll();
+  maybePromptFirstHydrationImport(buildStateFromDOM());
+  if (scenarioLoop.variants[0]) {
+    const s = buildStateFromDOM();
+    scenarioLoop.variants[0].whinfellScore = s.intake.whinfellScore;
+    scenarioLoop.variants[0].transmissionState = s.intake.transmissionState;
+    scenarioLoop.variants[0].regimeTag = s.intake.regimeTag;
+    renderScenarioColumns();
+  }
+  renderSnapshotList();
+});
 
-window.__creditMissionProbe = function creditMissionProbe(bundle) {
+function runMissionSurfaceProbe(nodeId, bundle, options = {}) {
   if (!bundle || typeof bundle !== 'object') {
     return { error: 'bundle required' };
   }
   hydrateFromBundle(bundle);
-  if (el('chinaPolicyStrength')) el('chinaPolicyStrength').value = '50';
-  if (el('chinaStateImpulse')) el('chinaStateImpulse').value = '0';
-  if (el('chinaGrowthImpulse')) el('chinaGrowthImpulse').value = '0';
+  if (options.chinaInputs) {
+    if (el('chinaPolicyStrength')) el('chinaPolicyStrength').value = String(options.chinaInputs.policy ?? '50');
+    if (el('chinaStateImpulse')) el('chinaStateImpulse').value = String(options.chinaInputs.state ?? '0');
+    if (el('chinaGrowthImpulse')) el('chinaGrowthImpulse').value = String(options.chinaInputs.growth ?? '0');
+  }
   appState.ui = appState.ui || createEmptyState().ui;
   appState.ui.workspaceView = 'cockpit';
-  setActiveNode('credit');
+  setActiveNode(nodeId);
   renderNodeCockpitShell(buildStateFromDOM());
-  const cockpit = mergeNodeCockpit('credit', buildStateFromDOM());
+  const cockpit = mergeNodeCockpit(nodeId, buildStateFromDOM());
   const gate = deriveGate(buildStateFromDOM());
   const tacticalLead = el('basisTacticalSentence')?.textContent || '';
   const tacticalSuffix = el('basisTacticalSuffix')?.textContent || '';
   const railHtml = el('cockpitDecisionRail')?.innerHTML || '';
   const chips = buildMissionImplicationChips(cockpit, gate).map(c => c.label);
+  const readingValue = el('basisReadingValue')?.textContent || '';
   return {
+    nodeId,
     tacticalLead,
     tacticalSuffix,
     tactical: tacticalSuffix ? `${tacticalLead} ${tacticalSuffix}` : tacticalLead,
@@ -7973,6 +9173,87 @@ window.__creditMissionProbe = function creditMissionProbe(bundle) {
     railHasHorizonNet: /horizon-net fallback/i.test(railHtml),
     sq3Score: gate.sq3Score,
     compositeFallback: chips.includes('Composite fallback'),
+    readingValue,
+    bandChip: chips[0] || '',
+    missionVisible: !el('basisTacticalBanner')?.classList.contains('zone-hidden'),
+  };
+}
+
+window.__creditMissionProbe = function creditMissionProbe(bundle) {
+  return runMissionSurfaceProbe('credit', bundle, {
+    chinaInputs: { policy: 50, state: 0, growth: 0 },
+  });
+};
+
+window.__liquidityMissionProbe = function liquidityMissionProbe(bundle) {
+  return runMissionSurfaceProbe('liquidity', bundle, {
+    chinaInputs: { policy: 50, state: 0, growth: 0 },
+  });
+};
+
+window.__breadthMissionProbe = function breadthMissionProbe(bundle) {
+  return runMissionSurfaceProbe('breadth', bundle, {
+    chinaInputs: { policy: 50, state: 0, growth: 0 },
+  });
+};
+
+window.__highbetaMissionProbe = function highbetaMissionProbe(bundle) {
+  return runMissionSurfaceProbe('highbeta', bundle, {
+    chinaInputs: { policy: 50, state: 0, growth: 0 },
+  });
+};
+
+window.__uiAuditProbe = function uiAuditProbe(bundle) {
+  if (!bundle || typeof bundle !== 'object') return { error: 'bundle required' };
+  hydrateFromBundle(bundle);
+  appState.ui = appState.ui || createEmptyState().ui;
+  appState.ui.workspaceView = 'cockpit';
+  renderNodeCockpitShell(buildStateFromDOM());
+  const state = buildStateFromDOM();
+  const payload = buildUiAuditPayload(state);
+  const ddHtml = el('dataDictionaryAudit')?.innerHTML || '';
+  const flipPos = el('flipchartPosition')?.textContent || '';
+  const flipTitle = el('flipchartTitle')?.textContent || '';
+  const coverageMode = el('nodeCoverageBanner')?.className || '';
+  const failureCodes = [...document.querySelectorAll('[data-failure-code]')].map(n => n.dataset.failureCode);
+  return {
+    consoleBuild: TC_CONSOLE_BUILD,
+    coverageMode: payload.coverage_mode,
+    impairmentDriver: payload.impairment_driver,
+    dictionaryAuditCount: payload.dictionary_audit_count,
+    flipPosition: flipPos,
+    flipTitle,
+    hasDdAuditTable: ddHtml.includes('dd-audit-table'),
+    hasFlipchartState: flipPos.includes('/'),
+    failureCodesPresent: failureCodes.length > 0,
+    failureCodes,
+    uiAudit: payload,
+  };
+};
+
+window.__rvHorizonEvidenceProbe = function rvHorizonEvidenceProbe(bundle, nodeId = 'credit') {
+  if (!bundle || typeof bundle !== 'object') return { error: 'bundle required' };
+  hydrateFromBundle(bundle);
+  appState.ui = appState.ui || createEmptyState().ui;
+  appState.ui.workspaceView = 'cockpit';
+  setActiveNode(nodeId);
+  toggleFocusMode(true);
+  renderNodeCockpitShell(buildStateFromDOM());
+  const cockpit = mergeNodeCockpit(nodeId, buildStateFromDOM());
+  const seriesMap = cockpit.rv_basis?.series || {};
+  const seriesId = cockpit.rv_basis?.active_series_id || Object.keys(seriesMap)[0];
+  const series = seriesId ? seriesMap[seriesId] : null;
+  const markup = buildRvHorizonEvidenceMarkup(cockpit, series);
+  const focusHtml = el('cockpitFocusLayer')?.innerHTML || '';
+  const valueMatches = focusHtml.match(/339\.2 bps/g) || [];
+  return {
+    nodeId,
+    fallbackMode: markup.fallback?.mode || 'none',
+    spotFallbackTable: focusHtml.includes('focus-horizon-table--spot-fallback'),
+    spotValueRepeatCount: valueMatches.length,
+    hasSpotNote: /Single spot reading/i.test(focusHtml),
+    primaryHorizon: markup.fallback?.primaryHorizon || null,
+    focusHtml,
   };
 };
 </script>

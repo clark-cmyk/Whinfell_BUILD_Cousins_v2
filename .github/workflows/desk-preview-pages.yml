@@ -1,0 +1,49 @@
+# Free GitHub Pages deploy — Transmission Control desk preview
+# Enable once: Repo Settings → Pages → Build and deployment → Source: GitHub Actions
+name: Desk preview (GitHub Pages)
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - '08_Deliverables/Whinfell_Transmission_Control.html'
+      - '08_Deliverables/desk_china_ladder_models.js'
+      - '08_Deliverables/data_dictionary_meta.json'
+      - 'data/hydration/latest.json'
+      - 'scripts/build_desk_preview.sh'
+      - '.github/workflows/desk-preview-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: desk-preview-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build static desk preview
+        run: bash scripts/build_desk_preview.sh
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _desk_preview_out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4

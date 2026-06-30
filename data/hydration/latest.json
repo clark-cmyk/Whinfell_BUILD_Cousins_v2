@@ -1,28 +1,28 @@
 {
-  "hydration_version": "1.0.0",
+  "hydration_version": "1.2.0",
   "pipeline_version": "1.0.0",
   "bundle_version": "1.0.0",
-  "snapshot_id": "global-2026-06-29-raw2wtm-01",
-  "lineage_hash": "sha256:b5f9b9286a384dc7e733c7e6bf17f10e03ece178dca188e87411788df3498818",
+  "snapshot_id": "global-2026-06-30-raw2wtm-01",
+  "lineage_hash": "sha256:62066f68677ac24da870473d3a00de8762b402fe40d36b524b8069dbb47f633c",
   "validation_status": "parsed",
-  "as_of": "2026-06-29T15:11:45+00:00",
+  "as_of": "2026-06-30T17:09:57+00:00",
   "source": "parquet_hydration",
   "freshness_status": "fresh",
   "global": {
-    "observation_id": "global-2026-06-29-raw2wtm-01",
-    "whinfell_score": 50,
-    "transmission_state": "stressed",
-    "regime_tag": "Fragile Risk-On",
-    "key_observation": "Desk auto-transform from Koyfin wide export (2.2e).",
+    "observation_id": "global-2026-06-30-raw2wtm-01",
+    "whinfell_score": 80,
+    "transmission_state": "normal",
+    "regime_tag": "Confirmed Risk-On",
+    "key_observation": "HYG +; MBB +; MUB +; AGG +; US10Y +; US10YT +",
     "gate_status": "",
     "sq3_score": 35,
     "sq3_band": "Impaired",
     "near_month": "Jul",
     "far_month": "Back",
-    "basis_spread": "59685.00",
-    "ref_low": "47748.00",
-    "ref_mid": "59685.00",
-    "ref_high": "71622.00",
+    "basis_spread": "58620.00",
+    "ref_low": "46896.00",
+    "ref_mid": "58620.00",
+    "ref_high": "70344.00",
     "btc_bias": "Neutral"
   },
   "china": {
@@ -32,8 +32,8 @@
     "sq3_score": 35,
     "sq3_band": "Impaired",
     "regime_tag": "desk-auto",
-    "observation_id": "china-2026-06-29-raw2wtm-01",
-    "as_of": "2026-06-29T15:11:45+00:00",
+    "observation_id": "china-2026-06-30-raw2wtm-01",
+    "as_of": "2026-06-30T17:09:56+00:00",
     "source": "manual"
   },
   "china_ladder": {
@@ -73,148 +73,148 @@
   },
   "crypto_sleeve": {
     "version": "1.0.0",
-    "as_of": "2026-06-29T15:11:45.264226+00:00",
+    "as_of": "2026-06-30T17:09:57.058503+00:00",
     "assets": {
       "xrp_spot_usd": {
         "ticker": "XRPUSD",
         "asset_key": "xrp_spot_usd",
+        "last_price": 1.0383,
         "name": "Ripple - United States Dollar",
-        "last_price": 1.044,
-        "1d_chg": "-0.0011",
-        "vol_1m": 52.46,
-        "total_return_5d": "-0.0272",
-        "tr_1w": -0.0765,
-        "tr_1m": -0.2107,
-        "tr_3m": -0.2109,
-        "tr_6m": -0.4362,
-        "tr_1y": -0.5216,
-        "total_return_3y": "1.2566",
-        "total_return_5y": "0.6067",
-        "vol_3m": 38.9,
-        "vol_1y": 60.62,
+        "1_day": "-0.0225",
+        "tr_1m": -0.2287,
+        "tr_3m": -0.2171,
+        "total_return_ytd": "-0.4353",
+        "tr_1w": -0.0587,
+        "total_return_5d": "0.0065",
+        "chg_1d": -0.0225,
+        "tr_6m": -0.4452,
+        "tr_1y": -0.5477,
+        "total_return_3y": "1.1873",
+        "total_return_5y": "0.4675",
+        "total_return_qtd": "-0.2269",
         "_raw": {
           "Ticker": "XRPUSD",
+          "Last Price": "1.0383",
           "Name": "Ripple - United States Dollar",
-          "Last Price": "1.0440",
-          "1d Chg %": "-0.0011",
-          "Volatility (1M)": "52.46",
-          "Total Return (5D)": "-0.0272",
-          "Total Return (1W)": "-0.0765",
-          "Total Return (1M)": "-0.2107",
-          "Total Return (3M)": "-0.2109",
-          "Total Return (6M)": "-0.4362",
-          "Total Return (1Y)": "-0.5216",
-          "Total Return (3Y)": "1.2566",
-          "Total Return (5Y)": "0.6067",
-          "Volatility (3M)": "38.90",
-          "Volatility (1Y)": "60.62"
+          "1-Day %": "-0.0225",
+          "Total Return (1M)": "-0.2287",
+          "Total Return (3M)": "-0.2171",
+          "Total Return (YTD)": "-0.4353",
+          "Total Return (1W)": "-0.0587",
+          "Total Return (5D)": "0.0065",
+          "Total Return (1D)": "-0.0225",
+          "Total Return (6M)": "-0.4452",
+          "Total Return (1Y)": "-0.5477",
+          "Total Return (3Y)": "1.1873",
+          "Total Return (5Y)": "0.4675",
+          "Total Return (QTD)": "-0.2269"
         }
       },
       "btc_spot_usd": {
         "ticker": "BTCUSD",
         "asset_key": "btc_spot_usd",
+        "last_price": 58313.02,
         "name": "Bitcoin - United States Dollar",
-        "last_price": 59402.16,
-        "1d_chg": "-0.0026",
-        "vol_1m": 33.27,
-        "total_return_5d": "-0.0241",
-        "tr_1w": -0.077,
-        "tr_1m": -0.1926,
-        "tr_3m": -0.1074,
-        "tr_6m": -0.319,
-        "tr_1y": -0.4469,
-        "total_return_3y": "0.9733",
-        "total_return_5y": "0.7123",
-        "total_return_10y": "91.9910",
-        "vol_3m": 28.16,
-        "vol_1y": 36.05,
+        "1_day": "-0.0327",
+        "tr_1m": -0.2106,
+        "tr_3m": -0.1243,
+        "total_return_ytd": "-0.3364",
+        "tr_1w": -0.0653,
+        "total_return_5d": "-0.0176",
+        "chg_1d": -0.0327,
+        "tr_6m": -0.3399,
+        "tr_1y": -0.4581,
+        "total_return_3y": "0.9186",
+        "total_return_5y": "0.6130",
+        "total_return_10y": "86.6538",
+        "total_return_qtd": "-0.1447",
         "_raw": {
           "Ticker": "BTCUSD",
+          "Last Price": "58313.02",
           "Name": "Bitcoin - United States Dollar",
-          "Last Price": "59402.16",
-          "1d Chg %": "-0.0026",
-          "Volatility (1M)": "33.27",
-          "Total Return (5D)": "-0.0241",
-          "Total Return (1W)": "-0.0770",
-          "Total Return (1M)": "-0.1926",
-          "Total Return (3M)": "-0.1074",
-          "Total Return (6M)": "-0.3190",
-          "Total Return (1Y)": "-0.4469",
-          "Total Return (3Y)": "0.9733",
-          "Total Return (5Y)": "0.7123",
-          "Total Return (10Y)": "91.9910",
-          "Volatility (3M)": "28.16",
-          "Volatility (1Y)": "36.05"
+          "1-Day %": "-0.0327",
+          "Total Return (1M)": "-0.2106",
+          "Total Return (3M)": "-0.1243",
+          "Total Return (YTD)": "-0.3364",
+          "Total Return (1W)": "-0.0653",
+          "Total Return (5D)": "-0.0176",
+          "Total Return (1D)": "-0.0327",
+          "Total Return (6M)": "-0.3399",
+          "Total Return (1Y)": "-0.4581",
+          "Total Return (3Y)": "0.9186",
+          "Total Return (5Y)": "0.6130",
+          "Total Return (10Y)": "86.6538",
+          "Total Return (QTD)": "-0.1447"
         }
       },
       "eth_spot_usd": {
         "ticker": "ETHUSD",
         "asset_key": "eth_spot_usd",
+        "last_price": 1567.57,
         "name": "Ethereum - United States Dollar",
-        "last_price": 1568.99,
-        "1d_chg": "-0.0024",
-        "vol_1m": 52.95,
-        "total_return_5d": "-0.0261",
-        "tr_1w": -0.0945,
-        "tr_1m": -0.2215,
-        "tr_3m": -0.2158,
-        "tr_6m": -0.4651,
-        "tr_1y": -0.3551,
-        "total_return_3y": "-0.1431",
-        "total_return_5y": "-0.2642",
-        "vol_3m": 41.13,
-        "vol_1y": 57.15,
+        "1_day": "-0.0308",
+        "tr_1m": -0.2255,
+        "tr_3m": -0.2246,
+        "total_return_ytd": "-0.4736",
+        "tr_1w": -0.0567,
+        "total_return_5d": "0.0063",
+        "chg_1d": -0.0308,
+        "tr_6m": -0.4715,
+        "tr_1y": -0.3739,
+        "total_return_3y": "-0.1523",
+        "total_return_5y": "-0.2846",
+        "total_return_qtd": "-0.2556",
         "_raw": {
           "Ticker": "ETHUSD",
+          "Last Price": "1567.57",
           "Name": "Ethereum - United States Dollar",
-          "Last Price": "1568.99",
-          "1d Chg %": "-0.0024",
-          "Volatility (1M)": "52.95",
-          "Total Return (5D)": "-0.0261",
-          "Total Return (1W)": "-0.0945",
-          "Total Return (1M)": "-0.2215",
-          "Total Return (3M)": "-0.2158",
-          "Total Return (6M)": "-0.4651",
-          "Total Return (1Y)": "-0.3551",
-          "Total Return (3Y)": "-0.1431",
-          "Total Return (5Y)": "-0.2642",
-          "Volatility (3M)": "41.13",
-          "Volatility (1Y)": "57.15"
+          "1-Day %": "-0.0308",
+          "Total Return (1M)": "-0.2255",
+          "Total Return (3M)": "-0.2246",
+          "Total Return (YTD)": "-0.4736",
+          "Total Return (1W)": "-0.0567",
+          "Total Return (5D)": "0.0063",
+          "Total Return (1D)": "-0.0308",
+          "Total Return (6M)": "-0.4715",
+          "Total Return (1Y)": "-0.3739",
+          "Total Return (3Y)": "-0.1523",
+          "Total Return (5Y)": "-0.2846",
+          "Total Return (QTD)": "-0.2556"
         }
       },
       "sol_spot_usd": {
         "ticker": "SOLUSD",
         "asset_key": "sol_spot_usd",
+        "last_price": 73.25,
         "name": "Solana - United States Dollar",
-        "last_price": 73.06,
-        "1d_chg": "0.0319",
-        "vol_1m": 65.09,
-        "total_return_5d": "0.0812",
-        "tr_1w": 0.0043,
-        "tr_1m": -0.1103,
-        "tr_3m": -0.1075,
-        "tr_6m": -0.4076,
-        "tr_1y": -0.5156,
-        "total_return_3y": "3.5605",
-        "total_return_5y": "1.1636",
-        "vol_3m": 45.68,
-        "vol_1y": 61.56,
+        "1_day": "-0.0268",
+        "tr_1m": -0.1158,
+        "tr_3m": -0.1145,
+        "total_return_ytd": "-0.4104",
+        "tr_1w": 0.0627,
+        "total_return_5d": "0.1068",
+        "chg_1d": -0.0268,
+        "tr_6m": -0.4085,
+        "tr_1y": -0.5324,
+        "total_return_3y": "3.1762",
+        "total_return_5y": "1.1390",
+        "total_return_qtd": "-0.1184",
         "_raw": {
           "Ticker": "SOLUSD",
+          "Last Price": "73.2500",
           "Name": "Solana - United States Dollar",
-          "Last Price": "73.0600",
-          "1d Chg %": "0.0319",
-          "Volatility (1M)": "65.09",
-          "Total Return (5D)": "0.0812",
-          "Total Return (1W)": "0.0043",
-          "Total Return (1M)": "-0.1103",
-          "Total Return (3M)": "-0.1075",
-          "Total Return (6M)": "-0.4076",
-          "Total Return (1Y)": "-0.5156",
-          "Total Return (3Y)": "3.5605",
-          "Total Return (5Y)": "1.1636",
-          "Volatility (3M)": "45.68",
-          "Volatility (1Y)": "61.56"
+          "1-Day %": "-0.0268",
+          "Total Return (1M)": "-0.1158",
+          "Total Return (3M)": "-0.1145",
+          "Total Return (YTD)": "-0.4104",
+          "Total Return (1W)": "0.0627",
+          "Total Return (5D)": "0.1068",
+          "Total Return (1D)": "-0.0268",
+          "Total Return (6M)": "-0.4085",
+          "Total Return (1Y)": "-0.5324",
+          "Total Return (3Y)": "3.1762",
+          "Total Return (5Y)": "1.1390",
+          "Total Return (QTD)": "-0.1184"
         }
       }
     },
@@ -223,10 +223,10 @@
         "chart_key": "btc_price_chart",
         "asset_key": "btc_spot_usd",
         "field": "close",
-        "row_count": 366,
+        "row_count": 1265,
         "latest": {
-          "date": "06-29-2026",
-          "close": 59650.39
+          "date": "06-18-2026",
+          "close": 63012.28
         },
         "priority": "backup"
       },
@@ -234,10 +234,10 @@
         "chart_key": "eth_price_chart_backup",
         "asset_key": "eth_spot_usd",
         "field": "close",
-        "row_count": 366,
+        "row_count": 1265,
         "latest": {
-          "date": "06-29-2026",
-          "close": 1569.94
+          "date": "06-18-2026",
+          "close": 1708.52
         },
         "priority": "backup"
       },
@@ -245,10 +245,10 @@
         "chart_key": "xrp_price_chart_backup",
         "asset_key": "xrp_spot_usd",
         "field": "close",
-        "row_count": 366,
+        "row_count": 1265,
         "latest": {
-          "date": "06-29-2026",
-          "close": 1.0408
+          "date": "06-18-2026",
+          "close": 1.151
         },
         "priority": "backup"
       },
@@ -256,18 +256,18 @@
         "chart_key": "sol_price_chart_backup",
         "asset_key": "sol_spot_usd",
         "field": "close",
-        "row_count": 366,
+        "row_count": 1264,
         "latest": {
-          "date": "06-29-2026",
-          "close": 71.4
+          "date": "06-18-2026",
+          "close": 69.73
         },
         "priority": "backup"
       }
     },
     "correlation_series": {},
     "snapshot": {
-      "as_of": "2026-06-29T15:11:45.239015+00:00",
-      "source_file": "credit_20260629_0929.csv",
+      "as_of": "2026-06-30T17:09:56.611513+00:00",
+      "source_file": "credit_20260630_1149.csv",
       "tickers_found": [
         "BTCUSD",
         "ETHUSD",
@@ -275,16 +275,16 @@
         "XRPUSD"
       ]
     },
-    "legacy_BTCPRice": 59650.39
+    "legacy_BTCPRice": 63012.28
   },
   "execution": {
     "btc_bias": "Neutral",
     "near_month": "Jul",
     "far_month": "Back",
-    "basis_spread": "59685.00",
-    "ref_low": "47748.00",
-    "ref_mid": "59685.00",
-    "ref_high": "71622.00",
+    "basis_spread": "58620.00",
+    "ref_low": "46896.00",
+    "ref_mid": "58620.00",
+    "ref_high": "70344.00",
     "policy_strength": 50,
     "state_impulse_score": 0,
     "growth_impulse_score": 0,
@@ -294,19 +294,19 @@
     "liquidity": {
       "d1": "flat",
       "d5": "flat",
-      "d20": "down",
+      "d20": "flat",
       "d60": "flat"
     },
     "credit": {
-      "d1": "flat",
-      "d5": "down",
-      "d20": "flat",
+      "d1": "up",
+      "d5": "flat",
+      "d20": "up",
       "d60": "flat"
     },
     "breadth": {
       "d1": "flat",
-      "d5": "flat",
-      "d20": "flat",
+      "d5": "up",
+      "d20": "up",
       "d60": "flat"
     },
     "highbeta": {
@@ -323,6 +323,3122 @@
     }
   },
   "tracer_apply_mode": "confirm_required",
-  "wtm_export_v21": "--- WTM EXPORT v2.1 ---\nWhinfell Score: 50\nTransmission State: Stressed\nRegime Tag: Fragile Risk-On\nKey Observation: Desk auto-transform from Koyfin wide export (2.2e).\nGross Risk Recommendation: \u2014\nBTC Bias: Neutral\nTimestamp: 2026-06-29T15:11:45\nSQ3 Score: 35\nSQ3 Band: Impaired\nPolicy Strength: 50\nState Impulse Score: 0\nGrowth Impulse Score: 0\nChina Regime Tag: desk-auto\nSnapshot ID: global-2026-06-29-raw2wtm-01\nLineage Hash: sha256:b5f9b9286a384dc7e733c7e6bf17f10e03ece178dca188e87411788df3498818\nValidation Status: parsed\nData As Of: 2026-06-29T15:11:45Z\nSource Channel: koyfin\nFreshness Status: fresh\n--- CHINA LADDER EXPORT v1.1 ---\nChina Raw Score: 43\nChina Final Score: 26\nChina Final Band: Impaired\nSQ3 Policy Score: 35\nWeakest China Stage: Credit Confirmation\nKey China Observation: Weakest stage Credit Confirmation at 32/100 \u2014 avoid new China-linked exposure until composite clears 50.",
-  "warnings": []
+  "node_cockpits": {
+    "liquidity": {
+      "node_id": "liquidity",
+      "display_name": "Liquidity & Rates",
+      "composite_score": 100,
+      "composite_score_source": "weighted_components",
+      "band": "Supportive",
+      "band_key": "supportive",
+      "freshness_status": "fresh",
+      "as_of": "2026-06-30T17:09:57+00:00",
+      "horizon_marks": {
+        "d1": "flat",
+        "d5": "flat",
+        "d20": "flat",
+        "d60": "flat"
+      },
+      "horizon_net": 0,
+      "is_weakest_link": false,
+      "key_observation": "Liquidity & Rates horizon_net +0 from suggested tracer marks.",
+      "confidence": "high",
+      "gate_interaction": {
+        "zone": "green",
+        "blocks_directional": false,
+        "blocks_rv": false,
+        "note": ""
+      },
+      "component_inputs": [
+        {
+          "asset_id": "us10y",
+          "label": "2s10s 5D+20D direction",
+          "value": 1.225,
+          "unit": "pct",
+          "weight": 0.3,
+          "contribution": 30.0,
+          "direction": "up",
+          "as_of": "2026-06-30T17:09:57+00:00",
+          "source": "rv_history"
+        },
+        {
+          "asset_id": "sofr",
+          "label": "SOFR / front-end funding impulse",
+          "value": 320.0,
+          "unit": "bps",
+          "weight": 0.25,
+          "contribution": 25.0,
+          "direction": "up",
+          "as_of": "2026-06-30T17:09:57+00:00",
+          "source": "rv_history"
+        },
+        {
+          "asset_id": "us10y",
+          "label": "10Y yield 3M change",
+          "value": "unavailable",
+          "unit": "signal",
+          "weight": 0.2,
+          "contribution": 5.0,
+          "direction": "flat",
+          "as_of": "2026-06-30T17:09:57+00:00",
+          "source": "horizon_fallback"
+        },
+        {
+          "asset_id": "dxy_continuous",
+          "label": "DXY 5D+20D (liquidity conditions)",
+          "value": "unavailable",
+          "unit": "signal",
+          "weight": 0.15,
+          "contribution": 3.75,
+          "direction": "flat",
+          "as_of": "2026-06-30T17:09:57+00:00",
+          "source": "horizon_fallback"
+        },
+        {
+          "asset_id": "us10y",
+          "label": "Real rates / duration pressure proxy",
+          "value": "unavailable",
+          "unit": "signal",
+          "weight": 0.1,
+          "contribution": 2.5,
+          "direction": "flat",
+          "as_of": "2026-06-30T17:09:57+00:00",
+          "source": "horizon_fallback"
+        }
+      ],
+      "directional": {
+        "posture": "neutral",
+        "conviction": "low",
+        "rationale": "Liquidity & Rates mixed marks \u2014 prefer RV or reduced size. IEF 5D inflows confirm constructive liquidity transmission. (Flows: supportive.)",
+        "horizon": "20d",
+        "invalidation": "",
+        "size_hint": "probe",
+        "blocked": false,
+        "block_reason": ""
+      },
+      "relative_value": {
+        "posture": "neutral",
+        "structure": "2s10s curve trade / SOFR spread",
+        "conviction": "low",
+        "rationale": "No extreme RV signal on 2s10s curve trade / SOFR spread. IEF 5D inflows confirm constructive liquidity transmission. (Flows: supportive.)",
+        "leg_long": "",
+        "leg_short": "",
+        "hedge_ratio": 1.0,
+        "target": "",
+        "stop": "",
+        "blocked": false,
+        "block_reason": ""
+      },
+      "implementations": [
+        {
+          "id": "liq_ief_tlt",
+          "instrument_class": "etf",
+          "label": "IEF / TLT duration pair",
+          "legs": [
+            {
+              "side": "long",
+              "asset_id": "ief",
+              "vendor_ticker": "IEF",
+              "ratio": 1
+            },
+            {
+              "side": "short",
+              "asset_id": "tlt",
+              "vendor_ticker": "TLT",
+              "ratio": 1
+            }
+          ],
+          "liquidity_tier": "institutional",
+          "margin_profile": "ibkr_etf",
+          "rank": 1
+        }
+      ],
+      "selected_implementation_id": null,
+      "sizing": {
+        "enabled": false,
+        "portfolio_nav_usd": null,
+        "risk_budget_bps": 25,
+        "kelly_fraction": 0.25,
+        "max_notional_usd": null,
+        "recommended_notional_usd": null,
+        "contracts_or_shares": null,
+        "margin": null
+      },
+      "rv_basis": {
+        "active_horizon": "3m",
+        "active_series_id": "usgg2y10y",
+        "richness_label": "fair",
+        "quartile_context": "US 2s10s spread Q2 (44.4th pct) \u2014 higher_is_richer",
+        "series": {
+          "usgg2y10y": {
+            "quartile_direction": "higher_is_richer",
+            "label": "US 2s10s spread",
+            "horizons": {
+              "1m": {
+                "current_value": 1.225,
+                "unit": "pct",
+                "percentile": 54.5,
+                "quartile": 3,
+                "richness_label": "rich",
+                "lookback_start": "2026-06-08",
+                "lookback_end": "2026-06-29",
+                "n_observations": 22
+              },
+              "3m": {
+                "current_value": 1.225,
+                "unit": "pct",
+                "percentile": 44.4,
+                "quartile": 2,
+                "richness_label": "fair",
+                "lookback_start": "2026-04-28",
+                "lookback_end": "2026-06-29",
+                "n_observations": 63
+              },
+              "6m": {
+                "current_value": 1.225,
+                "unit": "pct",
+                "percentile": 44.4,
+                "quartile": 2,
+                "richness_label": "fair",
+                "lookback_start": "2026-02-24",
+                "lookback_end": "2026-06-29",
+                "n_observations": 126
+              },
+              "12m": {
+                "current_value": 1.225,
+                "unit": "pct",
+                "percentile": 41.7,
+                "quartile": 2,
+                "richness_label": "fair",
+                "lookback_start": "2025-10-21",
+                "lookback_end": "2026-06-29",
+                "n_observations": 252
+              },
+              "3y": {
+                "current_value": 1.225,
+                "unit": "pct",
+                "percentile": 41.7,
+                "quartile": 2,
+                "richness_label": "fair",
+                "lookback_start": "2024-06-04",
+                "lookback_end": "2026-06-29",
+                "n_observations": 756
+              }
+            }
+          },
+          "sofr_ois_spread": {
+            "quartile_direction": "higher_is_cheaper",
+            "label": "SOFR front-end stress",
+            "horizons": {
+              "1m": {
+                "current_value": 320.0,
+                "unit": "bps",
+                "percentile": 63.6,
+                "quartile": 3,
+                "richness_label": "fair",
+                "lookback_start": "2026-06-08",
+                "lookback_end": "2026-06-29",
+                "n_observations": 22
+              },
+              "3m": {
+                "current_value": 320.0,
+                "unit": "bps",
+                "percentile": 57.1,
+                "quartile": 3,
+                "richness_label": "fair",
+                "lookback_start": "2026-04-28",
+                "lookback_end": "2026-06-29",
+                "n_observations": 63
+              },
+              "6m": {
+                "current_value": 320.0,
+                "unit": "bps",
+                "percentile": 55.6,
+                "quartile": 3,
+                "richness_label": "fair",
+                "lookback_start": "2026-02-24",
+                "lookback_end": "2026-06-29",
+                "n_observations": 126
+              },
+              "12m": {
+                "current_value": 320.0,
+                "unit": "bps",
+                "percentile": 53.6,
+                "quartile": 3,
+                "richness_label": "fair",
+                "lookback_start": "2025-10-21",
+                "lookback_end": "2026-06-29",
+                "n_observations": 252
+              },
+              "3y": {
+                "current_value": 320.0,
+                "unit": "bps",
+                "percentile": 53.4,
+                "quartile": 3,
+                "richness_label": "fair",
+                "lookback_start": "2024-06-04",
+                "lookback_end": "2026-06-29",
+                "n_observations": 756
+              }
+            }
+          }
+        }
+      },
+      "china_parallel": {
+        "present": true,
+        "stage_id": "liquidity",
+        "stage_name": "Liquidity & Rates",
+        "horizon_marks": {
+          "d1": "flat",
+          "d5": "flat",
+          "d20": "down",
+          "d60": "flat"
+        },
+        "horizon_net": -1,
+        "composite_score": 40,
+        "note": "China liquidity & rates stage horizon_net -1 (informational)"
+      },
+      "funds_flows": {
+        "enabled": true,
+        "source": "derived",
+        "degrade_mode": "full",
+        "as_of": "2026-06-30",
+        "horizon_display": "5d",
+        "basket_id": "liquidity_duration",
+        "basket_label": "Duration & front-end sponsorship",
+        "node_id": "liquidity",
+        "flows_meta": {
+          "flows_status": "ok",
+          "flows_source": "wtm_flows_timeseries",
+          "flows_degraded": false,
+          "flows_confidence_penalty": 0,
+          "fallback_reason": "",
+          "degrade_mode": "full"
+        },
+        "aggregate": {
+          "flow_pct_aum_1d": 0.0745,
+          "flow_pct_aum_5d": 0.35,
+          "flow_usd_1d": 8.04,
+          "flow_usd_5d": 37.54,
+          "positive_count": 4,
+          "total_count": 4,
+          "populated_count": 4,
+          "primary_ticker": "IEF",
+          "primary_flow_pct_aum_5d": 0.35,
+          "concentration_flag": false,
+          "verdict": "supportive",
+          "confidence_delta": 1
+        },
+        "etfs": [
+          {
+            "ticker": "IEF",
+            "asset_id": "ief",
+            "node_affiliation": "liquidity",
+            "basket_role": "primary",
+            "basket_weight": 0.35,
+            "flow_pct_aum_1d": 0.07,
+            "flow_pct_aum_5d": 0.35,
+            "flow_usd_1d": 7.35,
+            "flow_usd_5d": 36.75,
+            "persistence_score": 1.0,
+            "data_status": "ok"
+          },
+          {
+            "ticker": "SHY",
+            "asset_id": "shy",
+            "node_affiliation": "liquidity",
+            "basket_role": "supporting",
+            "basket_weight": 0.2,
+            "flow_pct_aum_1d": 0.06,
+            "flow_pct_aum_5d": 0.35,
+            "flow_usd_1d": 6.0,
+            "flow_usd_5d": 35.0,
+            "persistence_score": 1.0,
+            "data_status": "ok"
+          },
+          {
+            "ticker": "TLT",
+            "asset_id": "tlt",
+            "node_affiliation": "liquidity",
+            "basket_role": "supporting",
+            "basket_weight": 0.25,
+            "flow_pct_aum_1d": 0.08,
+            "flow_pct_aum_5d": 0.35,
+            "flow_usd_1d": 8.8,
+            "flow_usd_5d": 38.5,
+            "persistence_score": 1.0,
+            "data_status": "ok"
+          },
+          {
+            "ticker": "BIL",
+            "asset_id": "bil",
+            "node_affiliation": "liquidity",
+            "basket_role": "supporting",
+            "basket_weight": 0.2,
+            "flow_pct_aum_1d": 0.09,
+            "flow_pct_aum_5d": 0.35,
+            "flow_usd_1d": 10.35,
+            "flow_usd_5d": 40.25,
+            "persistence_score": 1.0,
+            "data_status": "ok"
+          }
+        ],
+        "interpretation": {
+          "supports_node_thesis": true,
+          "divergence_flag": false,
+          "summary": "IEF 5D inflows confirm constructive liquidity transmission.",
+          "caution_line": "",
+          "change_mind_trigger": "IEF 5D % AUM turns negative while node posture stays constructive.",
+          "degrade_notice": ""
+        }
+      }
+    },
+    "credit": {
+      "node_id": "credit",
+      "display_name": "Credit Confirmation",
+      "composite_score": 75,
+      "composite_score_source": "horizon_net_fallback",
+      "band": "Supportive",
+      "band_key": "supportive",
+      "freshness_status": "fresh",
+      "as_of": "2026-06-30T17:09:57+00:00",
+      "horizon_marks": {
+        "d1": "up",
+        "d5": "flat",
+        "d20": "up",
+        "d60": "flat"
+      },
+      "horizon_net": 2,
+      "is_weakest_link": false,
+      "key_observation": "Credit Confirmation horizon_net +2 from suggested tracer marks.",
+      "confidence": "medium",
+      "gate_interaction": {
+        "zone": "green",
+        "blocks_directional": false,
+        "blocks_rv": false,
+        "note": ""
+      },
+      "component_inputs": [],
+      "directional": {
+        "posture": "long",
+        "conviction": "medium",
+        "rationale": "Credit Confirmation horizons confirming risk-on transmission. HYG 5D inflows confirm constructive credit confirmation transmission. (Flows: supportive.)",
+        "horizon": "20d",
+        "invalidation": "",
+        "size_hint": "probe",
+        "blocked": false,
+        "block_reason": ""
+      },
+      "relative_value": {
+        "posture": "long_spread",
+        "structure": "HYG vs LQD (or HY\u2212IG OAS proxy)",
+        "conviction": "medium",
+        "rationale": "Cheap vs history on HY OAS proxy. HYG 5D inflows confirm constructive credit confirmation transmission. (Flows: supportive.)",
+        "leg_long": "",
+        "leg_short": "",
+        "hedge_ratio": 1.0,
+        "target": "",
+        "stop": "",
+        "blocked": false,
+        "block_reason": ""
+      },
+      "implementations": [
+        {
+          "id": "credit_hyg_lqd",
+          "instrument_class": "etf",
+          "label": "HYG / LQD credit pair",
+          "legs": [
+            {
+              "side": "long",
+              "asset_id": "hyg",
+              "vendor_ticker": "HYG",
+              "ratio": 1
+            },
+            {
+              "side": "short",
+              "asset_id": "jaaa",
+              "vendor_ticker": "LQD",
+              "ratio": 1
+            }
+          ],
+          "liquidity_tier": "institutional",
+          "margin_profile": "ibkr_etf",
+          "rank": 1
+        }
+      ],
+      "selected_implementation_id": null,
+      "sizing": {
+        "enabled": false,
+        "portfolio_nav_usd": null,
+        "risk_budget_bps": 25,
+        "kelly_fraction": 0.25,
+        "max_notional_usd": null,
+        "recommended_notional_usd": null,
+        "contracts_or_shares": null,
+        "margin": null
+      },
+      "rv_basis": {
+        "active_horizon": "3m",
+        "active_series_id": "hy_oas_proxy",
+        "richness_label": "cheap",
+        "quartile_context": "HY OAS proxy Q4 (90.5th pct) \u2014 higher_is_cheaper",
+        "series": {
+          "hy_oas_proxy": {
+            "quartile_direction": "higher_is_cheaper",
+            "label": "HY OAS proxy",
+            "horizons": {
+              "1m": {
+                "current_value": 339.2,
+                "unit": "bps",
+                "percentile": 90.9,
+                "quartile": 4,
+                "richness_label": "cheap",
+                "lookback_start": "2026-06-08",
+                "lookback_end": "2026-06-29",
+                "n_observations": 22
+              },
+              "3m": {
+                "current_value": 339.2,
+                "unit": "bps",
+                "percentile": 90.5,
+                "quartile": 4,
+                "richness_label": "cheap",
+                "lookback_start": "2026-04-28",
+                "lookback_end": "2026-06-29",
+                "n_observations": 63
+              },
+              "6m": {
+                "current_value": 339.2,
+                "unit": "bps",
+                "percentile": 88.9,
+                "quartile": 4,
+                "richness_label": "cheap",
+                "lookback_start": "2026-02-24",
+                "lookback_end": "2026-06-29",
+                "n_observations": 126
+              },
+              "12m": {
+                "current_value": 339.2,
+                "unit": "bps",
+                "percentile": 88.9,
+                "quartile": 4,
+                "richness_label": "cheap",
+                "lookback_start": "2025-10-21",
+                "lookback_end": "2026-06-29",
+                "n_observations": 252
+              },
+              "3y": {
+                "current_value": 339.2,
+                "unit": "bps",
+                "percentile": 88.4,
+                "quartile": 4,
+                "richness_label": "cheap",
+                "lookback_start": "2024-06-04",
+                "lookback_end": "2026-06-29",
+                "n_observations": 756
+              }
+            }
+          },
+          "hyg_lqd_ratio": {
+            "quartile_direction": "higher_is_richer",
+            "label": "HYG / LQD ratio",
+            "horizons": {
+              "1m": {
+                "current_value": 0.98,
+                "unit": "ratio",
+                "percentile": 63.6,
+                "quartile": 3,
+                "richness_label": "rich",
+                "lookback_start": "2026-06-08",
+                "lookback_end": "2026-06-29",
+                "n_observations": 22
+              },
+              "3m": {
+                "current_value": 0.98,
+                "unit": "ratio",
+                "percentile": 57.1,
+                "quartile": 3,
+                "richness_label": "rich",
+                "lookback_start": "2026-04-28",
+                "lookback_end": "2026-06-29",
+                "n_observations": 63
+              },
+              "6m": {
+                "current_value": 0.98,
+                "unit": "ratio",
+                "percentile": 55.6,
+                "quartile": 3,
+                "richness_label": "rich",
+                "lookback_start": "2026-02-24",
+                "lookback_end": "2026-06-29",
+                "n_observations": 126
+              },
+              "12m": {
+                "current_value": 0.98,
+                "unit": "ratio",
+                "percentile": 53.6,
+                "quartile": 3,
+                "richness_label": "rich",
+                "lookback_start": "2025-10-21",
+                "lookback_end": "2026-06-29",
+                "n_observations": 252
+              },
+              "3y": {
+                "current_value": 0.98,
+                "unit": "ratio",
+                "percentile": 53.4,
+                "quartile": 3,
+                "richness_label": "rich",
+                "lookback_start": "2024-06-04",
+                "lookback_end": "2026-06-29",
+                "n_observations": 756
+              }
+            }
+          }
+        }
+      },
+      "china_parallel": {
+        "present": true,
+        "stage_id": "credit",
+        "stage_name": "Credit Confirmation",
+        "horizon_marks": {
+          "d1": "down",
+          "d5": "down",
+          "d20": "flat",
+          "d60": "down"
+        },
+        "horizon_net": -3,
+        "composite_score": 32,
+        "note": "China credit confirmation stage horizon_net -3 (informational)"
+      },
+      "funds_flows": {
+        "enabled": true,
+        "source": "derived",
+        "degrade_mode": "full",
+        "as_of": "2026-06-30",
+        "horizon_display": "5d",
+        "basket_id": "credit_hy_ig",
+        "basket_label": "Credit ETF sponsorship",
+        "node_id": "credit",
+        "flows_meta": {
+          "flows_status": "ok",
+          "flows_source": "wtm_flows_timeseries",
+          "flows_degraded": false,
+          "flows_confidence_penalty": 0,
+          "fallback_reason": "",
+          "degrade_mode": "full"
+        },
+        "aggregate": {
+          "flow_pct_aum_1d": 0.0615,
+          "flow_pct_aum_5d": 0.35,
+          "flow_usd_1d": 7.79,
+          "flow_usd_5d": 44.01,
+          "positive_count": 4,
+          "total_count": 4,
+          "populated_count": 4,
+          "primary_ticker": "HYG",
+          "primary_flow_pct_aum_5d": 0.35,
+          "concentration_flag": false,
+          "verdict": "supportive",
+          "confidence_delta": 1
+        },
+        "etfs": [
+          {
+            "ticker": "HYG",
+            "asset_id": "hyg",
+            "node_affiliation": "credit",
+            "basket_role": "primary",
+            "basket_weight": 0.35,
+            "flow_pct_aum_1d": 0.05,
+            "flow_pct_aum_5d": 0.35,
+            "flow_usd_1d": 6.0,
+            "flow_usd_5d": 42.0,
+            "persistence_score": 1.0,
+            "data_status": "ok"
+          },
+          {
+            "ticker": "LQD",
+            "asset_id": "jaaa",
+            "node_affiliation": "credit",
+            "basket_role": "supporting",
+            "basket_weight": 0.3,
+            "flow_pct_aum_1d": 0.06,
+            "flow_pct_aum_5d": 0.35,
+            "flow_usd_1d": 7.5,
+            "flow_usd_5d": 43.75,
+            "persistence_score": 1.0,
+            "data_status": "ok"
+          },
+          {
+            "ticker": "BKLN",
+            "asset_id": "bkln",
+            "node_affiliation": "credit",
+            "basket_role": "supporting",
+            "basket_weight": 0.2,
+            "flow_pct_aum_1d": 0.07,
+            "flow_pct_aum_5d": 0.35,
+            "flow_usd_1d": 9.1,
+            "flow_usd_5d": 45.5,
+            "persistence_score": 1.0,
+            "data_status": "ok"
+          },
+          {
+            "ticker": "CWB",
+            "asset_id": "cwb",
+            "node_affiliation": "credit",
+            "basket_role": "supporting",
+            "basket_weight": 0.15,
+            "flow_pct_aum_1d": 0.08,
+            "flow_pct_aum_5d": 0.35,
+            "flow_usd_1d": 10.8,
+            "flow_usd_5d": 47.25,
+            "persistence_score": 1.0,
+            "data_status": "ok"
+          }
+        ],
+        "interpretation": {
+          "supports_node_thesis": true,
+          "divergence_flag": false,
+          "summary": "HYG 5D inflows confirm constructive credit confirmation transmission.",
+          "caution_line": "",
+          "change_mind_trigger": "HYG 5D % AUM turns negative while node posture stays constructive.",
+          "degrade_notice": ""
+        }
+      }
+    },
+    "breadth": {
+      "node_id": "breadth",
+      "display_name": "Equity Breadth",
+      "composite_score": 85,
+      "composite_score_source": "weighted_components",
+      "band": "Supportive",
+      "band_key": "supportive",
+      "freshness_status": "fresh",
+      "as_of": "2026-06-30T17:09:57+00:00",
+      "horizon_marks": {
+        "d1": "flat",
+        "d5": "up",
+        "d20": "up",
+        "d60": "flat"
+      },
+      "horizon_net": 2,
+      "is_weakest_link": false,
+      "key_observation": "Equity Breadth horizon_net +2 from suggested tracer marks.",
+      "confidence": "high",
+      "gate_interaction": {
+        "zone": "green",
+        "blocks_directional": false,
+        "blocks_rv": false,
+        "note": ""
+      },
+      "component_inputs": [
+        {
+          "asset_id": "spy",
+          "label": "IWM/SPY ratio 5D+20D",
+          "value": 0.9604,
+          "unit": "ratio",
+          "weight": 0.3,
+          "contribution": 30.0,
+          "direction": "up",
+          "as_of": "2026-06-30T17:09:57+00:00",
+          "source": "rv_history"
+        },
+        {
+          "asset_id": "spy",
+          "label": "Equal-weight vs cap-weight participation",
+          "value": "bullish",
+          "unit": "signal",
+          "weight": 0.25,
+          "contribution": 12.5,
+          "direction": "up",
+          "as_of": "2026-06-30T17:09:57+00:00",
+          "source": "horizon_fallback"
+        },
+        {
+          "asset_id": "xlre",
+          "label": "Financials vs defensives 5D+20D",
+          "value": 0.9016,
+          "unit": "ratio",
+          "weight": 0.2,
+          "contribution": -20.0,
+          "direction": "down",
+          "as_of": "2026-06-30T17:09:57+00:00",
+          "source": "rv_history"
+        },
+        {
+          "asset_id": "spy",
+          "label": "Cyclicals keeping pace with index",
+          "value": "bullish",
+          "unit": "signal",
+          "weight": 0.15,
+          "contribution": 7.5,
+          "direction": "up",
+          "as_of": "2026-06-30T17:09:57+00:00",
+          "source": "horizon_fallback"
+        },
+        {
+          "asset_id": "spy",
+          "label": "Multi-sector participation breadth",
+          "value": "bullish",
+          "unit": "signal",
+          "weight": 0.1,
+          "contribution": 5.0,
+          "direction": "up",
+          "as_of": "2026-06-30T17:09:57+00:00",
+          "source": "horizon_fallback"
+        }
+      ],
+      "directional": {
+        "posture": "long",
+        "conviction": "medium",
+        "rationale": "Equity Breadth horizons confirming risk-on transmission. IWM 5D inflows confirm constructive equity breadth transmission. (Flows: supportive.)",
+        "horizon": "20d",
+        "invalidation": "",
+        "size_hint": "probe",
+        "blocked": false,
+        "block_reason": ""
+      },
+      "relative_value": {
+        "posture": "neutral",
+        "structure": "IWM/SPY participation pair",
+        "conviction": "low",
+        "rationale": "No extreme RV signal on IWM/SPY participation pair. IWM 5D inflows confirm constructive equity breadth transmission. (Flows: supportive.)",
+        "leg_long": "",
+        "leg_short": "",
+        "hedge_ratio": 1.0,
+        "target": "",
+        "stop": "",
+        "blocked": false,
+        "block_reason": ""
+      },
+      "implementations": [
+        {
+          "id": "breadth_iwm_spy",
+          "instrument_class": "etf",
+          "label": "IWM / SPY participation pair",
+          "legs": [
+            {
+              "side": "long",
+              "asset_id": "spy",
+              "vendor_ticker": "IWM",
+              "ratio": 1
+            },
+            {
+              "side": "short",
+              "asset_id": "spy",
+              "vendor_ticker": "SPY",
+              "ratio": 1
+            }
+          ],
+          "liquidity_tier": "institutional",
+          "margin_profile": "ibkr_etf",
+          "rank": 1
+        }
+      ],
+      "selected_implementation_id": null,
+      "sizing": {
+        "enabled": false,
+        "portfolio_nav_usd": null,
+        "risk_budget_bps": 25,
+        "kelly_fraction": 0.25,
+        "max_notional_usd": null,
+        "recommended_notional_usd": null,
+        "contracts_or_shares": null,
+        "margin": null
+      },
+      "rv_basis": {
+        "active_horizon": "3m",
+        "active_series_id": "iwm_spy_ratio",
+        "richness_label": "fair",
+        "quartile_context": "IWM / SPY participation Q2 (44.4th pct) \u2014 higher_is_richer",
+        "series": {
+          "iwm_spy_ratio": {
+            "quartile_direction": "higher_is_richer",
+            "label": "IWM / SPY participation",
+            "horizons": {
+              "1m": {
+                "current_value": 0.9604,
+                "unit": "ratio",
+                "percentile": 54.5,
+                "quartile": 3,
+                "richness_label": "rich",
+                "lookback_start": "2026-06-08",
+                "lookback_end": "2026-06-29",
+                "n_observations": 22
+              },
+              "3m": {
+                "current_value": 0.9604,
+                "unit": "ratio",
+                "percentile": 44.4,
+                "quartile": 2,
+                "richness_label": "fair",
+                "lookback_start": "2026-04-28",
+                "lookback_end": "2026-06-29",
+                "n_observations": 63
+              },
+              "6m": {
+                "current_value": 0.9604,
+                "unit": "ratio",
+                "percentile": 44.4,
+                "quartile": 2,
+                "richness_label": "fair",
+                "lookback_start": "2026-02-24",
+                "lookback_end": "2026-06-29",
+                "n_observations": 126
+              },
+              "12m": {
+                "current_value": 0.9604,
+                "unit": "ratio",
+                "percentile": 41.7,
+                "quartile": 2,
+                "richness_label": "fair",
+                "lookback_start": "2025-10-21",
+                "lookback_end": "2026-06-29",
+                "n_observations": 252
+              },
+              "3y": {
+                "current_value": 0.9604,
+                "unit": "ratio",
+                "percentile": 41.7,
+                "quartile": 2,
+                "richness_label": "fair",
+                "lookback_start": "2024-06-04",
+                "lookback_end": "2026-06-29",
+                "n_observations": 756
+              }
+            }
+          },
+          "xlf_xlu_relative": {
+            "quartile_direction": "higher_is_richer",
+            "label": "XLF vs XLU relative",
+            "horizons": {
+              "1m": {
+                "current_value": 0.9016,
+                "unit": "ratio",
+                "percentile": 9.1,
+                "quartile": 1,
+                "richness_label": "cheap",
+                "lookback_start": "2026-06-08",
+                "lookback_end": "2026-06-29",
+                "n_observations": 22
+              },
+              "3m": {
+                "current_value": 0.9016,
+                "unit": "ratio",
+                "percentile": 6.3,
+                "quartile": 1,
+                "richness_label": "cheap",
+                "lookback_start": "2026-04-28",
+                "lookback_end": "2026-06-29",
+                "n_observations": 63
+              },
+              "6m": {
+                "current_value": 0.9016,
+                "unit": "ratio",
+                "percentile": 6.3,
+                "quartile": 1,
+                "richness_label": "cheap",
+                "lookback_start": "2026-02-24",
+                "lookback_end": "2026-06-29",
+                "n_observations": 126
+              },
+              "12m": {
+                "current_value": 0.9016,
+                "unit": "ratio",
+                "percentile": 6.0,
+                "quartile": 1,
+                "richness_label": "cheap",
+                "lookback_start": "2025-10-21",
+                "lookback_end": "2026-06-29",
+                "n_observations": 252
+              },
+              "3y": {
+                "current_value": 0.9016,
+                "unit": "ratio",
+                "percentile": 6.0,
+                "quartile": 1,
+                "richness_label": "cheap",
+                "lookback_start": "2024-06-04",
+                "lookback_end": "2026-06-29",
+                "n_observations": 756
+              }
+            }
+          }
+        }
+      },
+      "china_parallel": {
+        "present": true,
+        "stage_id": "breadth",
+        "stage_name": "Equity Breadth",
+        "horizon_marks": {
+          "d1": "up",
+          "d5": "flat",
+          "d20": "flat",
+          "d60": "flat"
+        },
+        "horizon_net": 1,
+        "composite_score": 56,
+        "note": "China equity breadth stage horizon_net +1 (informational)"
+      },
+      "funds_flows": {
+        "enabled": true,
+        "source": "derived",
+        "degrade_mode": "full",
+        "as_of": "2026-06-30",
+        "horizon_display": "5d",
+        "basket_id": "breadth_participation",
+        "basket_label": "Equity participation sponsorship",
+        "node_id": "breadth",
+        "flows_meta": {
+          "flows_status": "ok",
+          "flows_source": "wtm_flows_timeseries",
+          "flows_degraded": false,
+          "flows_confidence_penalty": 0,
+          "fallback_reason": "",
+          "degrade_mode": "full"
+        },
+        "aggregate": {
+          "flow_pct_aum_1d": 0.07,
+          "flow_pct_aum_5d": 0.35,
+          "flow_usd_1d": 10.19,
+          "flow_usd_5d": 51.19,
+          "positive_count": 4,
+          "total_count": 4,
+          "populated_count": 4,
+          "primary_ticker": "IWM",
+          "primary_flow_pct_aum_5d": 0.35,
+          "concentration_flag": false,
+          "verdict": "supportive",
+          "confidence_delta": 1
+        },
+        "etfs": [
+          {
+            "ticker": "IWM",
+            "asset_id": "iwm",
+            "node_affiliation": "breadth",
+            "basket_role": "primary",
+            "basket_weight": 0.35,
+            "flow_pct_aum_1d": 0.09,
+            "flow_pct_aum_5d": 0.35,
+            "flow_usd_1d": 12.6,
+            "flow_usd_5d": 49.0,
+            "persistence_score": 1.0,
+            "data_status": "ok"
+          },
+          {
+            "ticker": "SPY",
+            "asset_id": "spy",
+            "node_affiliation": "breadth",
+            "basket_role": "supporting",
+            "basket_weight": 0.25,
+            "flow_pct_aum_1d": 0.05,
+            "flow_pct_aum_5d": 0.35,
+            "flow_usd_1d": 7.25,
+            "flow_usd_5d": 50.75,
+            "persistence_score": 1.0,
+            "data_status": "ok"
+          },
+          {
+            "ticker": "QQQ",
+            "asset_id": "qqq",
+            "node_affiliation": "breadth",
+            "basket_role": "supporting",
+            "basket_weight": 0.2,
+            "flow_pct_aum_1d": 0.06,
+            "flow_pct_aum_5d": 0.35,
+            "flow_usd_1d": 9.0,
+            "flow_usd_5d": 52.5,
+            "persistence_score": 1.0,
+            "data_status": "ok"
+          },
+          {
+            "ticker": "RSP",
+            "asset_id": "rsp",
+            "node_affiliation": "breadth",
+            "basket_role": "supporting",
+            "basket_weight": 0.2,
+            "flow_pct_aum_1d": 0.07,
+            "flow_pct_aum_5d": 0.35,
+            "flow_usd_1d": 10.85,
+            "flow_usd_5d": 54.25,
+            "persistence_score": 1.0,
+            "data_status": "ok"
+          }
+        ],
+        "interpretation": {
+          "supports_node_thesis": true,
+          "divergence_flag": false,
+          "summary": "IWM 5D inflows confirm constructive equity breadth transmission.",
+          "caution_line": "",
+          "change_mind_trigger": "IWM 5D % AUM turns negative while node posture stays constructive.",
+          "degrade_notice": ""
+        }
+      }
+    },
+    "highbeta": {
+      "node_id": "highbeta",
+      "display_name": "High-Beta / BTC",
+      "composite_score": 72,
+      "composite_score_source": "weighted_components",
+      "band": "Supportive",
+      "band_key": "supportive",
+      "freshness_status": "fresh",
+      "as_of": "2026-06-30T17:09:57+00:00",
+      "horizon_marks": {
+        "d1": "flat",
+        "d5": "flat",
+        "d20": "flat",
+        "d60": "flat"
+      },
+      "horizon_net": 0,
+      "is_weakest_link": true,
+      "key_observation": "BTC bias Neutral; horizon_net +0.",
+      "confidence": "high",
+      "gate_interaction": {
+        "zone": "green",
+        "blocks_directional": false,
+        "blocks_rv": false,
+        "note": ""
+      },
+      "component_inputs": [
+        {
+          "asset_id": "btc_vehicle_ibit",
+          "label": "IBIT vs QQQ 5D+20D",
+          "value": 0.9506,
+          "unit": "ratio",
+          "weight": 0.3,
+          "contribution": 30.0,
+          "direction": "up",
+          "as_of": "2026-06-30T17:09:57+00:00",
+          "source": "rv_history"
+        },
+        {
+          "asset_id": "btc_vehicle_ibit",
+          "label": "IBIT beta transmission vs SPY",
+          "value": 0.9506,
+          "unit": "ratio",
+          "weight": 0.25,
+          "contribution": 25.0,
+          "direction": "up",
+          "as_of": "2026-06-30T17:09:57+00:00",
+          "source": "rv_history"
+        },
+        {
+          "asset_id": "btc_spot_usd",
+          "label": "BTC spot 5D+20D momentum",
+          "value": 0.9016,
+          "unit": "ratio",
+          "weight": 0.2,
+          "contribution": -20.0,
+          "direction": "down",
+          "as_of": "2026-06-30T17:09:57+00:00",
+          "source": "rv_history"
+        },
+        {
+          "asset_id": "btc_spot_usd",
+          "label": "BTC/SPY correlation trend",
+          "value": 0.9016,
+          "unit": "ratio",
+          "weight": 0.15,
+          "contribution": -15.0,
+          "direction": "down",
+          "as_of": "2026-06-30T17:09:57+00:00",
+          "source": "rv_history"
+        },
+        {
+          "asset_id": "eth_spot_usd",
+          "label": "ETH/BTC high-beta confirmation",
+          "value": "unavailable",
+          "unit": "signal",
+          "weight": 0.1,
+          "contribution": 2.5,
+          "direction": "flat",
+          "as_of": "2026-06-30T17:09:57+00:00",
+          "source": "horizon_fallback"
+        }
+      ],
+      "directional": {
+        "posture": "neutral",
+        "conviction": "low",
+        "rationale": "High-Beta / BTC mixed marks \u2014 prefer RV or reduced size. IBIT 5D inflows confirm constructive high-beta / btc transmission. (Flows: supportive.)",
+        "horizon": "20d",
+        "invalidation": "",
+        "size_hint": "probe",
+        "blocked": false,
+        "block_reason": ""
+      },
+      "relative_value": {
+        "posture": "neutral",
+        "structure": "IBIT vs QQQ beta spread",
+        "conviction": "low",
+        "rationale": "No extreme RV signal on IBIT vs QQQ beta spread. IBIT 5D inflows confirm constructive high-beta / btc transmission. (Flows: supportive.)",
+        "leg_long": "",
+        "leg_short": "",
+        "hedge_ratio": 1.0,
+        "target": "",
+        "stop": "",
+        "blocked": false,
+        "block_reason": ""
+      },
+      "implementations": [
+        {
+          "id": "highbeta_ibit_qqq",
+          "instrument_class": "etf",
+          "label": "IBIT vs QQQ beta spread",
+          "legs": [
+            {
+              "side": "long",
+              "asset_id": "btc_vehicle_ibit",
+              "vendor_ticker": "IBIT",
+              "ratio": 1
+            },
+            {
+              "side": "short",
+              "asset_id": "qqq",
+              "vendor_ticker": "QQQ",
+              "ratio": 1
+            }
+          ],
+          "liquidity_tier": "institutional",
+          "margin_profile": "ibkr_etf",
+          "rank": 1
+        }
+      ],
+      "selected_implementation_id": null,
+      "sizing": {
+        "enabled": false,
+        "portfolio_nav_usd": null,
+        "risk_budget_bps": 25,
+        "kelly_fraction": 0.25,
+        "max_notional_usd": null,
+        "recommended_notional_usd": null,
+        "contracts_or_shares": null,
+        "margin": null
+      },
+      "rv_basis": {
+        "active_horizon": "3m",
+        "active_series_id": "ibit_qqq_beta_spread",
+        "richness_label": "fair",
+        "quartile_context": "IBIT vs QQQ beta spread Q2 (38.1th pct) \u2014 higher_is_richer",
+        "series": {
+          "ibit_qqq_beta_spread": {
+            "quartile_direction": "higher_is_richer",
+            "label": "IBIT vs QQQ beta spread",
+            "horizons": {
+              "1m": {
+                "current_value": 0.9506,
+                "unit": "ratio",
+                "percentile": 50.0,
+                "quartile": 2,
+                "richness_label": "fair",
+                "lookback_start": "2026-06-08",
+                "lookback_end": "2026-06-29",
+                "n_observations": 22
+              },
+              "3m": {
+                "current_value": 0.9506,
+                "unit": "ratio",
+                "percentile": 38.1,
+                "quartile": 2,
+                "richness_label": "fair",
+                "lookback_start": "2026-04-28",
+                "lookback_end": "2026-06-29",
+                "n_observations": 63
+              },
+              "6m": {
+                "current_value": 0.9506,
+                "unit": "ratio",
+                "percentile": 38.1,
+                "quartile": 2,
+                "richness_label": "fair",
+                "lookback_start": "2026-02-24",
+                "lookback_end": "2026-06-29",
+                "n_observations": 126
+              },
+              "12m": {
+                "current_value": 0.9506,
+                "unit": "ratio",
+                "percentile": 35.7,
+                "quartile": 2,
+                "richness_label": "fair",
+                "lookback_start": "2025-10-21",
+                "lookback_end": "2026-06-29",
+                "n_observations": 252
+              },
+              "3y": {
+                "current_value": 0.9506,
+                "unit": "ratio",
+                "percentile": 35.7,
+                "quartile": 2,
+                "richness_label": "fair",
+                "lookback_start": "2024-06-04",
+                "lookback_end": "2026-06-29",
+                "n_observations": 756
+              }
+            }
+          },
+          "btc_spy_corr": {
+            "quartile_direction": "higher_is_richer",
+            "label": "BTC / SPY correlation",
+            "horizons": {
+              "1m": {
+                "current_value": 0.9016,
+                "unit": "ratio",
+                "percentile": 9.1,
+                "quartile": 1,
+                "richness_label": "cheap",
+                "lookback_start": "2026-06-08",
+                "lookback_end": "2026-06-29",
+                "n_observations": 22
+              },
+              "3m": {
+                "current_value": 0.9016,
+                "unit": "ratio",
+                "percentile": 6.3,
+                "quartile": 1,
+                "richness_label": "cheap",
+                "lookback_start": "2026-04-28",
+                "lookback_end": "2026-06-29",
+                "n_observations": 63
+              },
+              "6m": {
+                "current_value": 0.9016,
+                "unit": "ratio",
+                "percentile": 6.3,
+                "quartile": 1,
+                "richness_label": "cheap",
+                "lookback_start": "2026-02-24",
+                "lookback_end": "2026-06-29",
+                "n_observations": 126
+              },
+              "12m": {
+                "current_value": 0.9016,
+                "unit": "ratio",
+                "percentile": 6.0,
+                "quartile": 1,
+                "richness_label": "cheap",
+                "lookback_start": "2025-10-21",
+                "lookback_end": "2026-06-29",
+                "n_observations": 252
+              },
+              "3y": {
+                "current_value": 0.9016,
+                "unit": "ratio",
+                "percentile": 6.0,
+                "quartile": 1,
+                "richness_label": "cheap",
+                "lookback_start": "2024-06-04",
+                "lookback_end": "2026-06-29",
+                "n_observations": 756
+              }
+            }
+          }
+        }
+      },
+      "china_parallel": {
+        "present": true,
+        "stage_id": "highbeta",
+        "stage_name": "High-Beta / China Cyclical Transmission",
+        "horizon_marks": {
+          "d1": "flat",
+          "d5": "down",
+          "d20": "flat",
+          "d60": "flat"
+        },
+        "horizon_net": -1,
+        "composite_score": 44,
+        "note": "China high-beta / china cyclical transmission stage horizon_net -1 (informational)"
+      },
+      "weakest_context": {
+        "global_health_score": 80,
+        "transmission_state": "normal",
+        "key_observation": "HYG +; MBB +; MUB +; AGG +; US10Y +; US10YT +"
+      },
+      "funds_flows": {
+        "enabled": true,
+        "source": "derived",
+        "degrade_mode": "full",
+        "as_of": "2026-06-30",
+        "horizon_display": "5d",
+        "basket_id": "highbeta_crypto_beta",
+        "basket_label": "High-beta & crypto vehicle sponsorship",
+        "node_id": "highbeta",
+        "flows_meta": {
+          "flows_status": "ok",
+          "flows_source": "wtm_flows_timeseries",
+          "flows_degraded": false,
+          "flows_confidence_penalty": 0,
+          "fallback_reason": "",
+          "degrade_mode": "full"
+        },
+        "aggregate": {
+          "flow_pct_aum_1d": 0.069,
+          "flow_pct_aum_5d": 0.35,
+          "flow_usd_1d": 10.76,
+          "flow_usd_5d": 54.07,
+          "positive_count": 4,
+          "total_count": 4,
+          "populated_count": 4,
+          "primary_ticker": "IBIT",
+          "primary_flow_pct_aum_5d": 0.35,
+          "concentration_flag": false,
+          "verdict": "supportive",
+          "confidence_delta": 1
+        },
+        "etfs": [
+          {
+            "ticker": "IBIT",
+            "asset_id": "btc_vehicle_ibit",
+            "node_affiliation": "highbeta",
+            "basket_role": "primary",
+            "basket_weight": 0.4,
+            "flow_pct_aum_1d": 0.08,
+            "flow_pct_aum_5d": 0.35,
+            "flow_usd_1d": 12.8,
+            "flow_usd_5d": 56.0,
+            "persistence_score": 1.0,
+            "data_status": "ok"
+          },
+          {
+            "ticker": "QQQ",
+            "asset_id": "qqq",
+            "node_affiliation": "highbeta",
+            "basket_role": "supporting",
+            "basket_weight": 0.3,
+            "flow_pct_aum_1d": 0.06,
+            "flow_pct_aum_5d": 0.35,
+            "flow_usd_1d": 9.0,
+            "flow_usd_5d": 52.5,
+            "persistence_score": 1.0,
+            "data_status": "ok"
+          },
+          {
+            "ticker": "SPY",
+            "asset_id": "spy",
+            "node_affiliation": "highbeta",
+            "basket_role": "supporting",
+            "basket_weight": 0.2,
+            "flow_pct_aum_1d": 0.05,
+            "flow_pct_aum_5d": 0.35,
+            "flow_usd_1d": 7.25,
+            "flow_usd_5d": 50.75,
+            "persistence_score": 1.0,
+            "data_status": "ok"
+          },
+          {
+            "ticker": "BITO",
+            "asset_id": "bito",
+            "node_affiliation": "highbeta",
+            "basket_role": "supporting",
+            "basket_weight": 0.1,
+            "flow_pct_aum_1d": 0.09,
+            "flow_pct_aum_5d": 0.35,
+            "flow_usd_1d": 14.85,
+            "flow_usd_5d": 57.75,
+            "persistence_score": 1.0,
+            "data_status": "ok"
+          }
+        ],
+        "interpretation": {
+          "supports_node_thesis": true,
+          "divergence_flag": false,
+          "summary": "IBIT 5D inflows confirm constructive high-beta / btc transmission.",
+          "caution_line": "",
+          "change_mind_trigger": "IBIT 5D % AUM turns negative while node posture stays constructive.",
+          "degrade_notice": ""
+        }
+      }
+    },
+    "basis": {
+      "node_id": "basis",
+      "display_name": "Basis & Term Structure",
+      "composite_score": 100,
+      "composite_score_source": "weighted_components",
+      "band": "Supportive",
+      "band_key": "supportive",
+      "freshness_status": "fresh",
+      "as_of": "2026-06-30T17:09:57+00:00",
+      "horizon_marks": {
+        "d1": "flat",
+        "d5": "flat",
+        "d20": "flat",
+        "d60": "flat"
+      },
+      "horizon_net": 0,
+      "is_weakest_link": false,
+      "key_observation": "Calendar at 58620.00% (Jul/Back); horizon_net +0.",
+      "confidence": "medium",
+      "gate_interaction": {
+        "zone": "green",
+        "blocks_directional": false,
+        "blocks_rv": false,
+        "note": ""
+      },
+      "component_inputs": [
+        {
+          "asset_id": "btc_near_contract",
+          "label": "Near-deferred calendar level vs refs",
+          "value": 1.25,
+          "unit": "pct",
+          "weight": 0.3,
+          "contribution": 30.0,
+          "direction": "up",
+          "as_of": "2026-06-30T17:09:57+00:00",
+          "source": "rv_history"
+        },
+        {
+          "asset_id": "btc_near_contract",
+          "label": "Calendar spread 5D+20D direction",
+          "value": 1.25,
+          "unit": "pct",
+          "weight": 0.25,
+          "contribution": 25.0,
+          "direction": "up",
+          "as_of": "2026-06-30T17:09:57+00:00",
+          "source": "rv_history"
+        },
+        {
+          "asset_id": "btc_near_contract",
+          "label": "Roll / contango stability",
+          "value": 1.25,
+          "unit": "pct",
+          "weight": 0.2,
+          "contribution": 20.0,
+          "direction": "up",
+          "as_of": "2026-06-30T17:09:57+00:00",
+          "source": "rv_history"
+        },
+        {
+          "asset_id": "btc_near_contract",
+          "label": "Spread vs ref_low/mid/high",
+          "value": 1.275,
+          "unit": "pct",
+          "weight": 0.15,
+          "contribution": 15.0,
+          "direction": "up",
+          "as_of": "2026-06-30T17:09:57+00:00",
+          "source": "rv_history"
+        },
+        {
+          "asset_id": "btc_vehicle_ibit",
+          "label": "ETF vs futures basis consistency",
+          "value": 1.275,
+          "unit": "pct",
+          "weight": 0.1,
+          "contribution": 10.0,
+          "direction": "up",
+          "as_of": "2026-06-30T17:09:57+00:00",
+          "source": "rv_history"
+        }
+      ],
+      "directional": {
+        "posture": "neutral",
+        "conviction": "low",
+        "rationale": "Basis & Term Structure mixed marks \u2014 prefer RV or reduced size.",
+        "horizon": "20d",
+        "invalidation": "",
+        "size_hint": "probe",
+        "blocked": false,
+        "block_reason": ""
+      },
+      "relative_value": {
+        "posture": "short_spread",
+        "structure": "BT near vs deferred calendar",
+        "conviction": "medium",
+        "rationale": "Rich vs history on BT near-deferred calendar.",
+        "leg_long": "",
+        "leg_short": "",
+        "hedge_ratio": 1.0,
+        "target": "",
+        "stop": "",
+        "blocked": false,
+        "block_reason": ""
+      },
+      "implementations": [
+        {
+          "id": "basis_btc_calendar",
+          "instrument_class": "futures",
+          "label": "BT calendar spread",
+          "legs": [
+            {
+              "side": "long",
+              "asset_id": "btc_deferred_contract",
+              "vendor_ticker": "BTQ26",
+              "ratio": 1
+            },
+            {
+              "side": "short",
+              "asset_id": "btc_near_contract",
+              "vendor_ticker": "BTM26",
+              "ratio": 1
+            }
+          ],
+          "liquidity_tier": "institutional",
+          "margin_profile": "cme_btc",
+          "rank": 1
+        },
+        {
+          "id": "basis_ibit_proxy",
+          "instrument_class": "etf",
+          "label": "IBIT warehouse proxy",
+          "legs": [
+            {
+              "side": "long",
+              "asset_id": "btc_vehicle_ibit",
+              "vendor_ticker": "IBIT",
+              "ratio": 1
+            }
+          ],
+          "liquidity_tier": "institutional",
+          "margin_profile": "ibkr_etf",
+          "rank": 2
+        }
+      ],
+      "selected_implementation_id": null,
+      "sizing": {
+        "enabled": false,
+        "portfolio_nav_usd": null,
+        "risk_budget_bps": 25,
+        "kelly_fraction": 0.25,
+        "max_notional_usd": null,
+        "recommended_notional_usd": null,
+        "contracts_or_shares": null,
+        "margin": null
+      },
+      "rv_basis": {
+        "active_horizon": "3m",
+        "active_series_id": "btc_calendar_bt_near_deferred",
+        "richness_label": "rich",
+        "quartile_context": "BT near-deferred calendar Q3 (57.1th pct) \u2014 higher_is_richer",
+        "series": {
+          "btc_calendar_bt_near_deferred": {
+            "quartile_direction": "higher_is_richer",
+            "label": "BT near-deferred calendar",
+            "horizons": {
+              "1m": {
+                "current_value": 1.25,
+                "unit": "pct",
+                "percentile": 63.6,
+                "quartile": 3,
+                "richness_label": "rich",
+                "lookback_start": "2026-06-08",
+                "lookback_end": "2026-06-29",
+                "n_observations": 22
+              },
+              "3m": {
+                "current_value": 1.25,
+                "unit": "pct",
+                "percentile": 57.1,
+                "quartile": 3,
+                "richness_label": "rich",
+                "lookback_start": "2026-04-28",
+                "lookback_end": "2026-06-29",
+                "n_observations": 63
+              },
+              "6m": {
+                "current_value": 1.25,
+                "unit": "pct",
+                "percentile": 55.6,
+                "quartile": 3,
+                "richness_label": "rich",
+                "lookback_start": "2026-02-24",
+                "lookback_end": "2026-06-29",
+                "n_observations": 126
+              },
+              "12m": {
+                "current_value": 1.25,
+                "unit": "pct",
+                "percentile": 53.6,
+                "quartile": 3,
+                "richness_label": "rich",
+                "lookback_start": "2025-10-21",
+                "lookback_end": "2026-06-29",
+                "n_observations": 252
+              },
+              "3y": {
+                "current_value": 1.25,
+                "unit": "pct",
+                "percentile": 53.4,
+                "quartile": 3,
+                "richness_label": "rich",
+                "lookback_start": "2024-06-04",
+                "lookback_end": "2026-06-29",
+                "n_observations": 756
+              }
+            }
+          },
+          "btc_basis_vs_refs": {
+            "quartile_direction": "higher_is_richer",
+            "label": "Basis vs ref band",
+            "horizons": {
+              "1m": {
+                "current_value": 1.275,
+                "unit": "pct",
+                "percentile": 72.7,
+                "quartile": 3,
+                "richness_label": "rich",
+                "lookback_start": "2026-06-08",
+                "lookback_end": "2026-06-29",
+                "n_observations": 22
+              },
+              "3m": {
+                "current_value": 1.275,
+                "unit": "pct",
+                "percentile": 69.8,
+                "quartile": 3,
+                "richness_label": "rich",
+                "lookback_start": "2026-04-28",
+                "lookback_end": "2026-06-29",
+                "n_observations": 63
+              },
+              "6m": {
+                "current_value": 1.275,
+                "unit": "pct",
+                "percentile": 66.7,
+                "quartile": 3,
+                "richness_label": "rich",
+                "lookback_start": "2026-02-24",
+                "lookback_end": "2026-06-29",
+                "n_observations": 126
+              },
+              "12m": {
+                "current_value": 1.275,
+                "unit": "pct",
+                "percentile": 65.5,
+                "quartile": 3,
+                "richness_label": "rich",
+                "lookback_start": "2025-10-21",
+                "lookback_end": "2026-06-29",
+                "n_observations": 252
+              },
+              "3y": {
+                "current_value": 1.275,
+                "unit": "pct",
+                "percentile": 65.1,
+                "quartile": 3,
+                "richness_label": "rich",
+                "lookback_start": "2024-06-04",
+                "lookback_end": "2026-06-29",
+                "n_observations": 756
+              }
+            }
+          }
+        }
+      },
+      "china_parallel": {
+        "present": true,
+        "stage_id": "basis",
+        "stage_name": "Basis & Term Structure",
+        "horizon_marks": {
+          "d1": "flat",
+          "d5": "flat",
+          "d20": "down",
+          "d60": "flat"
+        },
+        "horizon_net": -1,
+        "composite_score": 41,
+        "note": "China basis & term structure stage horizon_net -1 (informational)"
+      },
+      "funds_flows": {
+        "enabled": true,
+        "source": "derived",
+        "degrade_mode": "full",
+        "as_of": "2026-06-30",
+        "horizon_display": "5d",
+        "basket_id": "basis_warehouse_proxy",
+        "basket_label": "Warehouse / ETF basis proxy sponsorship",
+        "node_id": "basis",
+        "flows_meta": {
+          "flows_status": "ok",
+          "flows_source": "wtm_flows_timeseries",
+          "flows_degraded": false,
+          "flows_confidence_penalty": 0,
+          "fallback_reason": "",
+          "degrade_mode": "full"
+        },
+        "aggregate": {
+          "flow_pct_aum_1d": 0.078,
+          "flow_pct_aum_5d": 0.35,
+          "flow_usd_1d": 12.24,
+          "flow_usd_5d": 57.31,
+          "positive_count": 3,
+          "total_count": 3,
+          "populated_count": 3,
+          "primary_ticker": "IBIT",
+          "primary_flow_pct_aum_5d": 0.35,
+          "concentration_flag": false,
+          "verdict": "mixed",
+          "confidence_delta": 0
+        },
+        "etfs": [
+          {
+            "ticker": "IBIT",
+            "asset_id": "btc_vehicle_ibit",
+            "node_affiliation": "basis",
+            "basket_role": "primary",
+            "basket_weight": 0.5,
+            "flow_pct_aum_1d": 0.08,
+            "flow_pct_aum_5d": 0.35,
+            "flow_usd_1d": 12.8,
+            "flow_usd_5d": 56.0,
+            "persistence_score": 1.0,
+            "data_status": "ok"
+          },
+          {
+            "ticker": "BITO",
+            "asset_id": "bito",
+            "node_affiliation": "basis",
+            "basket_role": "supporting",
+            "basket_weight": 0.25,
+            "flow_pct_aum_1d": 0.09,
+            "flow_pct_aum_5d": 0.35,
+            "flow_usd_1d": 14.85,
+            "flow_usd_5d": 57.75,
+            "persistence_score": 1.0,
+            "data_status": "ok"
+          },
+          {
+            "ticker": "GBTC",
+            "asset_id": "gbtc",
+            "node_affiliation": "basis",
+            "basket_role": "proxy",
+            "basket_weight": 0.25,
+            "flow_pct_aum_1d": 0.05,
+            "flow_pct_aum_5d": 0.35,
+            "flow_usd_1d": 8.5,
+            "flow_usd_5d": 59.5,
+            "persistence_score": 1.0,
+            "data_status": "ok"
+          }
+        ],
+        "interpretation": {
+          "supports_node_thesis": false,
+          "divergence_flag": false,
+          "summary": "Mixed allocator sponsorship across IBIT basket.",
+          "caution_line": "",
+          "change_mind_trigger": "IBIT 5D % AUM turns negative while node posture stays constructive.",
+          "degrade_notice": ""
+        }
+      }
+    }
+  },
+  "cockpit_context": {
+    "transmission_health_score": 80,
+    "transmission_state": "normal",
+    "weakest_node_id": "highbeta",
+    "gate_zone": "green",
+    "whinfell_score": 80
+  },
+  "wtm_export_v21": "--- WTM EXPORT v2.1 ---\nWhinfell Score: 80\nTransmission State: Normal\nRegime Tag: Confirmed Risk-On\nKey Observation: HYG +; MBB +; MUB +; AGG +; US10Y +; US10YT +\nGross Risk Recommendation: \u2014\nBTC Bias: Neutral\nTimestamp: 2026-06-30T17:09:57\nSQ3 Score: 35\nSQ3 Band: Impaired\nPolicy Strength: 50\nState Impulse Score: 0\nGrowth Impulse Score: 0\nChina Regime Tag: desk-auto\nSnapshot ID: global-2026-06-30-raw2wtm-01\nLineage Hash: sha256:62066f68677ac24da870473d3a00de8762b402fe40d36b524b8069dbb47f633c\nValidation Status: parsed\nData As Of: 2026-06-30T17:09:57Z\nSource Channel: koyfin\nFreshness Status: fresh\nOutput Kind: unknown\n--- CHINA LADDER EXPORT v1.1 ---\nChina Raw Score: 43\nChina Final Score: 26\nChina Final Band: Impaired\nSQ3 Policy Score: 35\nWeakest China Stage: Credit Confirmation\nKey China Observation: Weakest stage Credit Confirmation at 32/100 \u2014 avoid new China-linked exposure until composite clears 50.",
+  "wtm_export_v22": "--- WTM EXPORT v2.2 ---\nWhinfell Score: 80\nTransmission State: Normal\nRegime Tag: Confirmed Risk-On\nKey Observation: HYG +; MBB +; MUB +; AGG +; US10Y +; US10YT +\nGross Risk Recommendation: \u2014\nBTC Bias: Neutral\nTimestamp: 2026-06-30T17:09:57\nSQ3 Score: 35\nSQ3 Band: Impaired\nPolicy Strength: 50\nState Impulse Score: 0\nGrowth Impulse Score: 0\nChina Regime Tag: desk-auto\nSnapshot ID: global-2026-06-30-raw2wtm-01\nLineage Hash: sha256:62066f68677ac24da870473d3a00de8762b402fe40d36b524b8069dbb47f633c\nValidation Status: parsed\nData As Of: 2026-06-30T17:09:57Z\nSource Channel: koyfin\nFreshness Status: fresh\nOutput Kind: unknown\n--- CHINA LADDER EXPORT v1.1 ---\nChina Raw Score: 43\nChina Final Score: 26\nChina Final Band: Impaired\nSQ3 Policy Score: 35\nWeakest China Stage: Credit Confirmation\nKey China Observation: Weakest stage Credit Confirmation at 32/100 \u2014 avoid new China-linked exposure until composite clears 50.\n\n--- NODE COCKPIT: Liquidity & Rates ---\nNode ID: liquidity\nComposite Score: 100\nComposite Score Source: weighted_components\nBand: Supportive\nBand Key: supportive\nFreshness Status: fresh\nHorizon Net: 0\nHorizon Marks: d1\u2192 d5\u2192 d20\u2192 d60\u2192\nDirectional: neutral (low) \u2014 Liquidity & Rates mixed marks \u2014 prefer RV or reduced size. IEF 5D inflows confirm constructive liquidity transmission. (Flows: supportive.)\nRelative Value: neutral \u2014 2s10s curve trade / SOFR spread (low)\nSelected Implementation: \u2014\nRV Series: usgg2y10y\nRV Direction: higher_is_richer\nRV Horizon: 3m\nRV Quartile: Q2\nRV Percentile: 44.4\nRV Richness: fair\nChina Parallel: present \u2014 horizon_net -1\nChina Parallel Note: China liquidity & rates stage horizon_net -1 (informational)\nKey Observation: Liquidity & Rates horizon_net +0 from suggested tracer marks.\nFunds Flow Enabled: true\nFunds Flow Status: ok\nFunds Flow Source: wtm_flows_timeseries\nFunds Flow Degraded: false\nFunds Flow Fallback Reason: \nFunds Flow Verdict: supportive\nFunds Flow 1D: +0.07% AUM\nFunds Flow 5D: +0.35% AUM\nFunds Flow Breadth: 4/4\nFunds Flow Confidence Penalty: 0\nFunds Flow Summary: IEF 5D inflows confirm constructive liquidity transmission.\n\n--- NODE COCKPIT: Credit Confirmation ---\nNode ID: credit\nComposite Score: 75\nComposite Score Source: horizon_net_fallback\nBand: Supportive\nBand Key: supportive\nFreshness Status: fresh\nHorizon Net: 2\nHorizon Marks: d1\u2191 d5\u2192 d20\u2191 d60\u2192\nDirectional: long (medium) \u2014 Credit Confirmation horizons confirming risk-on transmission. HYG 5D inflows confirm constructive credit confirmation transmission. (Flows: supportive.)\nRelative Value: long_spread \u2014 HYG vs LQD (or HY\u2212IG OAS proxy) (medium)\nSelected Implementation: \u2014\nRV Series: hy_oas_proxy\nRV Direction: higher_is_cheaper\nRV Horizon: 3m\nRV Quartile: Q4\nRV Percentile: 90.5\nRV Richness: cheap\nChina Parallel: present \u2014 horizon_net -3\nChina Parallel Note: China credit confirmation stage horizon_net -3 (informational)\nKey Observation: Credit Confirmation horizon_net +2 from suggested tracer marks.\nFunds Flow Enabled: true\nFunds Flow Status: ok\nFunds Flow Source: wtm_flows_timeseries\nFunds Flow Degraded: false\nFunds Flow Fallback Reason: \nFunds Flow Verdict: supportive\nFunds Flow 1D: +0.06% AUM\nFunds Flow 5D: +0.35% AUM\nFunds Flow Breadth: 4/4\nFunds Flow Confidence Penalty: 0\nFunds Flow Summary: HYG 5D inflows confirm constructive credit confirmation transmission.\n\n--- NODE COCKPIT: Equity Breadth ---\nNode ID: breadth\nComposite Score: 85\nComposite Score Source: weighted_components\nBand: Supportive\nBand Key: supportive\nFreshness Status: fresh\nHorizon Net: 2\nHorizon Marks: d1\u2192 d5\u2191 d20\u2191 d60\u2192\nDirectional: long (medium) \u2014 Equity Breadth horizons confirming risk-on transmission. IWM 5D inflows confirm constructive equity breadth transmission. (Flows: supportive.)\nRelative Value: neutral \u2014 IWM/SPY participation pair (low)\nSelected Implementation: \u2014\nRV Series: iwm_spy_ratio\nRV Direction: higher_is_richer\nRV Horizon: 3m\nRV Quartile: Q2\nRV Percentile: 44.4\nRV Richness: fair\nChina Parallel: present \u2014 horizon_net 1\nChina Parallel Note: China equity breadth stage horizon_net +1 (informational)\nKey Observation: Equity Breadth horizon_net +2 from suggested tracer marks.\nFunds Flow Enabled: true\nFunds Flow Status: ok\nFunds Flow Source: wtm_flows_timeseries\nFunds Flow Degraded: false\nFunds Flow Fallback Reason: \nFunds Flow Verdict: supportive\nFunds Flow 1D: +0.07% AUM\nFunds Flow 5D: +0.35% AUM\nFunds Flow Breadth: 4/4\nFunds Flow Confidence Penalty: 0\nFunds Flow Summary: IWM 5D inflows confirm constructive equity breadth transmission.\n\n--- NODE COCKPIT: High-Beta / BTC ---\nNode ID: highbeta\nComposite Score: 72\nComposite Score Source: weighted_components\nBand: Supportive\nBand Key: supportive\nFreshness Status: fresh\nHorizon Net: 0\nHorizon Marks: d1\u2192 d5\u2192 d20\u2192 d60\u2192\nDirectional: neutral (low) \u2014 High-Beta / BTC mixed marks \u2014 prefer RV or reduced size. IBIT 5D inflows confirm constructive high-beta / btc transmission. (Flows: supportive.)\nRelative Value: neutral \u2014 IBIT vs QQQ beta spread (low)\nSelected Implementation: \u2014\nRV Series: ibit_qqq_beta_spread\nRV Direction: higher_is_richer\nRV Horizon: 3m\nRV Quartile: Q2\nRV Percentile: 38.1\nRV Richness: fair\nChina Parallel: present \u2014 horizon_net -1\nChina Parallel Note: China high-beta / china cyclical transmission stage horizon_net -1 (informational)\nKey Observation: BTC bias Neutral; horizon_net +0.\nFunds Flow Enabled: true\nFunds Flow Status: ok\nFunds Flow Source: wtm_flows_timeseries\nFunds Flow Degraded: false\nFunds Flow Fallback Reason: \nFunds Flow Verdict: supportive\nFunds Flow 1D: +0.07% AUM\nFunds Flow 5D: +0.35% AUM\nFunds Flow Breadth: 4/4\nFunds Flow Confidence Penalty: 0\nFunds Flow Summary: IBIT 5D inflows confirm constructive high-beta / btc transmission.\n\n--- NODE COCKPIT: Basis & Term Structure ---\nNode ID: basis\nComposite Score: 100\nComposite Score Source: weighted_components\nBand: Supportive\nBand Key: supportive\nFreshness Status: fresh\nHorizon Net: 0\nHorizon Marks: d1\u2192 d5\u2192 d20\u2192 d60\u2192\nDirectional: neutral (low) \u2014 Basis & Term Structure mixed marks \u2014 prefer RV or reduced size.\nRelative Value: short_spread \u2014 BT near vs deferred calendar (medium)\nSelected Implementation: \u2014\nRV Series: btc_calendar_bt_near_deferred\nRV Direction: higher_is_richer\nRV Horizon: 3m\nRV Quartile: Q3\nRV Percentile: 57.1\nRV Richness: rich\nChina Parallel: present \u2014 horizon_net -1\nChina Parallel Note: China basis & term structure stage horizon_net -1 (informational)\nKey Observation: Calendar at 58620.00% (Jul/Back); horizon_net +0.\nFunds Flow Enabled: true\nFunds Flow Status: ok\nFunds Flow Source: wtm_flows_timeseries\nFunds Flow Degraded: false\nFunds Flow Fallback Reason: \nFunds Flow Verdict: mixed\nFunds Flow 1D: +0.08% AUM\nFunds Flow 5D: +0.35% AUM\nFunds Flow Breadth: 3/3\nFunds Flow Confidence Penalty: 0\nFunds Flow Summary: Mixed allocator sponsorship across IBIT basket.",
+  "warnings": [],
+  "flows_health": {
+    "status": "ok",
+    "node_id": "credit",
+    "missing_tickers": [],
+    "warnings": []
+  },
+  "flows_sidecar": {
+    "as_of": "2026-06-29",
+    "source_file": "WTM-Flows-Global-head.csv",
+    "ingest_mode": "timeseries_primary",
+    "flows_status": "ok",
+    "ticker_count": 15,
+    "warnings": [],
+    "basket_health": {
+      "status": "ok",
+      "node_id": "credit",
+      "missing_tickers": [],
+      "warnings": []
+    }
+  },
+  "ingest_provenance": {
+    "window_hours": 48,
+    "staged_count": 91,
+    "entries": [
+      {
+        "filename": "futures_daily_20260628_1015.csv",
+        "dataset": "futures_daily",
+        "source": "barchart",
+        "source_class": "barchart_quote_snapshot",
+        "output_kind": "quote_snapshot",
+        "output_kinds": [
+          "quote_snapshot",
+          "execution_l3"
+        ],
+        "vendor": "barchart",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T15:02:51.117769+00:00",
+        "sha256": "b10e8fb0349b35cbb59e8d65be75e9907ae3ae18592149966ca81195ab77582d"
+      },
+      {
+        "filename": "futures_daily_20260628_1145.csv",
+        "dataset": "futures_daily",
+        "source": "barchart",
+        "source_class": "barchart_quote_snapshot",
+        "output_kind": "quote_snapshot",
+        "output_kinds": [
+          "quote_snapshot",
+          "execution_l3"
+        ],
+        "vendor": "barchart",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T15:02:51.122059+00:00",
+        "sha256": "42fffa7940317178f420a2d555a562cbe7486b619e2690df9ea6993101096167"
+      },
+      {
+        "filename": "futures_daily_20260628_1206.csv",
+        "dataset": "futures_daily",
+        "source": "barchart",
+        "source_class": "barchart_quote_snapshot",
+        "output_kind": "quote_snapshot",
+        "output_kinds": [
+          "quote_snapshot",
+          "execution_l3"
+        ],
+        "vendor": "barchart",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T15:02:51.126713+00:00",
+        "sha256": "6dd9003d798d662dff02339ce2ed55d23807dc3b8ba9395bba7ca4a49606173b"
+      },
+      {
+        "filename": "futures_daily_20260628_1225.csv",
+        "dataset": "futures_daily",
+        "source": "barchart",
+        "source_class": "barchart_quote_snapshot",
+        "output_kind": "quote_snapshot",
+        "output_kinds": [
+          "quote_snapshot",
+          "execution_l3"
+        ],
+        "vendor": "barchart",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.676606+00:00",
+        "sha256": "23792d92ca4407da1731666c2204804bccfb9a8fc72ae7f5daa3bcb3024c8252"
+      },
+      {
+        "filename": "futures_daily_20260628_1232.csv",
+        "dataset": "futures_daily",
+        "source": "barchart",
+        "source_class": "barchart_quote_snapshot",
+        "output_kind": "quote_snapshot",
+        "output_kinds": [
+          "quote_snapshot",
+          "execution_l3"
+        ],
+        "vendor": "barchart",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.682479+00:00",
+        "sha256": "c15bb9a1135d40d856afe64fb13be0c7d64f1239b8a67abec17036085413b00c"
+      },
+      {
+        "filename": "futures_daily_20260628_1234.csv",
+        "dataset": "futures_daily",
+        "source": "barchart",
+        "source_class": "barchart_quote_snapshot",
+        "output_kind": "quote_snapshot",
+        "output_kinds": [
+          "quote_snapshot",
+          "execution_l3"
+        ],
+        "vendor": "barchart",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.684735+00:00",
+        "sha256": "75db2c5268cf521520ea0d0d7bbc4aebd80c4b43efa564ea2d2d428d7ff630de"
+      },
+      {
+        "filename": "futures_daily_20260628_1235.csv",
+        "dataset": "futures_daily",
+        "source": "barchart",
+        "source_class": "barchart_quote_snapshot",
+        "output_kind": "quote_snapshot",
+        "output_kinds": [
+          "quote_snapshot",
+          "execution_l3"
+        ],
+        "vendor": "barchart",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.686957+00:00",
+        "sha256": "bd2adfd8983ca6202ec10a5612071891db01d4ace504598ef1d2273544e1e7d9"
+      },
+      {
+        "filename": "futures_daily_20260629_1014.csv",
+        "dataset": "futures_daily",
+        "source": "barchart",
+        "source_class": "barchart_quote_snapshot",
+        "output_kind": "quote_snapshot",
+        "output_kinds": [
+          "quote_snapshot",
+          "execution_l3"
+        ],
+        "vendor": "barchart",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.691070+00:00",
+        "sha256": "83d52da2c11d37d97f45f2029cb3842b798636db9051703236ca052c0056c226"
+      },
+      {
+        "filename": "btc_basis_20260628.csv",
+        "dataset": "futures_intraday",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T15:02:50.901053+00:00",
+        "sha256": "65c0f0bee76c77da49d68720dc9da12f2d681e70c367520adf7f0aa3e7a3e7d4"
+      },
+      {
+        "filename": "btc_basis_20260630.csv",
+        "dataset": "futures_intraday",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.511278+00:00",
+        "sha256": "ef309356ef7dc517657ce22a5d5ffa035a990c2fb4a6c8dbcf8ede8e8a5ff512"
+      },
+      {
+        "filename": "futures_intraday_20260628_1146.csv",
+        "dataset": "futures_intraday",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T15:02:51.403121+00:00",
+        "sha256": "597909b2838c3f124cc2a671cc6b1d1ea55bd0dade49537eb60243ef0285170e"
+      },
+      {
+        "filename": "futures_intraday_20260628_1207.csv",
+        "dataset": "futures_intraday",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T15:02:51.404759+00:00",
+        "sha256": "7e84073c664be6249554c5978006be6020b1363b9ff274ad75f0694dfa470c60"
+      },
+      {
+        "filename": "futures_intraday_20260628_1221.csv",
+        "dataset": "futures_intraday",
+        "source": "barchart",
+        "source_class": "barchart_quote_snapshot",
+        "output_kind": "quote_snapshot",
+        "output_kinds": [
+          "quote_snapshot",
+          "execution_l3"
+        ],
+        "vendor": "barchart",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.907780+00:00",
+        "sha256": "b533b8070719c41fecdaf39a137faba385b1f800d9f7bac5d5bf03ce5f56164b"
+      },
+      {
+        "filename": "futures_intraday_20260628_2257.csv",
+        "dataset": "futures_intraday",
+        "source": "barchart",
+        "source_class": "barchart_quote_snapshot",
+        "output_kind": "quote_snapshot",
+        "output_kinds": [
+          "quote_snapshot",
+          "execution_l3"
+        ],
+        "vendor": "barchart",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.909394+00:00",
+        "sha256": "b533b8070719c41fecdaf39a137faba385b1f800d9f7bac5d5bf03ce5f56164b"
+      },
+      {
+        "filename": "futures_intraday_20260628_2322.csv",
+        "dataset": "futures_intraday",
+        "source": "barchart",
+        "source_class": "barchart_quote_snapshot",
+        "output_kind": "quote_snapshot",
+        "output_kinds": [
+          "quote_snapshot",
+          "execution_l3"
+        ],
+        "vendor": "barchart",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.911433+00:00",
+        "sha256": "498ce23382c147aa75d421363344738d6cfe3f9d62bccb5af6711688be29923e"
+      },
+      {
+        "filename": "futures_intraday_20260629_0041.csv",
+        "dataset": "futures_intraday",
+        "source": "barchart",
+        "source_class": "barchart_quote_snapshot",
+        "output_kind": "quote_snapshot",
+        "output_kinds": [
+          "quote_snapshot",
+          "execution_l3"
+        ],
+        "vendor": "barchart",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.913445+00:00",
+        "sha256": "068e982da726b7a1e124501e6b168a7fa255109c90383d7f8c9d0af4b86a4330"
+      },
+      {
+        "filename": "futures_intraday_20260629_0948.csv",
+        "dataset": "futures_intraday",
+        "source": "barchart",
+        "source_class": "barchart_quote_snapshot",
+        "output_kind": "quote_snapshot",
+        "output_kinds": [
+          "quote_snapshot",
+          "execution_l3"
+        ],
+        "vendor": "barchart",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.915240+00:00",
+        "sha256": "205f6d9117399e5128d71b9e8a9e4b1cf762e05f3c365f9c7ed03dc06c43fa83"
+      },
+      {
+        "filename": "futures_intraday_20260630_0529.csv",
+        "dataset": "futures_intraday",
+        "source": "barchart",
+        "source_class": "barchart_quote_snapshot",
+        "output_kind": "quote_snapshot",
+        "output_kinds": [
+          "quote_snapshot",
+          "execution_l3"
+        ],
+        "vendor": "barchart",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.917376+00:00",
+        "sha256": "0535819954d0fdbcdb031866afa0c9aef34d9d1b7def6c89b8a90e3135eaee0d"
+      },
+      {
+        "filename": "futures_intraday_20260630_0533.csv",
+        "dataset": "futures_intraday",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.918643+00:00",
+        "sha256": "0801e49e2ebd98aaafe814d40c1c8c358be8a450ed6f8b4c12c4e7c60d6ec505"
+      },
+      {
+        "filename": "futures_intraday_20260630_0556.csv",
+        "dataset": "futures_intraday",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.920126+00:00",
+        "sha256": "f6f980711ba42dfee04bf6a956877adeb39980d3536fba8c67b4e8f7827d5758"
+      },
+      {
+        "filename": "futures_intraday_20260630_0947.csv",
+        "dataset": "futures_intraday",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.921387+00:00",
+        "sha256": "5cfd89fcccb16459df42a78abde3b8b582b99783fc6b1493e9e63a96283502ce"
+      },
+      {
+        "filename": "futures_intraday_20260630_1206.csv",
+        "dataset": "futures_intraday",
+        "source": "barchart",
+        "source_class": "barchart_quote_snapshot",
+        "output_kind": "quote_snapshot",
+        "output_kinds": [
+          "quote_snapshot",
+          "execution_l3"
+        ],
+        "vendor": "barchart",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.923326+00:00",
+        "sha256": "dfe271ddca576667e8d0864e0799e4123e13602b2f58b737c34463d438806d5b"
+      },
+      {
+        "filename": "greeks_20260628_1016.csv",
+        "dataset": "greeks",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T15:02:51.450646+00:00",
+        "sha256": "fdcc83f285f6f0060ed3c4ff5cb3e2597258487faf4d619ae4b9d88411c75174"
+      },
+      {
+        "filename": "greeks_20260630_0538.csv",
+        "dataset": "greeks",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.929570+00:00",
+        "sha256": "03393142c18e0e380eea1ced27cf795a125050d41a861909986112d5acb61caa"
+      },
+      {
+        "filename": "greeks_20260630_0539.csv",
+        "dataset": "greeks",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.931300+00:00",
+        "sha256": "7020b0dfd882fb78a963ad61aff1e79993df73db1fdabde7405d62b5b1199d0b"
+      },
+      {
+        "filename": "greeks_20260630_0540.csv",
+        "dataset": "greeks",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.933000+00:00",
+        "sha256": "6f5de7e5425739e771a11d83bbbbd7a387bdbfad1746aa5b49223f467477a9e1"
+      },
+      {
+        "filename": "greeks_20260630_0541.csv",
+        "dataset": "greeks",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.934816+00:00",
+        "sha256": "6aa3e90dccb0d48b1c3113bd401c6ae9e0f952de0b90d6c1b02afdb9c38f65ee"
+      },
+      {
+        "filename": "greeks_20260630_0542.csv",
+        "dataset": "greeks",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.936448+00:00",
+        "sha256": "4125f2d58e6c5828a0d4a99384dadf432e0bfdc973b8db979f871c1b2f0be5e6"
+      },
+      {
+        "filename": "greeks_20260630_0543.csv",
+        "dataset": "greeks",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.937965+00:00",
+        "sha256": "25df75daebb167c24476317e4078549725c5bbdfa34efd7f6d4357ff3ff09f05"
+      },
+      {
+        "filename": "greeks_20260630_0545.csv",
+        "dataset": "greeks",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.939369+00:00",
+        "sha256": "5a885b099e5d75f60f622179025ca14ff1a306abc9156c46489afc9d758ba1dc"
+      },
+      {
+        "filename": "greeks_20260630_0546.csv",
+        "dataset": "greeks",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.940997+00:00",
+        "sha256": "6a7a077a24d09ed8b012decf9fa1307456664acd4abe603995f45947439af97f"
+      },
+      {
+        "filename": "greeks_20260630_0547.csv",
+        "dataset": "greeks",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.942402+00:00",
+        "sha256": "04ae649f42f9cceb87bc7f4e93dab8055f80b4cb85aa914b8308f1e8bdf74463"
+      },
+      {
+        "filename": "greeks_20260630_0548.csv",
+        "dataset": "greeks",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.943602+00:00",
+        "sha256": "ca53900e5c49bf06a8e7873f69f502497c4e5d9df5ca960f8ed50bbd78b44651"
+      },
+      {
+        "filename": "greeks_20260630_0549.csv",
+        "dataset": "greeks",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.945142+00:00",
+        "sha256": "560d1f4557021ff2b3321d1b03e5f24c0db4af1225b5527877de990aa90bde57"
+      },
+      {
+        "filename": "greeks_20260630_0550.csv",
+        "dataset": "greeks",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.946515+00:00",
+        "sha256": "0d0be1f91ee27f436e7743a73c3675114be90b3d74fde3420e238838be95ea43"
+      },
+      {
+        "filename": "greeks_20260630_0554.csv",
+        "dataset": "greeks",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.947426+00:00",
+        "sha256": "f3bbf44aabec579d053f0091b65f8526a1606270b78b4c978facc8296859ebb5"
+      },
+      {
+        "filename": "greeks_20260630_0555.csv",
+        "dataset": "greeks",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.949014+00:00",
+        "sha256": "1c31272c7d45da4902afea2365c82288c5064ca0bb04e0154775908aa40c6759"
+      },
+      {
+        "filename": "greeks_20260630_0557.csv",
+        "dataset": "greeks",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.950642+00:00",
+        "sha256": "cb4c6c5539060cd7c6b09f0bb3d3e2e2a200eed1536ca036556f9d7e5719ff48"
+      },
+      {
+        "filename": "greeks_20260630_0559.csv",
+        "dataset": "greeks",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.952153+00:00",
+        "sha256": "fd1928c087a7100f313b1b5f7bde5667bd7f5f9708b31d0531bd0038ef2a3b25"
+      },
+      {
+        "filename": "greeks_20260630_0600.csv",
+        "dataset": "greeks",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.953815+00:00",
+        "sha256": "95292dc58d5f0423e4e97682b350b5e88abbf3084ca0985961dbe12ba9c42677"
+      },
+      {
+        "filename": "greeks_20260630_1203.csv",
+        "dataset": "greeks",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.955307+00:00",
+        "sha256": "17f3a8609270fd7a0162d580054da35eeb4fd8722696d7923275bf7c2cc4173e"
+      },
+      {
+        "filename": "greeks_20260630_1205.csv",
+        "dataset": "greeks",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.956401+00:00",
+        "sha256": "8f6de768a2082a5e38fa74d15f39628e9d2cb49e3153db7c52584f475dad1961"
+      },
+      {
+        "filename": "options_20260628_1016.csv",
+        "dataset": "options",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T15:02:51.531034+00:00",
+        "sha256": "c7ce18874d7871045d49ac3e35f918c375c7dad7e8597264d799c6692cc726d8"
+      },
+      {
+        "filename": "options_20260629_0957.csv",
+        "dataset": "options",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.976200+00:00",
+        "sha256": "af25717dc1e08d8dc0bd6a92d8e7ebeecb5243fb152ce906a6d854a7696c858c"
+      },
+      {
+        "filename": "options_20260629_0959.csv",
+        "dataset": "options",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.977410+00:00",
+        "sha256": "0b1d51673f4855c717ee749fa1e340a585f469ade4c305e8989d0b6a31c08946"
+      },
+      {
+        "filename": "options_20260630_0538.csv",
+        "dataset": "options",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.978819+00:00",
+        "sha256": "58350b361522c14687d58a3b578c0ce4f34e975424990e6726d02859bf500ee1"
+      },
+      {
+        "filename": "options_20260630_0539.csv",
+        "dataset": "options",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.980375+00:00",
+        "sha256": "5d60268e28b895df8f8b44209b7f2bd0bcc650a4b8378ba7ed0cf2f7d0547cc3"
+      },
+      {
+        "filename": "options_20260630_0540.csv",
+        "dataset": "options",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.981679+00:00",
+        "sha256": "c15c1af230aa30197967371f16687ee1271ca4f4f0ffc2194866bcf6abb41180"
+      },
+      {
+        "filename": "options_20260630_0541.csv",
+        "dataset": "options",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.983000+00:00",
+        "sha256": "d5f2ea4057fd96becb8f53ad8cba8c936d721bfbe82e0cd84b63dd171c766889"
+      },
+      {
+        "filename": "options_20260630_0542.csv",
+        "dataset": "options",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.984338+00:00",
+        "sha256": "362f5252f3c4da284a1d91b3635d40edc591955728cee1d67a36f8532bf08249"
+      },
+      {
+        "filename": "options_20260630_0543.csv",
+        "dataset": "options",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.985961+00:00",
+        "sha256": "ce4205ec792df99f880b2aa39ef0faac74f026ceea70cf351af735b2a82bb680"
+      },
+      {
+        "filename": "options_20260630_0544.csv",
+        "dataset": "options",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.987236+00:00",
+        "sha256": "904dc05923ae3a9b34265a7b8d6ea5e3e68d4ba53d3cb96b97810827f272ab4c"
+      },
+      {
+        "filename": "options_20260630_0546.csv",
+        "dataset": "options",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.988529+00:00",
+        "sha256": "a43f63af43092b6092105929902f5b801a4816c44d65cae2d8b51d87befc38ac"
+      },
+      {
+        "filename": "options_20260630_0547.csv",
+        "dataset": "options",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.989614+00:00",
+        "sha256": "7a9eabc726cb56faa3dacd1da45454235b56f64d48d050ea41a1fbacbb027305"
+      },
+      {
+        "filename": "options_20260630_0548.csv",
+        "dataset": "options",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.991143+00:00",
+        "sha256": "08bdb26f2cc4d409e9f968edf3a444dfeaeaf321864e8a32bf5831491b0052a0"
+      },
+      {
+        "filename": "options_20260630_0549.csv",
+        "dataset": "options",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.992195+00:00",
+        "sha256": "1fd6f19c93cfdddcb57ba4bf3d0d016ea91684fd0f51dfe1e4fc1867600f149c"
+      },
+      {
+        "filename": "options_20260630_0550.csv",
+        "dataset": "options",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.993228+00:00",
+        "sha256": "5a9e01800315e249e264919f741866ddbd35bce0e750542a8e2ad8e643a1599e"
+      },
+      {
+        "filename": "options_20260630_0554.csv",
+        "dataset": "options",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.994255+00:00",
+        "sha256": "d4496b2196d2905afe90ed78637a0cf6e7cab20dc19929e8823d3e798182fa95"
+      },
+      {
+        "filename": "options_20260630_0555.csv",
+        "dataset": "options",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.995737+00:00",
+        "sha256": "d035180ff2e350052f6196ecac56c09c5bbca7725f00128a83f6012df5472619"
+      },
+      {
+        "filename": "options_20260630_0557.csv",
+        "dataset": "options",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.996945+00:00",
+        "sha256": "39906d6255c1b045c239aa0f85be5b49842b479f63dc1aa3c9759d311ac36f92"
+      },
+      {
+        "filename": "options_20260630_0559.csv",
+        "dataset": "options",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.998119+00:00",
+        "sha256": "f15f853d643292b17a8828fbd5bd778651f631a930204bdfb52cfb628cf16a45"
+      },
+      {
+        "filename": "options_20260630_1203.csv",
+        "dataset": "options",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.999152+00:00",
+        "sha256": "1386e4d659be33edff52535edb0c3128935df994b0afc0d5e21c4fcec65aa2cb"
+      },
+      {
+        "filename": "options_20260630_1205.csv",
+        "dataset": "options",
+        "source": "barchart",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:57.000087+00:00",
+        "sha256": "ff7bf9b80da4f1f759ca3c71bda9ede355f0b0bfec5c155d46ef7fb887e73aff"
+      },
+      {
+        "filename": "credit_20260628_1047.csv",
+        "dataset": "credit",
+        "source": "koyfin",
+        "source_class": "koyfin_snapshot_csv",
+        "output_kind": "snapshot",
+        "output_kinds": [
+          "snapshot_validation",
+          "universe_membership"
+        ],
+        "vendor": "koyfin",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T14:33:06.965032+00:00",
+        "sha256": "c86f4c60b962004b9918d04018b13683c51369b8bfc0a299a50b79497b3427e2"
+      },
+      {
+        "filename": "credit_20260628_1120.csv",
+        "dataset": "credit",
+        "source": "koyfin",
+        "source_class": "koyfin_snapshot_csv",
+        "output_kind": "snapshot",
+        "output_kinds": [
+          "snapshot_validation",
+          "universe_membership"
+        ],
+        "vendor": "koyfin",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T15:02:50.938965+00:00",
+        "sha256": "1aed921a407301e5311d3731e0568982682f7546b11a38245d9f3b3ea3e7a068"
+      },
+      {
+        "filename": "credit_20260629_0915.csv",
+        "dataset": "credit",
+        "source": "koyfin",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.533776+00:00",
+        "sha256": "053210022ec006faca663220a4374dae4cd1ee6276d25aaa43b4767905518b32"
+      },
+      {
+        "filename": "credit_20260629_0917.csv",
+        "dataset": "credit",
+        "source": "koyfin",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.538798+00:00",
+        "sha256": "2b2e97b94fa31d3462b661c734e0910ac19a810bd534a3085eaad2628ff67a19"
+      },
+      {
+        "filename": "credit_20260629_0923.csv",
+        "dataset": "credit",
+        "source": "koyfin",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.545044+00:00",
+        "sha256": "4edbc0a414aa9c8066711263068f6c7f203a34a17e2e1c7157ae848130dea1cc"
+      },
+      {
+        "filename": "credit_20260629_0924.csv",
+        "dataset": "credit",
+        "source": "koyfin",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.549181+00:00",
+        "sha256": "11c2ae8ae0d59302137793fc5d99e681ee3a1c09d57bd19bbd891e6bd80dfccd"
+      },
+      {
+        "filename": "credit_20260629_0929.csv",
+        "dataset": "credit",
+        "source": "koyfin",
+        "source_class": "koyfin_snapshot_csv",
+        "output_kind": "snapshot",
+        "output_kinds": [
+          "snapshot_validation",
+          "universe_membership"
+        ],
+        "vendor": "koyfin",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.554755+00:00",
+        "sha256": "f7feab92e9ad5adfc0483dbec27086ef2470b01b1b94e4daf12cc519a9b19566"
+      },
+      {
+        "filename": "credit_20260630_0943.csv",
+        "dataset": "credit",
+        "source": "koyfin",
+        "source_class": "koyfin_snapshot_csv",
+        "output_kind": "snapshot",
+        "output_kinds": [
+          "snapshot_validation",
+          "universe_membership"
+        ],
+        "vendor": "koyfin",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.577330+00:00",
+        "sha256": "a2cb26566321918dec843a689e630897bafedb29f36946d35f7b66dba2c5dad3"
+      },
+      {
+        "filename": "credit_20260630_1002.csv",
+        "dataset": "credit",
+        "source": "koyfin",
+        "source_class": "koyfin_snapshot_csv",
+        "output_kind": "snapshot",
+        "output_kinds": [
+          "snapshot_validation",
+          "universe_membership"
+        ],
+        "vendor": "koyfin",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.595418+00:00",
+        "sha256": "a2a066ba16f30389e404e526faa515722b2e7b6b70603ce8ab2f0c51f7aaad54"
+      },
+      {
+        "filename": "credit_20260630_1149.csv",
+        "dataset": "credit",
+        "source": "koyfin",
+        "source_class": "koyfin_snapshot_csv",
+        "output_kind": "snapshot",
+        "output_kinds": [
+          "snapshot_validation",
+          "universe_membership"
+        ],
+        "vendor": "koyfin",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.610900+00:00",
+        "sha256": "0b9251b0c4a31aa03e4873087d7b6664b90755814f346e91fe331e54dfc6c930"
+      },
+      {
+        "filename": "equities_20260628_1053.csv",
+        "dataset": "equities",
+        "source": "koyfin",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T14:33:07.032958+00:00",
+        "sha256": "6f90830f58be79236e8d22ff3b7b75a4f8af0bab33d45678201e1f3d34e3d172"
+      },
+      {
+        "filename": "equities_20260628_1120.csv",
+        "dataset": "equities",
+        "source": "koyfin",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T15:02:51.067475+00:00",
+        "sha256": "08da20411570ed4a770c13ba7419866eb95840e24bee3d05abff120e61c84000"
+      },
+      {
+        "filename": "equities_20260628_2238.csv",
+        "dataset": "equities",
+        "source": "koyfin",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.628271+00:00",
+        "sha256": "6e51725862563ed5873905a356a570d4abe908fd5f255451b4d83ebb19e0d829"
+      },
+      {
+        "filename": "equities_20260629_0927.csv",
+        "dataset": "equities",
+        "source": "koyfin",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.632236+00:00",
+        "sha256": "10efec4d9055379cbda700e4b5839de51250469b3e23fde27cfa4744041bfa92"
+      },
+      {
+        "filename": "equities_20260629_0929.csv",
+        "dataset": "equities",
+        "source": "koyfin",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.636336+00:00",
+        "sha256": "1078c7cdd70684d61a70ebb172979179e92da6d034467b250cea73f1dbe7ffab"
+      },
+      {
+        "filename": "equities_20260630_0527.csv",
+        "dataset": "equities",
+        "source": "koyfin",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.639292+00:00",
+        "sha256": "e431399c14235b5293f5aaf548e4280ee2c0b64bd0783059671558ff1d05e754"
+      },
+      {
+        "filename": "equities_20260630_0532.csv",
+        "dataset": "equities",
+        "source": "koyfin",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.643833+00:00",
+        "sha256": "a2cb26566321918dec843a689e630897bafedb29f36946d35f7b66dba2c5dad3"
+      },
+      {
+        "filename": "flows_20260629_1017.csv",
+        "dataset": "flows",
+        "source": "koyfin",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:56.648544+00:00",
+        "sha256": "700cebad7f70e6daabd4206642a085794659c5d057c9aed143b35e533a85cf66"
+      },
+      {
+        "filename": "rates_20260628_1119.csv",
+        "dataset": "rates",
+        "source": "koyfin",
+        "source_class": "koyfin_wide_timeseries",
+        "output_kind": "historical_timeseries",
+        "output_kinds": [
+          "historical_timeseries",
+          "correlation_series",
+          "global_score_proxy"
+        ],
+        "vendor": "koyfin",
+        "priority": "backup",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T15:02:51.656164+00:00",
+        "sha256": "d66396b385eb7d1b250480e9de43d2cba17980c21fd4f7f677d4e53ec17a4478"
+      },
+      {
+        "filename": "rates_20260628_2237.csv",
+        "dataset": "rates",
+        "source": "koyfin",
+        "source_class": "koyfin_wide_timeseries",
+        "output_kind": "historical_timeseries",
+        "output_kinds": [
+          "historical_timeseries",
+          "correlation_series",
+          "global_score_proxy"
+        ],
+        "vendor": "koyfin",
+        "priority": "backup",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:57.009043+00:00",
+        "sha256": "bbf9191cd637774fbbccf1d511f8bdd10bc37a8de6c017d2736ea32353969827"
+      },
+      {
+        "filename": "rates_20260628_2238.csv",
+        "dataset": "rates",
+        "source": "koyfin",
+        "source_class": "koyfin_wide_timeseries",
+        "output_kind": "historical_timeseries",
+        "output_kinds": [
+          "historical_timeseries",
+          "correlation_series",
+          "global_score_proxy"
+        ],
+        "vendor": "koyfin",
+        "priority": "backup",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:57.019034+00:00",
+        "sha256": "34258daee2001eca6aa10536da2f23c3acb59cbf85fe59444e3142f959e1d6f1"
+      },
+      {
+        "filename": "rates_20260628_2249.csv",
+        "dataset": "rates",
+        "source": "koyfin",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:57.026809+00:00",
+        "sha256": "6f9dac07bad233a8c331b32ecc93c76785a10ee6316b25a680363d8e581827e2"
+      },
+      {
+        "filename": "rates_20260628_2250.csv",
+        "dataset": "rates",
+        "source": "koyfin",
+        "source_class": "koyfin_wide_timeseries",
+        "output_kind": "historical_timeseries",
+        "output_kinds": [
+          "historical_timeseries",
+          "correlation_series",
+          "global_score_proxy"
+        ],
+        "vendor": "koyfin",
+        "priority": "backup",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:57.033384+00:00",
+        "sha256": "bad4ffef3348cb9d84a7dfd70462c72eca9cb1a7fd425f0998b75278f476e112"
+      },
+      {
+        "filename": "rates_20260629_0038.csv",
+        "dataset": "rates",
+        "source": "koyfin",
+        "source_class": "koyfin_wide_timeseries",
+        "output_kind": "historical_timeseries",
+        "output_kinds": [
+          "historical_timeseries",
+          "correlation_series",
+          "global_score_proxy"
+        ],
+        "vendor": "koyfin",
+        "priority": "backup",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:57.054896+00:00",
+        "sha256": "bad4ffef3348cb9d84a7dfd70462c72eca9cb1a7fd425f0998b75278f476e112"
+      },
+      {
+        "filename": "rates_20260629_0039.csv",
+        "dataset": "rates",
+        "source": "koyfin",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:57.075405+00:00",
+        "sha256": "6f9dac07bad233a8c331b32ecc93c76785a10ee6316b25a680363d8e581827e2"
+      },
+      {
+        "filename": "rates_20260629_0922.csv",
+        "dataset": "rates",
+        "source": "koyfin",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:57.080842+00:00",
+        "sha256": "f9e86750b39bcad16e1a02a7905fdae41862a8adf62762727468027a7923afc3"
+      },
+      {
+        "filename": "rates_20260629_0927.csv",
+        "dataset": "rates",
+        "source": "koyfin",
+        "source_class": "unknown",
+        "output_kind": "unknown",
+        "output_kinds": [],
+        "vendor": "",
+        "priority": "",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:57.085870+00:00",
+        "sha256": "e2876fb71d0a0dcb9a31e4b6d8d3527c2b18cf724ac205d94e9885bbe7e69dd4"
+      },
+      {
+        "filename": "rates_20260630_0528.csv",
+        "dataset": "rates",
+        "source": "koyfin",
+        "source_class": "koyfin_wide_timeseries",
+        "output_kind": "historical_timeseries",
+        "output_kinds": [
+          "historical_timeseries",
+          "correlation_series",
+          "global_score_proxy"
+        ],
+        "vendor": "koyfin",
+        "priority": "backup",
+        "canonical_assets": [],
+        "staged_at": "2026-06-30T17:09:57.095935+00:00",
+        "sha256": "d6dd0139dc5c8a004f0a9048c923bca79a15485309cd43cd120b2a90f8468b10"
+      }
+    ],
+    "output_kinds": {
+      "quote_snapshot": 15,
+      "unknown": 64,
+      "snapshot": 6,
+      "historical_timeseries": 6
+    },
+    "primary_output_kind": "unknown",
+    "source_classes": [
+      "barchart_quote_snapshot",
+      "koyfin_snapshot_csv",
+      "koyfin_wide_timeseries",
+      "unknown"
+    ]
+  }
 }

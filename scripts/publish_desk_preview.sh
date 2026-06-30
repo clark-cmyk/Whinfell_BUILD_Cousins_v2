@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# Commit + push source files so GitHub Actions redeploys desk preview (free Pages).
+# Run after whinfell_daily_am.sh when you want Wes/Lovable on the latest bundle.
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$ROOT"
+
+if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  echo "publish_desk_preview: not a git repo — init + remote first:" >&2
+  echo "  git init && git remote add origin <your-github-repo-url>" >&2
+  exit 1
+fi
+
+REMOTE="$(git remote get-url origin 2>/dev/null || true)"
+if [[ -z "$REMOTE" ]]; then
+  echo "publish_desk_preview: no git remote 'origin' — add GitHub repo URL first." >&2
+  exit 1
+fi
+
+bash scripts/build_desk_preview.sh
+
+git add \
+  08_Deliverables/Whinfell_Transmission_Control.html \
+  08_Deliverables/desk_china_ladder_models.js \
+  08_Deliverables/data_dictionary_meta.json \
+  data/hydration/latest.json \
+  scripts/build_desk_preview.sh \
+  scripts/publish_desk_preview.sh \
+  .github/workflows/desk-preview-pages.yml \
+  2>/dev/null || true
+
+if git diff --cached --quiet; then
+  echo "publish_desk_preview: nothing to commit — desk preview already up to date on this branch."
+  echo "  Trigger manual deploy: GitHub → Actions → Desk preview → Run workflow"
+  exit 0
+fi
+
+git commit -m "desk preview: TC + hydration bundle $(date -u +%Y-%m-%dT%H:%MZ)"
+git push origin HEAD
+
+echo ""
+echo "publish_desk_preview: pushed — GitHub Actions will deploy Pages in ~1–2 min."
+echo "  Check: GitHub repo → Actions → Desk preview (GitHub Pages)"
+echo "  URL:   GitHub repo → Settings → Pages (shown after first successful deploy)"
