@@ -21,6 +21,7 @@ whinfell_pipeline/*
 whinfell_pipeline/examples/*
 !whinfell_pipeline/examples/hydration_bundle.json
 !whinfell_pipeline/examples/cockpit_hydration_snippet.json
+!whinfell_pipeline/examples/cockpit_hydration_credit_mission.json
 !whinfell_pipeline/examples/flows/
 !whinfell_pipeline/tests/
 whinfell_pipeline/tests/*
