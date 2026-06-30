@@ -5051,7 +5051,7 @@ function renderCockpitChart(cockpit) {
   el('cockpitChartTitle').textContent = series?.label || `${row?.short || 'Node'} · RV / Basis`;
   el('cockpitChartSubtitle').textContent = series
     ? `${series.quartile_direction || ''} · ${RV_HORIZON_LABELS[horizon] || horizon} lookback`
-    : (cockpit.rv_basis?._degraded ? 'Stub — import hydration for pipeline quartiles' : 'No series populated');
+    : (cockpit.rv_basis?._degraded ? 'Hydration required — quartile rankings not loaded' : 'No series populated');
 
   if (hz) {
     const unit = hz.unit || '';
@@ -5074,7 +5074,7 @@ function renderCockpitChart(cockpit) {
     pills.innerHTML = RV_HORIZONS.map(h => {
       const hasData = series?.horizons?.[h];
       const cls = h === horizon ? 'horizon-pill-active' : '';
-      const disabled = !hasData && !cockpit.rv_basis?._degraded ? 'opacity-40' : '';
+      const disabled = !hasData ? 'opacity-40' : '';
       return `<button type="button" class="horizon-pill ${cls} ${disabled}" data-horizon="${h}">${RV_HORIZON_LABELS[h]}</button>`;
     }).join('');
     pills.querySelectorAll('[data-horizon]').forEach(btn => {

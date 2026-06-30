@@ -9,15 +9,16 @@ import unittest
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-SCRATCH = Path(
-    "/var/folders/qn/gdsdhg9j3f77wk7fn889zbq40000gn/T/grok-goal-9f124befa95c/implementer"
-)
-SCRATCH.mkdir(parents=True, exist_ok=True)
 sys.path.insert(0, str(REPO_ROOT))
+
+from whinfell_pipeline.tests.goal_scratch import goal_scratch
+
+SCRATCH = goal_scratch()
 
 from whinfell_pipeline.flows_parser import (
     compute_rolling_metrics,
     detect_flows_format,
+    ensure_flows_sidecar,
     parse_and_write,
     parse_flows_csv,
     try_parse_flows_csv,
@@ -116,6 +117,16 @@ class TestFlowsParser(unittest.TestCase):
         self.assertEqual(credit["flows_meta"]["flows_source"], "wtm_flows_timeseries")
         self.assertFalse(credit["flows_meta"]["flows_degraded"])
         self.assertEqual(bundle["flows_sidecar"]["flows_status"], "ok")
+
+    def test_ensure_flows_sidecar_via_hydrate_path(self):
+        payload = ensure_flows_sidecar(REPO_ROOT)
+        self.assertIsNotNone(payload)
+        self.assertGreaterEqual(len(payload.get("tickers") or {}), 10)
+        bundle = build_hydration_bundle()
+        self.assertEqual(
+            bundle["node_cockpits"]["credit"]["funds_flows"]["flows_meta"]["flows_status"],
+            "ok",
+        )
 
     def test_cli_parse_and_write(self):
         with tempfile.TemporaryDirectory() as td:

@@ -14,7 +14,8 @@ from china_policy_track.sq3 import calculate_sq3
 from china_policy_track.storage import default_parquet_path as china_default
 from china_policy_track.storage import read_observations as read_china
 from whinfell_pipeline.export_contract import ProvenanceMeta, build_wtm_export_v21, build_wtm_export_v22
-from whinfell_pipeline.funds_flows import build_flows_sidecar_metadata, load_flows_sidecar
+from whinfell_pipeline.flows_parser import ensure_flows_sidecar
+from whinfell_pipeline.funds_flows import build_flows_sidecar_metadata
 from whinfell_pipeline.node_cockpits import build_cockpit_context, build_node_cockpits
 from whinfell_pipeline.rv_history import ensure_dated_series_fixture, load_rv_history
 from whinfell_pipeline.freshness import compute_freshness
@@ -336,7 +337,7 @@ def build_hydration_bundle(
     if flows_sidecar is not None:
         flows_data = flows_sidecar
     else:
-        flows_data = load_flows_sidecar(root)
+        flows_data = ensure_flows_sidecar(root)
 
     ensure_dated_series_fixture(root)
     rv_history = load_rv_history(root)

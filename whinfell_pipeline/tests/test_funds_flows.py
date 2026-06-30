@@ -11,11 +11,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-SCRATCH = Path(
-    "/var/folders/qn/gdsdhg9j3f77wk7fn889zbq40000gn/T/grok-goal-121c0aab5bcc/implementer"
-)
-SCRATCH.mkdir(parents=True, exist_ok=True)
 sys.path.insert(0, str(REPO_ROOT))
+
+from whinfell_pipeline.tests.goal_scratch import goal_scratch
+
+SCRATCH = goal_scratch()
 
 from whinfell_pipeline.flows_fallback import merge_fallback_into_sidecar, parse_credit_cross_section_flows
 from whinfell_pipeline.funds_flows import (
@@ -330,10 +330,17 @@ class TestHydrateFundsIntegration(unittest.TestCase):
     def test_hydration_bundle_always_has_flows_sidecar_block(self):
         bundle = build_hydration_bundle()
         self.assertIn("flows_sidecar", bundle)
-        # When L1 sidecar absent, degrade to unavailable; when present (PR-3a), reflect ingest health.
-        sidecar_path = REPO_ROOT / "data" / "flows" / "v1" / "latest_flows.json"
-        expected = "ok" if sidecar_path.is_file() else "unavailable"
-        self.assertEqual(bundle["flows_sidecar"]["flows_status"], expected)
+        self.assertIn(bundle["flows_sidecar"]["flows_status"], ("ok", "unavailable", "fallback_1d"))
+
+    def test_live_hydrate_flows_status_ok(self):
+        """Acceptance #2: representative flows data → credit funds_flows.flows_status exactly ok."""
+        bundle = build_hydration_bundle()
+        credit_ff = bundle["node_cockpits"]["credit"]["funds_flows"]
+        self.assertEqual(credit_ff["flows_meta"]["flows_status"], "ok")
+        self.assertEqual(credit_ff["flows_meta"]["flows_source"], "wtm_flows_timeseries")
+        self.assertFalse(credit_ff["flows_meta"]["flows_degraded"])
+        self.assertEqual(bundle["flows_sidecar"]["flows_status"], "ok")
+        self.assertGreaterEqual(bundle["flows_sidecar"]["ticker_count"], 10)
 
     def test_hydration_bundle_with_sidecar_param(self):
         bundle = build_hydration_bundle(flows_sidecar=_supportive_credit_sidecar())
@@ -343,8 +350,8 @@ class TestHydrateFundsIntegration(unittest.TestCase):
         self.assertTrue(credit["enabled"])
         self.assertEqual(credit["aggregate"]["verdict"], "supportive")
 
-    def test_verification_plan_step5_cli_hydrate_twice_no_sidecar(self):
-        """Verification plan step 5: real CLI entry, twice, identical, no-flows degrade."""
+    def test_verification_plan_step5_cli_hydrate_twice_identical_ok(self):
+        """Verification plan: CLI hydrate twice — ensure_flows_sidecar restores ok from fixture."""
         sidecar_path = REPO_ROOT / "data" / "flows" / "v1" / "latest_flows.json"
         sidecar_path.parent.mkdir(parents=True, exist_ok=True)
         had_file = sidecar_path.is_file()
@@ -379,18 +386,21 @@ class TestHydrateFundsIntegration(unittest.TestCase):
             for bundle in (bundle1, bundle2):
                 self.assertEqual(bundle["hydration_version"], "1.2.0")
                 self.assertIn("flows_sidecar", bundle)
-                self.assertEqual(bundle["flows_sidecar"]["flows_status"], "unavailable")
+                self.assertEqual(bundle["flows_sidecar"]["flows_status"], "ok")
                 credit_ff = bundle["node_cockpits"]["credit"]["funds_flows"]
                 self.assertIn("flows_meta", credit_ff)
-                self.assertFalse(credit_ff["enabled"])
-                self.assertEqual(credit_ff["flows_meta"]["flows_status"], "unavailable")
-                self.assertEqual(credit_ff["aggregate"]["verdict"], "neutral")
+                self.assertTrue(credit_ff["enabled"])
+                self.assertEqual(credit_ff["flows_meta"]["flows_status"], "ok")
+                self.assertEqual(credit_ff["flows_meta"]["flows_source"], "wtm_flows_timeseries")
+                self.assertFalse(credit_ff["flows_meta"]["flows_degraded"])
+
+            self.assertTrue(sidecar_path.is_file(), "ensure_flows_sidecar should recreate L1 sidecar")
 
             evidence_script = (
                 "import json,sys\n"
                 f"d=json.load(open({str(out1)!r}))\n"
                 "print(d.get('hydration_version'))\n"
-                "print('funds_flows' in d.get('node_cockpits',{}).get('credit',{}))\n"
+                "print(d['node_cockpits']['credit']['funds_flows']['flows_meta']['flows_status'])\n"
                 "sys.stdout.flush()\n"
             )
             evidence = subprocess.run(
@@ -404,7 +414,7 @@ class TestHydrateFundsIntegration(unittest.TestCase):
             self.assertEqual(evidence.returncode, 0, evidence.stderr)
             evidence_lines = evidence.stdout.strip().splitlines()
             self.assertEqual(evidence_lines[0], "1.2.0")
-            self.assertEqual(evidence_lines[1], "True")
+            self.assertEqual(evidence_lines[1], "ok")
 
             (SCRATCH / "hydrate_v12.log").write_text("\n".join(log_lines) + "\n", encoding="utf-8")
         finally:

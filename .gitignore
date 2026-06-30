@@ -32,6 +32,10 @@ whinfell_pipeline/tests/*
 !whinfell_pipeline/tests/test_transmission_control_cockpit.py
 !whinfell_pipeline/tests/test_rv_history.py
 !whinfell_pipeline/tests/test_flows_parser.py
+!whinfell_pipeline/tests/goal_scratch.py
+!whinfell_pipeline/tests/html_load_check.mjs
+!whinfell_pipeline/tests/playwright_cockpit_capture.mjs
+!whinfell_pipeline/verify_phase2_goal.py
 !whinfell_pipeline/tests/test_transmission_control_2_2b.py
 !whinfell_pipeline/tests/test_staged_2_2c.py
 !whinfell_pipeline/tests/test_csv_download.py

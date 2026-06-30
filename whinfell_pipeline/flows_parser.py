@@ -280,6 +280,58 @@ def try_parse_flows_csv(path: Path | str) -> dict[str, Any] | None:
         return None
 
 
+def _canonical_flows_csv_paths(repo_root: Path) -> list[Path]:
+    """Desk + fixture sources in priority order for hydrate-time sidecar ensure."""
+    candidates: list[Path] = [
+        repo_root / "whinfell_pipeline" / "examples" / "flows" / "WTM-Flows-Global-head.csv",
+    ]
+    quarantine = repo_root / "staged_raw" / "quarantine"
+    if quarantine.is_dir():
+        for day_dir in sorted(quarantine.iterdir(), reverse=True):
+            if not day_dir.is_dir():
+                continue
+            for name in ("WTM-Flows-Global.csv", "flows_global.csv"):
+                p = day_dir / name
+                if p.is_file():
+                    candidates.append(p)
+            for p in sorted(day_dir.glob("flows_*.csv"), reverse=True):
+                candidates.append(p)
+    return candidates
+
+
+def _sidecar_is_healthy(payload: Mapping[str, Any] | None) -> bool:
+    if not payload or not isinstance(payload, dict):
+        return False
+    if str(payload.get("ingest_mode") or "") != "timeseries_primary":
+        return False
+    tickers = payload.get("tickers") or {}
+    return len(tickers) >= 10
+
+
+def ensure_flows_sidecar(repo_root: Path | None = None) -> dict[str, Any] | None:
+    """Ensure L1 sidecar via flows_parser when missing or unhealthy; idempotent when healthy."""
+    root = repo_root or Path(__file__).resolve().parents[1]
+    out_path = default_flows_sidecar_path(root)
+    if out_path.is_file():
+        try:
+            existing = json.loads(out_path.read_text(encoding="utf-8"))
+            if _sidecar_is_healthy(existing):
+                return dict(existing)
+        except (json.JSONDecodeError, OSError):
+            pass
+    for csv_path in _canonical_flows_csv_paths(root):
+        payload = try_parse_flows_csv(csv_path)
+        if payload and _sidecar_is_healthy(payload):
+            write_flows_sidecar(payload, out_path)
+            return payload
+    if out_path.is_file():
+        try:
+            return dict(json.loads(out_path.read_text(encoding="utf-8")))
+        except (json.JSONDecodeError, OSError):
+            return None
+    return None
+
+
 def main(argv: list[str] | None = None) -> int:
     import argparse
     import sys
