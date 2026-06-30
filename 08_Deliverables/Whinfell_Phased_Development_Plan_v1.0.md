@@ -34,7 +34,7 @@ The Whinfell desk suffers two structural problems: **naming drift** across files
 ### What was locked
 
 1. **Project structure** — repo root, drop dir, hydration path, folder roles  
-2. **Watchlist names** — `WTM-*` saved views; `WhinPump` documented as legacy alias of `WTM-Credit-Confirmation`  
+2. **Watchlist names** — canonical `WTM-*` saved views only; legacy vendor filenames auto-normalized
 3. **File naming** — `{dataset}_{YYYYMMDD}_{HHMM}.csv` + vendor→canonical map in `normalize_whinfell_drop.sh`  
 4. **JSON structures** — hydration bundle blocks, WTM EXPORT v2.1 fields, TC state version  
 5. **Column mappings** — display labels → `snake_case` fields (`whinfell_score`, not "Whinfell Score")  

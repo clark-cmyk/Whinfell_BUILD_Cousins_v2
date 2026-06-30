@@ -18,19 +18,24 @@ class TestMasterDictionaryTransmissionControl(unittest.TestCase):
     def test_html_contains_dd_badge_element(self):
         text = TC_HTML.read_text(encoding="utf-8")
         self.assertIn('id="ddVersionBadge"', text)
-        self.assertIn("Master Data Dictionary v1.0", text)
+        self.assertIn("Loading dictionary", text)
+        self.assertNotIn("MASTER_DATA_DICTIONARY_FALLBACK", text)
 
     def test_html_defines_render_function(self):
         text = TC_HTML.read_text(encoding="utf-8")
-        self.assertIn("function renderDataDictionaryBadge()", text)
-        self.assertIn("data_dictionary_meta.js", text)
-        self.assertIn("getDataDictionaryMeta()", text)
-        self.assertIn("validateDataDictionaryMeta()", text)
+        self.assertIn("function renderDataDictionaryBadge(", text)
+        self.assertIn("data_dictionary_meta.json", text)
+        self.assertIn("fetchDataDictionaryMeta", text)
+        self.assertIn("validateDataDictionaryMeta", text)
+        self.assertNotIn("MASTER_DATA_DICTIONARY_FALLBACK", text)
+        self.assertIn("Loading dictionary", text)
 
     def test_render_all_calls_dd_badge(self):
         text = TC_HTML.read_text(encoding="utf-8")
-        m = re.search(r"function renderAll\(\)\s*\{([^}]+renderDataDictionaryBadge)", text, re.DOTALL)
-        self.assertIsNotNone(m, "renderAll must call renderDataDictionaryBadge on refresh")
+        idx = text.find("function renderAll()")
+        self.assertGreater(idx, -1)
+        snippet = text[idx : idx + 200]
+        self.assertIn("renderDataDictionaryBadge", snippet)
 
     def test_headless_badge_load_and_refresh(self):
         script = REPO_ROOT / "whinfell_pipeline/tests/dd_badge_headless.mjs"
@@ -40,6 +45,7 @@ class TestMasterDictionaryTransmissionControl(unittest.TestCase):
             capture_output=True,
             text=True,
             check=False,
+            timeout=10,
         )
         self.assertEqual(proc.returncode, 0, proc.stderr or proc.stdout)
         self.assertIn("Master Data Dictionary v1.0", proc.stdout)

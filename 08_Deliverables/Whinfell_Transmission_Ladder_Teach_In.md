@@ -246,7 +246,7 @@ Fixture liquidity: one down → net = −1 → tracer ≈ **38**. Expert composi
 | Ladder stage | Koyfin dashboard (wired name) | What to verify | Export |
 |--------------|------------------------------|----------------|--------|
 | Liquidity & Rates | `WTM-Rates-Credit` | T10Y2Y, DGS10, front-end move vs 20D | ⋮ → Export CSV |
-| Credit Confirmation | `WTM-Credit-Confirmation` / WhinPump | HYG, LQD, HYG/LQD ratio trend | ⋮ → Export CSV |
+| Credit Confirmation | `WTM-Credit-Confirmation` | HYG, LQD, HYG/LQD ratio trend | ⋮ → Export CSV |
 | Equity Breadth | `WTM-Equities-Breadth` | IWM vs SPY, sector participation | ⋮ → Export CSV |
 | High-Beta / BTC | `Whinfell-Daily-TimeSeries` | BTCUSD, IBIT, SPY aligned dates | Download Available Data |
 | China overlay | `WTM-China-Policy` | policy / state / growth impulses | ⋮ → Export CSV |

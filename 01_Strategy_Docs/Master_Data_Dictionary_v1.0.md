@@ -34,14 +34,14 @@ Full folder map: `project_structure` in YAML.
 | Canonical saved view | Canonical export file | Legacy alias |
 |---------------------|----------------------|--------------|
 | **WTM-Rates-Credit** | `rates_{YYYYMMDD}_{HHMM}.csv` | `koyfin_YYYY-MM-DD.csv` |
-| **WTM-Equities-Breadth** | `equities_{YYYYMMDD}_{HHMM}.csv` | `koyfin_Simplify_All_ETFs_*` |
-| **WTM-Credit-Confirmation** | `credit_{YYYYMMDD}_{HHMM}.csv` | `koyfin_WhinPump*` / **WhinPump** |
+| **WTM-Equities-Breadth** | `equities_{YYYYMMDD}_{HHMM}.csv` | legacy vendor files (auto-normalized) |
+| **WTM-Credit-Confirmation** | `credit_{YYYYMMDD}_{HHMM}.csv` | legacy vendor files (auto-normalized) |
 | **WTM-China-Policy** | `china_policy_{YYYYMMDD}_{HHMM}.csv` | — |
 | **WTM-Crypto-Price** | `btc_price_chart_{YYYYMMDD}_{HHMM}.csv` | — |
 | **WTM-Crypto-Correl** | `{asset}_correl_chart_{YYYYMMDD}_{HHMM}.csv` | — |
 | **WTM-BTC-Basis** | `btc_basis_{YYYYMMDD}.csv` | `futures-spreads-btn26-*` |
 
-**Planned watchlists:** `WTM-Import-Core` (replaces WhinPump), `WTM-Import-Curves`, `WTM-Research-Sandbox` (never auto-ingested).
+**Planned watchlists:** `WTM-Import-Core`, `WTM-Import-Curves`, `WTM-Research-Sandbox` (never auto-ingested).
 
 **Barchart screens:** `WTM-Futures-Intraday` → `futures_intraday_*`; `WTM-Futures-Daily` → `futures_daily_*`.
 
@@ -102,7 +102,7 @@ Full folder map: `project_structure` in YAML.
 - Barchart indices: dollar prefix (`$HSI`)
 - Resolution: `canonical_assets` in YAML
 
-**Legacy aliases (compatibility only):** `BTCPRice` → `btc_spot_usd`; `WhinPump` → `WTM-Credit-Confirmation` export path.
+**Legacy aliases (compatibility only):** `BTCPRice` → `btc_spot_usd`; legacy vendor filenames → canonical via `normalize_rules`.
 
 ---
 

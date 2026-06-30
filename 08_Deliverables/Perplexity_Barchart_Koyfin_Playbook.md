@@ -201,16 +201,16 @@ Reference: `data_parser/src/columns.py` → `reshape_side_by_side()`.
 
 | Filename pattern | Why |
 |------------------|-----|
-| `koyfin_Simplify_*` | Cross-sectional watchlist snapshot — not history |
-| `koyfin_WhinPump*` | Pump/snapshot layout |
+| Legacy cross-section snapshots | Not time-series — use WTM-* saved views instead |
+| Legacy credit snapshot exports | Normalize only — export WTM-Credit-Confirmation |
 | `Whinfell*` | Desk snapshot, not time series |
 
 These may still help desk glance or observation **text**, but WhinVis explicitly skips them when loading daily spot.
 
 **Whinfell rename (if desk still drops them):**
 
-- `koyfin_Simplify_All_ETFs_*` → `equities_{YYYYMMDD}_{HHMM}.csv`
-- `koyfin_WhinPump*` → `credit_{YYYYMMDD}_{HHMM}.csv`
+- Legacy equities vendor files → `equities_{YYYYMMDD}_{HHMM}.csv` (see `normalize_rules` in data_dictionary.yaml)
+- Legacy credit vendor files → `credit_{YYYYMMDD}_{HHMM}.csv` (see `normalize_rules` in data_dictionary.yaml)
 
 ### WhinSig-only — Flow (D) exports (separate track)
 
@@ -312,7 +312,7 @@ Optional when available:
 
 - [ ] Export `koyfin_YYYY-MM-DD.csv` with `Date` + Close columns
 - [ ] Include `IBIT Close` (and other approved ETF closes if desk requests)
-- [ ] Do **not** substitute Simplify/WhinPump for time-series work
+- [ ] Do **not** substitute non-WTM watchlist snapshots for time-series work
 
 ### Step 3 — Rename filenames
 
@@ -392,8 +392,8 @@ After pipeline produces hydration bundle:
 | `btn26-volatility-greeks-exp-*` | `greeks_{YYYYMMDD}_{HHMM}.csv` |
 | `futures-spreads-btn26-*` | `btc_basis_{YYYYMMDD}.csv` |
 | `koyfin_YYYY-MM-DD.csv` | `rates_{YYYYMMDD}_{HHMM}.csv` |
-| `koyfin_Simplify_All_ETFs_*` | `equities_{YYYYMMDD}_{HHMM}.csv` |
-| `koyfin_WhinPump*` | `credit_{YYYYMMDD}_{HHMM}.csv` |
+| `equities_vendor_snapshot` (normalize_rules) | `equities_{YYYYMMDD}_{HHMM}.csv` |
+| `credit_vendor_snapshot` (normalize_rules) | `credit_{YYYYMMDD}_{HHMM}.csv` |
 
 Files already matching `futures_intraday_*`, `rates_*`, etc. are skipped.
 

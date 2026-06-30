@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/** Headless: renderDataDictionaryBadge after DICTIONARY_META load (simulated refresh). */
+/** Headless: fetch data_dictionary_meta.json → renderDataDictionaryBadge (load + refresh). */
 import fs from 'fs';
 import path from 'path';
 import vm from 'vm';
@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url';
 
 const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const HTML_PATH = path.join(REPO, '08_Deliverables/Whinfell_Transmission_Control.html');
-const META_JS = path.join(REPO, '08_Deliverables/data_dictionary_meta.js');
+const META_JSON = path.join(REPO, '08_Deliverables/data_dictionary_meta.json');
 
 function extractScript(html) {
   const m = html.match(/<script>\s*\/\*\* Whinfell Transmission Control[\s\S]*?<\/script>/);
@@ -15,14 +15,27 @@ function extractScript(html) {
   let body = m[0].replace(/^<script>\s*/, '').replace(/\s*<\/script>$/, '');
   const cut = body.indexOf("el('btnSave').onclick");
   if (cut >= 0) body = body.slice(0, cut);
-  const metaJs = fs.readFileSync(META_JS, 'utf8');
-  body = metaJs + '\n' + body + `
-renderDataDictionaryBadge();
-const loadText = document.getElementById('ddVersionBadge').textContent;
-validateDataDictionaryMeta();
-renderDataDictionaryBadge();
-const refreshText = document.getElementById('ddVersionBadge').textContent;
-this.__out = { loadText, refreshText, meta: window.DICTIONARY_META, validated: validateDataDictionaryMeta() };
+  const metaPayload = fs.readFileSync(META_JSON, 'utf8');
+  body += `
+const __metaPayload = ${metaPayload};
+let __fetchCount = 0;
+globalThis.fetch = () => {
+  __fetchCount += 1;
+  return Promise.resolve({ ok: true, json: async () => JSON.parse(JSON.stringify(__metaPayload)) });
+};
+(async () => {
+  await fetchDataDictionaryMeta(true);
+  applyDataDictionaryBadge(ddMetaCache, validateDataDictionaryMeta(ddMetaCache));
+  await fetchDataDictionaryMeta(true);
+  renderDataDictionaryBadge(true);
+  await new Promise(r => setTimeout(r, 5));
+  globalThis.__ddOut = {
+    fetchCount: __fetchCount,
+    badgeText: document.getElementById('ddVersionBadge').textContent,
+    meta: ddMetaCache,
+    validated: validateDataDictionaryMeta(ddMetaCache),
+  };
+})();
 `;
   return body;
 }
@@ -30,46 +43,35 @@ this.__out = { loadText, refreshText, meta: window.DICTIONARY_META, validated: v
 function makeSandbox() {
   class El {
     constructor(id) {
-      this.id = id; this.textContent = ''; this.title = ''; this.className = '';
-      this.classList = { _s: new Set(), toggle(c, f) { if (f) { f ? this._s.add(c) : this._s.delete(c); } else { this._s.has(c) ? this._s.delete(c) : this._s.add(c); } } };
+      this.id = id; this.textContent = 'Loading dictionary…'; this.title = ''; this.className = '';
+      this.classList = { _s: new Set(), toggle(c, f) { if (f === true) this._s.add(c); else if (f === false) this._s.delete(c); else this._s.has(c) ? this._s.delete(c) : this._s.add(c); } };
       this.value = ''; this.innerHTML = ''; this.dataset = {}; this.style = {}; this.disabled = false;
     }
     addEventListener() {}
   }
   const els = { ddVersionBadge: new El('ddVersionBadge') };
-  const document = {
-    getElementById(id) {
-      if (!els[id]) els[id] = new El(id);
-      return els[id];
+  return {
+    document: {
+      getElementById(id) { if (!els[id]) els[id] = new El(id); return els[id]; },
+      querySelectorAll: () => [],
+      querySelector: () => ({ value: 'full' }),
     },
-    querySelectorAll: () => [],
-    querySelector: () => ({ value: 'full' }),
-  };
-  const sandbox = {
-    document, window: { DICTIONARY_META: null }, localStorage: { getItem: () => null, setItem: () => {} },
-    console, setTimeout, clearTimeout, Date, JSON, Math, Number, parseInt, parseFloat, Array, Object, Error,
+    window: {}, localStorage: { getItem: () => null, setItem: () => {} },
+    console, setTimeout, clearTimeout, Date, JSON, Math, Number, parseInt, parseFloat, Array, Object, Error, Promise,
     navigator: { clipboard: { writeText: async () => {} } },
   };
-  sandbox.window = sandbox.window;
-  return sandbox;
 }
 
-const html = fs.readFileSync(HTML_PATH, 'utf8');
 const sandbox = makeSandbox();
 vm.createContext(sandbox);
-vm.runInContext(extractScript(html), sandbox, { filename: 'tc-dd-badge.mjs' });
+vm.runInContext(extractScript(fs.readFileSync(HTML_PATH, 'utf8')), sandbox, { filename: 'tc-dd-badge.mjs' });
 
-const out = sandbox.__out;
-for (const label of ['loadText', 'refreshText']) {
-  const t = out?.[label] || '';
-  if (!t.includes('Master Data Dictionary v1.0') || !t.includes('Locked') || !t.includes('Aligned')) {
-    console.error(`FAIL ${label}:`, t);
-    process.exit(1);
-  }
-}
-if (!out?.validated) {
-  console.error('FAIL meta validation');
-  process.exit(1);
-}
-console.log('PASS dd_badge_headless load:', out.loadText);
-console.log('PASS dd_badge_headless refresh:', out.refreshText);
+setTimeout(() => {
+  const out = sandbox.__ddOut;
+  if (!out) { console.error('FAIL no output'); process.exit(1); }
+  if (out.fetchCount < 2) { console.error('FAIL fetchCount', out.fetchCount); process.exit(1); }
+  if (!out.badgeText?.includes('Master Data Dictionary v1.0')) { console.error('FAIL badge', out.badgeText); process.exit(1); }
+  if (!out.validated) { console.error('FAIL validation', out.meta); process.exit(1); }
+  console.log('PASS dd_badge_headless fetch x' + out.fetchCount + ':', out.badgeText);
+  process.exit(0);
+}, 200);

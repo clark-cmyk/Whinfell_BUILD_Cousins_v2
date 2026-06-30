@@ -37,6 +37,7 @@ whinfell_pipeline/tests/*
 !whinfell_pipeline/tests/test_data_dictionary.py
 !whinfell_pipeline/tests/test_master_dictionary_tc.py
 !whinfell_pipeline/tests/test_normalize_dictionary.py
+!whinfell_pipeline/tests/test_operator_naming_alignment.py
 !whinfell_pipeline/tests/dd_badge_headless.mjs
 !whinfell_pipeline/sync_dictionary_meta.py
 !whinfell_pipeline/batch_collect.py

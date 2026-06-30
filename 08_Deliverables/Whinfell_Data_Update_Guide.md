@@ -176,8 +176,8 @@ python3 run_batch_collect.py open
 | Step | ID | Navigation | Export clicks | Canonical name |
 |------|-----|------------|-------------|----------------|
 | 1 | `koyfin_rates` | My Dashboards → **WTM-Rates-Credit** | ⋮ → Export → CSV | `rates_YYYYMMDD_HHMM.csv` |
-| 2 | `koyfin_equities` | **WTM-Equities-Breadth** or watchlist **Simplify All ETFs** | ⋮ → Export → CSV | `equities_YYYYMMDD_HHMM.csv` |
-| 3 | `koyfin_credit` | **WTM-Credit-Confirmation** or **WhinPump** | ⋮ → Export → CSV | `credit_YYYYMMDD_HHMM.csv` |
+| 2 | `koyfin_equities` | My Dashboards → **WTM-Equities-Breadth** (canonical) | ⋮ → Export → CSV | `equities_YYYYMMDD_HHMM.csv` |
+| 3 | `koyfin_credit` | My Dashboards → **WTM-Credit-Confirmation** (canonical) | ⋮ → Export → CSV | `credit_YYYYMMDD_HHMM.csv` |
 | 4 | `koyfin_china` | **WTM-China-Policy** | ⋮ → Export → CSV | `china_policy_YYYYMMDD_HHMM.csv` |
 
 **Assist URLs** (sanity check you're on desk screens):
@@ -465,8 +465,8 @@ open ~/Desktop/Whinfell_BUILD_Cousins/08_Deliverables/whinfell-transmission-ladd
 | Ladder stage | Verify against export |
 |--------------|----------------------|
 | Liquidity & Rates | Koyfin rates / T10Y2Y 20D direction |
-| Credit Confirmation | WhinPump / HYG-LQD 5D |
-| Equity Breadth | Simplify ETFs / IWM-SPY |
+| Credit Confirmation | WTM-Credit-Confirmation export / HYG-LQD 5D |
+| Equity Breadth | WTM-Equities-Breadth export / IWM-SPY |
 | High-Beta / BTC | Koyfin spot series + Barchart intraday |
 | Basis & Term Structure | Barchart spreads + intraday curve |
 
