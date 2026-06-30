@@ -7,7 +7,15 @@ import { fileURLToPath } from 'url';
 
 const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const HTML_PATH = path.join(REPO, '08_Deliverables/Whinfell_Transmission_Control.html');
+const CHINA_MODELS_JS = path.join(REPO, '08_Deliverables/desk_china_ladder_models.js');
+const META_JSON = path.join(REPO, '08_Deliverables/data_dictionary_meta.json');
 const BUNDLE_PATH = path.join(REPO, 'whinfell_pipeline/examples/hydration_bundle.json');
+
+function extractBadgeDefault(html) {
+  const m = html.match(/window\.DICTIONARY_BADGE_DEFAULT\s*=\s*(\{[\s\S]*?\});/);
+  if (!m) throw new Error('DICTIONARY_BADGE_DEFAULT not found in HTML');
+  return JSON.parse(m[1]);
+}
 
 const REQUIRED_FNS = [
   'hydrateFromBundle', 'acceptSuggestedTracer', 'dismissSuggestedTracer',
@@ -16,9 +24,19 @@ const REQUIRED_FNS = [
 ];
 
 function extractScript(html) {
+  const chinaModels = fs.readFileSync(CHINA_MODELS_JS, 'utf8');
+  const badgeDefault = extractBadgeDefault(html);
+  const metaPayload = JSON.parse(fs.readFileSync(META_JSON, 'utf8'));
   const m = html.match(/<script>\s*\/\*\* Whinfell Transmission Control[\s\S]*?<\/script>/);
   if (!m) throw new Error('main script block not found');
-  let body = m[0].replace(/^<script>\s*/, '').replace(/\s*<\/script>$/, '');
+  const ddStub = `
+window.DICTIONARY_BADGE_DEFAULT = ${JSON.stringify(badgeDefault)};
+globalThis.fetch = () => Promise.resolve({
+  ok: true,
+  json: async () => JSON.parse(JSON.stringify(${JSON.stringify(metaPayload)})),
+});
+`;
+  let body = ddStub + chinaModels + '\n' + m[0].replace(/^<script>\s*/, '').replace(/\s*<\/script>$/, '');
   const cut = body.indexOf("el('btnSave').onclick");
   if (cut >= 0) body = body.slice(0, cut);
   body += `

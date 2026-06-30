@@ -506,7 +506,7 @@ If marks wrong → return to TC tracer → edit → Save State → refresh Deep 
 | `warn no rule for: foo.csv` | Unknown raw name | See playbook Appendix A | Report filename to Clark |
 | All quarantined | Pre-2.2e headers | Check 2.2e transform logs | Report quarantine path |
 | Duplicate `(1).csv` | Double export | Delete duplicate | Keep one file |
-| Wrong Koyfin export | Simplify snapshot not time series | Use Date-column export | Re-export step 2/3 |
+| Wrong Koyfin export | Cross-section snapshot not time series | Use Date-column export | Re-export step 2/3 |
 | ER1 confusion | Ether vs Russell | ER1 = **Ether** on CME | Do not substitute QR1 |
 | Stale freshness chip | Old `latest.json` | Re-run full chain + re-import | Report `as_of` timestamp |
 | Tracer suggestions wrong | Bad marks in source data | Dismiss + manual override | Do not Accept for Clark |

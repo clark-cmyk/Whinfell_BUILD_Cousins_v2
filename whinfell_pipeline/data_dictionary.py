@@ -183,3 +183,50 @@ def raw_patterns_for_dataset(dataset: str, data: dict[str, Any] | None = None) -
 def canonical_saved_view_names(data: dict[str, Any] | None = None) -> list[str]:
     views = (get_watchlist_names(data).get("koyfin_saved_views") or {})
     return list(views.keys())
+
+
+def get_operator_alignment(data: dict[str, Any] | None = None) -> dict[str, Any]:
+    dd = data or load_data_dictionary()
+    return dict((dd.get("operator_alignment") or {}).get("enforcement") or {})
+
+
+def operator_active_files(repo_root: Path | None = None, data: dict[str, Any] | None = None) -> list[Path]:
+    """Resolve active_globs from Master DD to concrete file paths."""
+    root = repo_root or Path(__file__).resolve().parents[1]
+    enforcement = get_operator_alignment(data)
+    globs = enforcement.get("active_globs") or []
+    found: set[Path] = set()
+    for pattern in globs:
+        for path in root.glob(pattern):
+            if path.is_file():
+                found.add(path)
+    return sorted(found)
+
+
+def scan_operator_violations(repo_root: Path | None = None, data: dict[str, Any] | None = None) -> list[str]:
+    """Return violation lines: rel_path:lineno: text (forbidden_patterns from Master DD)."""
+    root = repo_root or Path(__file__).resolve().parents[1]
+    enforcement = get_operator_alignment(data)
+    patterns = [str(p) for p in (enforcement.get("forbidden_patterns") or [])]
+    violations: list[str] = []
+    for path in operator_active_files(root, data):
+        text = path.read_text(encoding="utf-8")
+        rel = path.relative_to(root)
+        for i, line in enumerate(text.splitlines(), 1):
+            for pat in patterns:
+                if pat.lower() in line.lower():
+                    violations.append(f"{rel}:{i}: {line.strip()}")
+                    break
+    return violations
+
+
+def badge_default_payload(data: dict[str, Any] | None = None) -> dict[str, str]:
+    info = master_dictionary_info(data)
+    return {
+        "version": info["version"],
+        "date": info["date"],
+        "status": info["status"],
+        "alignment": info["alignment"],
+        "source": "whinfell_pipeline/data_dictionary.yaml",
+        "loadingLabel": "Loading dictionary…",
+    }

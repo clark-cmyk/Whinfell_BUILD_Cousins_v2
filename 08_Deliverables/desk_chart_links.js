@@ -16,7 +16,7 @@ const chartLinks = {
     "primary": {
       "label": "View Chart",
       "source": "Koyfin",
-      "url": "REPLACE_WTM_CREDIT_CONFIRMATION_OR_WHINPUMP_URL"
+      "url": "REPLACE_WTM_CREDIT_CONFIRMATION_SHARE_URL"
     },
     "secondary": {
       "label": "Assist",

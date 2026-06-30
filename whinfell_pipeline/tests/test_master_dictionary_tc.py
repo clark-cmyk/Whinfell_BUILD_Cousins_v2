@@ -18,7 +18,8 @@ class TestMasterDictionaryTransmissionControl(unittest.TestCase):
     def test_html_contains_dd_badge_element(self):
         text = TC_HTML.read_text(encoding="utf-8")
         self.assertIn('id="ddVersionBadge"', text)
-        self.assertIn("Loading dictionary", text)
+        self.assertIn("DD_BADGE_SYNC_START", text)
+        self.assertIn("DICTIONARY_BADGE_DEFAULT", text)
         self.assertNotIn("MASTER_DATA_DICTIONARY_FALLBACK", text)
 
     def test_html_defines_render_function(self):
@@ -28,7 +29,7 @@ class TestMasterDictionaryTransmissionControl(unittest.TestCase):
         self.assertIn("fetchDataDictionaryMeta", text)
         self.assertIn("validateDataDictionaryMeta", text)
         self.assertNotIn("MASTER_DATA_DICTIONARY_FALLBACK", text)
-        self.assertIn("Loading dictionary", text)
+        self.assertIn("getDictionaryBadgeDefault", text)
 
     def test_render_all_calls_dd_badge(self):
         text = TC_HTML.read_text(encoding="utf-8")

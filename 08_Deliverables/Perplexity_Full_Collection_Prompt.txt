@@ -194,7 +194,7 @@ Mode: FAST BATCH (8 exports)
 
 Exports completed:
   [ ] Step 1  koyfin_rates          (WTM-Rates-Credit)
-  [ ] Step 2  koyfin_equities       (WTM-Equities-Breadth / Simplify ETFs)
+  [ ] Step 2  koyfin_equities       (WTM-Equities-Breadth)
   [ ] Step 3  koyfin_credit         (WTM-Credit-Confirmation)
   [ ] Step 4  koyfin_china          (WTM-China-Policy)
   [ ] Step 5  barchart_intraday     (major-commodities / dailymonitor0610)

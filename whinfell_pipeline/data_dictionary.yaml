@@ -217,6 +217,37 @@ ticker_standards:
   resolution: canonical_assets
 
 # ---------------------------------------------------------------------------
+# Operator alignment — active desk docs scanned for forbidden legacy names
+# ---------------------------------------------------------------------------
+operator_alignment:
+  enforcement:
+    active_globs:
+      - "08_Deliverables/Perplexity_*.txt"
+      - "08_Deliverables/Perplexity_*.md"
+      - "08_Deliverables/Comet_Shortcuts_WTM.md"
+      - "08_Deliverables/Whinfell_Data_Update_Guide.md"
+      - "08_Deliverables/Whinfell_Transmission_Ladder_Teach_In.md"
+      - "08_Deliverables/Perplexity_Barchart_Koyfin_Playbook.md"
+      - "08_Deliverables/desk_chart_links.*"
+      - "whinfell_pipeline/examples/AGENT_COLLECTION_PROMPT.txt"
+      - "whinfell_pipeline/examples/comet_collection_plan.json"
+      - "whinfell_pipeline/collection_manifest.yaml"
+      - "whinfell_pipeline/desk_urls.yaml"
+    forbidden_patterns:
+      - WhinPump
+      - whinpump
+      - WHINPUMP
+      - OR_WHINPUMP
+      - Simplify All ETFs
+      - Simplify ETFs
+      - Simplify snapshot
+      - Simplify/WhinPump
+      - Koyfin Simplify
+      - koyfin_WhinPump
+      - koyfin_Simplify
+      - Simplify for history
+
+# ---------------------------------------------------------------------------
 # Source system definitions (ingestion routing keys)
 # ---------------------------------------------------------------------------
 source_systems:

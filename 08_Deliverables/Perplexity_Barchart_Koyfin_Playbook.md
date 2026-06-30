@@ -404,7 +404,7 @@ Files already matching `futures_intraday_*`, `rates_*`, etc. are skipped.
 | Mistake | Fix |
 |---------|-----|
 | Treating `ER1` as Russell | ER1 = Ether (`erm*` files). Russell = `QR1` (`qrm*`). |
-| Using Koyfin Simplify for history | Export `koyfin_YYYY-MM-DD.csv` with `Date` column instead. |
+| Using cross-section snapshot for history | Export `koyfin_YYYY-MM-DD.csv` with `Date` column instead. |
 | Expecting ingest after rename only | Need WTM observation row (2.2e) or manual/Comet shaped export. |
 | One parser for all Barchart files | Classify by filename into 5 types first. |
 | Parsing options without reshape | Side-by-side Call/Put must be split and stacked. |

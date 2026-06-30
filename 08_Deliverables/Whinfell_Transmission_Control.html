@@ -6,6 +6,19 @@
   <title>Whinfell Transmission Control — Phase 2.2 Operator Console</title>
   <script src="https://cdn.tailwindcss.com"></script>
 
+<!-- DD_BADGE_SYNC_START -->
+<script>
+window.DICTIONARY_BADGE_DEFAULT = {
+  "version": "1.0",
+  "date": "2026-06-29",
+  "status": "Locked",
+  "alignment": "Aligned",
+  "source": "whinfell_pipeline/data_dictionary.yaml",
+  "loadingLabel": "Loading dictionary\u2026"
+};
+</script>
+<!-- DD_BADGE_SYNC_END -->
+
   <script>
     tailwind.config = {
       theme: {
@@ -543,7 +556,7 @@
       <div class="flex items-center gap-2.5 flex-wrap">
         <h1 class="text-[15px] font-semibold tracking-tight">Whinfell Transmission Control</h1>
         <span class="text-[9px] font-bold uppercase tracking-wider text-wtm-accent bg-wtm-accent/10 border border-wtm-accent/30 px-2 py-0.5 rounded">Phase 2.2</span>
-        <span id="ddVersionBadge" class="text-[9px] font-bold uppercase tracking-wider text-wtm-muted bg-wtm-card border border-wtm-border px-2 py-0.5 rounded" title="Loading Master Data Dictionary status…">Loading dictionary…</span>
+        <span id="ddVersionBadge" class="text-[9px] font-bold uppercase tracking-wider text-wtm-muted bg-wtm-card border border-wtm-border px-2 py-0.5 rounded"></span>
       </div>
       <p class="text-[11px] text-wtm-muted">Pipeline-authoritative command bar · Hybrid Signal Tracer · WTM EXPORT v2.1</p>
     </div>
@@ -4215,10 +4228,16 @@ function applyDataDictionaryBadge(meta, validated) {
   badge.classList.toggle('bg-amber-500/10', meta && !validated);
 }
 
+function getDictionaryBadgeDefault() {
+  return (typeof window !== 'undefined' && window.DICTIONARY_BADGE_DEFAULT) || {};
+}
+
 function validateDataDictionaryMeta(meta) {
+  const expected = getDictionaryBadgeDefault();
   if (!meta || meta.validated !== true) return false;
-  if (meta.version !== '1.0' || meta.status !== 'Locked') return false;
-  if (meta.source !== 'whinfell_pipeline/data_dictionary.yaml') return false;
+  if (!expected.version || !expected.status) return false;
+  if (meta.version !== expected.version || meta.status !== expected.status) return false;
+  if (meta.source !== expected.source) return false;
   return true;
 }
 
@@ -4245,17 +4264,23 @@ function fetchDataDictionaryMeta(force) {
 function renderDataDictionaryBadge(forceRefresh) {
   const badge = el('ddVersionBadge');
   if (!badge) return;
+  const badgeDefault = getDictionaryBadgeDefault();
   if (!ddMetaCache || forceRefresh) {
-    badge.textContent = 'Loading dictionary…';
+    badge.textContent = badgeDefault.loadingLabel || 'Loading dictionary…';
   }
   fetchDataDictionaryMeta(forceRefresh).then(meta => {
     if (!meta) {
-      badge.textContent = 'Dictionary meta unavailable';
-      badge.title = `Failed to load ${MASTER_DATA_DICTIONARY_META_URL}`;
+      const fb = badgeDefault;
+      if (fb.version && fb.status && fb.alignment) {
+        applyDataDictionaryBadge({ ...fb, source: fb.source || MASTER_DATA_DICTIONARY_META_URL }, false);
+      } else {
+        badge.textContent = 'Dictionary meta unavailable';
+        badge.title = `Failed to load ${MASTER_DATA_DICTIONARY_META_URL}`;
+      }
       return;
     }
     const ok = validateDataDictionaryMeta(meta);
-    if (!ok) console.warn('[WTM] Master Data Dictionary meta validation failed', meta);
+    if (!ok) console.warn('[WTM] Master Data Dictionary meta validation failed', meta, badgeDefault);
     applyDataDictionaryBadge(meta, ok);
   });
 }
