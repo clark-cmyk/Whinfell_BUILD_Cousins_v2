@@ -1,4 +1,4 @@
-"""Build per-node cockpit objects for hydration bundle v1.1.0."""
+"""Build per-node cockpit objects for hydration bundle v1.2.0."""
 
 from __future__ import annotations
 
@@ -15,11 +15,17 @@ from china_policy_track.china_ladder import (
     composite_stage_score,
 )
 from whinfell_pipeline.data_dictionary import (
+    funds_flow_basket_for_node,
     get_node_score_weights,
     get_rv_series_registry,
     node_score_components,
     rv_series_for_node,
     rv_series_primary,
+)
+from whinfell_pipeline.funds_flows import (
+    apply_confidence_delta,
+    build_funds_flows,
+    merge_flow_rationale,
 )
 
 CANONICAL_NODE_IDS: tuple[str, ...] = CANONICAL_STAGE_IDS
@@ -552,6 +558,35 @@ def _node_key_observation(
     return f"{_node_display_name(node_id)} horizon_net {net:+d} from suggested tracer marks."
 
 
+def _attach_funds_flows(
+    cockpit: dict[str, Any],
+    *,
+    node_id: str,
+    flows_sidecar: Mapping[str, Any] | None,
+    as_of_iso: str,
+) -> None:
+    basket = funds_flow_basket_for_node(node_id)
+    funds = build_funds_flows(
+        node_id,
+        sidecar=flows_sidecar,
+        node_cockpit=cockpit,
+        basket_spec=basket,
+        as_of=as_of_iso[:10],
+    )
+    cockpit["funds_flows"] = funds
+    cockpit["confidence"] = apply_confidence_delta(str(cockpit.get("confidence") or "low"), funds)
+    if isinstance(cockpit.get("directional"), dict):
+        cockpit["directional"]["rationale"] = merge_flow_rationale(
+            str(cockpit["directional"].get("rationale") or ""),
+            funds,
+        )
+    if isinstance(cockpit.get("relative_value"), dict):
+        cockpit["relative_value"]["rationale"] = merge_flow_rationale(
+            str(cockpit["relative_value"].get("rationale") or ""),
+            funds,
+        )
+
+
 def build_node_cockpit(
     node_id: str,
     *,
@@ -564,6 +599,7 @@ def build_node_cockpit(
     is_weakest_link: bool = False,
     weakest_context: Mapping[str, Any] | None = None,
     spread_history: Mapping[str, list[tuple[str, float]]] | None = None,
+    flows_sidecar: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Build one node_cockpit object per Phase 2 data model."""
     as_of_iso = as_of.astimezone(timezone.utc).isoformat()
@@ -616,6 +652,7 @@ def build_node_cockpit(
     if is_weakest_link and weakest_context:
         cockpit["weakest_context"] = dict(weakest_context)
 
+    _attach_funds_flows(cockpit, node_id=node_id, flows_sidecar=flows_sidecar, as_of_iso=as_of_iso)
     return cockpit
 
 
@@ -628,6 +665,7 @@ def build_node_cockpits(
     china_ladder: Mapping[str, Any] | None = None,
     execution: Mapping[str, Any] | None = None,
     spread_history: Mapping[str, list[tuple[str, float]]] | None = None,
+    flows_sidecar: Mapping[str, Any] | None = None,
 ) -> dict[str, dict[str, Any]]:
     """Build all five node cockpit objects keyed by node_id."""
     default_marks = {"d1": "flat", "d5": "flat", "d20": "flat", "d60": "flat"}
@@ -661,6 +699,7 @@ def build_node_cockpits(
             is_weakest_link=(node_id == weakest_id),
             weakest_context=weakest_context if node_id == weakest_id else None,
             spread_history=spread_history,
+            flows_sidecar=flows_sidecar,
         )
     return cockpits
 
@@ -670,7 +709,7 @@ def build_cockpit_context(
     global_payload: Mapping[str, Any],
     node_cockpits: Mapping[str, Mapping[str, Any]],
 ) -> dict[str, Any]:
-    """Shared metadata for hydration bundle v1.1.0."""
+    """Shared metadata for hydration bundle v1.2.0."""
     weakest = min(
         node_cockpits.items(),
         key=lambda item: (int(item[1].get("composite_score") or 50), STAGE_TIE_RANK.get(item[0], 99)),

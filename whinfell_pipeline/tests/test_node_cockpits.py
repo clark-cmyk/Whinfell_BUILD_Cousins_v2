@@ -145,13 +145,27 @@ class TestNodeCockpits(unittest.TestCase):
 
     def test_hydration_bundle_includes_node_cockpits(self):
         bundle = build_hydration_bundle()
-        self.assertEqual(bundle["hydration_version"], "1.1.0")
+        self.assertEqual(bundle["hydration_version"], "1.2.0")
         self.assertIn("node_cockpits", bundle)
         self.assertIn("cockpit_context", bundle)
         self.assertIn("wtm_export_v22", bundle)
         self.assertEqual(set(bundle["node_cockpits"].keys()), set(CANONICAL_NODE_IDS))
         self.assertIn(DECISION_EXPORT_FORMAT_V22, bundle["wtm_export_v22"])
         self.assertIn("WTM EXPORT v2.1", bundle["wtm_export_v21"])
+        credit = bundle["node_cockpits"]["credit"]
+        self.assertIn("funds_flows", credit)
+        self.assertIn("flows_meta", credit["funds_flows"])
+
+    def test_funds_flows_on_all_nodes(self):
+        cockpits = build_node_cockpits(
+            global_payload={"whinfell_score": 58, "transmission_state": "stressed"},
+            suggested_tracer=self._sample_tracer(),
+            as_of=__import__("datetime").datetime(2026, 6, 27, 14, 0, 0, tzinfo=__import__("datetime").timezone.utc),
+            freshness_status="fresh",
+        )
+        for node_id in CANONICAL_NODE_IDS:
+            self.assertIn("funds_flows", cockpits[node_id])
+            self.assertIn("flows_meta", cockpits[node_id]["funds_flows"])
 
 
 if __name__ == "__main__":

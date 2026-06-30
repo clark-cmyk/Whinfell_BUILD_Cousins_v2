@@ -36,7 +36,7 @@ class TestExportContract(unittest.TestCase):
 
     def test_hydration_bundle_shape(self):
         bundle = build_hydration_bundle()
-        self.assertEqual(bundle["hydration_version"], "1.1.0")
+        self.assertEqual(bundle["hydration_version"], "1.2.0")
         self.assertIn("wtm_export_v21", bundle)
         self.assertIn("wtm_export_v22", bundle)
         self.assertIn("node_cockpits", bundle)

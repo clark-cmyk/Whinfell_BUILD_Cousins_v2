@@ -14,6 +14,7 @@ from china_policy_track.sq3 import calculate_sq3
 from china_policy_track.storage import default_parquet_path as china_default
 from china_policy_track.storage import read_observations as read_china
 from whinfell_pipeline.export_contract import ProvenanceMeta, build_wtm_export_v21, build_wtm_export_v22
+from whinfell_pipeline.funds_flows import build_flows_sidecar_metadata, load_flows_sidecar
 from whinfell_pipeline.node_cockpits import build_cockpit_context, build_node_cockpits
 from whinfell_pipeline.freshness import compute_freshness
 from whinfell_pipeline.global_track.storage import default_parquet_path as global_default
@@ -21,7 +22,7 @@ from whinfell_pipeline.global_track.storage import read_observations as read_glo
 from whinfell_pipeline.lineage import compute_lineage_hash
 from whinfell_pipeline.version import BUNDLE_VERSION, PIPELINE_VERSION
 
-HYDRATION_BUNDLE_VERSION = "1.1.0"
+HYDRATION_BUNDLE_VERSION = "1.2.0"
 
 _STAGE_IDS = ("liquidity", "credit", "breadth", "highbeta", "basis")
 _L3_FIELD_KEYS = ("near_month", "far_month", "basis_spread", "ref_low", "ref_mid", "ref_high")
@@ -246,6 +247,8 @@ def build_hydration_bundle(
     china_path: Path | None = None,
     execution_path: Path | None = None,
     crypto_path: Path | None = None,
+    flows_sidecar: dict[str, Any] | None = None,
+    repo_root: Path | None = None,
 ) -> dict[str, Any]:
     """Read latest Parquet rows and build console hydration JSON."""
     g_obs = _latest_by_as_of(read_global(global_path or global_default()))
@@ -328,6 +331,9 @@ def build_hydration_bundle(
         freshness_status=freshness,
     )
 
+    root = repo_root or Path(__file__).resolve().parents[1]
+    flows_data = flows_sidecar if flows_sidecar is not None else load_flows_sidecar(root)
+
     node_cockpits = build_node_cockpits(
         global_payload=global_payload,
         suggested_tracer=suggested_tracer,
@@ -335,6 +341,7 @@ def build_hydration_bundle(
         freshness_status=freshness,
         china_ladder=china_ladder or None,
         execution=execution,
+        flows_sidecar=flows_data,
     )
     cockpit_context = build_cockpit_context(
         global_payload=global_payload,
@@ -365,7 +372,7 @@ def build_hydration_bundle(
         node_cockpits=node_cockpits,
     )
 
-    return {
+    bundle: dict[str, Any] = {
         "hydration_version": HYDRATION_BUNDLE_VERSION,
         "pipeline_version": PIPELINE_VERSION,
         "bundle_version": BUNDLE_VERSION,
@@ -388,6 +395,10 @@ def build_hydration_bundle(
         "wtm_export_v22": wtm_block_v22,
         "warnings": [] if g_obs and c_obs else (["Partial hydration — single track only"] if g_obs or c_obs else []),
     }
+    flows_meta_block = build_flows_sidecar_metadata(flows_data)
+    if flows_meta_block:
+        bundle["flows_sidecar"] = flows_meta_block
+    return bundle
 
 
 def main(argv: list[str] | None = None) -> int:

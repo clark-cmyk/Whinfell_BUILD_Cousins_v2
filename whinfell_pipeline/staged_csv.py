@@ -19,7 +19,7 @@ SOURCE_CHINA = "china_policy"
 SOURCE_CRYPTO = "crypto"
 
 BARCHART_DATASETS = ("futures_intraday", "futures_daily", "options", "greeks")
-KOYFIN_DATASETS = ("rates", "credit", "equities")
+KOYFIN_DATASETS = ("rates", "credit", "equities", "flows")
 CRYPTO_DATASETS = (
     "crypto_snapshot",
     "btc_price_chart",
@@ -199,6 +199,15 @@ def _header_check(source: str, dataset: str | None, headers: list[str]) -> Stage
             missing_core.append("near_month or basis_spread")
     elif source == SOURCE_CRYPTO:
         return out
+    elif dataset == "flows":
+        if "date" not in norm:
+            missing_core.append("date")
+        has_flow_col = any(
+            "flow" in h and ("(d)" in h or "periodic" in h)
+            for h in norm
+        )
+        if not has_flow_col:
+            missing_core.append("flow column (e.g. '{TICKER} Flow (D)')")
     else:
         if "timestamp" not in norm:
             missing_core.append("timestamp")
