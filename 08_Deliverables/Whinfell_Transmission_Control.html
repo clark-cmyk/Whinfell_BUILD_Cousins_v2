@@ -6198,64 +6198,134 @@ function renderMissingDiagnostic(message) {
   </div>`;
 }
 
-function buildBasisTacticalSentence(cockpit, hz, series, gate, health) {
-  const seriesLabel = series?.label || 'Basis';
+const MISSION_SURFACE_NODES = new Set(['basis', 'credit']);
+
+const MISSION_NODE_CONFIG = {
+  basis: {
+    eyebrow: 'Basis mission read',
+    defaultSeriesLabel: 'Basis',
+    blockedPhrase: 'new basis risk is blocked under current gate.',
+  },
+  credit: {
+    eyebrow: 'Credit mission read',
+    defaultSeriesLabel: 'HY OAS proxy',
+    blockedPhrase: 'new credit RV is blocked under current gate.',
+  },
+};
+
+function isMissionSurfaceNode(nodeId) {
+  return MISSION_SURFACE_NODES.has(nodeId);
+}
+
+function missionNodeConfig(nodeId) {
+  return MISSION_NODE_CONFIG[nodeId] || null;
+}
+
+function isHorizonNetFallback(cockpit) {
+  return cockpit.composite_score_source === 'horizon_net_fallback';
+}
+
+function buildMissionChinaSuffix(state, gate) {
+  const china = computeChinaLadderRead(state);
+  const sq3Band = String(gate.sq3Band || '').toLowerCase();
+  if (gate.sq3Result && (sq3Band.includes('impaired') || sq3Band.includes('fragile') || sq3Band.includes('mixed'))) {
+    return ` · SQ3 ${gate.sq3Score} constraint`;
+  }
+  if (china.finalScore != null && String(china.band || '').toLowerCase().includes('impaired')) {
+    return ` · China ladder ${china.finalScore} constraint`;
+  }
+  return '';
+}
+
+function buildMissionTacticalSentence(cockpit, hz, series, gate, health, state) {
+  const config = missionNodeConfig(cockpit.node_id) || MISSION_NODE_CONFIG.basis;
+  const seriesLabel = series?.label || config.defaultSeriesLabel;
   const stance = hz?.richness_label || cockpit.rv_basis?.richness_label;
   const richnessText = richnessPillLabel(stance).toLowerCase();
   const rv = cockpit.relative_value || {};
+  let lead;
 
   if (gate?.blocked || rv.blocked) {
-    return `${seriesLabel} is ${richnessText}; new basis risk is blocked under current gate.`;
+    lead = `${seriesLabel} is ${richnessText}; ${config.blockedPhrase}`;
+  } else {
+    const expression = rv.posture ? humanizeValue(rv.posture).toLowerCase() : 'expression';
+    const capped = gate?.tight || (health && health.score < TX_HEALTH_OPEN_THRESHOLD);
+    if (capped) {
+      lead = `${seriesLabel} is ${richnessText}; ${expression} is allowed, but only at 0.5× under Tight Risk.`;
+    } else {
+      lead = `${seriesLabel} is ${richnessText}; ${expression} is eligible within desk policy.`;
+    }
   }
 
-  const expression = rv.posture ? humanizeValue(rv.posture).toLowerCase() : 'expression';
-  const capped = gate?.tight || (health && health.score < TX_HEALTH_OPEN_THRESHOLD);
-
-  if (capped) {
-    return `${seriesLabel} is ${richnessText}; ${expression} is allowed, but only at 0.5× under Tight Risk.`;
-  }
-  return `${seriesLabel} is ${richnessText}; ${expression} is eligible within desk policy.`;
+  const suffix = cockpit.node_id === 'credit' && state ? buildMissionChinaSuffix(state, gate) : '';
+  return lead + suffix;
 }
 
-function renderBasisTacticalBanner(cockpit, hz, series, state, gate) {
+function buildBasisTacticalSentence(cockpit, hz, series, gate, health) {
+  return buildMissionTacticalSentence(cockpit, hz, series, gate, health, null);
+}
+
+function renderMissionTacticalBanner(cockpit, hz, series, state, gate) {
   const banner = el('basisTacticalBanner');
   const sentence = el('basisTacticalSentence');
-  const isBasis = cockpit.node_id === 'basis';
+  const eyebrow = banner?.querySelector('.basis-tactical-eyebrow');
+  const config = missionNodeConfig(cockpit.node_id);
   if (!banner || !sentence) return;
 
-  if (!isBasis || !hz) {
+  if (!isMissionSurfaceNode(cockpit.node_id) || !hz || !config) {
     banner.classList.add('zone-hidden');
     return;
   }
 
   const health = computeHealthScore(state);
-  sentence.textContent = buildBasisTacticalSentence(cockpit, hz, series, gate, health);
+  if (eyebrow) eyebrow.textContent = config.eyebrow;
+  sentence.textContent = buildMissionTacticalSentence(cockpit, hz, series, gate, health, state);
   banner.classList.remove('zone-hidden');
   banner.classList.toggle('basis-tactical-banner--blocked', !!(gate?.blocked || cockpit.relative_value?.blocked));
   banner.classList.toggle('basis-tactical-banner--tight', !!(gate?.tight && !gate?.blocked));
 }
 
-function renderBasisImplicationRail(cockpit, state, gate) {
+function renderBasisTacticalBanner(cockpit, hz, series, state, gate) {
+  renderMissionTacticalBanner(cockpit, hz, series, state, gate);
+}
+
+function buildMissionImplicationChips(cockpit, gate) {
   const ff = cockpit.funds_flows || {};
   const ffStatus = ff.flows_meta?.flows_status || 'unavailable';
-  const blocks = buildSignalDiagnostics(cockpit, state, gate);
-  const showFlowsDetail = ffStatus === 'ok' || ffStatus === 'partial';
+  const chips = [];
+
+  if (cockpit.node_id === 'credit' && isHorizonNetFallback(cockpit)) {
+    chips.push({ label: 'Composite fallback', cls: 'impl-chip--warn' });
+  } else {
+    chips.push({ label: humanizeValue(cockpit.band || '—'), cls: 'impl-chip--signal' });
+  }
+
+  chips.push({ label: humanizeValue(cockpit.relative_value?.posture || '—'), cls: 'impl-chip--rv' });
 
   let flowsChip = 'Flows unavailable';
   if (ffStatus === 'ok' || ffStatus === 'partial' || ffStatus === 'fallback_1d') {
     const verdict = ff.aggregate?.verdict || 'mixed';
     flowsChip = verdict === 'mixed' || verdict === 'neutral' ? 'Flows neutral' : humanizeValue(verdict);
   }
+  chips.push({ label: flowsChip, cls: 'impl-chip--flows' });
+  chips.push({
+    label: gate.blocked ? 'Blocked' : gate.tight ? 'Tight Risk' : humanizeValue(gate.displayLabel || gate.label || 'Open'),
+    cls: gate.blocked ? 'impl-chip--block' : gate.tight ? 'impl-chip--warn' : 'impl-chip--ok',
+  });
 
-  const chips = [
-    { label: humanizeValue(cockpit.band || '—'), cls: 'impl-chip--signal' },
-    { label: humanizeValue(cockpit.relative_value?.posture || '—'), cls: 'impl-chip--rv' },
-    { label: flowsChip, cls: 'impl-chip--flows' },
-    {
-      label: gate.blocked ? 'Blocked' : gate.tight ? 'Tight Risk' : humanizeValue(gate.displayLabel || gate.label || 'Open'),
-      cls: gate.blocked ? 'impl-chip--block' : gate.tight ? 'impl-chip--warn' : 'impl-chip--ok',
-    },
-  ];
+  if (cockpit.node_id === 'credit' && cockpit.is_weakest_link) {
+    chips.push({ label: 'Weakest link', cls: 'impl-chip--warn' });
+  }
+
+  return chips;
+}
+
+function renderMissionImplicationRail(cockpit, state, gate) {
+  const ff = cockpit.funds_flows || {};
+  const ffStatus = ff.flows_meta?.flows_status || 'unavailable';
+  const blocks = buildSignalDiagnostics(cockpit, state, gate);
+  const showFlowsDetail = ffStatus === 'ok' || ffStatus === 'partial';
+  const chips = buildMissionImplicationChips(cockpit, gate);
 
   return `
     <div class="basis-implication-rail">
@@ -6277,6 +6347,10 @@ function renderBasisImplicationRail(cockpit, state, gate) {
     </div>`;
 }
 
+function renderBasisImplicationRail(cockpit, state, gate) {
+  return renderMissionImplicationRail(cockpit, state, gate);
+}
+
 function buildBasisInterpretLine(hz, cockpit) {
   if (!hz) return cockpit.rv_basis?.quartile_context || 'Awaiting history';
   const stance = hz.richness_label || cockpit.rv_basis?.richness_label;
@@ -6290,13 +6364,21 @@ function buildBasisInterpretLine(hz, cockpit) {
 }
 
 function buildBasisChartDiagnosis(cockpit, state, gate) {
+  return buildMissionChartDiagnosis(cockpit, state, gate);
+}
+
+function buildMissionChartDiagnosis(cockpit, state, gate) {
   const ff = cockpit.funds_flows || {};
   const ffMeta = ff.flows_meta || {};
   const rv = cockpit.relative_value || {};
   const tags = [];
 
-  const signal = String(cockpit.band || cockpit.band_key || '').trim();
-  if (signal) tags.push(humanizeValue(signal).toUpperCase());
+  if (cockpit.node_id === 'basis') {
+    const signal = String(cockpit.band || cockpit.band_key || '').trim();
+    if (signal) tags.push(humanizeValue(signal).toUpperCase());
+  } else if (cockpit.rv_basis?.richness_label) {
+    tags.push(richnessPillLabel(cockpit.rv_basis.richness_label).split(' ')[0].toUpperCase());
+  }
 
   if (rv.posture) tags.push(humanizeValue(rv.posture).toUpperCase());
 
@@ -6314,12 +6396,12 @@ function buildBasisChartDiagnosis(cockpit, state, gate) {
   return tags.slice(0, 4);
 }
 
-function renderBasisSummaryRows(cockpit, hz, series, state, gate) {
+function renderMissionSummaryRows(cockpit, hz, series, state, gate) {
   const health = computeHealthScore(state);
-  const label = series?.label || 'Current reading';
+  const config = missionNodeConfig(cockpit.node_id);
+  const label = series?.label || config?.defaultSeriesLabel || 'Current reading';
   const rv = cockpit.relative_value || {};
   const expression = rv.posture ? humanizeValue(rv.posture) : '—';
-  const isBasis = cockpit.node_id === 'basis';
   const strip = el('basisSummaryStrip');
 
   el('basisReadingValue').textContent = formatReadingValue(hz);
@@ -6336,9 +6418,13 @@ function renderBasisSummaryRows(cockpit, hz, series, state, gate) {
   }
 
   if (strip) {
-    if (isBasis && hz) strip.classList.remove('zone-hidden');
+    if (isMissionSurfaceNode(cockpit.node_id) && hz) strip.classList.remove('zone-hidden');
     else strip.classList.add('zone-hidden');
   }
+}
+
+function renderBasisSummaryRows(cockpit, hz, series, state, gate) {
+  renderMissionSummaryRows(cockpit, hz, series, state, gate);
 }
 
 function buildSignalDiagnostics(cockpit, state, gate) {
@@ -6350,8 +6436,15 @@ function buildSignalDiagnostics(cockpit, state, gate) {
   const gateNote = cockpit.gate_interaction?.note || '';
   const gateSentence = buildNodeGateDecisionSentence(cockpit, state, gate);
 
-  const signalChip = humanizeValue(cockpit.band || '—');
-  const signalInterp = cockpit.key_observation || `${cockpit.display_name || 'Node'} composite ${cockpit.composite_score ?? '—'}.`;
+  let signalChip = humanizeValue(cockpit.band || '—');
+  let signalInterp = cockpit.key_observation || `${cockpit.display_name || 'Node'} composite ${cockpit.composite_score ?? '—'}.`;
+  if (isHorizonNetFallback(cockpit) && !(cockpit.component_inputs || []).length) {
+    signalChip = 'Horizon-net fallback';
+    const obs = cockpit.key_observation ? ` ${cockpit.key_observation}` : '';
+    signalInterp = cockpit.node_id === 'credit'
+      ? `Credit composite uses horizon-net fallback (not C1-weighted components).${obs}`
+      : `${cockpit.display_name || 'Node'} composite from horizon-net fallback — component inputs not populated.${obs}`;
+  }
   const signalImpl = gate.blocked
     ? 'Do not initiate new risk — observe and maintain.'
     : gate.tight || health.score < TX_HEALTH_OPEN_THRESHOLD
@@ -6690,8 +6783,12 @@ function buildNodeGateDecisionSentence(cockpit, state, gate) {
     riskPart = ` → ${gate.displayLabel || gate.label}: ${nodeShort} RV eligible within desk policy.`;
   }
   const flowsStatus = cockpit.funds_flows?.flows_meta?.flows_status || 'unavailable';
-  if (mode.mode === 'partial' && flowsStatus === 'unavailable' && cockpit.node_id === 'basis') {
-    riskPart += ' Running RV-only (no flows).';
+  if (mode.mode === 'partial' && flowsStatus === 'unavailable') {
+    if (cockpit.node_id === 'basis') {
+      riskPart += ' Running RV-only (no flows).';
+    } else if (cockpit.node_id === 'credit') {
+      riskPart += ' Credit RV-only (no flows sponsorship).';
+    }
   }
   return `${ladderPart}${sq3Part}${riskPart}`;
 }
@@ -7010,9 +7107,9 @@ function renderCockpitDecisionRail(cockpit, state) {
   const domState = state || buildStateFromDOM();
   const derivedGate = deriveGate(domState);
 
-  if (cockpit.node_id === 'basis') {
+  if (isMissionSurfaceNode(cockpit.node_id)) {
     rail.classList.add('cockpit-decision-rail--basis-mission');
-    rail.innerHTML = renderBasisImplicationRail(cockpit, domState, derivedGate);
+    rail.innerHTML = renderMissionImplicationRail(cockpit, domState, derivedGate);
     return;
   }
 
@@ -7059,9 +7156,10 @@ function drawRvBasisChart(cockpit, canvas, state, gate) {
 
   if (!points.length) return { drew: false, pointCount: 0 };
 
+  const isMission = isMissionSurfaceNode(cockpit.node_id);
   const isBasis = cockpit.node_id === 'basis';
-  const diagTags = isBasis ? buildBasisChartDiagnosis(cockpit, domState, gateState) : [];
-  const pad = { l: isBasis ? 52 : 44, r: 16, t: isBasis ? 22 : 16, b: 36 };
+  const diagTags = isMission ? buildMissionChartDiagnosis(cockpit, domState, gateState) : [];
+  const pad = { l: isMission ? 52 : 44, r: 16, t: isMission ? 22 : 16, b: 36 };
   const plotW = w - pad.l - pad.r;
   const plotH = h - pad.t - pad.b;
   const vals = points.map(p => p.value);
@@ -7240,17 +7338,17 @@ function renderCockpitChart(cockpit, state) {
   const canvas = el('cockpitRvCanvas');
   const placeholder = el('cockpitChartPlaceholder');
 
-  const isBasis = cockpit.node_id === 'basis';
+  const isMission = isMissionSurfaceNode(cockpit.node_id);
   const chartArea = el('cockpitChartArea');
-  chartArea?.classList.toggle('cockpit-chart-area--basis-mission', isBasis);
+  chartArea?.classList.toggle('cockpit-chart-area--basis-mission', isMission);
 
   el('cockpitChartTitle').textContent = series?.label || `${row?.short || 'Node'} · RV / Basis`;
   el('cockpitChartSubtitle').textContent = series
     ? `${humanizeValue(series.quartile_direction || '')} · ${RV_HORIZON_LABELS[horizon] || horizon} lookback`
     : (cockpit.rv_basis?._fallback_mode ? 'RV quartiles require hydration — history not loaded' : 'No series populated');
 
-  renderBasisTacticalBanner(cockpit, hz, series, domState, gate);
-  renderBasisSummaryRows(cockpit, hz, series, domState, gate);
+  renderMissionTacticalBanner(cockpit, hz, series, domState, gate);
+  renderMissionSummaryRows(cockpit, hz, series, domState, gate);
   if (hz) {
     el('cockpitChartValue').textContent = formatReadingValue(hz);
     el('cockpitChartRichness').textContent = `${hz.richness_label || '—'} · Q${hz.quartile || '—'}`;
