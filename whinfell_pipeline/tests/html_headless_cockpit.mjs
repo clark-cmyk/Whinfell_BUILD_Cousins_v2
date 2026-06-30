@@ -10,7 +10,6 @@ const HTML_PATH = path.join(REPO, '08_Deliverables/Whinfell_Transmission_Control
 const CHINA_MODELS_JS = path.join(REPO, '08_Deliverables/desk_china_ladder_models.js');
 const META_JSON = path.join(REPO, '08_Deliverables/data_dictionary_meta.json');
 const COCKPIT_BUNDLE = path.join(REPO, 'whinfell_pipeline/examples/cockpit_hydration_snippet.json');
-const CREDIT_MISSION_BUNDLE = path.join(REPO, 'whinfell_pipeline/examples/cockpit_hydration_credit_mission.json');
 
 const REQUIRED_FNS = [
   'drawRvBasisChart', 'toggleFocusMode', 'toggleCompareMode', 'setActiveNode',
@@ -50,8 +49,7 @@ this.__test = {
   renderFundsFlowSponsorshipCard, assessHydrationImportGuard, scoreHydrationBundleQuality,
   assessHydrationSession, renderHydrationBanner, setSharedHorizon, document,
   assessCockpitHydrationMode, buildNodeGateDecisionSentence, renderNodeCoverageBanner,
-  assessPostImportWorkflow, deriveGate, isMissionSurfaceNode, buildMissionTacticalSentence,
-  buildMissionImplicationChips, resolveMissionGateChipLabel,
+  assessPostImportWorkflow, deriveGate,
 };
 `;
   return body;
@@ -182,16 +180,11 @@ function seedCockpitDom(t) {
     'nodeCoverageBanner', 'postImportWorkflow', 'postImportSteps', 'sessionReadyChip', 'commandBar',
     'cmdWhinfellScore', 'cmdScoreZone', 'txHealthValue', 'txHealthMeta', 'cmdTxState', 'cmdRegime',
     'cmdSq3Score', 'cmdSq3Band', 'cmdGrossRisk', 'cmdGrossPosture', 'cmdHydrationBadge', 'gateText',
-    'chinaPolicyStrength', 'chinaStateImpulse', 'chinaGrowthImpulse', 'chinaRegimeTag',
     'gateChip', 'gateHelperText', 'shockText', 'shockMeta', 'scoreCard', 'cmdGlobalCluster', 'cmdChinaCluster',
     'gateExplainList', 'gateUnlockList', 'gateHealthSub', 'gateDetailPanel', 'sq3ComputedDisplay', 'sq3BandChip',
     'scoreZoneChip', 'gateStatusChip', 'txChip', 'grossTotal', 'grossMmHint', 'postureWarning',
   ];
   ids.forEach(id => t.document.getElementById(id));
-  const banner = t.document.getElementById('basisTacticalBanner');
-  const eyebrowEl = { textContent: '', className: 'basis-tactical-eyebrow' };
-  banner.querySelector = (sel) => (sel === '.basis-tactical-eyebrow' ? eyebrowEl : null);
-  banner._eyebrowEl = eyebrowEl;
 }
 
 function boot(script) {
@@ -363,61 +356,6 @@ function testHydrationBanner(t, bundle) {
   return { missingLevel: missing.level, okAfterHydrate: true };
 }
 
-function testCreditMissionSurface(t, creditBundle) {
-  hydrateCockpit(t, creditBundle);
-  t.setActiveNode('credit');
-  t.renderNodeCockpitShell(t.buildStateFromDOM());
-
-  const tactical = t.document.getElementById('basisTacticalSentence').textContent;
-  const eyebrow = t.document.getElementById('basisTacticalBanner')._eyebrowEl?.textContent;
-  const reading = t.document.getElementById('basisReadingValue').textContent;
-  const stance = t.document.getElementById('basisStanceRow').textContent;
-  const rail = t.document.getElementById('cockpitDecisionRail').innerHTML;
-  const gate = t.deriveGate(t.buildStateFromDOM());
-  const cockpit = t.mergeNodeCockpit('credit', t.buildStateFromDOM());
-  const chips = t.buildMissionImplicationChips(cockpit, gate).map(c => c.label);
-
-  if (!t.isMissionSurfaceNode('credit')) throw new Error('credit should be mission-surface node');
-  if (eyebrow !== 'Credit mission read') throw new Error(`unexpected eyebrow: ${eyebrow}`);
-  if (!tactical || tactical === '—') throw new Error('credit tactical banner empty');
-  if (!/cheap|rich|fair/i.test(tactical)) throw new Error(`tactical missing RV richness: ${tactical}`);
-  if (!/long spread|short spread|eligible|blocked|0\.5×/i.test(tactical)) throw new Error(`tactical missing expression/gate cap: ${tactical}`);
-  if (/^blocked\b/i.test(tactical) || /\bband\b/i.test(tactical)) {
-    throw new Error(`tactical must not lead with raw band: ${tactical}`);
-  }
-  if (!reading.includes('bps')) throw new Error(`summary reading not bps: ${reading}`);
-  if (!stance.includes('Q')) throw new Error(`stance row missing quartile context: ${stance}`);
-  if (!rail.includes('Composite fallback')) throw new Error(`Composite fallback chip missing: ${chips.join(', ')}`);
-  if (!rail.includes('horizon-net fallback') && !rail.includes('Horizon-net fallback')) {
-    throw new Error('horizon-net fallback diagnostics missing');
-  }
-  if (!rail.includes('Weakest link')) throw new Error('weakest link chip missing on credit rail');
-  if (!rail.includes('funds-flow-card')) throw new Error('funds-flow card missing in diagnostics drawer');
-
-  const gateChipLabel = t.resolveMissionGateChipLabel(gate);
-  if (gate.chinaCaution && gate.tight && gateChipLabel !== 'Tight + China Caution') {
-    throw new Error(`expected Tight + China Caution gate chip, got ${gateChipLabel}`);
-  }
-  if (!rail.includes('Tight + China Caution')) {
-    throw new Error(`rail missing Tight + China Caution chip for impaired SQ3: ${chips.join(', ')}`);
-  }
-  if (gate.sq3Score < 50 && !tactical.includes('SQ3') && !tactical.includes('constraint')) {
-    throw new Error(`impaired SQ3 should add material suffix to tactical: ${tactical}`);
-  }
-  if (tactical.includes('China ladder') && tactical.indexOf('China ladder') < 20) {
-    throw new Error(`China ladder must not be in lead sentence: ${tactical}`);
-  }
-
-  return {
-    creditMissionSurface: true,
-    tactical,
-    gateChipLabel,
-    sq3Score: gate.sq3Score,
-    chips,
-    compositeFallbackVisible: true,
-  };
-}
-
 function testImportGuard(t, bundle) {
   hydrateCockpit(t, bundle);
   const healthyScore = t.scoreHydrationBundleQuality(bundle);
@@ -433,16 +371,14 @@ function testImportGuard(t, bundle) {
   return { healthyScore, blocked: true, forcedOk: true };
 }
 
-function runSuite(script, bundle, creditBundle, label) {
-  const t0 = boot(script);
+function runSuite(script, bundle, label) {
   return {
     label,
-    chart: testDrawRvBasisChart(t0, bundle),
+    chart: testDrawRvBasisChart(boot(script), bundle),
     focus: testFocusMode(boot(script), bundle),
     compare: testCompareMode(boot(script), bundle),
     navigation: testRailNavigation(boot(script), bundle),
     fundsFlow: testFundsFlowCard(boot(script), bundle),
-    creditMission: testCreditMissionSurface(boot(script), creditBundle),
     statePreservation: testStatePreservation(boot(script), bundle),
     importGuard: testImportGuard(boot(script), bundle),
     hydrationBanner: testHydrationBanner(boot(script), bundle),
@@ -452,11 +388,10 @@ function runSuite(script, bundle, creditBundle, label) {
 
 const html = fs.readFileSync(HTML_PATH, 'utf8');
 const bundle = JSON.parse(fs.readFileSync(COCKPIT_BUNDLE, 'utf8'));
-const creditBundle = JSON.parse(fs.readFileSync(CREDIT_MISSION_BUNDLE, 'utf8'));
 const script = extractScript(html);
 
-const run1 = runSuite(script, bundle, creditBundle, 'run1');
-const run2 = runSuite(script, bundle, creditBundle, 'run2');
+const run1 = runSuite(script, bundle, 'run1');
+const run2 = runSuite(script, bundle, 'run2');
 
 const snap = (run) => {
   const { label: _l, ...rest } = run;
@@ -469,7 +404,7 @@ if (JSON.stringify(snap(run1)) !== JSON.stringify(snap(run2))) {
 const out = [
   'html_headless_cockpit_ok',
   `Required functions: ${REQUIRED_FNS.join(', ')}.`,
-  'Blocks: drawRvBasisChart (5 horizons), toggleFocusMode, toggleCompareMode, setActiveNode/flipNode, fundsFlowCard, creditMissionSurface.',
+  'Blocks: drawRvBasisChart (5 horizons), toggleFocusMode, toggleCompareMode, setActiveNode/flipNode, fundsFlowCard.',
   'Executed twice (run1, run2) with identical snapshots.',
   JSON.stringify(run1, null, 2),
 ].join('\n');

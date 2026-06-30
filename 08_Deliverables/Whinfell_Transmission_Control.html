@@ -6230,20 +6230,7 @@ function resolveMissionGateChipLabel(gate) {
   return humanizeValue(gate?.displayLabel || gate?.label || 'Open');
 }
 
-function buildMissionChinaSuffix(state, gate) {
-  if (!gate?.sq3Result) return '';
-  const sq3Band = String(gate.sq3Band || gate.sq3Result?.interpretationBand || '').toLowerCase();
-  if (sq3Band.includes('impaired') || sq3Band.includes('fragile') || sq3Band.includes('mixed')) {
-    return ` · SQ3 ${gate.sq3Score} constraint`;
-  }
-  const china = computeChinaLadderRead(state);
-  if (china.finalScore != null && String(china.band || '').toLowerCase().includes('impaired')) {
-    return ` · China ladder ${china.finalScore} constraint`;
-  }
-  return '';
-}
-
-function buildMissionTacticalSentence(cockpit, hz, series, gate, health, state) {
+function buildMissionTacticalSentence(cockpit, hz, series, gate, health) {
   const config = missionNodeConfig(cockpit.node_id) || MISSION_NODE_CONFIG.basis;
   const seriesLabel = series?.label || config.defaultSeriesLabel;
   const stance = hz?.richness_label || cockpit.rv_basis?.richness_label;
@@ -6263,12 +6250,11 @@ function buildMissionTacticalSentence(cockpit, hz, series, gate, health, state) 
     }
   }
 
-  const suffix = cockpit.node_id === 'credit' && state ? buildMissionChinaSuffix(state, gate) : '';
-  return lead + suffix;
+  return lead;
 }
 
 function buildBasisTacticalSentence(cockpit, hz, series, gate, health) {
-  return buildMissionTacticalSentence(cockpit, hz, series, gate, health, null);
+  return buildMissionTacticalSentence(cockpit, hz, series, gate, health);
 }
 
 function renderMissionTacticalBanner(cockpit, hz, series, state, gate) {
@@ -6285,7 +6271,7 @@ function renderMissionTacticalBanner(cockpit, hz, series, state, gate) {
 
   const health = computeHealthScore(state);
   if (eyebrow) eyebrow.textContent = config.eyebrow;
-  sentence.textContent = buildMissionTacticalSentence(cockpit, hz, series, gate, health, state);
+  sentence.textContent = buildMissionTacticalSentence(cockpit, hz, series, gate, health);
   banner.classList.remove('zone-hidden');
   banner.classList.toggle('basis-tactical-banner--blocked', !!(gate?.blocked || cockpit.relative_value?.blocked));
   banner.classList.toggle('basis-tactical-banner--tight', !!(gate?.tight && !gate?.blocked));

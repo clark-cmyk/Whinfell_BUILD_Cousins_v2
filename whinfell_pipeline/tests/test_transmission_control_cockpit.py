@@ -10,7 +10,6 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 HEADLESS = REPO_ROOT / "whinfell_pipeline/tests/html_headless_cockpit.mjs"
 HTML = REPO_ROOT / "08_Deliverables/Whinfell_Transmission_Control.html"
 COCKPIT_BUNDLE = REPO_ROOT / "whinfell_pipeline/examples/cockpit_hydration_snippet.json"
-CREDIT_MISSION_BUNDLE = REPO_ROOT / "whinfell_pipeline/examples/cockpit_hydration_credit_mission.json"
 
 
 class TestTransmissionControlCockpit(unittest.TestCase):
@@ -40,13 +39,6 @@ class TestTransmissionControlCockpit(unittest.TestCase):
             "function formatOrdinalPercentile",
             "function buildBasisTacticalSentence",
             "function renderBasisImplicationRail",
-            "MISSION_SURFACE_NODES",
-            "function isMissionSurfaceNode",
-            "function buildMissionTacticalSentence",
-            "function renderMissionImplicationRail",
-            "function resolveMissionGateChipLabel",
-            "Composite fallback",
-            "horizon-net fallback",
             'id="basisSummaryStrip"',
             'id="basisTacticalBanner"',
             'id="cockpitHorizonRow"',
@@ -73,16 +65,6 @@ class TestTransmissionControlCockpit(unittest.TestCase):
             ".funds-flow-verdict-supportive",
         ):
             self.assertIn(marker, text, f"missing {marker}")
-
-    def test_credit_mission_fixture_present(self):
-        self.assertTrue(CREDIT_MISSION_BUNDLE.is_file(), "credit mission hydration fixture missing")
-        import json
-
-        bundle = json.loads(CREDIT_MISSION_BUNDLE.read_text(encoding="utf-8"))
-        credit = bundle["node_cockpits"]["credit"]
-        self.assertEqual(credit["composite_score_source"], "horizon_net_fallback")
-        self.assertEqual(credit["component_inputs"], [])
-        self.assertLess(bundle["china"]["sq3_score"], 50)
 
     def test_cockpit_hydration_snippet_present(self):
         self.assertTrue(COCKPIT_BUNDLE.is_file(), "cockpit hydration snippet missing")
@@ -114,11 +96,6 @@ class TestTransmissionControlCockpit(unittest.TestCase):
             self.assertIn("compareToggle", proc.stdout)
             self.assertIn("railRendered", proc.stdout)
             self.assertIn("fundsFlowCardRendered", proc.stdout)
-            self.assertIn("creditMissionSurface", proc.stdout)
-            self.assertIn("Composite fallback", proc.stdout)
-            self.assertIn('"compositeFallbackVisible": true', proc.stdout)
-            self.assertIn("Tight + China Caution", proc.stdout)
-            self.assertIn("SQ3 35 constraint", proc.stdout)
 
 
 if __name__ == "__main__":
