@@ -166,7 +166,7 @@ function makeSandbox() {
 function seedCockpitDom(t) {
   const ids = [
     'nodeRail', 'cockpitShell', 'cockpitChartTitle', 'cockpitChartSubtitle',
-    'cockpitHorizonPills', 'cockpitRvCanvas', 'cockpitChartPlaceholder',
+    'cockpitHorizonRow', 'cockpitHorizonPills', 'cockpitRvCanvas', 'cockpitChartPlaceholder',
     'basisTacticalBanner', 'basisTacticalSentence', 'basisSummaryStrip',
     'basisReadingValue', 'basisReadingLabel', 'basisStanceRow', 'basisTradeRow',
     'cockpitChartValue', 'cockpitChartRichness', 'cockpitChartPct',

@@ -444,25 +444,77 @@ window.DICTIONARY_BADGE_DEFAULT = {
     .operator-action--why { border-color: rgba(76,142,217,0.35); }
     .operator-action--compare { border-color: rgba(142,156,179,0.3); }
     .operator-action--export { border-color: rgba(255,255,255,0.08); }
-    .header-instrument-row {
+    .header-instrument-stack {
       display: flex;
-      align-items: center;
+      flex-direction: column;
+      align-items: flex-start;
       gap: 8px;
-      flex-wrap: wrap;
+      width: 100%;
     }
     .header-instrument-identity {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       flex-wrap: wrap;
     }
+    .header-phase-badge {
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
     .header-instrument-meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      width: 100%;
+    }
+    .header-build-badge,
+    .header-dictionary-badge,
+    .header-workspace-toggle {
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .header-workspace-cluster {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      flex-shrink: 0;
+      margin-left: auto;
+      padding-left: 10px;
+      border-left: 1px solid rgba(255,255,255,0.1);
+    }
+    .cockpit-horizon-row {
+      flex-shrink: 0;
+      padding: 7px 12px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(0,0,0,0.14);
+    }
+    .cockpit-horizon-row #cockpitHorizonPills {
+      display: flex;
       flex-wrap: wrap;
-      padding-left: 8px;
-      border-left: 1px solid rgba(255,255,255,0.08);
+      gap: 6px;
+      width: 100%;
+    }
+    .basis-reading-primary {
+      display: block;
+      width: 100%;
+      padding: 6px 0 4px;
+      margin-bottom: 2px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .node-coverage-banner--status-rail .node-coverage-head--compact {
+      margin-bottom: 4px;
+    }
+    .node-coverage-banner--status-rail .node-coverage-headline,
+    .node-coverage-banner--status-rail .node-coverage-summary,
+    .node-coverage-banner--status-rail .node-coverage-context,
+    .node-coverage-banner--status-rail .node-coverage-upstream,
+    .node-coverage-banner--status-rail .node-coverage-impact {
+      display: none !important;
+    }
+    .node-coverage-banner--status-rail .coverage-pill-grid {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none;
     }
     .basis-summary {
       display: flex;
@@ -1602,18 +1654,17 @@ window.DICTIONARY_BADGE_DEFAULT = {
 
   <header class="flex flex-col sm:flex-row sm:items-stretch border-b border-wtm-border bg-wtm-surface shrink-0">
     <div class="flex-1 px-5 py-3 flex flex-col justify-center gap-0.5">
-      <div class="header-instrument-row">
+      <div class="header-instrument-stack">
         <div class="header-instrument-identity">
           <h1 class="text-[15px] font-semibold tracking-tight">Whinfell Transmission Control</h1>
-          <span class="text-[9px] font-bold uppercase tracking-wider text-wtm-accent bg-wtm-accent/10 border border-wtm-accent/30 px-2 py-0.5 rounded">Phase 2.2</span>
+          <span class="header-phase-badge text-[9px] font-bold uppercase tracking-wider text-wtm-accent bg-wtm-accent/10 border border-wtm-accent/30 px-2 py-0.5 rounded">Phase 2.2</span>
         </div>
         <div class="header-instrument-meta">
-          <span class="header-meta-cluster">
-            <span id="tcConsoleBuildBadge" class="text-[8px] font-bold uppercase tracking-wider text-wtm-green bg-emerald-500/10 border border-wtm-green/35 px-2 py-0.5 rounded" title="Operator-console build — hard-refresh if stale">—</span>
-            <span class="header-meta-sep" aria-hidden="true"></span>
-            <span id="ddVersionBadge" class="text-[9px] font-bold uppercase tracking-wider text-wtm-muted bg-wtm-card border border-wtm-border px-2 py-0.5 rounded"></span>
+          <span id="tcConsoleBuildBadge" class="header-build-badge text-[8px] font-bold uppercase tracking-wider text-wtm-green bg-emerald-500/10 border border-wtm-green/35 px-2 py-0.5 rounded" title="Operator-console build — hard-refresh if stale">—</span>
+          <span id="ddVersionBadge" class="header-dictionary-badge text-[9px] font-bold uppercase tracking-wider text-wtm-muted bg-wtm-card border border-wtm-border px-2 py-0.5 rounded"></span>
+          <span class="header-workspace-cluster">
+            <button type="button" id="btnWorkspaceToggle" class="header-workspace-toggle text-[9px] font-bold uppercase tracking-wider text-wtm-accent bg-wtm-accent/10 border border-wtm-accent/35 px-2 py-0.5 rounded hover:bg-wtm-accent/20">Node Cockpits</button>
           </span>
-          <button type="button" id="btnWorkspaceToggle" class="text-[9px] font-bold uppercase tracking-wider text-wtm-accent bg-wtm-accent/10 border border-wtm-accent/35 px-2 py-0.5 rounded hover:bg-wtm-accent/20 shrink-0">Node Cockpits</button>
         </div>
       </div>
       <p class="text-[11px] text-wtm-muted">Phase 2 node cockpits · Pipeline command bar · WTM EXPORT v2.1</p>
@@ -1749,12 +1800,12 @@ window.DICTIONARY_BADGE_DEFAULT = {
             <p class="basis-tactical-eyebrow">Basis mission read</p>
             <p id="basisTacticalSentence" class="basis-tactical-sentence">—</p>
           </div>
-          <div class="cockpit-chart-header px-3 py-2 border-b border-wtm-border bg-wtm-surface flex items-center justify-between gap-3 flex-wrap">
-            <div class="min-w-0">
-              <h2 id="cockpitChartTitle" class="text-[12px] font-bold">Relative Value · Basis</h2>
-              <p id="cockpitChartSubtitle" class="text-[9px] text-wtm-muted">—</p>
-            </div>
-            <div id="cockpitHorizonPills" class="flex gap-1 flex-wrap shrink-0" role="group" aria-label="RV horizon"></div>
+          <div class="cockpit-chart-header px-3 py-2 border-b border-wtm-border bg-wtm-surface">
+            <h2 id="cockpitChartTitle" class="text-[12px] font-bold">Relative Value · Basis</h2>
+            <p id="cockpitChartSubtitle" class="text-[9px] text-wtm-muted mt-0.5">—</p>
+          </div>
+          <div id="cockpitHorizonRow" class="cockpit-horizon-row">
+            <div id="cockpitHorizonPills" role="group" aria-label="RV horizon"></div>
           </div>
           <div id="cockpitChartCanvas" class="cockpit-chart-canvas">
             <canvas id="cockpitRvCanvas" aria-label="RV basis chart"></canvas>
@@ -1767,7 +1818,9 @@ window.DICTIONARY_BADGE_DEFAULT = {
           </div>
           <div id="basisSummaryStrip" class="basis-summary-strip zone-hidden">
             <div id="basisSummary" class="basis-summary">
-              <div id="basisReadingValue" class="basis-reading-value">—</div>
+              <div class="basis-reading-primary">
+                <div id="basisReadingValue" class="basis-reading-value">—</div>
+              </div>
               <div id="basisReadingLabel" class="basis-reading-label">Current reading</div>
               <div id="basisStanceRow" class="basis-interpret-row"></div>
               <div id="basisTradeRow" class="basis-trade-row"></div>
@@ -6033,15 +6086,17 @@ function ordinalSuffixWhole(n) {
 }
 
 function formatPercentile(value) {
-  if (!Number.isFinite(value)) return 'Percentile unavailable';
-  if (!Number.isInteger(value)) return `${value.toFixed(1)}th percentile`;
+  const n = Number(value);
+  if (!Number.isFinite(n)) return 'Percentile unavailable';
+  const rounded = Math.round(n * 10) / 10;
+  if (!Number.isInteger(rounded)) return `${rounded.toFixed(1)}th percentile`;
 
-  const mod10 = value % 10;
-  const mod100 = value % 100;
-  if (mod10 === 1 && mod100 !== 11) return `${value}st percentile`;
-  if (mod10 === 2 && mod100 !== 12) return `${value}nd percentile`;
-  if (mod10 === 3 && mod100 !== 13) return `${value}rd percentile`;
-  return `${value}th percentile`;
+  const mod10 = rounded % 10;
+  const mod100 = rounded % 100;
+  if (mod10 === 1 && mod100 !== 11) return `${rounded}st percentile`;
+  if (mod10 === 2 && mod100 !== 12) return `${rounded}nd percentile`;
+  if (mod10 === 3 && mod100 !== 13) return `${rounded}rd percentile`;
+  return `${rounded}th percentile`;
 }
 
 function formatOrdinalPercentile(pct) {
@@ -6223,7 +6278,7 @@ function renderBasisImplicationRail(cockpit, state, gate) {
 }
 
 function buildBasisInterpretLine(hz, cockpit) {
-  if (!hz) return escapeHtml(cockpit.rv_basis?.quartile_context || 'Awaiting history');
+  if (!hz) return cockpit.rv_basis?.quartile_context || 'Awaiting history';
   const stance = hz.richness_label || cockpit.rv_basis?.richness_label;
   const parts = [
     richnessPillLabel(stance),
@@ -6231,7 +6286,7 @@ function buildBasisInterpretLine(hz, cockpit) {
     formatPercentile(Number(hz.percentile)),
     `n=${hz.n_observations ?? '—'}`,
   ];
-  return escapeHtml(parts.join(' · '));
+  return parts.join(' · ');
 }
 
 function buildBasisChartDiagnosis(cockpit, state, gate) {
@@ -6271,7 +6326,7 @@ function renderBasisSummaryRows(cockpit, hz, series, state, gate) {
   el('basisReadingLabel').textContent = label;
 
   const stanceRow = el('basisStanceRow');
-  if (stanceRow) stanceRow.innerHTML = buildBasisInterpretLine(hz, cockpit);
+  if (stanceRow) stanceRow.textContent = buildBasisInterpretLine(hz, cockpit);
 
   const tradeRow = el('basisTradeRow');
   if (tradeRow) {
@@ -6551,16 +6606,22 @@ function renderNodeCoverageBanner(cockpit, state) {
   const summary = buildNodeCoverageSummary(cockpit, modeInfo);
   const contextLines = buildCoverageBannerContextLines(cockpit, modeInfo, state);
 
-  banner.className = `node-coverage-banner node-coverage-banner--${modeInfo.mode}`;
-  banner.innerHTML = `
-    <div class="node-coverage-head">
-      <span class="node-coverage-mode">${escapeHtml(modeInfo.title)}</span>
-      <span class="node-coverage-stamp">${escapeHtml(stamp)}</span>
-      <p class="node-coverage-headline">${escapeHtml(modeInfo.headline)}</p>
-    </div>
-    <p class="node-coverage-summary">${escapeHtml(summary)}</p>
-    ${contextLines}
-    <div class="coverage-pill-grid" aria-label="Coverage checklist">${checklist}</div>`;
+  const statusRail = modeInfo.mode === 'complete';
+  banner.className = `node-coverage-banner node-coverage-banner--${modeInfo.mode}${statusRail ? ' node-coverage-banner--status-rail' : ''}`;
+  banner.innerHTML = statusRail
+    ? `<div class="node-coverage-head node-coverage-head--compact">
+        <span class="node-coverage-mode">${escapeHtml(modeInfo.title)}</span>
+        <span class="node-coverage-stamp">${escapeHtml(stamp)}</span>
+      </div>
+      <div class="coverage-pill-grid" aria-label="Coverage checklist">${checklist}</div>`
+    : `<div class="node-coverage-head">
+        <span class="node-coverage-mode">${escapeHtml(modeInfo.title)}</span>
+        <span class="node-coverage-stamp">${escapeHtml(stamp)}</span>
+        <p class="node-coverage-headline">${escapeHtml(modeInfo.headline)}</p>
+      </div>
+      <p class="node-coverage-summary">${escapeHtml(summary)}</p>
+      ${contextLines}
+      <div class="coverage-pill-grid" aria-label="Coverage checklist">${checklist}</div>`;
   banner.classList.remove('zone-hidden');
 
   if (shell) {
