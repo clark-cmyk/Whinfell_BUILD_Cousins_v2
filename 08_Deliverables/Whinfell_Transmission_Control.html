@@ -776,6 +776,84 @@ window.DICTIONARY_BADGE_DEFAULT = {
       color: var(--muted);
       margin-left: auto;
     }
+
+    #cockpitRvCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .node-rail-tab-compare-selected {
+      outline: 1px solid var(--amber);
+      background: rgba(214,163,74,.1);
+    }
+
+    .cockpit-focus-layer {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .cockpit-focus-layer h3 {
+      margin: 0 0 6px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--blue);
+    }
+
+    .focus-horizon-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .focus-horizon-table th,
+    .focus-horizon-table td {
+      border: 1px solid var(--border);
+      padding: 6px 8px;
+      text-align: left;
+    }
+
+    .focus-horizon-table th {
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 9px;
+      text-transform: uppercase;
+    }
+
+    .cockpit-compare-layer {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      padding: 12px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 10px;
+    }
+
+    .compare-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px;
+      font-size: 11px;
+    }
+
+    .compare-card h4 {
+      margin: 0 0 6px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
   </style>
 </head>
 <body class="bg-wtm-bg text-slate-100 font-sans h-screen flex flex-col overflow-hidden">
@@ -907,6 +985,7 @@ window.DICTIONARY_BADGE_DEFAULT = {
             <div id="cockpitHorizonPills" class="flex gap-1 flex-wrap" role="group" aria-label="RV horizon"></div>
           </div>
           <div id="cockpitChartCanvas" class="cockpit-chart-canvas">
+            <canvas id="cockpitRvCanvas" aria-label="RV basis chart"></canvas>
             <div id="cockpitChartPlaceholder" class="cockpit-chart-placeholder">
               <span class="text-[10px] uppercase tracking-wider text-wtm-muted font-bold">Current reading</span>
               <span id="cockpitChartValue" class="chart-value">—</span>
@@ -917,12 +996,14 @@ window.DICTIONARY_BADGE_DEFAULT = {
         </div>
         <aside id="cockpitDecisionRail" class="cockpit-decision-rail xl:col-span-4 bg-wtm-bg min-h-0" aria-label="Decision rail"></aside>
       </div>
+      <div id="cockpitFocusLayer" class="cockpit-focus-layer zone-hidden" aria-label="Here's Why focus"></div>
+      <div id="cockpitCompareLayer" class="cockpit-compare-layer zone-hidden" aria-label="Compare mode"></div>
       <div id="cockpitDetailBand" class="cockpit-detail-band shrink-0" aria-label="Component drivers"></div>
       <div id="cockpitActions" class="cockpit-actions shrink-0" aria-label="Cockpit actions">
-        <button type="button" id="btnHeresWhy" class="btn btn-primary" disabled title="UI-3">Here's Why</button>
-        <button type="button" id="btnCompareMode" class="btn btn-secondary" disabled title="UI-4">Compare</button>
+        <button type="button" id="btnHeresWhy" class="btn btn-primary">Here's Why</button>
+        <button type="button" id="btnCompareMode" class="btn btn-secondary">Compare</button>
         <button type="button" id="btnExportNode" class="btn btn-ghost">Export node</button>
-        <span class="keyboard-hint">← → flip · 1–5 jump · Import hydration for live cockpits</span>
+        <span class="keyboard-hint">← → flip · 1–5 jump · f focus · c compare · Shift+click rail</span>
       </div>
     </div>
   </section>
@@ -4741,6 +4822,10 @@ function flipNode(direction) {
   jumpToNode(LADDER[next].id);
 }
 
+function setActiveNode(nodeId) {
+  jumpToNode(nodeId);
+}
+
 function jumpToNode(nodeId) {
   if (!LADDER.some(r => r.id === nodeId)) return;
   appState.navigation = appState.navigation || createEmptyNavigation();
@@ -4750,7 +4835,6 @@ function jumpToNode(nodeId) {
     appState.panel = appState.panel || createEmptyPanelState();
     appState.panel.scroll_positions[activeNodeId()] = detailBand.scrollTop;
   }
-  appState.navigation = appState.navigation || createEmptyNavigation();
   appState.navigation.active_node_id = nodeId;
   if (appState.navigation.focus_mode) appState.navigation.focus_node_id = nodeId;
   renderNodeCockpitShell(buildStateFromDOM());
@@ -4785,9 +4869,12 @@ function renderNodeRail(state) {
   const rail = el('nodeRail');
   if (!rail) return;
   const active = activeNodeId();
+  const compareIds = appState.navigation?.compare_node_ids || [];
+  const compareOn = appState.navigation?.view_mode === 'compare';
   rail.innerHTML = LADDER.map((row, i) => {
     const cockpit = mergeNodeCockpit(row.id, state);
     const isActive = row.id === active;
+    const inCompare = compareOn && compareIds.includes(row.id);
     const weakest = cockpit.is_weakest_link ? '<span class="weakest-link-dot" title="Weakest link"></span>' : '';
     const freshCls = cockpit.freshness_status === 'fresh' ? 'freshness-dot-fresh'
       : cockpit.freshness_status === 'aging' ? 'freshness-dot-aging'
@@ -4795,7 +4882,7 @@ function renderNodeRail(state) {
     const freshDot = freshCls ? `<span class="freshness-dot ${freshCls}" title="${escapeHtml(cockpit.freshness_status)}"></span>` : '';
     return `
       <button type="button"
-        class="node-rail-tab ${isActive ? 'node-rail-tab-active' : ''}"
+        class="node-rail-tab ${isActive ? 'node-rail-tab-active' : ''} ${inCompare ? 'node-rail-tab-compare-selected' : ''}"
         data-node-id="${row.id}"
         data-node-index="${i + 1}"
         aria-pressed="${isActive}"
@@ -4811,7 +4898,13 @@ function renderNodeRail(state) {
       </button>`;
   }).join('');
   rail.querySelectorAll('[data-node-id]').forEach(btn => {
-    btn.onclick = () => jumpToNode(btn.dataset.nodeId);
+    btn.onclick = (e) => {
+      if (e.shiftKey && appState.navigation?.view_mode === 'compare') {
+        applyCompareSelection(btn.dataset.nodeId);
+        return;
+      }
+      jumpToNode(btn.dataset.nodeId);
+    };
   });
 }
 
@@ -4856,6 +4949,95 @@ function renderCockpitDecisionRail(cockpit) {
     </div>`;
 }
 
+function drawRvBasisChart(cockpit, canvas) {
+  if (!canvas || !canvas.getContext) return { drew: false, pointCount: 0 };
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.parentElement?.getBoundingClientRect?.() || { width: 400, height: 240 };
+  const w = Math.max(200, Math.floor(rect.width));
+  const h = Math.max(160, Math.floor(rect.height));
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  canvas.style.width = `${w}px`;
+  canvas.style.height = `${h}px`;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, w, h);
+
+  const horizon = cockpit.rv_basis?.active_horizon || appState.chart?.shared_horizon || '3m';
+  const seriesMap = cockpit.rv_basis?.series || {};
+  const seriesId = cockpit.rv_basis?.active_series_id || Object.keys(seriesMap)[0];
+  const series = seriesId ? seriesMap[seriesId] : null;
+  if (!series) return { drew: false, pointCount: 0 };
+
+  const points = RV_HORIZONS.map(hzKey => {
+    const hz = series.horizons?.[hzKey];
+    return hz ? { key: hzKey, value: Number(hz.current_value), percentile: Number(hz.percentile), quartile: hz.quartile } : null;
+  }).filter(Boolean);
+
+  if (!points.length) return { drew: false, pointCount: 0 };
+
+  const pad = { l: 44, r: 16, t: 16, b: 36 };
+  const plotW = w - pad.l - pad.r;
+  const plotH = h - pad.t - pad.b;
+  const vals = points.map(p => p.value);
+  const minV = Math.min(...vals);
+  const maxV = Math.max(...vals);
+  const span = maxV - minV || 1;
+  const barW = plotW / points.length;
+
+  ctx.strokeStyle = 'rgba(255,255,255,.08)';
+  for (let i = 0; i <= 4; i++) {
+    const y = pad.t + (plotH * i) / 4;
+    ctx.beginPath();
+    ctx.moveTo(pad.l, y);
+    ctx.lineTo(w - pad.r, y);
+    ctx.stroke();
+  }
+
+  const activeIdx = points.findIndex(p => p.key === horizon);
+  if (activeIdx >= 0) {
+    ctx.fillStyle = 'rgba(76,142,217,.12)';
+    ctx.fillRect(pad.l + activeIdx * barW, pad.t, barW, plotH);
+  }
+
+  points.forEach((p, i) => {
+    const x = pad.l + i * barW + barW * 0.15;
+    const bw = barW * 0.7;
+    const norm = (p.value - minV) / span;
+    const bh = Math.max(4, norm * plotH);
+    const y = pad.t + plotH - bh;
+    const q = p.quartile || 2;
+    ctx.fillStyle = q >= 4 ? 'rgba(255,140,105,.85)' : q <= 1 ? 'rgba(79,179,122,.85)' : 'rgba(76,142,217,.75)';
+    ctx.fillRect(x, y, bw, bh);
+    ctx.fillStyle = '#9eacbb';
+    ctx.font = '10px system-ui,sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(RV_HORIZON_LABELS[p.key] || p.key, x + bw / 2, h - pad.b + 14);
+  });
+
+  ctx.strokeStyle = 'rgba(214,163,74,.9)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  points.forEach((p, i) => {
+    const x = pad.l + i * barW + barW / 2;
+    const y = pad.t + plotH - ((p.percentile || 50) / 100) * plotH;
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+
+  points.forEach((p, i) => {
+    const x = pad.l + i * barW + barW / 2;
+    const y = pad.t + plotH - ((p.percentile || 50) / 100) * plotH;
+    ctx.fillStyle = '#d6a34a';
+    ctx.beginPath();
+    ctx.arc(x, y, 3, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  return { drew: true, pointCount: points.length };
+}
+
 function renderCockpitChart(cockpit) {
   const horizon = cockpit.rv_basis?.active_horizon || appState.chart?.shared_horizon || '3m';
   const seriesMap = cockpit.rv_basis?.series || {};
@@ -4863,6 +5045,8 @@ function renderCockpitChart(cockpit) {
   const series = seriesId ? seriesMap[seriesId] : null;
   const hz = series?.horizons?.[horizon];
   const row = LADDER.find(r => r.id === cockpit.node_id);
+  const canvas = el('cockpitRvCanvas');
+  const placeholder = el('cockpitChartPlaceholder');
 
   el('cockpitChartTitle').textContent = series?.label || `${row?.short || 'Node'} · RV / Basis`;
   el('cockpitChartSubtitle').textContent = series
@@ -4881,6 +5065,9 @@ function renderCockpitChart(cockpit) {
     el('cockpitChartRichness').className = 'text-[11px] font-semibold text-wtm-muted';
     el('cockpitChartPct').textContent = cockpit.composite_score_source === 'horizon_net_fallback' ? 'Tracer fallback score' : '—';
   }
+
+  const drawResult = drawRvBasisChart(cockpit, canvas);
+  if (placeholder) placeholder.style.opacity = drawResult.drew ? '0.35' : '1';
 
   const pills = el('cockpitHorizonPills');
   if (pills) {
@@ -4917,10 +5104,150 @@ function renderCockpitDetailBand(cockpit) {
     </span>`).join('')}</div>`;
 }
 
+function toggleFocusMode(force) {
+  appState.navigation = appState.navigation || createEmptyNavigation();
+  const next = typeof force === 'boolean' ? force : !appState.navigation.focus_mode;
+  appState.navigation.focus_mode = next;
+  appState.navigation.focus_node_id = next ? activeNodeId() : null;
+  if (!next) appState.navigation._focus_scroll = el('cockpitFocusLayer')?.scrollTop || 0;
+  renderNodeCockpitShell(buildStateFromDOM());
+  markDirty();
+}
+
+function exitFocusMode() {
+  if (!appState.navigation?.focus_mode) return;
+  toggleFocusMode(false);
+}
+
+function toggleCompareMode(force) {
+  appState.navigation = appState.navigation || createEmptyNavigation();
+  const next = typeof force === 'boolean' ? force : appState.navigation.view_mode !== 'compare';
+  if (next) {
+    appState.navigation.view_mode = 'compare';
+    if (appState.navigation.focus_mode) exitFocusMode();
+    if (!appState.navigation.compare_node_ids?.length) {
+      appState.navigation.compare_node_ids = [activeNodeId()];
+    }
+  } else {
+    appState.navigation.view_mode = 'flip';
+    appState.navigation.compare_node_ids = [];
+  }
+  renderNodeCockpitShell(buildStateFromDOM());
+  markDirty();
+}
+
+function applyCompareSelection(nodeId) {
+  if (appState.navigation?.view_mode !== 'compare') return;
+  appState.navigation = appState.navigation || createEmptyNavigation();
+  const ids = [...(appState.navigation.compare_node_ids || [])];
+  const idx = ids.indexOf(nodeId);
+  if (idx >= 0) ids.splice(idx, 1);
+  else {
+    if (ids.length >= 3) { showToast('Compare max 3 nodes'); return; }
+    ids.push(nodeId);
+  }
+  if (!ids.length) ids.push(activeNodeId());
+  appState.navigation.compare_node_ids = ids;
+  renderNodeCockpitShell(buildStateFromDOM());
+  markDirty();
+}
+
+function renderFocusLayer(cockpit, state) {
+  const layer = el('cockpitFocusLayer');
+  if (!layer) return;
+  const dir = cockpit.directional || {};
+  const rv = cockpit.relative_value || {};
+  const seriesMap = cockpit.rv_basis?.series || {};
+  const seriesId = cockpit.rv_basis?.active_series_id || Object.keys(seriesMap)[0];
+  const series = seriesId ? seriesMap[seriesId] : null;
+  const horizonRows = series ? RV_HORIZONS.map(h => {
+    const hz = series.horizons?.[h];
+    if (!hz) return '';
+    return `<tr><td>${RV_HORIZON_LABELS[h]}</td><td>${hz.current_value} ${hz.unit || ''}</td><td>${hz.percentile}</td><td>Q${hz.quartile}</td><td class="${richnessClass(hz.richness_label)}">${hz.richness_label}</td></tr>`;
+  }).join('') : '<tr><td colspan="5">No horizon data</td></tr>';
+  const flows = cockpit.funds_flows || {};
+  const fm = flows.flows_meta || {};
+  let flowsLine = 'Flows unavailable — not neutral.';
+  if (fm.flows_status === 'ok' && flows.aggregate?.verdict) flowsLine = `${flows.aggregate.verdict} · ${fm.flows_source}`;
+  else if (fm.flows_degraded) flowsLine = `${fm.flows_status} · ${fm.fallback_reason || 'degraded'}`;
+
+  layer.innerHTML = `
+    <div class="cockpit-card"><h3>Thesis</h3>
+      <p class="cockpit-line"><strong>${escapeHtml(cockpit.band)}</strong> · ${cockpit.composite_score} · ${escapeHtml(cockpit.confidence || '')}</p>
+      <p class="cockpit-sub">${escapeHtml(cockpit.key_observation || '')}</p>
+      <p class="cockpit-sub">${escapeHtml(cockpit.gate_interaction?.note || '')}</p>
+    </div>
+    <div class="cockpit-card"><h3>Directional</h3>
+      <p class="cockpit-line">${escapeHtml(dir.posture || '—')} · ${escapeHtml(dir.conviction || '')}</p>
+      <p class="cockpit-sub">${escapeHtml(dir.rationale || '')}</p>
+      <p class="cockpit-sub">${escapeHtml(dir.invalidation || '')}</p>
+    </div>
+    <div class="cockpit-card"><h3>RV / Basis evidence</h3>
+      <p class="cockpit-sub">${escapeHtml(series?.label || rv.structure || '')} · ${escapeHtml(series?.quartile_direction || '')}</p>
+      <table class="focus-horizon-table"><thead><tr><th>Horizon</th><th>Value</th><th>Pct</th><th>Q</th><th>Rich</th></tr></thead><tbody>${horizonRows}</tbody></table>
+    </div>
+    <div class="cockpit-card"><h3>Drivers</h3>
+      <p class="cockpit-sub">${(cockpit.component_inputs || []).map(c => `${escapeHtml(c.label || '')} ${c.value}`).join(' · ') || 'Horizon marks only — import hydration for feed.'}</p>
+    </div>
+    <div class="cockpit-card"><h3>Funds flow</h3><p class="cockpit-sub">${escapeHtml(flowsLine)}</p></div>
+    <div class="cockpit-card"><h3>Change mind</h3>
+      <p class="cockpit-sub">${escapeHtml(flows.interpretation?.change_mind_trigger || dir.invalidation || '—')}</p>
+    </div>`;
+  if (typeof appState.navigation._focus_scroll === 'number') layer.scrollTop = appState.navigation._focus_scroll;
+}
+
+function renderCompareLayer(state) {
+  const layer = el('cockpitCompareLayer');
+  if (!layer) return;
+  const ids = appState.navigation?.compare_node_ids || [activeNodeId()];
+  const horizon = appState.chart?.shared_horizon || '3m';
+  layer.innerHTML = ids.map(nodeId => {
+    const cockpit = mergeNodeCockpit(nodeId, state);
+    const row = LADDER.find(r => r.id === nodeId);
+    const series = cockpit.rv_basis?.series?.[cockpit.rv_basis?.active_series_id];
+    const hz = series?.horizons?.[horizon];
+    const rvLine = hz ? `Q${hz.quartile} · ${hz.richness_label} · ${hz.percentile}th` : (cockpit.rv_basis?.quartile_context || '—');
+    const fm = cockpit.funds_flows?.flows_meta || {};
+    const flowsChip = fm.flows_status && fm.flows_status !== 'ok'
+      ? `<span class="flows-degrade-chip">${escapeHtml(fm.flows_status)}</span>` : '';
+    return `<article class="compare-card">
+      <h4>${escapeHtml(row?.short || nodeId)} ${flowsChip}</h4>
+      <p><strong>${escapeHtml(cockpit.band || '')}</strong> · ${cockpit.composite_score}</p>
+      <p>${escapeHtml(cockpit.directional?.posture || '')} · ${escapeHtml(cockpit.directional?.rationale || '').slice(0, 80)}</p>
+      <p class="${richnessClass(hz?.richness_label)}">${escapeHtml(rvLine)} · ${RV_HORIZON_LABELS[horizon]}</p>
+    </article>`;
+  }).join('');
+}
+
 function renderNodeCockpitShell(state) {
   if (appState.ui?.workspaceView !== 'cockpit') return;
-  const cockpit = mergeNodeCockpit(activeNodeId(), state);
+  const nav = appState.navigation || createEmptyNavigation();
+  const compareOn = nav.view_mode === 'compare';
+  const focusOn = nav.focus_mode;
+  const main = document.querySelector('#cockpitShell .cockpit-main');
+  const detail = el('cockpitDetailBand');
+  const focus = el('cockpitFocusLayer');
+  const compare = el('cockpitCompareLayer');
+
   renderNodeRail(state);
+
+  main?.classList.toggle('zone-hidden', focusOn || compareOn);
+  detail?.classList.toggle('zone-hidden', focusOn || compareOn);
+  focus?.classList.toggle('zone-hidden', !focusOn);
+  compare?.classList.toggle('zone-hidden', !compareOn);
+
+  el('btnCompareMode')?.classList.toggle('btn-primary', compareOn);
+  el('btnHeresWhy')?.classList.toggle('btn-primary', focusOn);
+
+  if (compareOn) {
+    renderCompareLayer(state);
+    return;
+  }
+  const cockpit = mergeNodeCockpit(focusOn ? (nav.focus_node_id || activeNodeId()) : activeNodeId(), state);
+  if (focusOn) {
+    renderFocusLayer(cockpit, state);
+    return;
+  }
   renderCockpitChart(cockpit);
   renderCockpitDecisionRail(cockpit);
   renderCockpitDetailBand(cockpit);
@@ -4946,6 +5273,21 @@ function isTypingTarget(target) {
 function handleCockpitKeyboard(e) {
   if (appState.ui?.workspaceView !== 'cockpit') return;
   if (isTypingTarget(e.target)) return;
+  if (e.key === 'Escape') {
+    if (appState.navigation?.focus_mode) { e.preventDefault(); exitFocusMode(); return; }
+    if (appState.navigation?.view_mode === 'compare') { e.preventDefault(); toggleCompareMode(false); return; }
+  }
+  if (e.key === 'f' || e.key === 'F') {
+    if (appState.navigation?.view_mode === 'compare') return;
+    e.preventDefault();
+    toggleFocusMode();
+    return;
+  }
+  if (e.key === 'c' || e.key === 'C') {
+    e.preventDefault();
+    toggleCompareMode();
+    return;
+  }
   if (e.key === 'ArrowLeft') { e.preventDefault(); flipNode(-1); return; }
   if (e.key === 'ArrowRight') { e.preventDefault(); flipNode(1); return; }
   const num = parseInt(e.key, 10);
@@ -5245,6 +5587,8 @@ el('btnExportNode').onclick = () => {
   ];
   copyText(lines.join('\n'), el('btnExportNode'), 'Export node');
 };
+el('btnHeresWhy').onclick = () => toggleFocusMode();
+el('btnCompareMode').onclick = () => toggleCompareMode();
 document.addEventListener('keydown', handleCockpitKeyboard);
 
 renderPrompts();

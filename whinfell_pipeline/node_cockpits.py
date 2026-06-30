@@ -298,30 +298,9 @@ def _build_china_parallel(
 
 
 def _load_spread_history(repo_root: Path | None = None) -> dict[str, list[tuple[str, float]]]:
-    path = default_spread_history_path(repo_root)
-    if not path.exists():
-        return {}
-    try:
-        payload = json.loads(path.read_text(encoding="utf-8"))
-    except (json.JSONDecodeError, OSError):
-        return {}
-    out: dict[str, list[tuple[str, float]]] = {}
-    for rec in payload.get("records") or []:
-        if not isinstance(rec, dict):
-            continue
-        key = str(rec.get("raw_symbol") or rec.get("canonical_id") or "")
-        points = rec.get("points") or []
-        series: list[tuple[str, float]] = []
-        for pt in points:
-            if not isinstance(pt, dict):
-                continue
-            date = str(pt.get("date") or "")
-            close = pt.get("close")
-            if date and close is not None:
-                series.append((date, float(close)))
-        if key and series:
-            out[key] = sorted(series, key=lambda x: x[0])
-    return out
+    from whinfell_pipeline.rv_history import load_rv_history
+
+    return load_rv_history(repo_root)
 
 
 def _history_values_for_series(
@@ -329,16 +308,21 @@ def _history_values_for_series(
     spread_history: Mapping[str, list[tuple[str, float]]],
     execution: Mapping[str, Any],
 ) -> list[tuple[str, float]]:
+    history_key = str(series_spec.get("history_key") or "").upper()
+    if history_key and history_key in spread_history:
+        return list(spread_history[history_key])
+    for hk, values in spread_history.items():
+        if history_key and history_key in hk.upper():
+            return list(values)
     source = str(series_spec.get("history_source") or "")
-    key = str(series_spec.get("history_key") or "")
-    if source == "barchart_spread_history":
-        for hist_key, values in spread_history.items():
-            if key.upper() in hist_key.upper():
-                return values
+    if source.startswith("barchart") and history_key:
         spread = execution.get("basis_spread")
         as_of = execution.get("as_of") or datetime.now(timezone.utc).date().isoformat()
         if spread not in (None, ""):
-            return [(str(as_of)[:10], float(spread))]
+            try:
+                return [(str(as_of)[:10], float(str(spread).replace("%", "")))]
+            except ValueError:
+                pass
     return []
 
 

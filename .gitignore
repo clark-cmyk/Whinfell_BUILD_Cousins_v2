@@ -9,6 +9,8 @@ whinfell_pipeline/*
 !whinfell_pipeline/WTM_EXPORT_v2.1_SPEC.md
 !whinfell_pipeline/WTM_EXPORT_v2.2_SPEC.md
 !whinfell_pipeline/node_cockpits.py
+!whinfell_pipeline/rv_history.py
+!whinfell_pipeline/flows_parser.py
 !whinfell_pipeline/flows_fallback.py
 !whinfell_pipeline/funds_flows.py
 !whinfell_pipeline/export_contract.py
@@ -18,12 +20,18 @@ whinfell_pipeline/*
 !whinfell_pipeline/examples/
 whinfell_pipeline/examples/*
 !whinfell_pipeline/examples/hydration_bundle.json
+!whinfell_pipeline/examples/cockpit_hydration_snippet.json
+!whinfell_pipeline/examples/flows/
 !whinfell_pipeline/tests/
 whinfell_pipeline/tests/*
 !whinfell_pipeline/staged_csv.py
 !whinfell_pipeline/ingest.py
 !whinfell_pipeline/csv_download.py
 !whinfell_pipeline/tests/html_headless_2_2b.mjs
+!whinfell_pipeline/tests/html_headless_cockpit.mjs
+!whinfell_pipeline/tests/test_transmission_control_cockpit.py
+!whinfell_pipeline/tests/test_rv_history.py
+!whinfell_pipeline/tests/test_flows_parser.py
 !whinfell_pipeline/tests/test_transmission_control_2_2b.py
 !whinfell_pipeline/tests/test_staged_2_2c.py
 !whinfell_pipeline/tests/test_csv_download.py

@@ -77,13 +77,36 @@ function makeSandbox() {
     set onclick(fn) { this._onclk = fn; }
     get onchange() { return this._onchg; }
     set onchange(fn) { this._onchg = fn; }
+    querySelectorAll(sel) {
+      if (sel === '[data-node-id]') {
+        return Object.values(els).filter(e => e.dataset?.nodeId);
+      }
+      if (sel === '[data-horizon]') return [];
+      return [];
+    }
+    querySelector() { return null; }
   }
   const els = {};
   return {
     document: {
       getElementById(id) { if (!els[id]) els[id] = new El(id); return els[id]; },
-      querySelectorAll() { return []; },
-      querySelector() { return { value: 'full' }; },
+      querySelectorAll(sel) {
+        if (sel === '[data-node-id]') {
+          return Object.values(els).filter(e => e.dataset?.nodeId);
+        }
+        if (sel === '#cockpitShell .cockpit-main') {
+          if (!els._cockpitMain) els._cockpitMain = new El('cockpitMain');
+          return [els._cockpitMain];
+        }
+        return [];
+      },
+      querySelector(sel) {
+        if (sel === '#cockpitShell .cockpit-main') {
+          if (!els._cockpitMain) els._cockpitMain = new El('cockpitMain');
+          return els._cockpitMain;
+        }
+        return { value: 'full' };
+      },
     },
     localStorage: { _data: {}, getItem(k) { return this._data[k] ?? null; }, setItem(k, v) { this._data[k] = v; } },
     window: { open() {} },
@@ -116,6 +139,12 @@ function seedDom(t) {
     'tracerFlowBadge', 'tracerHorizonTable', 'tracerMatrixTitle', 'cmdGlobalCluster', 'cmdChinaCluster',
     'intakeGlobal', 'intakeChina', 'tracerScoreLabel', 'keyObservationDisplay', 'btcBiasDisplay', 'researchReadout',
     'cmdGateSub', 'cmdGrossPosture', 'snapshotList', 'snapshotCompare',
+    'nodeRail', 'cockpitShell', 'cockpitChartTitle', 'cockpitChartSubtitle',
+    'cockpitHorizonPills', 'cockpitRvCanvas', 'cockpitChartPlaceholder',
+    'cockpitChartValue', 'cockpitChartRichness', 'cockpitChartPct',
+    'cockpitDecisionRail', 'cockpitDetailBand', 'cockpitFocusLayer',
+    'cockpitCompareLayer', 'btnHeresWhy', 'btnCompareMode', 'nodeCockpitZone',
+    'legacyConsoleZone', 'btnWorkspaceToggle',
   ];
   ids.forEach(id => t.document.getElementById(id));
   t.LADDER.forEach(r => {

@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
-  "as_of": "2026-06-26",
-  "source_file": "WTM-Flows-Global.csv",
+  "as_of": "2026-06-29",
+  "source_file": "WTM-Flows-Global-head.csv",
   "source_channel": "koyfin_wtm_flows",
   "ingest_mode": "timeseries_primary",
   "units": {
@@ -9,144 +9,369 @@
     "aum_usd": "millions_usd",
     "flow_pct_aum": "percent"
   },
-  "history_sessions": 751,
+  "history_sessions": 12,
   "tickers": {
-    "SPY": {
-      "ticker": "SPY",
-      "asset_id": "spy",
+    "SHY": {
+      "ticker": "SHY",
+      "asset_id": "shy",
       "canonical_asset_resolved": true,
       "latest": {
-        "date": "2026-06-26",
-        "flow_usd_1d": -1978.88,
-        "aum_usd": 773853.64,
-        "flow_pct_aum_1d": -0.25571760572192953
+        "date": "2026-06-29",
+        "flow_usd_1d": 6.0,
+        "aum_usd": 10000.0,
+        "flow_pct_aum_1d": 0.06
       },
       "rolling": {
-        "flow_usd_5d": 12708.82,
-        "flow_pct_aum_5d": 1.6348,
+        "flow_usd_5d": 35.0,
+        "flow_pct_aum_5d": 0.35,
         "sessions_in_5d": 5,
-        "persistence_score_20d": 0.55
+        "persistence_score_20d": 1.0
       },
       "series_tail": [
         {
-          "date": "2026-05-29",
-          "flow_usd_1d": 830.07,
-          "aum_usd": 784628.32,
-          "flow_pct_aum_1d": 0.10579149118655315
-        },
-        {
-          "date": "2026-06-01",
-          "flow_usd_1d": -2117.59,
-          "aum_usd": 784620.19,
-          "flow_pct_aum_1d": -0.2698872686414047
-        },
-        {
-          "date": "2026-06-02",
-          "flow_usd_1d": 1782.05,
-          "aum_usd": 787437.69,
-          "flow_pct_aum_1d": 0.22630996999902306
-        },
-        {
-          "date": "2026-06-03",
-          "flow_usd_1d": 4935.57,
-          "aum_usd": 786553.04,
-          "flow_pct_aum_1d": 0.6274936017029442
-        },
-        {
-          "date": "2026-06-04",
-          "flow_usd_1d": -75.37,
-          "aum_usd": 789794.6,
-          "flow_pct_aum_1d": -0.00954298750586545
-        },
-        {
-          "date": "2026-06-05",
-          "flow_usd_1d": 8250.43,
-          "aum_usd": 777088.82,
-          "flow_pct_aum_1d": 1.061710037212992
-        },
-        {
-          "date": "2026-06-08",
-          "flow_usd_1d": -4680.23,
-          "aum_usd": 774732.48,
-          "flow_pct_aum_1d": -0.6041091758538379
-        },
-        {
-          "date": "2026-06-09",
-          "flow_usd_1d": 4139.86,
-          "aum_usd": 776896.31,
-          "flow_pct_aum_1d": 0.53287162607324
-        },
-        {
-          "date": "2026-06-10",
-          "flow_usd_1d": 1622.25,
-          "aum_usd": 765953.87,
-          "flow_pct_aum_1d": 0.21179473902259938
-        },
-        {
-          "date": "2026-06-11",
-          "flow_usd_1d": -217.65,
-          "aum_usd": 779125.25,
-          "flow_pct_aum_1d": -0.027935174736026077
-        },
-        {
-          "date": "2026-06-12",
-          "flow_usd_1d": -1476.34,
-          "aum_usd": 781588.07,
-          "flow_pct_aum_1d": -0.18888978180027746
-        },
-        {
-          "date": "2026-06-15",
-          "flow_usd_1d": -3041.83,
-          "aum_usd": 791562.78,
-          "flow_pct_aum_1d": -0.3842815853469007
-        },
-        {
-          "date": "2026-06-16",
-          "flow_usd_1d": -12521.6,
-          "aum_usd": 774646.23,
-          "flow_pct_aum_1d": -1.6164281855473563
-        },
-        {
-          "date": "2026-06-17",
-          "flow_usd_1d": -12750.98,
-          "aum_usd": 752670.05,
-          "flow_pct_aum_1d": -1.6940995592956036
-        },
-        {
           "date": "2026-06-18",
-          "flow_usd_1d": 17375.88,
-          "aum_usd": 776399.76,
-          "flow_pct_aum_1d": 2.238006874190688
+          "flow_usd_1d": 5.0,
+          "aum_usd": 10000.0,
+          "flow_pct_aum_1d": 0.05
+        },
+        {
+          "date": "2026-06-19",
+          "flow_usd_1d": 6.0,
+          "aum_usd": 10000.0,
+          "flow_pct_aum_1d": 0.06
+        },
+        {
+          "date": "2026-06-20",
+          "flow_usd_1d": 7.0,
+          "aum_usd": 10000.0,
+          "flow_pct_aum_1d": 0.07
+        },
+        {
+          "date": "2026-06-21",
+          "flow_usd_1d": 8.0,
+          "aum_usd": 10000.0,
+          "flow_pct_aum_1d": 0.08
         },
         {
           "date": "2026-06-22",
-          "flow_usd_1d": 6686.45,
-          "aum_usd": 780226.53,
-          "flow_pct_aum_1d": 0.8569882903110202
+          "flow_usd_1d": 9.0,
+          "aum_usd": 10000.0,
+          "flow_pct_aum_1d": 0.09
         },
         {
           "date": "2026-06-23",
-          "flow_usd_1d": 3126.32,
-          "aum_usd": 772110.12,
-          "flow_pct_aum_1d": 0.40490597377482895
+          "flow_usd_1d": 5.0,
+          "aum_usd": 10000.0,
+          "flow_pct_aum_1d": 0.05
         },
         {
           "date": "2026-06-24",
-          "flow_usd_1d": 770.36,
-          "aum_usd": 772123.19,
-          "flow_pct_aum_1d": 0.09977164395230766
+          "flow_usd_1d": 6.0,
+          "aum_usd": 10000.0,
+          "flow_pct_aum_1d": 0.06
         },
         {
           "date": "2026-06-25",
-          "flow_usd_1d": 4104.57,
-          "aum_usd": 776183.5,
-          "flow_pct_aum_1d": 0.5288143847427831
+          "flow_usd_1d": 7.0,
+          "aum_usd": 10000.0,
+          "flow_pct_aum_1d": 0.07
         },
         {
           "date": "2026-06-26",
-          "flow_usd_1d": -1978.88,
-          "aum_usd": 773853.64,
-          "flow_pct_aum_1d": -0.25571760572192953
+          "flow_usd_1d": 8.0,
+          "aum_usd": 10000.0,
+          "flow_pct_aum_1d": 0.08
+        },
+        {
+          "date": "2026-06-27",
+          "flow_usd_1d": 9.0,
+          "aum_usd": 10000.0,
+          "flow_pct_aum_1d": 0.09
+        },
+        {
+          "date": "2026-06-28",
+          "flow_usd_1d": 5.0,
+          "aum_usd": 10000.0,
+          "flow_pct_aum_1d": 0.05
+        },
+        {
+          "date": "2026-06-29",
+          "flow_usd_1d": 6.0,
+          "aum_usd": 10000.0,
+          "flow_pct_aum_1d": 0.06
+        }
+      ]
+    },
+    "IEF": {
+      "ticker": "IEF",
+      "asset_id": "ief",
+      "canonical_asset_resolved": true,
+      "latest": {
+        "date": "2026-06-29",
+        "flow_usd_1d": 7.35,
+        "aum_usd": 10500.0,
+        "flow_pct_aum_1d": 0.07
+      },
+      "rolling": {
+        "flow_usd_5d": 36.75,
+        "flow_pct_aum_5d": 0.35,
+        "sessions_in_5d": 5,
+        "persistence_score_20d": 1.0
+      },
+      "series_tail": [
+        {
+          "date": "2026-06-18",
+          "flow_usd_1d": 6.3,
+          "aum_usd": 10500.0,
+          "flow_pct_aum_1d": 0.06
+        },
+        {
+          "date": "2026-06-19",
+          "flow_usd_1d": 7.35,
+          "aum_usd": 10500.0,
+          "flow_pct_aum_1d": 0.07
+        },
+        {
+          "date": "2026-06-20",
+          "flow_usd_1d": 8.4,
+          "aum_usd": 10500.0,
+          "flow_pct_aum_1d": 0.08
+        },
+        {
+          "date": "2026-06-21",
+          "flow_usd_1d": 9.45,
+          "aum_usd": 10500.0,
+          "flow_pct_aum_1d": 0.09
+        },
+        {
+          "date": "2026-06-22",
+          "flow_usd_1d": 5.25,
+          "aum_usd": 10500.0,
+          "flow_pct_aum_1d": 0.05
+        },
+        {
+          "date": "2026-06-23",
+          "flow_usd_1d": 6.3,
+          "aum_usd": 10500.0,
+          "flow_pct_aum_1d": 0.06
+        },
+        {
+          "date": "2026-06-24",
+          "flow_usd_1d": 7.35,
+          "aum_usd": 10500.0,
+          "flow_pct_aum_1d": 0.07
+        },
+        {
+          "date": "2026-06-25",
+          "flow_usd_1d": 8.4,
+          "aum_usd": 10500.0,
+          "flow_pct_aum_1d": 0.08
+        },
+        {
+          "date": "2026-06-26",
+          "flow_usd_1d": 9.45,
+          "aum_usd": 10500.0,
+          "flow_pct_aum_1d": 0.09
+        },
+        {
+          "date": "2026-06-27",
+          "flow_usd_1d": 5.25,
+          "aum_usd": 10500.0,
+          "flow_pct_aum_1d": 0.05
+        },
+        {
+          "date": "2026-06-28",
+          "flow_usd_1d": 6.3,
+          "aum_usd": 10500.0,
+          "flow_pct_aum_1d": 0.06
+        },
+        {
+          "date": "2026-06-29",
+          "flow_usd_1d": 7.35,
+          "aum_usd": 10500.0,
+          "flow_pct_aum_1d": 0.07
+        }
+      ]
+    },
+    "TLT": {
+      "ticker": "TLT",
+      "asset_id": "tlt",
+      "canonical_asset_resolved": true,
+      "latest": {
+        "date": "2026-06-29",
+        "flow_usd_1d": 8.8,
+        "aum_usd": 11000.0,
+        "flow_pct_aum_1d": 0.08
+      },
+      "rolling": {
+        "flow_usd_5d": 38.5,
+        "flow_pct_aum_5d": 0.35,
+        "sessions_in_5d": 5,
+        "persistence_score_20d": 1.0
+      },
+      "series_tail": [
+        {
+          "date": "2026-06-18",
+          "flow_usd_1d": 7.7,
+          "aum_usd": 11000.0,
+          "flow_pct_aum_1d": 0.07
+        },
+        {
+          "date": "2026-06-19",
+          "flow_usd_1d": 8.8,
+          "aum_usd": 11000.0,
+          "flow_pct_aum_1d": 0.08
+        },
+        {
+          "date": "2026-06-20",
+          "flow_usd_1d": 9.9,
+          "aum_usd": 11000.0,
+          "flow_pct_aum_1d": 0.09
+        },
+        {
+          "date": "2026-06-21",
+          "flow_usd_1d": 5.5,
+          "aum_usd": 11000.0,
+          "flow_pct_aum_1d": 0.05
+        },
+        {
+          "date": "2026-06-22",
+          "flow_usd_1d": 6.6,
+          "aum_usd": 11000.0,
+          "flow_pct_aum_1d": 0.06
+        },
+        {
+          "date": "2026-06-23",
+          "flow_usd_1d": 7.7,
+          "aum_usd": 11000.0,
+          "flow_pct_aum_1d": 0.07
+        },
+        {
+          "date": "2026-06-24",
+          "flow_usd_1d": 8.8,
+          "aum_usd": 11000.0,
+          "flow_pct_aum_1d": 0.08
+        },
+        {
+          "date": "2026-06-25",
+          "flow_usd_1d": 9.9,
+          "aum_usd": 11000.0,
+          "flow_pct_aum_1d": 0.09
+        },
+        {
+          "date": "2026-06-26",
+          "flow_usd_1d": 5.5,
+          "aum_usd": 11000.0,
+          "flow_pct_aum_1d": 0.05
+        },
+        {
+          "date": "2026-06-27",
+          "flow_usd_1d": 6.6,
+          "aum_usd": 11000.0,
+          "flow_pct_aum_1d": 0.06
+        },
+        {
+          "date": "2026-06-28",
+          "flow_usd_1d": 7.7,
+          "aum_usd": 11000.0,
+          "flow_pct_aum_1d": 0.07
+        },
+        {
+          "date": "2026-06-29",
+          "flow_usd_1d": 8.8,
+          "aum_usd": 11000.0,
+          "flow_pct_aum_1d": 0.08
+        }
+      ]
+    },
+    "BIL": {
+      "ticker": "BIL",
+      "asset_id": "bil",
+      "canonical_asset_resolved": true,
+      "latest": {
+        "date": "2026-06-29",
+        "flow_usd_1d": 10.35,
+        "aum_usd": 11500.0,
+        "flow_pct_aum_1d": 0.09
+      },
+      "rolling": {
+        "flow_usd_5d": 40.25,
+        "flow_pct_aum_5d": 0.35,
+        "sessions_in_5d": 5,
+        "persistence_score_20d": 1.0
+      },
+      "series_tail": [
+        {
+          "date": "2026-06-18",
+          "flow_usd_1d": 9.2,
+          "aum_usd": 11500.0,
+          "flow_pct_aum_1d": 0.08
+        },
+        {
+          "date": "2026-06-19",
+          "flow_usd_1d": 10.35,
+          "aum_usd": 11500.0,
+          "flow_pct_aum_1d": 0.09
+        },
+        {
+          "date": "2026-06-20",
+          "flow_usd_1d": 5.75,
+          "aum_usd": 11500.0,
+          "flow_pct_aum_1d": 0.05
+        },
+        {
+          "date": "2026-06-21",
+          "flow_usd_1d": 6.9,
+          "aum_usd": 11500.0,
+          "flow_pct_aum_1d": 0.06
+        },
+        {
+          "date": "2026-06-22",
+          "flow_usd_1d": 8.05,
+          "aum_usd": 11500.0,
+          "flow_pct_aum_1d": 0.07
+        },
+        {
+          "date": "2026-06-23",
+          "flow_usd_1d": 9.2,
+          "aum_usd": 11500.0,
+          "flow_pct_aum_1d": 0.08
+        },
+        {
+          "date": "2026-06-24",
+          "flow_usd_1d": 10.35,
+          "aum_usd": 11500.0,
+          "flow_pct_aum_1d": 0.09
+        },
+        {
+          "date": "2026-06-25",
+          "flow_usd_1d": 5.75,
+          "aum_usd": 11500.0,
+          "flow_pct_aum_1d": 0.05
+        },
+        {
+          "date": "2026-06-26",
+          "flow_usd_1d": 6.9,
+          "aum_usd": 11500.0,
+          "flow_pct_aum_1d": 0.06
+        },
+        {
+          "date": "2026-06-27",
+          "flow_usd_1d": 8.05,
+          "aum_usd": 11500.0,
+          "flow_pct_aum_1d": 0.07
+        },
+        {
+          "date": "2026-06-28",
+          "flow_usd_1d": 9.2,
+          "aum_usd": 11500.0,
+          "flow_pct_aum_1d": 0.08
+        },
+        {
+          "date": "2026-06-29",
+          "flow_usd_1d": 10.35,
+          "aum_usd": 11500.0,
+          "flow_pct_aum_1d": 0.09
         }
       ]
     },
@@ -155,137 +380,89 @@
       "asset_id": "hyg",
       "canonical_asset_resolved": true,
       "latest": {
-        "date": "2026-06-26",
-        "flow_usd_1d": 167.55,
-        "aum_usd": 17569.41,
-        "flow_pct_aum_1d": 0.9536461383734571
+        "date": "2026-06-29",
+        "flow_usd_1d": 6.0,
+        "aum_usd": 12000.0,
+        "flow_pct_aum_1d": 0.05
       },
       "rolling": {
-        "flow_usd_5d": 1077.16,
-        "flow_pct_aum_5d": 6.2704,
+        "flow_usd_5d": 42.0,
+        "flow_pct_aum_5d": 0.35,
         "sessions_in_5d": 5,
-        "persistence_score_20d": 0.75
+        "persistence_score_20d": 1.0
       },
       "series_tail": [
         {
-          "date": "2026-05-29",
-          "flow_usd_1d": 32.04,
-          "aum_usd": 16138.39,
-          "flow_pct_aum_1d": 0.1985328152312591
-        },
-        {
-          "date": "2026-06-01",
-          "flow_usd_1d": -72.15,
-          "aum_usd": 15972.11,
-          "flow_pct_aum_1d": -0.45172491298895395
-        },
-        {
-          "date": "2026-06-02",
-          "flow_usd_1d": 111.58,
-          "aum_usd": 16094.99,
-          "flow_pct_aum_1d": 0.6932592067469442
-        },
-        {
-          "date": "2026-06-03",
-          "flow_usd_1d": 119.64,
-          "aum_usd": 16180.87,
-          "flow_pct_aum_1d": 0.7393916396337156
-        },
-        {
-          "date": "2026-06-04",
-          "flow_usd_1d": 222.86,
-          "aum_usd": 16426.29,
-          "flow_pct_aum_1d": 1.3567275385981863
-        },
-        {
-          "date": "2026-06-05",
-          "flow_usd_1d": -135.49,
-          "aum_usd": 16230.63,
-          "flow_pct_aum_1d": -0.8347796727545389
-        },
-        {
-          "date": "2026-06-08",
-          "flow_usd_1d": -206.46,
-          "aum_usd": 16037.35,
-          "flow_pct_aum_1d": -1.287369796132154
-        },
-        {
-          "date": "2026-06-09",
-          "flow_usd_1d": 39.74,
-          "aum_usd": 16084.2,
-          "flow_pct_aum_1d": 0.2470747690279902
-        },
-        {
-          "date": "2026-06-10",
-          "flow_usd_1d": 7.95,
-          "aum_usd": 16079.68,
-          "flow_pct_aum_1d": 0.049441282413580374
-        },
-        {
-          "date": "2026-06-11",
-          "flow_usd_1d": -47.67,
-          "aum_usd": 16078.24,
-          "flow_pct_aum_1d": -0.2964876752679398
-        },
-        {
-          "date": "2026-06-12",
-          "flow_usd_1d": 111.54,
-          "aum_usd": 16214.63,
-          "flow_pct_aum_1d": 0.6878972878197036
-        },
-        {
-          "date": "2026-06-15",
-          "flow_usd_1d": 159.59,
-          "aum_usd": 16418.61,
-          "flow_pct_aum_1d": 0.9720067654935466
-        },
-        {
-          "date": "2026-06-16",
-          "flow_usd_1d": 88.01,
-          "aum_usd": 16495.83,
-          "flow_pct_aum_1d": 0.5335287766665878
-        },
-        {
-          "date": "2026-06-17",
-          "flow_usd_1d": 87.96,
-          "aum_usd": 16554.85,
-          "flow_pct_aum_1d": 0.5313246571246493
-        },
-        {
           "date": "2026-06-18",
-          "flow_usd_1d": -47.89,
-          "aum_usd": 16513.17,
-          "flow_pct_aum_1d": -0.29001094278082284
+          "flow_usd_1d": 10.8,
+          "aum_usd": 12000.0,
+          "flow_pct_aum_1d": 0.09
+        },
+        {
+          "date": "2026-06-19",
+          "flow_usd_1d": 6.0,
+          "aum_usd": 12000.0,
+          "flow_pct_aum_1d": 0.05
+        },
+        {
+          "date": "2026-06-20",
+          "flow_usd_1d": 7.2,
+          "aum_usd": 12000.0,
+          "flow_pct_aum_1d": 0.06
+        },
+        {
+          "date": "2026-06-21",
+          "flow_usd_1d": 8.4,
+          "aum_usd": 12000.0,
+          "flow_pct_aum_1d": 0.07
         },
         {
           "date": "2026-06-22",
-          "flow_usd_1d": 15.97,
-          "aum_usd": 16520.88,
-          "flow_pct_aum_1d": 0.09666555292454154
+          "flow_usd_1d": 9.6,
+          "aum_usd": 12000.0,
+          "flow_pct_aum_1d": 0.08
         },
         {
           "date": "2026-06-23",
-          "flow_usd_1d": 215.49,
-          "aum_usd": 16722.93,
-          "flow_pct_aum_1d": 1.2885899779524284
+          "flow_usd_1d": 10.8,
+          "aum_usd": 12000.0,
+          "flow_pct_aum_1d": 0.09
         },
         {
           "date": "2026-06-24",
-          "flow_usd_1d": 255.19,
-          "aum_usd": 16990.13,
-          "flow_pct_aum_1d": 1.5019896845992349
+          "flow_usd_1d": 6.0,
+          "aum_usd": 12000.0,
+          "flow_pct_aum_1d": 0.05
         },
         {
           "date": "2026-06-25",
-          "flow_usd_1d": 422.96,
-          "aum_usd": 17409.49,
-          "flow_pct_aum_1d": 2.429479553967405
+          "flow_usd_1d": 7.2,
+          "aum_usd": 12000.0,
+          "flow_pct_aum_1d": 0.06
         },
         {
           "date": "2026-06-26",
-          "flow_usd_1d": 167.55,
-          "aum_usd": 17569.41,
-          "flow_pct_aum_1d": 0.9536461383734571
+          "flow_usd_1d": 8.4,
+          "aum_usd": 12000.0,
+          "flow_pct_aum_1d": 0.07
+        },
+        {
+          "date": "2026-06-27",
+          "flow_usd_1d": 9.6,
+          "aum_usd": 12000.0,
+          "flow_pct_aum_1d": 0.08
+        },
+        {
+          "date": "2026-06-28",
+          "flow_usd_1d": 10.8,
+          "aum_usd": 12000.0,
+          "flow_pct_aum_1d": 0.09
+        },
+        {
+          "date": "2026-06-29",
+          "flow_usd_1d": 6.0,
+          "aum_usd": 12000.0,
+          "flow_pct_aum_1d": 0.05
         }
       ]
     },
@@ -294,276 +471,89 @@
       "asset_id": "",
       "canonical_asset_resolved": false,
       "latest": {
-        "date": "2026-06-26",
-        "flow_usd_1d": 744.19,
-        "aum_usd": 32873.18,
-        "flow_pct_aum_1d": 2.263821145383562
+        "date": "2026-06-29",
+        "flow_usd_1d": 7.5,
+        "aum_usd": 12500.0,
+        "flow_pct_aum_1d": 0.06
       },
       "rolling": {
-        "flow_usd_5d": 1057.85,
-        "flow_pct_aum_5d": 3.2328,
+        "flow_usd_5d": 43.75,
+        "flow_pct_aum_5d": 0.35,
         "sessions_in_5d": 5,
-        "persistence_score_20d": 0.65
+        "persistence_score_20d": 1.0
       },
       "series_tail": [
         {
-          "date": "2026-05-29",
-          "flow_usd_1d": 436.84,
-          "aum_usd": 30220.05,
-          "flow_pct_aum_1d": 1.4455303680834413
-        },
-        {
-          "date": "2026-06-01",
-          "flow_usd_1d": -164.0,
-          "aum_usd": 29932.84,
-          "flow_pct_aum_1d": -0.5478932169483417
-        },
-        {
-          "date": "2026-06-02",
-          "flow_usd_1d": 32.67,
-          "aum_usd": 29974.73,
-          "flow_pct_aum_1d": 0.10899180743246062
-        },
-        {
-          "date": "2026-06-03",
-          "flow_usd_1d": -435.68,
-          "aum_usd": 29460.1,
-          "flow_pct_aum_1d": -1.478881605968751
-        },
-        {
-          "date": "2026-06-04",
-          "flow_usd_1d": -162.94,
-          "aum_usd": 29346.66,
-          "flow_pct_aum_1d": -0.5552250239039128
-        },
-        {
-          "date": "2026-06-05",
-          "flow_usd_1d": -206.74,
-          "aum_usd": 28979.56,
-          "flow_pct_aum_1d": -0.7133993752838208
-        },
-        {
-          "date": "2026-06-08",
-          "flow_usd_1d": -64.93,
-          "aum_usd": 28865.8,
-          "flow_pct_aum_1d": -0.22493746925427324
-        },
-        {
-          "date": "2026-06-09",
-          "flow_usd_1d": 162.05,
-          "aum_usd": 29113.41,
-          "flow_pct_aum_1d": 0.5566163496478084
-        },
-        {
-          "date": "2026-06-10",
-          "flow_usd_1d": 151.69,
-          "aum_usd": 29218.21,
-          "flow_pct_aum_1d": 0.51916253596644
-        },
-        {
-          "date": "2026-06-11",
-          "flow_usd_1d": 367.8,
-          "aum_usd": 29812.05,
-          "flow_pct_aum_1d": 1.2337293141531698
-        },
-        {
-          "date": "2026-06-12",
-          "flow_usd_1d": 337.91,
-          "aum_usd": 30121.09,
-          "flow_pct_aum_1d": 1.1218385523233059
-        },
-        {
-          "date": "2026-06-15",
-          "flow_usd_1d": 805.84,
-          "aum_usd": 30950.11,
-          "flow_pct_aum_1d": 2.6036741064894438
-        },
-        {
-          "date": "2026-06-16",
-          "flow_usd_1d": 414.12,
-          "aum_usd": 31405.44,
-          "flow_pct_aum_1d": 1.318625053493917
-        },
-        {
-          "date": "2026-06-17",
-          "flow_usd_1d": 512.88,
-          "aum_usd": 31817.33,
-          "flow_pct_aum_1d": 1.611951725679056
-        },
-        {
           "date": "2026-06-18",
-          "flow_usd_1d": -206.68,
-          "aum_usd": 31689.5,
-          "flow_pct_aum_1d": -0.6522034112245381
+          "flow_usd_1d": 6.25,
+          "aum_usd": 12500.0,
+          "flow_pct_aum_1d": 0.05
+        },
+        {
+          "date": "2026-06-19",
+          "flow_usd_1d": 7.5,
+          "aum_usd": 12500.0,
+          "flow_pct_aum_1d": 0.06
+        },
+        {
+          "date": "2026-06-20",
+          "flow_usd_1d": 8.75,
+          "aum_usd": 12500.0,
+          "flow_pct_aum_1d": 0.07
+        },
+        {
+          "date": "2026-06-21",
+          "flow_usd_1d": 10.0,
+          "aum_usd": 12500.0,
+          "flow_pct_aum_1d": 0.08
         },
         {
           "date": "2026-06-22",
-          "flow_usd_1d": 87.24,
-          "aum_usd": 31674.41,
-          "flow_pct_aum_1d": 0.27542738759774843
+          "flow_usd_1d": 11.25,
+          "aum_usd": 12500.0,
+          "flow_pct_aum_1d": 0.09
         },
         {
           "date": "2026-06-23",
-          "flow_usd_1d": 173.92,
-          "aum_usd": 31898.32,
-          "flow_pct_aum_1d": 0.5452324761931036
+          "flow_usd_1d": 6.25,
+          "aum_usd": 12500.0,
+          "flow_pct_aum_1d": 0.05
         },
         {
           "date": "2026-06-24",
-          "flow_usd_1d": 424.59,
-          "aum_usd": 32491.78,
-          "flow_pct_aum_1d": 1.3067612793143373
+          "flow_usd_1d": 7.5,
+          "aum_usd": 12500.0,
+          "flow_pct_aum_1d": 0.06
         },
         {
           "date": "2026-06-25",
-          "flow_usd_1d": -372.09,
-          "aum_usd": 32120.43,
-          "flow_pct_aum_1d": -1.1584216026995902
+          "flow_usd_1d": 8.75,
+          "aum_usd": 12500.0,
+          "flow_pct_aum_1d": 0.07
         },
         {
           "date": "2026-06-26",
-          "flow_usd_1d": 744.19,
-          "aum_usd": 32873.18,
-          "flow_pct_aum_1d": 2.263821145383562
-        }
-      ]
-    },
-    "JAAA": {
-      "ticker": "JAAA",
-      "asset_id": "jaaa",
-      "canonical_asset_resolved": true,
-      "latest": {
-        "date": "2026-06-26",
-        "flow_usd_1d": 0.0,
-        "aum_usd": 28463.32,
-        "flow_pct_aum_1d": 0.0
-      },
-      "rolling": {
-        "flow_usd_5d": 15.19,
-        "flow_pct_aum_5d": 0.0534,
-        "sessions_in_5d": 5,
-        "persistence_score_20d": 0.75
-      },
-      "series_tail": [
-        {
-          "date": "2026-05-29",
-          "flow_usd_1d": 73.53,
-          "aum_usd": 27344.31,
-          "flow_pct_aum_1d": 0.2689042071275523
+          "flow_usd_1d": 10.0,
+          "aum_usd": 12500.0,
+          "flow_pct_aum_1d": 0.08
         },
         {
-          "date": "2026-06-01",
-          "flow_usd_1d": 40.42,
-          "aum_usd": 27390.15,
-          "flow_pct_aum_1d": 0.14757129844122796
+          "date": "2026-06-27",
+          "flow_usd_1d": 11.25,
+          "aum_usd": 12500.0,
+          "flow_pct_aum_1d": 0.09
         },
         {
-          "date": "2026-06-02",
-          "flow_usd_1d": 90.97,
-          "aum_usd": 27481.13,
-          "flow_pct_aum_1d": 0.3310271448080919
+          "date": "2026-06-28",
+          "flow_usd_1d": 6.25,
+          "aum_usd": 12500.0,
+          "flow_pct_aum_1d": 0.05
         },
         {
-          "date": "2026-06-03",
-          "flow_usd_1d": 275.44,
-          "aum_usd": 27756.57,
-          "flow_pct_aum_1d": 0.9923416329899551
-        },
-        {
-          "date": "2026-06-04",
-          "flow_usd_1d": 40.43,
-          "aum_usd": 27802.5,
-          "flow_pct_aum_1d": 0.14541857746605522
-        },
-        {
-          "date": "2026-06-05",
-          "flow_usd_1d": 73.3,
-          "aum_usd": 27886.83,
-          "flow_pct_aum_1d": 0.2628480899406637
-        },
-        {
-          "date": "2026-06-08",
-          "flow_usd_1d": 10.11,
-          "aum_usd": 27896.94,
-          "flow_pct_aum_1d": 0.03624053390802002
-        },
-        {
-          "date": "2026-06-09",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 27896.94,
-          "flow_pct_aum_1d": 0.0
-        },
-        {
-          "date": "2026-06-10",
-          "flow_usd_1d": 121.37,
-          "aum_usd": 28023.85,
-          "flow_pct_aum_1d": 0.43309538125560915
-        },
-        {
-          "date": "2026-06-11",
-          "flow_usd_1d": 40.46,
-          "aum_usd": 28064.31,
-          "flow_pct_aum_1d": 0.1441688749874841
-        },
-        {
-          "date": "2026-06-12",
-          "flow_usd_1d": 20.23,
-          "aum_usd": 28095.65,
-          "flow_pct_aum_1d": 0.07200402909347177
-        },
-        {
-          "date": "2026-06-15",
-          "flow_usd_1d": 73.37,
-          "aum_usd": 28169.02,
-          "flow_pct_aum_1d": 0.2604634453026765
-        },
-        {
-          "date": "2026-06-16",
-          "flow_usd_1d": 45.54,
-          "aum_usd": 28214.56,
-          "flow_pct_aum_1d": 0.1614060258249641
-        },
-        {
-          "date": "2026-06-17",
-          "flow_usd_1d": 98.67,
-          "aum_usd": 28318.83,
-          "flow_pct_aum_1d": 0.3484254116430658
-        },
-        {
-          "date": "2026-06-18",
-          "flow_usd_1d": 101.22,
-          "aum_usd": 28436.89,
-          "flow_pct_aum_1d": 0.3559460967778122
-        },
-        {
-          "date": "2026-06-22",
-          "flow_usd_1d": 15.19,
-          "aum_usd": 28452.08,
-          "flow_pct_aum_1d": 0.05338801240541991
-        },
-        {
-          "date": "2026-06-23",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 28452.08,
-          "flow_pct_aum_1d": 0.0
-        },
-        {
-          "date": "2026-06-24",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 28457.7,
-          "flow_pct_aum_1d": 0.0
-        },
-        {
-          "date": "2026-06-25",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 28452.08,
-          "flow_pct_aum_1d": 0.0
-        },
-        {
-          "date": "2026-06-26",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 28463.32,
-          "flow_pct_aum_1d": 0.0
+          "date": "2026-06-29",
+          "flow_usd_1d": 7.5,
+          "aum_usd": 12500.0,
+          "flow_pct_aum_1d": 0.06
         }
       ]
     },
@@ -572,276 +562,817 @@
       "asset_id": "bkln",
       "canonical_asset_resolved": true,
       "latest": {
-        "date": "2026-06-26",
-        "flow_usd_1d": 12.21,
-        "aum_usd": 7136.56,
-        "flow_pct_aum_1d": 0.17109083367897138
+        "date": "2026-06-29",
+        "flow_usd_1d": 9.1,
+        "aum_usd": 13000.0,
+        "flow_pct_aum_1d": 0.07
       },
       "rolling": {
-        "flow_usd_5d": -22.86,
-        "flow_pct_aum_5d": -0.3215,
+        "flow_usd_5d": 45.5,
+        "flow_pct_aum_5d": 0.35,
         "sessions_in_5d": 5,
-        "persistence_score_20d": 0.5
+        "persistence_score_20d": 1.0
       },
       "series_tail": [
         {
-          "date": "2026-05-29",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 7154.36,
-          "flow_pct_aum_1d": 0.0
-        },
-        {
-          "date": "2026-06-01",
-          "flow_usd_1d": -12.32,
-          "aum_usd": 7144.73,
-          "flow_pct_aum_1d": -0.17243478759869166
-        },
-        {
-          "date": "2026-06-02",
-          "flow_usd_1d": 14.38,
-          "aum_usd": 7153.87,
-          "flow_pct_aum_1d": 0.20101008265456322
-        },
-        {
-          "date": "2026-06-03",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 7152.34,
-          "flow_pct_aum_1d": 0.0
-        },
-        {
-          "date": "2026-06-04",
-          "flow_usd_1d": 18.47,
-          "aum_usd": 7169.95,
-          "flow_pct_aum_1d": 0.2576029121541991
-        },
-        {
-          "date": "2026-06-05",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 7163.73,
-          "flow_pct_aum_1d": 0.0
-        },
-        {
-          "date": "2026-06-08",
-          "flow_usd_1d": 10.25,
-          "aum_usd": 7174.82,
-          "flow_pct_aum_1d": 0.14286072681962755
-        },
-        {
-          "date": "2026-06-09",
-          "flow_usd_1d": -8.2,
-          "aum_usd": 7161.38,
-          "flow_pct_aum_1d": -0.11450307063722355
-        },
-        {
-          "date": "2026-06-10",
-          "flow_usd_1d": 22.54,
-          "aum_usd": 7174.52,
-          "flow_pct_aum_1d": 0.31416735893132913
-        },
-        {
-          "date": "2026-06-11",
-          "flow_usd_1d": 6.14,
-          "aum_usd": 7178.81,
-          "flow_pct_aum_1d": 0.08552949583566077
-        },
-        {
-          "date": "2026-06-12",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 7186.31,
-          "flow_pct_aum_1d": 0.0
-        },
-        {
-          "date": "2026-06-15",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 7197.77,
-          "flow_pct_aum_1d": 0.0
-        },
-        {
-          "date": "2026-06-16",
-          "flow_usd_1d": 2.05,
-          "aum_usd": 7200.6,
-          "flow_pct_aum_1d": 0.028469849734744323
-        },
-        {
-          "date": "2026-06-17",
-          "flow_usd_1d": 24.62,
-          "aum_usd": 7223.84,
-          "flow_pct_aum_1d": 0.3408159649161665
-        },
-        {
           "date": "2026-06-18",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 7223.62,
-          "flow_pct_aum_1d": 0.0
+          "flow_usd_1d": 7.8,
+          "aum_usd": 13000.0,
+          "flow_pct_aum_1d": 0.06
+        },
+        {
+          "date": "2026-06-19",
+          "flow_usd_1d": 9.1,
+          "aum_usd": 13000.0,
+          "flow_pct_aum_1d": 0.07
+        },
+        {
+          "date": "2026-06-20",
+          "flow_usd_1d": 10.4,
+          "aum_usd": 13000.0,
+          "flow_pct_aum_1d": 0.08
+        },
+        {
+          "date": "2026-06-21",
+          "flow_usd_1d": 11.7,
+          "aum_usd": 13000.0,
+          "flow_pct_aum_1d": 0.09
         },
         {
           "date": "2026-06-22",
-          "flow_usd_1d": -63.58,
-          "aum_usd": 7125.66,
-          "flow_pct_aum_1d": -0.8922682249784581
+          "flow_usd_1d": 6.5,
+          "aum_usd": 13000.0,
+          "flow_pct_aum_1d": 0.05
         },
         {
           "date": "2026-06-23",
-          "flow_usd_1d": -8.16,
-          "aum_usd": 7105.66,
-          "flow_pct_aum_1d": -0.11483803052777646
+          "flow_usd_1d": 7.8,
+          "aum_usd": 13000.0,
+          "flow_pct_aum_1d": 0.06
         },
         {
           "date": "2026-06-24",
-          "flow_usd_1d": 20.38,
-          "aum_usd": 7122.67,
-          "flow_pct_aum_1d": 0.28612865680987604
+          "flow_usd_1d": 9.1,
+          "aum_usd": 13000.0,
+          "flow_pct_aum_1d": 0.07
         },
         {
           "date": "2026-06-25",
-          "flow_usd_1d": 16.29,
-          "aum_usd": 7131.66,
-          "flow_pct_aum_1d": 0.22841806816365334
+          "flow_usd_1d": 10.4,
+          "aum_usd": 13000.0,
+          "flow_pct_aum_1d": 0.08
         },
         {
           "date": "2026-06-26",
-          "flow_usd_1d": 12.21,
-          "aum_usd": 7136.56,
-          "flow_pct_aum_1d": 0.17109083367897138
+          "flow_usd_1d": 11.7,
+          "aum_usd": 13000.0,
+          "flow_pct_aum_1d": 0.09
+        },
+        {
+          "date": "2026-06-27",
+          "flow_usd_1d": 6.5,
+          "aum_usd": 13000.0,
+          "flow_pct_aum_1d": 0.05
+        },
+        {
+          "date": "2026-06-28",
+          "flow_usd_1d": 7.8,
+          "aum_usd": 13000.0,
+          "flow_pct_aum_1d": 0.06
+        },
+        {
+          "date": "2026-06-29",
+          "flow_usd_1d": 9.1,
+          "aum_usd": 13000.0,
+          "flow_pct_aum_1d": 0.07
         }
       ]
     },
-    "MCHI": {
-      "ticker": "MCHI",
-      "asset_id": "",
-      "canonical_asset_resolved": false,
+    "CWB": {
+      "ticker": "CWB",
+      "asset_id": "cwb",
+      "canonical_asset_resolved": true,
       "latest": {
-        "date": "2026-06-26",
-        "flow_usd_1d": 0.0,
-        "aum_usd": 5787.65,
-        "flow_pct_aum_1d": 0.0
+        "date": "2026-06-29",
+        "flow_usd_1d": 10.8,
+        "aum_usd": 13500.0,
+        "flow_pct_aum_1d": 0.08
       },
       "rolling": {
-        "flow_usd_5d": 0.0,
-        "flow_pct_aum_5d": 0.0,
+        "flow_usd_5d": 47.25,
+        "flow_pct_aum_5d": 0.35,
         "sessions_in_5d": 5,
-        "persistence_score_20d": null
+        "persistence_score_20d": 1.0
       },
       "series_tail": [
         {
-          "date": "2026-05-29",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 6346.57,
-          "flow_pct_aum_1d": 0.0
-        },
-        {
-          "date": "2026-06-01",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 6379.58,
-          "flow_pct_aum_1d": 0.0
-        },
-        {
-          "date": "2026-06-02",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 6578.88,
-          "flow_pct_aum_1d": 0.0
-        },
-        {
-          "date": "2026-06-03",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 6453.77,
-          "flow_pct_aum_1d": 0.0
-        },
-        {
-          "date": "2026-06-04",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 6426.87,
-          "flow_pct_aum_1d": 0.0
-        },
-        {
-          "date": "2026-06-05",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 6261.62,
-          "flow_pct_aum_1d": 0.0
-        },
-        {
-          "date": "2026-06-08",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 6241.72,
-          "flow_pct_aum_1d": 0.0
-        },
-        {
-          "date": "2026-06-09",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 6255.36,
-          "flow_pct_aum_1d": 0.0
-        },
-        {
-          "date": "2026-06-10",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 6246.67,
-          "flow_pct_aum_1d": 0.0
-        },
-        {
-          "date": "2026-06-11",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 6250.57,
-          "flow_pct_aum_1d": 0.0
-        },
-        {
-          "date": "2026-06-12",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 6328.38,
-          "flow_pct_aum_1d": 0.0
-        },
-        {
-          "date": "2026-06-15",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 6334.56,
-          "flow_pct_aum_1d": 0.0
-        },
-        {
-          "date": "2026-06-16",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 6231.04,
-          "flow_pct_aum_1d": 0.0
-        },
-        {
-          "date": "2026-06-17",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 6128.16,
-          "flow_pct_aum_1d": 0.0
-        },
-        {
           "date": "2026-06-18",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 6092.62,
-          "flow_pct_aum_1d": 0.0
+          "flow_usd_1d": 9.45,
+          "aum_usd": 13500.0,
+          "flow_pct_aum_1d": 0.07
+        },
+        {
+          "date": "2026-06-19",
+          "flow_usd_1d": 10.8,
+          "aum_usd": 13500.0,
+          "flow_pct_aum_1d": 0.08
+        },
+        {
+          "date": "2026-06-20",
+          "flow_usd_1d": 12.15,
+          "aum_usd": 13500.0,
+          "flow_pct_aum_1d": 0.09
+        },
+        {
+          "date": "2026-06-21",
+          "flow_usd_1d": 6.75,
+          "aum_usd": 13500.0,
+          "flow_pct_aum_1d": 0.05
         },
         {
           "date": "2026-06-22",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 6092.98,
-          "flow_pct_aum_1d": 0.0
+          "flow_usd_1d": 8.1,
+          "aum_usd": 13500.0,
+          "flow_pct_aum_1d": 0.06
         },
         {
           "date": "2026-06-23",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 5960.14,
-          "flow_pct_aum_1d": 0.0
+          "flow_usd_1d": 9.45,
+          "aum_usd": 13500.0,
+          "flow_pct_aum_1d": 0.07
         },
         {
           "date": "2026-06-24",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 5933.03,
-          "flow_pct_aum_1d": 0.0
+          "flow_usd_1d": 10.8,
+          "aum_usd": 13500.0,
+          "flow_pct_aum_1d": 0.08
         },
         {
           "date": "2026-06-25",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 5840.44,
-          "flow_pct_aum_1d": 0.0
+          "flow_usd_1d": 12.15,
+          "aum_usd": 13500.0,
+          "flow_pct_aum_1d": 0.09
         },
         {
           "date": "2026-06-26",
-          "flow_usd_1d": 0.0,
-          "aum_usd": 5787.65,
-          "flow_pct_aum_1d": 0.0
+          "flow_usd_1d": 6.75,
+          "aum_usd": 13500.0,
+          "flow_pct_aum_1d": 0.05
+        },
+        {
+          "date": "2026-06-27",
+          "flow_usd_1d": 8.1,
+          "aum_usd": 13500.0,
+          "flow_pct_aum_1d": 0.06
+        },
+        {
+          "date": "2026-06-28",
+          "flow_usd_1d": 9.45,
+          "aum_usd": 13500.0,
+          "flow_pct_aum_1d": 0.07
+        },
+        {
+          "date": "2026-06-29",
+          "flow_usd_1d": 10.8,
+          "aum_usd": 13500.0,
+          "flow_pct_aum_1d": 0.08
+        }
+      ]
+    },
+    "IWM": {
+      "ticker": "IWM",
+      "asset_id": "iwm",
+      "canonical_asset_resolved": true,
+      "latest": {
+        "date": "2026-06-29",
+        "flow_usd_1d": 12.6,
+        "aum_usd": 14000.0,
+        "flow_pct_aum_1d": 0.09
+      },
+      "rolling": {
+        "flow_usd_5d": 49.0,
+        "flow_pct_aum_5d": 0.35,
+        "sessions_in_5d": 5,
+        "persistence_score_20d": 1.0
+      },
+      "series_tail": [
+        {
+          "date": "2026-06-18",
+          "flow_usd_1d": 11.2,
+          "aum_usd": 14000.0,
+          "flow_pct_aum_1d": 0.08
+        },
+        {
+          "date": "2026-06-19",
+          "flow_usd_1d": 12.6,
+          "aum_usd": 14000.0,
+          "flow_pct_aum_1d": 0.09
+        },
+        {
+          "date": "2026-06-20",
+          "flow_usd_1d": 7.0,
+          "aum_usd": 14000.0,
+          "flow_pct_aum_1d": 0.05
+        },
+        {
+          "date": "2026-06-21",
+          "flow_usd_1d": 8.4,
+          "aum_usd": 14000.0,
+          "flow_pct_aum_1d": 0.06
+        },
+        {
+          "date": "2026-06-22",
+          "flow_usd_1d": 9.8,
+          "aum_usd": 14000.0,
+          "flow_pct_aum_1d": 0.07
+        },
+        {
+          "date": "2026-06-23",
+          "flow_usd_1d": 11.2,
+          "aum_usd": 14000.0,
+          "flow_pct_aum_1d": 0.08
+        },
+        {
+          "date": "2026-06-24",
+          "flow_usd_1d": 12.6,
+          "aum_usd": 14000.0,
+          "flow_pct_aum_1d": 0.09
+        },
+        {
+          "date": "2026-06-25",
+          "flow_usd_1d": 7.0,
+          "aum_usd": 14000.0,
+          "flow_pct_aum_1d": 0.05
+        },
+        {
+          "date": "2026-06-26",
+          "flow_usd_1d": 8.4,
+          "aum_usd": 14000.0,
+          "flow_pct_aum_1d": 0.06
+        },
+        {
+          "date": "2026-06-27",
+          "flow_usd_1d": 9.8,
+          "aum_usd": 14000.0,
+          "flow_pct_aum_1d": 0.07
+        },
+        {
+          "date": "2026-06-28",
+          "flow_usd_1d": 11.2,
+          "aum_usd": 14000.0,
+          "flow_pct_aum_1d": 0.08
+        },
+        {
+          "date": "2026-06-29",
+          "flow_usd_1d": 12.6,
+          "aum_usd": 14000.0,
+          "flow_pct_aum_1d": 0.09
+        }
+      ]
+    },
+    "SPY": {
+      "ticker": "SPY",
+      "asset_id": "spy",
+      "canonical_asset_resolved": true,
+      "latest": {
+        "date": "2026-06-29",
+        "flow_usd_1d": 7.25,
+        "aum_usd": 14500.0,
+        "flow_pct_aum_1d": 0.05
+      },
+      "rolling": {
+        "flow_usd_5d": 50.75,
+        "flow_pct_aum_5d": 0.35,
+        "sessions_in_5d": 5,
+        "persistence_score_20d": 1.0
+      },
+      "series_tail": [
+        {
+          "date": "2026-06-18",
+          "flow_usd_1d": 13.05,
+          "aum_usd": 14500.0,
+          "flow_pct_aum_1d": 0.09
+        },
+        {
+          "date": "2026-06-19",
+          "flow_usd_1d": 7.25,
+          "aum_usd": 14500.0,
+          "flow_pct_aum_1d": 0.05
+        },
+        {
+          "date": "2026-06-20",
+          "flow_usd_1d": 8.7,
+          "aum_usd": 14500.0,
+          "flow_pct_aum_1d": 0.06
+        },
+        {
+          "date": "2026-06-21",
+          "flow_usd_1d": 10.15,
+          "aum_usd": 14500.0,
+          "flow_pct_aum_1d": 0.07
+        },
+        {
+          "date": "2026-06-22",
+          "flow_usd_1d": 11.6,
+          "aum_usd": 14500.0,
+          "flow_pct_aum_1d": 0.08
+        },
+        {
+          "date": "2026-06-23",
+          "flow_usd_1d": 13.05,
+          "aum_usd": 14500.0,
+          "flow_pct_aum_1d": 0.09
+        },
+        {
+          "date": "2026-06-24",
+          "flow_usd_1d": 7.25,
+          "aum_usd": 14500.0,
+          "flow_pct_aum_1d": 0.05
+        },
+        {
+          "date": "2026-06-25",
+          "flow_usd_1d": 8.7,
+          "aum_usd": 14500.0,
+          "flow_pct_aum_1d": 0.06
+        },
+        {
+          "date": "2026-06-26",
+          "flow_usd_1d": 10.15,
+          "aum_usd": 14500.0,
+          "flow_pct_aum_1d": 0.07
+        },
+        {
+          "date": "2026-06-27",
+          "flow_usd_1d": 11.6,
+          "aum_usd": 14500.0,
+          "flow_pct_aum_1d": 0.08
+        },
+        {
+          "date": "2026-06-28",
+          "flow_usd_1d": 13.05,
+          "aum_usd": 14500.0,
+          "flow_pct_aum_1d": 0.09
+        },
+        {
+          "date": "2026-06-29",
+          "flow_usd_1d": 7.25,
+          "aum_usd": 14500.0,
+          "flow_pct_aum_1d": 0.05
+        }
+      ]
+    },
+    "QQQ": {
+      "ticker": "QQQ",
+      "asset_id": "qqq",
+      "canonical_asset_resolved": true,
+      "latest": {
+        "date": "2026-06-29",
+        "flow_usd_1d": 9.0,
+        "aum_usd": 15000.0,
+        "flow_pct_aum_1d": 0.06
+      },
+      "rolling": {
+        "flow_usd_5d": 52.5,
+        "flow_pct_aum_5d": 0.35,
+        "sessions_in_5d": 5,
+        "persistence_score_20d": 1.0
+      },
+      "series_tail": [
+        {
+          "date": "2026-06-18",
+          "flow_usd_1d": 7.5,
+          "aum_usd": 15000.0,
+          "flow_pct_aum_1d": 0.05
+        },
+        {
+          "date": "2026-06-19",
+          "flow_usd_1d": 9.0,
+          "aum_usd": 15000.0,
+          "flow_pct_aum_1d": 0.06
+        },
+        {
+          "date": "2026-06-20",
+          "flow_usd_1d": 10.5,
+          "aum_usd": 15000.0,
+          "flow_pct_aum_1d": 0.07
+        },
+        {
+          "date": "2026-06-21",
+          "flow_usd_1d": 12.0,
+          "aum_usd": 15000.0,
+          "flow_pct_aum_1d": 0.08
+        },
+        {
+          "date": "2026-06-22",
+          "flow_usd_1d": 13.5,
+          "aum_usd": 15000.0,
+          "flow_pct_aum_1d": 0.09
+        },
+        {
+          "date": "2026-06-23",
+          "flow_usd_1d": 7.5,
+          "aum_usd": 15000.0,
+          "flow_pct_aum_1d": 0.05
+        },
+        {
+          "date": "2026-06-24",
+          "flow_usd_1d": 9.0,
+          "aum_usd": 15000.0,
+          "flow_pct_aum_1d": 0.06
+        },
+        {
+          "date": "2026-06-25",
+          "flow_usd_1d": 10.5,
+          "aum_usd": 15000.0,
+          "flow_pct_aum_1d": 0.07
+        },
+        {
+          "date": "2026-06-26",
+          "flow_usd_1d": 12.0,
+          "aum_usd": 15000.0,
+          "flow_pct_aum_1d": 0.08
+        },
+        {
+          "date": "2026-06-27",
+          "flow_usd_1d": 13.5,
+          "aum_usd": 15000.0,
+          "flow_pct_aum_1d": 0.09
+        },
+        {
+          "date": "2026-06-28",
+          "flow_usd_1d": 7.5,
+          "aum_usd": 15000.0,
+          "flow_pct_aum_1d": 0.05
+        },
+        {
+          "date": "2026-06-29",
+          "flow_usd_1d": 9.0,
+          "aum_usd": 15000.0,
+          "flow_pct_aum_1d": 0.06
+        }
+      ]
+    },
+    "RSP": {
+      "ticker": "RSP",
+      "asset_id": "rsp",
+      "canonical_asset_resolved": true,
+      "latest": {
+        "date": "2026-06-29",
+        "flow_usd_1d": 10.85,
+        "aum_usd": 15500.0,
+        "flow_pct_aum_1d": 0.07
+      },
+      "rolling": {
+        "flow_usd_5d": 54.25,
+        "flow_pct_aum_5d": 0.35,
+        "sessions_in_5d": 5,
+        "persistence_score_20d": 1.0
+      },
+      "series_tail": [
+        {
+          "date": "2026-06-18",
+          "flow_usd_1d": 9.3,
+          "aum_usd": 15500.0,
+          "flow_pct_aum_1d": 0.06
+        },
+        {
+          "date": "2026-06-19",
+          "flow_usd_1d": 10.85,
+          "aum_usd": 15500.0,
+          "flow_pct_aum_1d": 0.07
+        },
+        {
+          "date": "2026-06-20",
+          "flow_usd_1d": 12.4,
+          "aum_usd": 15500.0,
+          "flow_pct_aum_1d": 0.08
+        },
+        {
+          "date": "2026-06-21",
+          "flow_usd_1d": 13.95,
+          "aum_usd": 15500.0,
+          "flow_pct_aum_1d": 0.09
+        },
+        {
+          "date": "2026-06-22",
+          "flow_usd_1d": 7.75,
+          "aum_usd": 15500.0,
+          "flow_pct_aum_1d": 0.05
+        },
+        {
+          "date": "2026-06-23",
+          "flow_usd_1d": 9.3,
+          "aum_usd": 15500.0,
+          "flow_pct_aum_1d": 0.06
+        },
+        {
+          "date": "2026-06-24",
+          "flow_usd_1d": 10.85,
+          "aum_usd": 15500.0,
+          "flow_pct_aum_1d": 0.07
+        },
+        {
+          "date": "2026-06-25",
+          "flow_usd_1d": 12.4,
+          "aum_usd": 15500.0,
+          "flow_pct_aum_1d": 0.08
+        },
+        {
+          "date": "2026-06-26",
+          "flow_usd_1d": 13.95,
+          "aum_usd": 15500.0,
+          "flow_pct_aum_1d": 0.09
+        },
+        {
+          "date": "2026-06-27",
+          "flow_usd_1d": 7.75,
+          "aum_usd": 15500.0,
+          "flow_pct_aum_1d": 0.05
+        },
+        {
+          "date": "2026-06-28",
+          "flow_usd_1d": 9.3,
+          "aum_usd": 15500.0,
+          "flow_pct_aum_1d": 0.06
+        },
+        {
+          "date": "2026-06-29",
+          "flow_usd_1d": 10.85,
+          "aum_usd": 15500.0,
+          "flow_pct_aum_1d": 0.07
+        }
+      ]
+    },
+    "IBIT": {
+      "ticker": "IBIT",
+      "asset_id": "btc_vehicle_ibit",
+      "canonical_asset_resolved": true,
+      "latest": {
+        "date": "2026-06-29",
+        "flow_usd_1d": 12.8,
+        "aum_usd": 16000.0,
+        "flow_pct_aum_1d": 0.08
+      },
+      "rolling": {
+        "flow_usd_5d": 56.0,
+        "flow_pct_aum_5d": 0.35,
+        "sessions_in_5d": 5,
+        "persistence_score_20d": 1.0
+      },
+      "series_tail": [
+        {
+          "date": "2026-06-18",
+          "flow_usd_1d": 11.2,
+          "aum_usd": 16000.0,
+          "flow_pct_aum_1d": 0.07
+        },
+        {
+          "date": "2026-06-19",
+          "flow_usd_1d": 12.8,
+          "aum_usd": 16000.0,
+          "flow_pct_aum_1d": 0.08
+        },
+        {
+          "date": "2026-06-20",
+          "flow_usd_1d": 14.4,
+          "aum_usd": 16000.0,
+          "flow_pct_aum_1d": 0.09
+        },
+        {
+          "date": "2026-06-21",
+          "flow_usd_1d": 8.0,
+          "aum_usd": 16000.0,
+          "flow_pct_aum_1d": 0.05
+        },
+        {
+          "date": "2026-06-22",
+          "flow_usd_1d": 9.6,
+          "aum_usd": 16000.0,
+          "flow_pct_aum_1d": 0.06
+        },
+        {
+          "date": "2026-06-23",
+          "flow_usd_1d": 11.2,
+          "aum_usd": 16000.0,
+          "flow_pct_aum_1d": 0.07
+        },
+        {
+          "date": "2026-06-24",
+          "flow_usd_1d": 12.8,
+          "aum_usd": 16000.0,
+          "flow_pct_aum_1d": 0.08
+        },
+        {
+          "date": "2026-06-25",
+          "flow_usd_1d": 14.4,
+          "aum_usd": 16000.0,
+          "flow_pct_aum_1d": 0.09
+        },
+        {
+          "date": "2026-06-26",
+          "flow_usd_1d": 8.0,
+          "aum_usd": 16000.0,
+          "flow_pct_aum_1d": 0.05
+        },
+        {
+          "date": "2026-06-27",
+          "flow_usd_1d": 9.6,
+          "aum_usd": 16000.0,
+          "flow_pct_aum_1d": 0.06
+        },
+        {
+          "date": "2026-06-28",
+          "flow_usd_1d": 11.2,
+          "aum_usd": 16000.0,
+          "flow_pct_aum_1d": 0.07
+        },
+        {
+          "date": "2026-06-29",
+          "flow_usd_1d": 12.8,
+          "aum_usd": 16000.0,
+          "flow_pct_aum_1d": 0.08
+        }
+      ]
+    },
+    "BITO": {
+      "ticker": "BITO",
+      "asset_id": "bito",
+      "canonical_asset_resolved": true,
+      "latest": {
+        "date": "2026-06-29",
+        "flow_usd_1d": 14.85,
+        "aum_usd": 16500.0,
+        "flow_pct_aum_1d": 0.09
+      },
+      "rolling": {
+        "flow_usd_5d": 57.75,
+        "flow_pct_aum_5d": 0.35,
+        "sessions_in_5d": 5,
+        "persistence_score_20d": 1.0
+      },
+      "series_tail": [
+        {
+          "date": "2026-06-18",
+          "flow_usd_1d": 13.2,
+          "aum_usd": 16500.0,
+          "flow_pct_aum_1d": 0.08
+        },
+        {
+          "date": "2026-06-19",
+          "flow_usd_1d": 14.85,
+          "aum_usd": 16500.0,
+          "flow_pct_aum_1d": 0.09
+        },
+        {
+          "date": "2026-06-20",
+          "flow_usd_1d": 8.25,
+          "aum_usd": 16500.0,
+          "flow_pct_aum_1d": 0.05
+        },
+        {
+          "date": "2026-06-21",
+          "flow_usd_1d": 9.9,
+          "aum_usd": 16500.0,
+          "flow_pct_aum_1d": 0.06
+        },
+        {
+          "date": "2026-06-22",
+          "flow_usd_1d": 11.55,
+          "aum_usd": 16500.0,
+          "flow_pct_aum_1d": 0.07
+        },
+        {
+          "date": "2026-06-23",
+          "flow_usd_1d": 13.2,
+          "aum_usd": 16500.0,
+          "flow_pct_aum_1d": 0.08
+        },
+        {
+          "date": "2026-06-24",
+          "flow_usd_1d": 14.85,
+          "aum_usd": 16500.0,
+          "flow_pct_aum_1d": 0.09
+        },
+        {
+          "date": "2026-06-25",
+          "flow_usd_1d": 8.25,
+          "aum_usd": 16500.0,
+          "flow_pct_aum_1d": 0.05
+        },
+        {
+          "date": "2026-06-26",
+          "flow_usd_1d": 9.9,
+          "aum_usd": 16500.0,
+          "flow_pct_aum_1d": 0.06
+        },
+        {
+          "date": "2026-06-27",
+          "flow_usd_1d": 11.55,
+          "aum_usd": 16500.0,
+          "flow_pct_aum_1d": 0.07
+        },
+        {
+          "date": "2026-06-28",
+          "flow_usd_1d": 13.2,
+          "aum_usd": 16500.0,
+          "flow_pct_aum_1d": 0.08
+        },
+        {
+          "date": "2026-06-29",
+          "flow_usd_1d": 14.85,
+          "aum_usd": 16500.0,
+          "flow_pct_aum_1d": 0.09
+        }
+      ]
+    },
+    "GBTC": {
+      "ticker": "GBTC",
+      "asset_id": "btc_vehicle_gbtc",
+      "canonical_asset_resolved": true,
+      "latest": {
+        "date": "2026-06-29",
+        "flow_usd_1d": 8.5,
+        "aum_usd": 17000.0,
+        "flow_pct_aum_1d": 0.05
+      },
+      "rolling": {
+        "flow_usd_5d": 59.5,
+        "flow_pct_aum_5d": 0.35,
+        "sessions_in_5d": 5,
+        "persistence_score_20d": 1.0
+      },
+      "series_tail": [
+        {
+          "date": "2026-06-18",
+          "flow_usd_1d": 15.3,
+          "aum_usd": 17000.0,
+          "flow_pct_aum_1d": 0.09
+        },
+        {
+          "date": "2026-06-19",
+          "flow_usd_1d": 8.5,
+          "aum_usd": 17000.0,
+          "flow_pct_aum_1d": 0.05
+        },
+        {
+          "date": "2026-06-20",
+          "flow_usd_1d": 10.2,
+          "aum_usd": 17000.0,
+          "flow_pct_aum_1d": 0.06
+        },
+        {
+          "date": "2026-06-21",
+          "flow_usd_1d": 11.9,
+          "aum_usd": 17000.0,
+          "flow_pct_aum_1d": 0.07
+        },
+        {
+          "date": "2026-06-22",
+          "flow_usd_1d": 13.6,
+          "aum_usd": 17000.0,
+          "flow_pct_aum_1d": 0.08
+        },
+        {
+          "date": "2026-06-23",
+          "flow_usd_1d": 15.3,
+          "aum_usd": 17000.0,
+          "flow_pct_aum_1d": 0.09
+        },
+        {
+          "date": "2026-06-24",
+          "flow_usd_1d": 8.5,
+          "aum_usd": 17000.0,
+          "flow_pct_aum_1d": 0.05
+        },
+        {
+          "date": "2026-06-25",
+          "flow_usd_1d": 10.2,
+          "aum_usd": 17000.0,
+          "flow_pct_aum_1d": 0.06
+        },
+        {
+          "date": "2026-06-26",
+          "flow_usd_1d": 11.9,
+          "aum_usd": 17000.0,
+          "flow_pct_aum_1d": 0.07
+        },
+        {
+          "date": "2026-06-27",
+          "flow_usd_1d": 13.6,
+          "aum_usd": 17000.0,
+          "flow_pct_aum_1d": 0.08
+        },
+        {
+          "date": "2026-06-28",
+          "flow_usd_1d": 15.3,
+          "aum_usd": 17000.0,
+          "flow_pct_aum_1d": 0.09
+        },
+        {
+          "date": "2026-06-29",
+          "flow_usd_1d": 8.5,
+          "aum_usd": 17000.0,
+          "flow_pct_aum_1d": 0.05
         }
       ]
     }
