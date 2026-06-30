@@ -55,35 +55,51 @@ Legacy public URL (may 404 until re-deployed as private):
 
 `https://clark-cmyk.github.io/Whinfell_BUILD_Cousins/`
 
-### Step 5 — Invite Wes
+### Step 5 — Invite desk reviewers (by email)
 
-Wes needs a **GitHub account** and **Read** access to the repo.
+Each person needs a **GitHub account** (or must create one when they accept).  
+**Read** access is sufficient for private Pages.
 
-**GitHub UI:**
+| Name | Email to invite |
+|------|-----------------|
+| Wes | `wes@whinfellcap.com` |
+| William | `william@whinfellcap.com` |
 
-1. Repo → **Settings** → **Collaborators** (or **Manage access**)
-2. **Add people** → enter Wes's GitHub username
-3. Role: **Read** (sufficient for private Pages viewing)
+**GitHub UI (email invite — API cannot do this on personal repos):**
 
-**Terminal (replace `WES_GITHUB_USERNAME`):**
+1. Open: https://github.com/clark-cmyk/Whinfell_BUILD_Cousins/settings/access  
+   Or run: `bash scripts/invite_desk_reviewers.sh`
+2. Click **Add people**
+3. Paste **`wes@whinfellcap.com`** → **Add wes@whinfellcap.com to this repository**
+4. Repeat for **`william@whinfellcap.com`**
+5. Role: **Read** (default for outside collaborators is fine)
+
+**Terminal (only if you have their GitHub usernames, not emails):**
 
 ```bash
-gh api repos/clark-cmyk/Whinfell_BUILD_Cousins/collaborators/WES_GITHUB_USERNAME \
+gh api repos/clark-cmyk/Whinfell_BUILD_Cousins/collaborators/GITHUB_USERNAME \
   -X PUT \
-  -f permission=read
+  -f permission=pull
 ```
 
-Wes accepts the email invite, signs in to GitHub, then opens the Pages URL.
+**Check pending invites:**
+
+```bash
+gh api repos/clark-cmyk/Whinfell_BUILD_Cousins/invitations --jq '.[] | {email: .invitee.email, login: .invitee.login, permissions}'
+```
+
+Each invitee accepts the GitHub email, signs in, then opens the Pages URL.
 
 ---
 
-## Wes instructions (send after invite)
+## Reviewer instructions (send to Wes + William after invite)
 
-1. Accept the GitHub collaborator invite (check email).
-2. Sign in at https://github.com
-3. Open the desk URL Clark sends (from repo **Settings → Pages**).
-4. If prompted, authorize GitHub Pages access for the private site.
-5. Hard-refresh: `Cmd+Shift+R` (Mac) or `Ctrl+Shift+R` (Windows).
+1. Accept the GitHub collaborator invite (check `wes@whinfellcap.com` / `william@whinfellcap.com` inbox).
+2. Create a GitHub account if prompted.
+3. Sign in at https://github.com
+4. Open the desk URL Clark sends (from repo **Settings → Pages**).
+5. If prompted, authorize GitHub Pages access for the private site.
+6. Hard-refresh: `Cmd+Shift+R` (Mac) or `Ctrl+Shift+R` (Windows).
 
 **No clone, no terminal, no import step** — Transmission Control auto-hydrates from co-hosted `latest.json` when signed in.
 
