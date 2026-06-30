@@ -161,7 +161,7 @@ json_structures:
   hydration_bundle:
     path: "data/hydration/latest.json"
     version_field: hydration_version
-    expected_version: "1.0.0"
+    expected_version: "1.1.0"
     blocks:
       global: [whinfell_score, transmission_state, regime_tag, key_observation, btc_bias]
       china: [sq3_score, sq3_band, policy_strength, state_impulse_score]
@@ -169,9 +169,13 @@ json_structures:
       crypto_sleeve: [assets, charts, correlation_series, snapshot]
       execution: [near_month, basis_spread, btc_bias]
       suggested_tracer: [marks, confirm_required]
+      node_cockpits: [liquidity, credit, breadth, highbeta, basis]
+      cockpit_context: [transmission_health_score, weakest_node_id, gate_zone, whinfell_score]
   wtm_export:
-    format: "WTM EXPORT v2.1"
+    format: "WTM EXPORT v2.2"
     legacy_format: "WTM EXPORT v2.0"
+    v21_format: "WTM EXPORT v2.1"
+    node_cockpit_block: "NODE COCKPIT"
     header_fields: [whinfell_score, transmission_state, regime_tag, btc_bias, key_observation]
   transmission_control_state:
     local_storage_key: whinfell_transmission_control_v6
@@ -852,7 +856,7 @@ node_score_weights:
 # ---------------------------------------------------------------------------
 transmission_outputs:
   hydration_bundle:
-    version: "1.0.0"
+    version: "1.1.0"
     blocks:
       global: {source: parquet, fields: [whinfell_score, transmission_state, regime_tag, key_observation, btc_bias]}
       china: {source: parquet, fields: [sq3_score, sq3_band, policy_strength, state_impulse_score]}
@@ -860,6 +864,8 @@ transmission_outputs:
       crypto_sleeve: {source: data/crypto/v1/latest_crypto_sleeve.json, fields: [assets, charts, correlation_series, snapshot]}
       execution: {source: data/execution/v1/latest_execution.json, fields: [near_month, basis_spread, btc_bias]}
       suggested_tracer: {source: derived, confirm_required: true}
+      node_cockpits: {source: derived, nodes: [liquidity, credit, breadth, highbeta, basis]}
+      cockpit_context: {source: derived, fields: [weakest_node_id, gate_zone, whinfell_score]}
   output_kinds:
     snapshot: cross_sectional current-state validation
     historical_timeseries: dated price/level series

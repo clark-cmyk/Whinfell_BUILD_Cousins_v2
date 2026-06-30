@@ -7,6 +7,11 @@ NEXTFOUR.md.txt
 data/execution/
 whinfell_pipeline/*
 !whinfell_pipeline/WTM_EXPORT_v2.1_SPEC.md
+!whinfell_pipeline/WTM_EXPORT_v2.2_SPEC.md
+!whinfell_pipeline/node_cockpits.py
+!whinfell_pipeline/export_contract.py
+!whinfell_pipeline/hydrate.py
+!whinfell_pipeline/version.py
 !whinfell_pipeline/verify_2_2b_goal.py
 !whinfell_pipeline/examples/
 whinfell_pipeline/examples/*
@@ -43,6 +48,8 @@ whinfell_pipeline/tests/*
 !whinfell_pipeline/tests/dd_badge_headless.mjs
 !whinfell_pipeline/tests/dd_badge_file_evidence.mjs
 !whinfell_pipeline/tests/generate_phase1_evidence.py
+!whinfell_pipeline/tests/test_node_cockpits.py
+!whinfell_pipeline/tests/test_export_contract.py
 !whinfell_pipeline/sync_dictionary_meta.py
 !whinfell_pipeline/batch_collect.py
 !whinfell_pipeline/desk_urls.yaml

@@ -626,7 +626,7 @@ When this model is locked, register in `data_dictionary.yaml`:
 | C | **History granularity** | Barchart history is daily; 1M window = 22 trading days — confirm desk uses calendar vs trading-day count. | Trading-day count (locked in §6.2); flag if Koyfin series differ. |
 | D | **Multiple active series** | When a node has 2+ RV series (e.g. credit: OAS + HYG/LQD), which drives `relative_value.rationale`? | Primary series per node in `rv_series.primary: true`; operator can switch `active_series_id`. |
 | E | **Fallback threshold** | How many `component_inputs` required before switching from weighted score to `horizon_net_fallback`? | Locked: **< 2 components** triggers fallback (see §1). |
-| F | **WTM EXPORT v2.2** | Per-node export must include `quartile_direction` + active series/horizon — field list not yet written. | Blueprint deliverable; blocked on this doc lock. |
+| F | **WTM EXPORT v2.2** | ✅ **Locked** — `whinfell_pipeline/WTM_EXPORT_v2.2_SPEC.md` + `build_node_cockpit_export_block()` / `build_wtm_export_v22()` in `export_contract.py`. | Per-node blocks append to v2.1 core; `RV Direction` carries `quartile_direction`. |
 
 ---
 
