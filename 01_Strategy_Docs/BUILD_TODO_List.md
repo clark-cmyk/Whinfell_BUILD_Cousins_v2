@@ -1,7 +1,7 @@
 # BUILD Cousins - TODO List
 
 **Maintained by:** BUILD Cousins  
-**Last Updated:** June 29, 2026 (Phase 1 verified · Phase 2 prep)  
+**Last Updated:** June 29, 2026 (Phase 2 data layer shipped)
 **Purpose:** Track all active and planned work for the Whinfell Transmission Map support track.
 
 ---
@@ -21,9 +21,13 @@
 | **Desk ops** | Document pre-stage rename in Operator Guide v1.5 | Medium | **Open** | Clarity | `normalize_whinfell_drop.sh` + canonical name table |
 | **Desk ops** | Clark first live CSV drop — report to TempLibby | High | **In progress** | Bridge | Re-test with Master DD v1.0 canonical names |
 | **Phase 1** | Master Data Dictionary v1.0 + naming rectification | **High** | **Complete · Verified** | Bridge + Precision | 104 tests PASS · 0 naming violations · `194506a` |
-| **Phase 2 prep** | Node cockpit data model spec | High | **Locked v0.2** | Blueprint | `rv_series` + interim score weights locked in Master DD |
-| **Phase 2** | Node architecture redesign (5 trading cockpits) | High | **Planned** | Bridge + Edge + Clarity | Blocked on data model sign-off + desk validation |
-| **Phase 3** | TC interface (full-screen Why, flip nav, margin module) | Medium | **Planned** | Clarity + Safeguard | Blocked on Phase 2 |
+| **Phase 2 prep** | Node cockpit data model spec | High | **Complete · Locked v0.2** | Blueprint | `c9974fa` · ambiguities A/B/E/F locked |
+| **Phase 2a** | `rv_series` + interim node score weights | High | **Complete** | Bridge | Master DD registry · `3293a9b` |
+| **Phase 2b-data** | WTM EXPORT v2.2 + `node_cockpits` hydration builder | High | **Shipped** | Bridge | `cdd677a` · bundle v1.1.0 · 111 tests PASS |
+| **Phase 2b** | ARCH-1 component routing + Koyfin history for RV quartiles | High | **Open** | Integration Dynamo | Replaces tracer-derived component stubs |
+| **Phase 2** | Node architecture redesign (5 trading cockpits) | High | **In progress** | Bridge + Edge + Clarity | Data/pipeline done · **TC UI not started** |
+| **Phase 2 open** | Ambiguity C — trading-day vs calendar-day lookback | Medium | **Open** | TempLibby + desk | Default locked in spec; desk confirm |
+| **Phase 3** | TC interface (full-screen Why, flip nav, margin module) | Medium | **Planned** | Clarity + Safeguard | Blocked on Phase 2 UI |
 | **Phase 4** | Validation & reliability gate | Medium | **Planned** | Hammer + Precision | After Phase 3 |
 
 ---
@@ -85,6 +89,9 @@
 | **Phase 1** | Master Data Dictionary v1.0 locked + naming alignment | June 29, 2026 | `data_dictionary.yaml` · TC badge · phased plan |
 | **Phase 1 verify** | Evidence scripts + disk-backed badge test | June 29, 2026 | `generate_phase1_evidence.py` · `dd_badge_file_evidence.mjs` · `194506a` |
 | **Phase 2 prep** | Node cockpit data model (planning only) | June 29, 2026 | `Phase2_Node_Cockpit_Data_Model.md` · `877524a` |
+| **Phase 2 prep** | Locked decisions v0.2 (composite, quartile, options defer, China soft) | June 29, 2026 | `c9974fa` |
+| **Phase 2a** | `rv_series` catalog + interim `node_score_weights` in Master DD | June 29, 2026 | 10 series · 5 nodes · `3293a9b` |
+| **Phase 2b-data** | WTM EXPORT v2.2 spec + `node_cockpits.py` + hydration v1.1.0 | June 29, 2026 | `cdd677a` · 111 tests PASS |
 
 ---
 
@@ -129,9 +136,10 @@ python3 -m whinfell_pipeline.verify_2_2_final
 ---
 
 ## Notes
+- **June 29, 2026** — **Phase 2 data layer shipped** — `node_cockpits.py` builds all 5 cockpits; hydration bundle **v1.1.0** adds `node_cockpits`, `cockpit_context`, `wtm_export_v22`; WTM EXPORT v2.2 spec locked. Full suite **111 tests PASS** (4 skipped). Commit `cdd677a`.
+- **June 29, 2026** — **Phase 2 prep locked** — Data model v0.2 + `rv_series` (10 series) + interim `node_score_weights` in Master DD; ambiguities A/B/E/F resolved. Commits `c9974fa` · `3293a9b`.
 - **June 29, 2026** — **Phase 1 verified** — `scan_operator_violations()` → 0; full suite **104 tests PASS** (4 skipped); sync pipeline yaml → `DICTIONARY_BADGE_DEFAULT` + `data_dictionary_meta.json`; disk-backed badge evidence PASS. Commits `80472ed` · `194506a`.
-- **June 29, 2026** — **Phase 2 prep shipped (planning only)** — `Phase2_Node_Cockpit_Data_Model.md` defines per-node JSON shape (signal, directional, RV, implementation, sizing, basis quartiles). **Awaiting Clark review** before implementation. Commit `877524a`.
-- **June 29, 2026** — **Phase 1 complete** — Master Data Dictionary v1.0 locked; naming aligned across YAML, Comet shortcuts, normalize script, TC badge. Phased plan v1.0 shipped. Phase 2 cockpit **UI/code not started**.
+- **June 29, 2026** — **Phase 1 complete** — Master Data Dictionary v1.0 locked; naming aligned across YAML, Comet shortcuts, normalize script, TC badge. Phased plan v1.0 shipped. Phase 2 **TC cockpit UI not started**.
 - **June 29, 2026** — **BUILD Cousins role adoption complete** — session activation shipped; canon test PASS; commit `25ed812`.
 - **June 28, 2026** — **Desk CSV drop issue logged** — filename quarantine mitigated via `normalize_whinfell_drop.sh`; header/transform gap open (2.2e). TempLibby report block added above. Perplexity working on response.
 - **June 28, 2026** — **Desktop launcher fixed** — `deploy_desktop_launchers.sh` · use `Whinfell Daily AM.app` on Desktop.

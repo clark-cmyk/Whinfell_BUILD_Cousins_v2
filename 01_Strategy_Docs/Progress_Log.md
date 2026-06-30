@@ -1,7 +1,7 @@
 # Whinfell BUILD Cousins - Progress Log
 
 **Started:** June 26, 2026  
-**Last Updated:** June 29, 2026 (Phase 1 verified · Phase 2 prep)
+**Last Updated:** June 29, 2026 (Phase 2 data layer shipped)
 
 ---
 
@@ -30,6 +30,10 @@
 | **Session** | BUILD Cousins role adoption (`/arena /role /plan`) | **Complete** | BUILD Cousins | June 29, 2026 |
 | **Phase 1** | Master Data Dictionary v1.0 + naming rectification | **Complete · Verified** | Bridge + Precision | June 29, 2026 |
 | **Phase 2 prep** | Node cockpit data model spec | **Locked v0.2** | Blueprint | June 29, 2026 |
+| **Phase 2a** | `rv_series` + interim node score weights | **Shipped** | Bridge | June 29, 2026 |
+| **Phase 2b-data** | WTM EXPORT v2.2 + node cockpit hydration builder | **Shipped** | Bridge | June 29, 2026 |
+| **Phase 2** | Node architecture (5 trading cockpits) | **In progress** | Bridge + Edge + Clarity | June 29, 2026 |
+| **Phase 2b** | ARCH-1 routing + live component inputs | **Open** | Integration Dynamo | June 29, 2026 |
 
 ---
 
@@ -52,14 +56,17 @@
 | **BUILD_Cousins_Session_Activation.md** | **1.0** | **Role adoption record — June 29** |
 | **Master_Data_Dictionary_v1.0.md** | **1.0 Locked** | **Naming authority — June 29** |
 | **Whinfell_Phased_Development_Plan_v1.0.md** | **1.0** | **Phases 2–4 roadmap — P1 complete** |
-| **Phase2_Node_Cockpit_Data_Model.md** | **0.2 locked** | **Decisions applied — implementation planning** |
+| **Phase2_Node_Cockpit_Data_Model.md** | **0.2 locked** | **A/B/E/F resolved — data layer in pipeline** |
+| **WTM_EXPORT_v2.2_SPEC.md** | **1.0 locked** | **Per-node NODE COCKPIT blocks — `cdd677a`** |
+| **Phase2_Interim_Node_Score_Weights.md** | **1.0-interim** | **Non-credit composite weights — `3293a9b`** |
 
 ---
 
 ## Notes
 
+- **June 29, 2026** — **PHASE 2 DATA LAYER SHIPPED** — `whinfell_pipeline/node_cockpits.py` builds all five `node_cockpit` objects from `node_score_weights` + `rv_series` + `suggested_tracer`; `hydrate.py` emits bundle **v1.1.0** with `node_cockpits`, `cockpit_context`, `wtm_export_v22`; `export_contract.py` adds `build_node_cockpit_export_block()` / `build_wtm_export_v22()`. Credit uses `horizon_net_fallback`; non-credit uses weighted components (tracer-derived MVP stubs until ARCH-1). RV quartiles compute when Barchart history available; basis degrades gracefully from execution sidecar. **111 tests PASS.** Commit `cdd677a`.
+- **June 29, 2026** — **PHASE 2 PREP LOCKED** — Data model v0.2 decisions (composite authority, per-series quartile direction, options defer, China soft coupling); `rv_series` (10 series) + `node_score_weights` registered in Master DD. Commits `c9974fa` · `3293a9b`.
 - **June 29, 2026** — **PHASE 1 VERIFIED** — Full test suite **104 PASS** (4 skipped); operator naming gate **0 violations**; `sync_dictionary_meta.py` chains yaml → HTML badge injection + `data_dictionary_meta.json`; disk-backed badge evidence (`dd_badge_file_evidence.mjs`) PASS. Evidence runner: `generate_phase1_evidence.py`. Commit `194506a`.
-- **June 29, 2026** — **PHASE 2 PREP (PLANNING ONLY)** — `01_Strategy_Docs/Phase2_Node_Cockpit_Data_Model.md` defines minimum per-node JSON (signal, directional, RV, implementation, sizing, basis quartiles, hydration v1.1.0 extension). **No UI or pipeline implementation.** Awaiting review. Commit `877524a`.
 - **June 29, 2026** — **PHASE 1 COMPLETE: MASTER DATA DICTIONARY v1.0 LOCKED** — Extended `data_dictionary.yaml` with project_structure, watchlist_names, file_naming_conventions, json_structures, column_mappings, ticker_standards. Human companion + phased plan shipped. Transmission Control displays **Master Data Dictionary v1.0 · Locked · Aligned** on load/refresh. Comet shortcuts aligned to canonical `WTM-*` names (WhinPump → legacy alias).
 - **June 29, 2026** — **BUILD COUSINS SESSION ACTIVATED** — Agent adopted BUILD Cousins role at `~/Desktop/Whinfell_BUILD_Cousins`; loaded Comet shortcut canon (`/roles`, `/role`, `/goal`, `/arena`, `/plan`, `/wtm-morning`) from `08_Deliverables/Comet_Shortcuts_WTM.md`; authority YAML read (`collection_manifest.yaml`, `data_dictionary.yaml`). Scope: support-only (docs, logic, fallback tools, reference, testing) — no Comet live code edits. Deliverable: `08_Deliverables/BUILD_Cousins_Session_Activation.md` + How to Use.
 - **June 28, 2026** — **DESK ISSUE: STAGED CSV CLASSIFIER** — Clark's first live drop (`~/Downloads/whinfell_drop`, 7 Barchart/Koyfin exports) quarantined: native filenames (`btm26_daily-nearby_...`, `koyfin_WhinPump...`, etc.) do not match staged contract `{dataset}_{YYYYMMDD}_{HHMM}.csv` or `{product}_{flavor}_{YYYYMMDD}.csv`. **Mitigation shipped:** `scripts/normalize_whinfell_drop.sh` maps desk exports → canonical names (e.g. `futures_daily_20260628_1015.csv`, `rates_20260628_1119.csv`, `btc_basis_20260628.csv`). **Remaining gap:** rename passes filename check but raw vendor column layouts (`Symbol,Time,Open...` / `Ticker,Name,AUM...`) still fail header validation — pipeline expects WTM observation rows per `whinfell_pipeline/examples/staged/` (`timestamp` + `whinfell_score`/`regime_tag` for Koyfin; `timestamp` + `near_month`/`basis_spread` for Barchart). Perplexity engaged on response; raw→WTM converter or operator re-export path TBD.
