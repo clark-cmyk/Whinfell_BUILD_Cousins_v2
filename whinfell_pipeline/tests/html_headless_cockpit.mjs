@@ -167,7 +167,8 @@ function seedCockpitDom(t) {
   const ids = [
     'nodeRail', 'cockpitShell', 'cockpitChartTitle', 'cockpitChartSubtitle',
     'cockpitHorizonPills', 'cockpitRvCanvas', 'cockpitChartPlaceholder',
-    'basisSummaryStrip', 'basisReadingValue', 'basisReadingLabel', 'basisStanceRow', 'basisTradeRow',
+    'basisTacticalBanner', 'basisTacticalSentence', 'basisSummaryStrip',
+    'basisReadingValue', 'basisReadingLabel', 'basisStanceRow', 'basisTradeRow',
     'cockpitChartValue', 'cockpitChartRichness', 'cockpitChartPct',
     'cockpitDecisionRail', 'cockpitDetailBand', 'cockpitFocusLayer',
     'cockpitCompareLayer', 'btnHeresWhy', 'btnCompareMode', 'nodeCockpitZone',

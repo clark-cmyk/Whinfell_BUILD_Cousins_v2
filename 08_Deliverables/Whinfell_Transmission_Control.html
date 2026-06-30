@@ -274,11 +274,195 @@ window.DICTIONARY_BADGE_DEFAULT = {
       gap: 6px;
       flex-wrap: wrap;
     }
+    .basis-tactical-banner {
+      flex-shrink: 0;
+      padding: 12px 16px 10px;
+      border-bottom: 1px solid rgba(76,142,217,0.22);
+      background: linear-gradient(180deg, rgba(76,142,217,0.1), rgba(0,0,0,0.08));
+      animation: basisMissionReveal 0.4s ease-out;
+    }
+    .basis-tactical-banner--tight {
+      border-bottom-color: rgba(245,166,35,0.35);
+      background: linear-gradient(180deg, rgba(245,166,35,0.08), rgba(0,0,0,0.08));
+    }
+    .basis-tactical-banner--blocked {
+      border-bottom-color: rgba(245,101,101,0.4);
+      background: linear-gradient(180deg, rgba(245,101,101,0.08), rgba(0,0,0,0.1));
+    }
+    .basis-tactical-eyebrow {
+      font-size: 8px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(158,197,240,0.75);
+      margin-bottom: 4px;
+    }
+    .basis-tactical-sentence {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.4;
+      color: #e8edf3;
+      letter-spacing: -0.01em;
+    }
     .basis-summary-strip {
       flex-shrink: 0;
-      padding: 10px 16px 6px;
-      border-bottom: 1px solid var(--border);
-      background: rgba(0,0,0,.12);
+      padding: 10px 16px 8px;
+      border-top: 1px solid var(--border);
+      background: rgba(0,0,0,.14);
+    }
+    .cockpit-chart-area--basis-mission .cockpit-chart-header {
+      padding-top: 6px;
+      padding-bottom: 6px;
+      background: rgba(0,0,0,0.18);
+    }
+    .cockpit-chart-area--basis-mission .cockpit-chart-canvas {
+      margin-top: 0;
+      border-top: none;
+      border-radius: 0 0 var(--radius) var(--radius);
+    }
+    .cockpit-chart-canvas.chart-horizon-transition {
+      opacity: 0.55;
+      transition: opacity 0.2s ease;
+    }
+    .cockpit-chart-canvas {
+      transition: opacity 0.25s ease;
+    }
+    @keyframes basisMissionReveal {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .basis-implication-rail {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .implication-rail-label {
+      margin: 0;
+      font-size: 8px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+    .implication-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+    .impl-chip {
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,0.22);
+      color: #9eacbb;
+    }
+    .impl-chip--signal { border-color: rgba(76,142,217,0.35); color: #9ec5f0; }
+    .impl-chip--rv { border-color: rgba(214,168,95,0.35); color: #d6a85f; }
+    .impl-chip--flows { border-color: rgba(142,156,179,0.3); }
+    .impl-chip--warn { border-color: rgba(245,166,35,0.4); color: #f5a623; }
+    .impl-chip--block { border-color: rgba(245,101,101,0.4); color: #f56565; }
+    .impl-chip--ok { border-color: rgba(61,221,140,0.35); color: #3dd68c; }
+    .basis-diagnostics-disclosure {
+      margin-top: 4px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 8px;
+    }
+    .basis-diagnostics-disclosure summary {
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--muted);
+      cursor: pointer;
+      list-style: none;
+      user-select: none;
+    }
+    .basis-diagnostics-disclosure summary::-webkit-details-marker { display: none; }
+    .basis-diagnostics-disclosure summary::before {
+      content: '▸ ';
+      color: #4c8ed9;
+    }
+    .basis-diagnostics-disclosure[open] summary::before { content: '▾ '; }
+    .basis-diagnostics-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .basis-diagnostics-stack .diag-interpretation,
+    .basis-diagnostics-stack .diag-implication {
+      font-size: 10px;
+    }
+    .cockpit-decision-rail--basis-mission {
+      gap: 8px;
+    }
+    #cockpitShell.cockpit-mode-trade .node-coverage-banner--complete .node-coverage-summary,
+    #cockpitShell.cockpit-mode-trade .node-coverage-banner--complete .node-coverage-context,
+    #cockpitShell.cockpit-mode-trade .node-coverage-banner--complete .node-coverage-upstream,
+    #cockpitShell.cockpit-mode-trade .node-coverage-banner--complete .node-coverage-impact {
+      display: none;
+    }
+    #cockpitShell.cockpit-mode-trade .node-coverage-banner--complete {
+      padding: 5px 12px 6px;
+    }
+    #cockpitShell.cockpit-mode-trade .node-coverage-banner--complete .coverage-pill-grid {
+      margin-top: 4px;
+      padding-top: 0;
+      border-top: none;
+    }
+    .operator-actions-strip {
+      display: flex;
+      align-items: stretch;
+      justify-content: space-between;
+      gap: 12px;
+      width: 100%;
+    }
+    .operator-actions-primary {
+      display: flex;
+      align-items: stretch;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .operator-action {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1px;
+      padding: 6px 12px;
+      min-height: 44px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+    .operator-action:hover { border-color: rgba(76,142,217,0.45); background: rgba(76,142,217,0.06); }
+    .operator-action-label { font-size: 10px; font-weight: 700; }
+    .operator-action-hint { font-size: 8px; color: var(--muted); font-weight: 600; }
+    .operator-action--why { border-color: rgba(76,142,217,0.35); }
+    .operator-action--compare { border-color: rgba(142,156,179,0.3); }
+    .operator-action--export { border-color: rgba(255,255,255,0.08); }
+    .header-instrument-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .header-instrument-identity {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .header-instrument-meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding-left: 8px;
+      border-left: 1px solid rgba(255,255,255,0.08);
     }
     .basis-summary {
       display: flex;
@@ -1301,6 +1485,10 @@ window.DICTIONARY_BADGE_DEFAULT = {
       border-top: 1px solid var(--border);
       background: var(--surface);
     }
+    .cockpit-actions .keyboard-hint {
+      margin-left: auto;
+      flex-shrink: 0;
+    }
 
     .horizon-pill {
       font-size: 9px;
@@ -1414,16 +1602,19 @@ window.DICTIONARY_BADGE_DEFAULT = {
 
   <header class="flex flex-col sm:flex-row sm:items-stretch border-b border-wtm-border bg-wtm-surface shrink-0">
     <div class="flex-1 px-5 py-3 flex flex-col justify-center gap-0.5">
-      <div class="flex items-center gap-2.5 flex-wrap">
-        <h1 class="text-[15px] font-semibold tracking-tight">Whinfell Transmission Control</h1>
-        <span class="text-[9px] font-bold uppercase tracking-wider text-wtm-accent bg-wtm-accent/10 border border-wtm-accent/30 px-2 py-0.5 rounded">Phase 2.2</span>
-        <span class="header-meta-cluster">
-          <span id="tcConsoleBuildBadge" class="text-[8px] font-bold uppercase tracking-wider text-wtm-green bg-emerald-500/10 border border-wtm-green/35 px-2 py-0.5 rounded" title="Operator-console UX build — hard-refresh if missing coverage banner">—</span>
-          <span class="header-meta-sep" aria-hidden="true"></span>
-          <span id="ddVersionBadge" class="text-[9px] font-bold uppercase tracking-wider text-wtm-muted bg-wtm-card border border-wtm-border px-2 py-0.5 rounded"></span>
-        </span>
-        <span class="header-meta-sep" aria-hidden="true"></span>
-        <button type="button" id="btnWorkspaceToggle" class="text-[9px] font-bold uppercase tracking-wider text-wtm-accent bg-wtm-accent/10 border border-wtm-accent/35 px-2 py-0.5 rounded hover:bg-wtm-accent/20 shrink-0">Node Cockpits</button>
+      <div class="header-instrument-row">
+        <div class="header-instrument-identity">
+          <h1 class="text-[15px] font-semibold tracking-tight">Whinfell Transmission Control</h1>
+          <span class="text-[9px] font-bold uppercase tracking-wider text-wtm-accent bg-wtm-accent/10 border border-wtm-accent/30 px-2 py-0.5 rounded">Phase 2.2</span>
+        </div>
+        <div class="header-instrument-meta">
+          <span class="header-meta-cluster">
+            <span id="tcConsoleBuildBadge" class="text-[8px] font-bold uppercase tracking-wider text-wtm-green bg-emerald-500/10 border border-wtm-green/35 px-2 py-0.5 rounded" title="Operator-console build — hard-refresh if stale">—</span>
+            <span class="header-meta-sep" aria-hidden="true"></span>
+            <span id="ddVersionBadge" class="text-[9px] font-bold uppercase tracking-wider text-wtm-muted bg-wtm-card border border-wtm-border px-2 py-0.5 rounded"></span>
+          </span>
+          <button type="button" id="btnWorkspaceToggle" class="text-[9px] font-bold uppercase tracking-wider text-wtm-accent bg-wtm-accent/10 border border-wtm-accent/35 px-2 py-0.5 rounded hover:bg-wtm-accent/20 shrink-0">Node Cockpits</button>
+        </div>
       </div>
       <p class="text-[11px] text-wtm-muted">Phase 2 node cockpits · Pipeline command bar · WTM EXPORT v2.1</p>
     </div>
@@ -1554,20 +1745,16 @@ window.DICTIONARY_BADGE_DEFAULT = {
     <div id="cockpitShell" class="flex-1 min-h-0 flex flex-col overflow-hidden">
       <div class="cockpit-main flex-1 min-h-0 grid grid-cols-1 xl:grid-cols-12 gap-px bg-wtm-border overflow-hidden">
         <div id="cockpitChartArea" class="cockpit-chart-area xl:col-span-8 bg-wtm-bg flex flex-col min-h-0 overflow-hidden">
+          <div id="basisTacticalBanner" class="basis-tactical-banner zone-hidden" aria-live="polite">
+            <p class="basis-tactical-eyebrow">Basis mission read</p>
+            <p id="basisTacticalSentence" class="basis-tactical-sentence">—</p>
+          </div>
           <div class="cockpit-chart-header px-3 py-2 border-b border-wtm-border bg-wtm-surface flex items-center justify-between gap-3 flex-wrap">
             <div class="min-w-0">
               <h2 id="cockpitChartTitle" class="text-[12px] font-bold">Relative Value · Basis</h2>
               <p id="cockpitChartSubtitle" class="text-[9px] text-wtm-muted">—</p>
             </div>
             <div id="cockpitHorizonPills" class="flex gap-1 flex-wrap shrink-0" role="group" aria-label="RV horizon"></div>
-          </div>
-          <div id="basisSummaryStrip" class="basis-summary-strip zone-hidden">
-            <div id="basisSummary" class="basis-summary">
-              <div id="basisReadingValue" class="basis-reading-value">—</div>
-              <div id="basisReadingLabel" class="basis-reading-label">Current reading</div>
-              <div id="basisStanceRow" class="basis-interpret-row"></div>
-              <div id="basisTradeRow" class="basis-trade-row"></div>
-            </div>
           </div>
           <div id="cockpitChartCanvas" class="cockpit-chart-canvas">
             <canvas id="cockpitRvCanvas" aria-label="RV basis chart"></canvas>
@@ -1578,6 +1765,14 @@ window.DICTIONARY_BADGE_DEFAULT = {
               <span id="cockpitChartPct" class="zone-hidden">—</span>
             </div>
           </div>
+          <div id="basisSummaryStrip" class="basis-summary-strip zone-hidden">
+            <div id="basisSummary" class="basis-summary">
+              <div id="basisReadingValue" class="basis-reading-value">—</div>
+              <div id="basisReadingLabel" class="basis-reading-label">Current reading</div>
+              <div id="basisStanceRow" class="basis-interpret-row"></div>
+              <div id="basisTradeRow" class="basis-trade-row"></div>
+            </div>
+          </div>
         </div>
         <aside id="cockpitDecisionRail" class="cockpit-decision-rail xl:col-span-4 bg-wtm-bg min-h-0" aria-label="Decision rail"></aside>
       </div>
@@ -1585,10 +1780,23 @@ window.DICTIONARY_BADGE_DEFAULT = {
       <div id="cockpitCompareLayer" class="cockpit-compare-layer zone-hidden" aria-label="Compare mode"></div>
       <div id="cockpitDetailBand" class="cockpit-detail-band shrink-0" aria-label="Component drivers"></div>
       <div id="cockpitActions" class="cockpit-actions shrink-0" aria-label="Cockpit actions">
-        <button type="button" id="btnHeresWhy" class="btn btn-primary">Here's Why</button>
-        <button type="button" id="btnCompareMode" class="btn btn-secondary">Compare</button>
-        <button type="button" id="btnExportNode" class="btn btn-ghost">Export node</button>
-        <span class="keyboard-hint">← → flip · 1–5 jump · f focus · c compare · Shift+click rail</span>
+        <div class="operator-actions-strip">
+          <div class="operator-actions-primary">
+            <button type="button" id="btnHeresWhy" class="operator-action operator-action--why btn btn-primary">
+              <span class="operator-action-label">Here's Why</span>
+              <span class="operator-action-hint">Inspect thesis &amp; drivers</span>
+            </button>
+            <button type="button" id="btnCompareMode" class="operator-action operator-action--compare btn btn-secondary">
+              <span class="operator-action-label">Compare</span>
+              <span class="operator-action-hint">Cross-node scenarios</span>
+            </button>
+            <button type="button" id="btnExportNode" class="operator-action operator-action--export btn btn-ghost">
+              <span class="operator-action-label">Export node</span>
+              <span class="operator-action-hint">Desk handoff bundle</span>
+            </button>
+          </div>
+          <span class="keyboard-hint">← → flip · 1–5 jump · f focus · c compare · Shift+click rail</span>
+        </div>
       </div>
     </div>
   </section>
@@ -1989,7 +2197,7 @@ const STORAGE_KEY = 'whinfell_transmission_control_v7';
 const LEGACY_KEYS = ['whinfell_transmission_control_v1', 'whinfell_transmission_control_v0', 'whinfell_operator_v1_1'];
 const STATE_VERSION = 7;
 /** Bump when operator-console UX changes — visible in header for reload verification. */
-const TC_CONSOLE_BUILD = '2.2-UX-2026-06-29';
+const TC_CONSOLE_BUILD = '2.2-MISSION-2026-06-29';
 const HYDRATION_BUNDLE_VERSION = '1.2.0';
 const RV_HORIZONS = ['1m', '3m', '6m', '12m', '3y'];
 const RV_HORIZON_LABELS = { '1m': '1M', '3m': '3M', '6m': '6M', '12m': '12M', '3y': '3Y' };
@@ -5754,6 +5962,11 @@ function jumpToNode(nodeId) {
 
 function setSharedHorizon(horizon) {
   if (!RV_HORIZONS.includes(horizon)) return;
+  const chartCanvas = el('cockpitChartCanvas');
+  if (chartCanvas && activeNodeId() === 'basis') {
+    chartCanvas.classList.add('chart-horizon-transition');
+    setTimeout(() => chartCanvas.classList.remove('chart-horizon-transition'), 220);
+  }
   appState.chart = appState.chart || createEmptyChartState();
   appState.chart.shared_horizon = horizon;
   const nodeId = activeNodeId();
@@ -5930,6 +6143,85 @@ function renderMissingDiagnostic(message) {
   </div>`;
 }
 
+function buildBasisTacticalSentence(cockpit, hz, series, gate, health) {
+  const seriesLabel = series?.label || 'Basis';
+  const stance = hz?.richness_label || cockpit.rv_basis?.richness_label;
+  const richnessText = richnessPillLabel(stance).toLowerCase();
+  const rv = cockpit.relative_value || {};
+
+  if (gate?.blocked || rv.blocked) {
+    return `${seriesLabel} is ${richnessText}; new basis risk is blocked under current gate.`;
+  }
+
+  const expression = rv.posture ? humanizeValue(rv.posture).toLowerCase() : 'expression';
+  const capped = gate?.tight || (health && health.score < TX_HEALTH_OPEN_THRESHOLD);
+
+  if (capped) {
+    return `${seriesLabel} is ${richnessText}; ${expression} is allowed, but only at 0.5× under Tight Risk.`;
+  }
+  return `${seriesLabel} is ${richnessText}; ${expression} is eligible within desk policy.`;
+}
+
+function renderBasisTacticalBanner(cockpit, hz, series, state, gate) {
+  const banner = el('basisTacticalBanner');
+  const sentence = el('basisTacticalSentence');
+  const isBasis = cockpit.node_id === 'basis';
+  if (!banner || !sentence) return;
+
+  if (!isBasis || !hz) {
+    banner.classList.add('zone-hidden');
+    return;
+  }
+
+  const health = computeHealthScore(state);
+  sentence.textContent = buildBasisTacticalSentence(cockpit, hz, series, gate, health);
+  banner.classList.remove('zone-hidden');
+  banner.classList.toggle('basis-tactical-banner--blocked', !!(gate?.blocked || cockpit.relative_value?.blocked));
+  banner.classList.toggle('basis-tactical-banner--tight', !!(gate?.tight && !gate?.blocked));
+}
+
+function renderBasisImplicationRail(cockpit, state, gate) {
+  const ff = cockpit.funds_flows || {};
+  const ffStatus = ff.flows_meta?.flows_status || 'unavailable';
+  const blocks = buildSignalDiagnostics(cockpit, state, gate);
+  const showFlowsDetail = ffStatus === 'ok' || ffStatus === 'partial';
+
+  let flowsChip = 'Flows unavailable';
+  if (ffStatus === 'ok' || ffStatus === 'partial' || ffStatus === 'fallback_1d') {
+    const verdict = ff.aggregate?.verdict || 'mixed';
+    flowsChip = verdict === 'mixed' || verdict === 'neutral' ? 'Flows neutral' : humanizeValue(verdict);
+  }
+
+  const chips = [
+    { label: humanizeValue(cockpit.band || '—'), cls: 'impl-chip--signal' },
+    { label: humanizeValue(cockpit.relative_value?.posture || '—'), cls: 'impl-chip--rv' },
+    { label: flowsChip, cls: 'impl-chip--flows' },
+    {
+      label: gate.blocked ? 'Blocked' : gate.tight ? 'Tight Risk' : humanizeValue(gate.displayLabel || gate.label || 'Open'),
+      cls: gate.blocked ? 'impl-chip--block' : gate.tight ? 'impl-chip--warn' : 'impl-chip--ok',
+    },
+  ];
+
+  return `
+    <div class="basis-implication-rail">
+      <p class="implication-rail-label">Implications</p>
+      <div class="implication-chip-row">
+        ${chips.map(c => `<span class="impl-chip ${c.cls}">${escapeHtml(c.label)}</span>`).join('')}
+      </div>
+      <details class="basis-diagnostics-disclosure">
+        <summary>Full diagnostics</summary>
+        <div class="basis-diagnostics-stack">
+          ${blocks.signal}
+          ${blocks.directional}
+          ${blocks.relativeValue}
+          ${blocks.flows}
+          ${showFlowsDetail ? renderFundsFlowSponsorshipCard(cockpit, { variant: 'rail' }) : ''}
+          ${blocks.gate}
+        </div>
+      </details>
+    </div>`;
+}
+
 function buildBasisInterpretLine(hz, cockpit) {
   if (!hz) return escapeHtml(cockpit.rv_basis?.quartile_context || 'Awaiting history');
   const stance = hz.richness_label || cockpit.rv_basis?.richness_label;
@@ -6093,6 +6385,35 @@ function basisValueToY(value, domain, pad, plotH) {
   const [yMin, yMax] = domain;
   const span = yMax - yMin || 1;
   return pad.t + plotH - ((value - yMin) / span) * plotH;
+}
+
+function drawBasisQuartileScaffold(ctx, domain, pad, plotW, plotH) {
+  const zoneColors = [
+    'rgba(79,179,122,0.05)',
+    'rgba(76,142,217,0.04)',
+    'rgba(76,142,217,0.05)',
+    'rgba(255,140,105,0.05)',
+  ];
+  const labels = ['Q1', 'Q2', 'Q3', 'Q4'];
+  for (let q = 0; q < 4; q++) {
+    const [yMin, yMax] = domain;
+    const vLo = yMin + (yMax - yMin) * (q / 4);
+    const vHi = yMin + (yMax - yMin) * ((q + 1) / 4);
+    const yLo = basisValueToY(vLo, domain, pad, plotH);
+    const yHi = basisValueToY(vHi, domain, pad, plotH);
+    ctx.fillStyle = zoneColors[q];
+    ctx.fillRect(pad.l, Math.min(yLo, yHi), plotW, Math.abs(yHi - yLo));
+  }
+  ctx.fillStyle = 'rgba(142,156,179,0.4)';
+  ctx.font = '7px system-ui,sans-serif';
+  ctx.textAlign = 'right';
+  labels.forEach((label, q) => {
+    const [yMin, yMax] = domain;
+    const v = yMin + (yMax - yMin) * ((q + 0.5) / 4);
+    const y = basisValueToY(v, domain, pad, plotH);
+    ctx.fillText(label, pad.l + plotW - 4, y + 2);
+  });
+  ctx.textAlign = 'left';
 }
 
 const COVERAGE_NODE_KEYS = [
@@ -6627,6 +6948,14 @@ function renderCockpitDecisionRail(cockpit, state) {
   if (!rail) return;
   const domState = state || buildStateFromDOM();
   const derivedGate = deriveGate(domState);
+
+  if (cockpit.node_id === 'basis') {
+    rail.classList.add('cockpit-decision-rail--basis-mission');
+    rail.innerHTML = renderBasisImplicationRail(cockpit, domState, derivedGate);
+    return;
+  }
+
+  rail.classList.remove('cockpit-decision-rail--basis-mission');
   const blocks = buildSignalDiagnostics(cockpit, domState, derivedGate);
   const flowsDetail = renderFundsFlowSponsorshipCard(cockpit, { variant: 'rail' });
   const showFlowsDetail = (cockpit.funds_flows?.flows_meta?.flows_status === 'ok'
@@ -6685,6 +7014,27 @@ function drawRvBasisChart(cockpit, canvas, state, gate) {
   const yBase = isBasis && yMin <= 0 && yMax >= 0 ? 0 : yMin;
   const barW = plotW / points.length;
   const unitSuffix = String(points[0]?.unit || '').toLowerCase() === 'pct' ? '%' : '';
+  const activeHz = series.horizons?.[horizon];
+
+  if (isBasis) {
+    const permText = gateState.blocked ? 'No new risk' : gateState.tight ? 'Allowed · capped 0.5×' : 'Eligible';
+    ctx.fillStyle = gateState.blocked
+      ? 'rgba(245,101,101,0.65)'
+      : gateState.tight
+        ? 'rgba(245,166,35,0.65)'
+        : 'rgba(61,221,140,0.55)';
+    ctx.font = '7px system-ui,sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText(permText, w - pad.r, pad.t - 6);
+    if (gateState.tight || gateState.blocked) {
+      ctx.fillStyle = gateState.blocked ? 'rgba(245,101,101,0.35)' : 'rgba(245,166,35,0.28)';
+      ctx.fillRect(pad.l - 3, pad.t, 2, plotH);
+    }
+  }
+
+  if (isBasis && !refsReady) {
+    drawBasisQuartileScaffold(ctx, domain, pad, plotW, plotH);
+  }
 
   ctx.strokeStyle = 'rgba(255,255,255,.08)';
   ctx.lineWidth = 1;
@@ -6737,7 +7087,7 @@ function drawRvBasisChart(cockpit, canvas, state, gate) {
     ctx.fillStyle = 'rgba(142,156,179,0.55)';
     ctx.font = '8px system-ui,sans-serif';
     ctx.textAlign = 'left';
-    ctx.fillText('History-only — ref band unavailable', pad.l, pad.t - 6);
+    ctx.fillText('History quartiles · ref band unavailable', pad.l, pad.t - 6);
   }
 
   const activeIdx = points.findIndex(p => p.key === horizon);
@@ -6764,6 +7114,21 @@ function drawRvBasisChart(cockpit, canvas, state, gate) {
       ctx.fillText(`${p.value.toFixed(2)}${unitSuffix}`, x + bw / 2, Math.min(yTop, yBot) - 4);
     }
   });
+
+  if (isBasis && activeHz && Number.isFinite(activeHz.percentile)) {
+    const pctY = pad.t + plotH - ((activeHz.percentile || 50) / 100) * plotH;
+    ctx.strokeStyle = 'rgba(214,163,74,0.35)';
+    ctx.setLineDash([2, 3]);
+    ctx.beginPath();
+    ctx.moveTo(pad.l, pctY);
+    ctx.lineTo(w - pad.r, pctY);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = 'rgba(214,163,74,0.55)';
+    ctx.font = '7px system-ui,sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText(formatPercentile(Number(activeHz.percentile)), w - pad.r, pctY + 2);
+  }
 
   if (!isBasis) {
     ctx.strokeStyle = 'rgba(214,163,74,.55)';
@@ -6814,11 +7179,16 @@ function renderCockpitChart(cockpit, state) {
   const canvas = el('cockpitRvCanvas');
   const placeholder = el('cockpitChartPlaceholder');
 
+  const isBasis = cockpit.node_id === 'basis';
+  const chartArea = el('cockpitChartArea');
+  chartArea?.classList.toggle('cockpit-chart-area--basis-mission', isBasis);
+
   el('cockpitChartTitle').textContent = series?.label || `${row?.short || 'Node'} · RV / Basis`;
   el('cockpitChartSubtitle').textContent = series
     ? `${humanizeValue(series.quartile_direction || '')} · ${RV_HORIZON_LABELS[horizon] || horizon} lookback`
     : (cockpit.rv_basis?._fallback_mode ? 'RV quartiles require hydration — history not loaded' : 'No series populated');
 
+  renderBasisTacticalBanner(cockpit, hz, series, domState, gate);
   renderBasisSummaryRows(cockpit, hz, series, domState, gate);
   if (hz) {
     el('cockpitChartValue').textContent = formatReadingValue(hz);
