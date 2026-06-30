@@ -1,7 +1,7 @@
 # BUILD Cousins - TODO List
 
 **Maintained by:** BUILD Cousins  
-**Last Updated:** June 29, 2026  
+**Last Updated:** June 29, 2026 (Phase 1 verified · Phase 2 prep)  
 **Purpose:** Track all active and planned work for the Whinfell Transmission Map support track.
 
 ---
@@ -20,8 +20,9 @@
 | **2.2e** | Raw vendor CSV → WTM observation row transform | **High** | **Shipped** | Integration Dynamo | `whinfell_pipeline/raw_csv_transform.py` — auto on stage |
 | **Desk ops** | Document pre-stage rename in Operator Guide v1.5 | Medium | **Open** | Clarity | `normalize_whinfell_drop.sh` + canonical name table |
 | **Desk ops** | Clark first live CSV drop — report to TempLibby | High | **In progress** | Bridge | Re-test with Master DD v1.0 canonical names |
-| **Phase 1** | Master Data Dictionary v1.0 + naming rectification | **High** | **Complete** | Bridge + Precision | `Master_Data_Dictionary_v1.0.md` · TC badge · tests PASS |
-| **Phase 2** | Node architecture redesign (5 trading cockpits) | High | **Planned** | Bridge + Edge + Clarity | Blocked on desk DD validation · see phased plan |
+| **Phase 1** | Master Data Dictionary v1.0 + naming rectification | **High** | **Complete · Verified** | Bridge + Precision | 104 tests PASS · 0 naming violations · `194506a` |
+| **Phase 2 prep** | Node cockpit data model spec | High | **Draft for review** | Blueprint | `01_Strategy_Docs/Phase2_Node_Cockpit_Data_Model.md` · no code yet |
+| **Phase 2** | Node architecture redesign (5 trading cockpits) | High | **Planned** | Bridge + Edge + Clarity | Blocked on data model sign-off + desk validation |
 | **Phase 3** | TC interface (full-screen Why, flip nav, margin module) | Medium | **Planned** | Clarity + Safeguard | Blocked on Phase 2 |
 | **Phase 4** | Validation & reliability gate | Medium | **Planned** | Hammer + Precision | After Phase 3 |
 
@@ -82,6 +83,8 @@
 | **Daily Launcher** | `Whinfell_Daily_Launcher.py` + `whinfell_daily_am.sh` | June 27, 2026 | Tkinter one-click AM · live log |
 | **Session** | BUILD Cousins agent role adoption (`/arena /role /plan`) | June 29, 2026 | `BUILD_Cousins_Session_Activation.md` · 7/7 canon tests PASS · `25ed812` |
 | **Phase 1** | Master Data Dictionary v1.0 locked + naming alignment | June 29, 2026 | `data_dictionary.yaml` · TC badge · phased plan |
+| **Phase 1 verify** | Evidence scripts + disk-backed badge test | June 29, 2026 | `generate_phase1_evidence.py` · `dd_badge_file_evidence.mjs` · `194506a` |
+| **Phase 2 prep** | Node cockpit data model (planning only) | June 29, 2026 | `Phase2_Node_Cockpit_Data_Model.md` · `877524a` |
 
 ---
 
@@ -126,8 +129,10 @@ python3 -m whinfell_pipeline.verify_2_2_final
 ---
 
 ## Notes
-- **June 29, 2026** — **Phase 1 complete** — Master Data Dictionary v1.0 locked; naming aligned across YAML, Comet shortcuts, normalize script, TC badge. Phased plan v1.0 shipped. Phase 2–4 planned, not started.
-- **June 29, 2026** — **BUILD Cousins role adoption complete** — session activation shipped; canon test PASS; commit `25ed812`. **Standing by** for pasted full instructions or next priority item from table above.
+- **June 29, 2026** — **Phase 1 verified** — `scan_operator_violations()` → 0; full suite **104 tests PASS** (4 skipped); sync pipeline yaml → `DICTIONARY_BADGE_DEFAULT` + `data_dictionary_meta.json`; disk-backed badge evidence PASS. Commits `80472ed` · `194506a`.
+- **June 29, 2026** — **Phase 2 prep shipped (planning only)** — `Phase2_Node_Cockpit_Data_Model.md` defines per-node JSON shape (signal, directional, RV, implementation, sizing, basis quartiles). **Awaiting Clark review** before implementation. Commit `877524a`.
+- **June 29, 2026** — **Phase 1 complete** — Master Data Dictionary v1.0 locked; naming aligned across YAML, Comet shortcuts, normalize script, TC badge. Phased plan v1.0 shipped. Phase 2 cockpit **UI/code not started**.
+- **June 29, 2026** — **BUILD Cousins role adoption complete** — session activation shipped; canon test PASS; commit `25ed812`.
 - **June 28, 2026** — **Desk CSV drop issue logged** — filename quarantine mitigated via `normalize_whinfell_drop.sh`; header/transform gap open (2.2e). TempLibby report block added above. Perplexity working on response.
 - **June 28, 2026** — **Desktop launcher fixed** — `deploy_desktop_launchers.sh` · use `Whinfell Daily AM.app` on Desktop.
 - **June 27, 2026** — **Daily Launcher shipped** — `Whinfell_Daily_Launcher.py` runs `whinfell_daily_am.sh` with live log + status bar; fixed `--window` typo in AM script.
