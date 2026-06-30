@@ -1,7 +1,7 @@
 # Whinfell BUILD Cousins - Progress Log
 
 **Started:** June 26, 2026  
-**Last Updated:** June 30, 2026 (Phase 2.2 Basis mission-surface accepted · Credit next)
+**Last Updated:** June 30, 2026 (GitHub Pages live · docs + UX fix · badge `2.2-UX-FIX-2026-06-30`)
 
 ---
 

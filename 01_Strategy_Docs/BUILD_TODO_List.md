@@ -1,7 +1,7 @@
 # BUILD Cousins - TODO List
 
 **Maintained by:** BUILD Cousins  
-**Last Updated:** June 30, 2026 (Goals 1–6 **done** · **UI audit shipped** · **desk preview Pages scaffold** · next **7–11**)
+**Last Updated:** June 30, 2026 (Goals 1–6 **done** · **desk preview live** · **docs + UX fix shipped** · badge `2.2-UX-FIX-2026-06-30` · next **7–11**)
 **Purpose:** Track all active and planned work for the Whinfell Transmission Map support track.
 
 ---
@@ -29,6 +29,18 @@
 | 5 | TempLibby close | ARCH-3 accepted · sign-off block filled |
 | 6 | Koyfin watchlist trim (UI) | `credit_20260630_1149.csv` · 16/16 from `WTM-Import-Core` watchlist · section labels OK |
 
+### Completed (Desk share + docs + UX — June 30 PM)
+
+| Item | Result |
+|------|--------|
+| **GitHub Pages desk** | Public repo · auto-hydrate · [clark-cmyk.github.io/Whinfell_BUILD_Cousins](https://clark-cmyk.github.io/Whinfell_BUILD_Cousins/) |
+| **Hydration field audit** | `hydration_audit.py` · `hydration_log.json` · Explain drawer panel |
+| **Desk User Manual v1.0** | `08_Deliverables/Whinfell_Desk_User_Manual_v1.0.md` — Comet / Perplexity / Wes / G-Quant |
+| **SQ3 Reference v1.0** | Full math + dual-track gate · `08_Deliverables/Whinfell_SQ3_Reference_v1.0.md` |
+| **In-app doc catalog** | 70+ linked docs · header **Docs** drawer (cockpit-safe) |
+| **TC UX fix** | Badge `2.2-UX-FIX-2026-06-30` — Koyfin/Barchart header · audit pill scoping · chart table + contrast · KPI hover defs |
+| **Strategy archive** | Legacy specs → `01_Strategy_Docs/Archive/` · liquidity handoff + ARCH-3 criteria committed |
+
 ### Wired desk URLs (June 30 — Clark confirmed downloader)
 
 | View | URL | Env override (optional) |
@@ -53,8 +65,11 @@
 | **ARCH-4** | Barchart core batch export in manifest | Medium | **Shipped · Clark desk run open** | Clark | `barchart_core_batch` · `WTM-Barchart-Core` in desk_urls |
 | **Desk feedback** | Transmission Control rollout | High | **Proxy signed · live confirm open** | Clark + Bridge | Ratings 4/5 logged · TODO **#8** live Focus pass |
 | **Phase 2.1** | Refinements post-feedback | Medium | **Next BUILD P1** | Bridge + Edge | WTC-2.0 import · scenario loop · TODO **#10** |
-| **Phase 2.2 UI** | TC cockpit hierarchy refactor (header/KPI/drawer) | High | **Shipped** | Bridge + Clarity | Badge `2.2-UI-AUDIT-2026-06-30` · three-zone top bar · signal drawer · zone labels |
-| **Phase 2.2 UI** | UI audit human + agent optimization | High | **Shipped** | Bridge + Clarity | `whinfell_ui_audit_chunked.md` · DD audit panel · flipchart state · failure taxonomy |
+| **Phase 2.2 UI** | TC cockpit hierarchy refactor (header/KPI/drawer) | High | **Shipped** | Bridge + Clarity | Badge `2.2-UX-FIX-2026-06-30` · three-zone top bar · signal drawer · docs drawer · KPI hovers |
+| **Phase 2.2 UI** | UI audit human + agent optimization | High | **Shipped** | Bridge + Clarity | `whinfell_ui_audit_chunked.md` · DD audit panel · coverage pill scoping fixed · RV data table |
+| **Desk ops** | GitHub Pages shareable desk (Wes / reviewers) | High | **Live** | Clark + Bridge | Public repo · auto-hydrate · no import step on HTTPS |
+| **Desk ops** | Desk User Manual + SQ3 Reference | High | **Shipped** | Clarity | Linked index in TC · raw GitHub paths for agents |
+| **Desk ops** | Hydration field-by-field audit | High | **Shipped** | Bridge | `data/hydration/hydration_log.json` · Explain drawer |
 | **Phase 2.2 Final** | Desk validation of browser blueprint | Medium | **Collecting** | Bridge | Blueprint + hydration UX + UI refactor shipped |
 | **2.2e** | Raw vendor CSV → WTM observation row transform | **High** | **Shipped** | Integration Dynamo | `whinfell_pipeline/raw_csv_transform.py` — auto on stage |
 | **Desk ops** | Operator Guide v1.5 (mission surfaces + ARCH-1 + Barchart normalize) | Medium | **Shipped** | Clarity | `Whinfell_Expanded_Operators_Guide_v1.5.md` |
@@ -95,19 +110,38 @@
 
 ## Desk preview — free GitHub Pages (Wes + Lovable, $0)
 
+**Live:** [https://clark-cmyk.github.io/Whinfell_BUILD_Cousins/](https://clark-cmyk.github.io/Whinfell_BUILD_Cousins/) · repo **public** · badge **`2.2-UX-FIX-2026-06-30`**.
+
 **Shipped:** `scripts/build_desk_preview.sh` · `scripts/publish_desk_preview.sh` · `.github/workflows/desk-preview-pages.yml` · TC auto-hydrate from co-hosted `latest.json` on HTTPS.
 
-**Clark one-time setup (~10 min, free):**
-1. Create **private** GitHub repo → `git remote add origin …` → push `main`
-2. Repo **Settings → Pages → Source: GitHub Actions**
-3. **Settings → Collaborators** → add **Wes** (and Lovable reviewer if needed)
-4. After first Actions run: copy Pages URL from **Settings → Pages**
+**Clark ongoing:** after AM chain → `bash scripts/publish_desk_preview.sh` (commit + push → auto-deploy ~1–2 min).
 
-**Clark ongoing:** after AM chain → `bash scripts/publish_desk_preview.sh` (commit + push → auto-deploy).
+**Wes / reviewers:** bookmark URL above · hard-refresh (`Cmd+Shift+R`) — no clone, no import, no terminal.
 
-**Wes:** bookmark Pages URL · log into GitHub once if private · hard-refresh — no repo clone, no local files.
+**Lovable:** same URL + `08_Deliverables/whinfell_ui_audit_chunked.md` · header **Docs** for full manual index.
 
-**Lovable:** same URL + `08_Deliverables/whinfell_ui_audit_chunked.md` · badge `2.2-UI-AUDIT-2026-06-30`.
+---
+
+## Report for TempLibby (June 30, 2026 — desk share + UX fix)
+
+**Live desk:** [clark-cmyk.github.io/Whinfell_BUILD_Cousins](https://clark-cmyk.github.io/Whinfell_BUILD_Cousins/) · build **`2.2-UX-FIX-2026-06-30`**.
+
+**Shipped this session:**
+
+| Area | What |
+|------|------|
+| **Share** | Public GitHub repo · Pages auto-deploy · hydration bundle co-hosted |
+| **Audit** | Field-by-field hydration log in pipeline + Explain drawer |
+| **Docs** | Desk User Manual v1.0 · SQ3 Reference · 70+ in-app doc links (Docs drawer) |
+| **UX fix** | Docs drawer works in Node Cockpit · Koyfin/Barchart in header · coverage pills scoped per area · RV chart contrast + table fallback · KPI hover definitions |
+
+**Tests:** `pytest test_transmission_control_cockpit.py` 3/3 · headless cockpit PASS.
+
+**Still open (Clark):** TODO **#7** fresh `WTM-Flows-Global.csv` · **#8** live Focus visual confirm · **#9** ARCH-4 core batch (optional).
+
+**Still open (BUILD):** TODO **#10** WTC-2.0 round-trip · **#11** Barchart collect noise (`collect_exit=1`).
+
+**Clark → TempLibby message:** *"Desk is shareable via URL with today's hydration. Docs + chart UX fixed on live Pages. Flows export still Jun 29 until #7."*
 
 ---
 
