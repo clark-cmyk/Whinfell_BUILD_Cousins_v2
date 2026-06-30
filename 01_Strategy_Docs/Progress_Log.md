@@ -29,7 +29,7 @@
 | **Desk fix** | Desktop launcher double-click (`.app` / `.command`) | **Fixed** | Hammer | June 28, 2026 |
 | **Session** | BUILD Cousins role adoption (`/arena /role /plan`) | **Complete** | BUILD Cousins | June 29, 2026 |
 | **Phase 1** | Master Data Dictionary v1.0 + naming rectification | **Complete · Verified** | Bridge + Precision | June 29, 2026 |
-| **Phase 2 prep** | Node cockpit data model spec | **Draft for review** | Blueprint | June 29, 2026 |
+| **Phase 2 prep** | Node cockpit data model spec | **Locked v0.2** | Blueprint | June 29, 2026 |
 
 ---
 
@@ -52,7 +52,7 @@
 | **BUILD_Cousins_Session_Activation.md** | **1.0** | **Role adoption record — June 29** |
 | **Master_Data_Dictionary_v1.0.md** | **1.0 Locked** | **Naming authority — June 29** |
 | **Whinfell_Phased_Development_Plan_v1.0.md** | **1.0** | **Phases 2–4 roadmap — P1 complete** |
-| **Phase2_Node_Cockpit_Data_Model.md** | **0.1 draft** | **Phase 2 prep — awaiting review** |
+| **Phase2_Node_Cockpit_Data_Model.md** | **0.2 locked** | **Decisions applied — implementation planning** |
 
 ---
 

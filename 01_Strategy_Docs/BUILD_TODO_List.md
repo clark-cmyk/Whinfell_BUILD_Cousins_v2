@@ -21,7 +21,7 @@
 | **Desk ops** | Document pre-stage rename in Operator Guide v1.5 | Medium | **Open** | Clarity | `normalize_whinfell_drop.sh` + canonical name table |
 | **Desk ops** | Clark first live CSV drop — report to TempLibby | High | **In progress** | Bridge | Re-test with Master DD v1.0 canonical names |
 | **Phase 1** | Master Data Dictionary v1.0 + naming rectification | **High** | **Complete · Verified** | Bridge + Precision | 104 tests PASS · 0 naming violations · `194506a` |
-| **Phase 2 prep** | Node cockpit data model spec | High | **Draft for review** | Blueprint | `01_Strategy_Docs/Phase2_Node_Cockpit_Data_Model.md` · no code yet |
+| **Phase 2 prep** | Node cockpit data model spec | High | **Locked v0.2** | Blueprint | `Phase2_Node_Cockpit_Data_Model.md` · decisions applied · implementation next |
 | **Phase 2** | Node architecture redesign (5 trading cockpits) | High | **Planned** | Bridge + Edge + Clarity | Blocked on data model sign-off + desk validation |
 | **Phase 3** | TC interface (full-screen Why, flip nav, margin module) | Medium | **Planned** | Clarity + Safeguard | Blocked on Phase 2 |
 | **Phase 4** | Validation & reliability gate | Medium | **Planned** | Hammer + Precision | After Phase 3 |
