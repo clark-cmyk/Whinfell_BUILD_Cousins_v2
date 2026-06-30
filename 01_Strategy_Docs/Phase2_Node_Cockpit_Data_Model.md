@@ -228,16 +228,20 @@ Registered in `data_dictionary.yaml` under `rv_series` (Phase 2 follow-up). Each
 | `history_key` | string | Key into source artifact (e.g. spread symbol, asset pair) |
 | `horizons_supported` | array | `[1m, 3m, 6m, 12m, 3y]` — all five required at full build |
 
-**Illustrative `quartile_direction` assignments (to lock in Master DD):**
+**Authoritative catalog:** `whinfell_pipeline/data_dictionary.yaml` → `rv_series.series` (locked June 29, 2026). Seed entries:
 
-| `series_id` | `node_id` | `quartile_direction` | Rationale |
+| `series_id` | `node_id` | `quartile_direction` | `primary` |
 |-------------|-----------|----------------------|-----------|
-| `btc_calendar_bt_near_deferred` | `basis` | `higher_is_richer` | Higher calendar % = richer contango |
-| `hy_oas_proxy` | `credit` | `higher_is_cheaper` | Wider OAS = cheaper/stressed credit |
-| `hyg_lqd_ratio` | `credit` | `higher_is_richer` | Higher ratio = risk-on confirmation |
-| `iwm_spy_ratio` | `breadth` | `higher_is_richer` | Higher breadth participation |
-| `ibit_qqq_beta_spread` | `highbeta` | `higher_is_richer` | Higher beta spread = BTC leading |
-| `usgg2y10y` | `liquidity` | `higher_is_richer` | Steeper curve |
+| `usgg2y10y` | `liquidity` | `higher_is_richer` | yes |
+| `sofr_ois_spread` | `liquidity` | `higher_is_cheaper` | no |
+| `hy_oas_proxy` | `credit` | `higher_is_cheaper` | yes |
+| `hyg_lqd_ratio` | `credit` | `higher_is_richer` | no |
+| `iwm_spy_ratio` | `breadth` | `higher_is_richer` | yes |
+| `xlf_xlu_relative` | `breadth` | `higher_is_richer` | no |
+| `ibit_qqq_beta_spread` | `highbeta` | `higher_is_richer` | yes |
+| `btc_spy_corr` | `highbeta` | `higher_is_richer` | no |
+| `btc_calendar_bt_near_deferred` | `basis` | `higher_is_richer` | yes |
+| `btc_basis_vs_refs` | `basis` | `higher_is_richer` | no |
 
 ### 6.2 Per-node cockpit structure (`rv_basis`)
 
@@ -617,8 +621,8 @@ When this model is locked, register in `data_dictionary.yaml`:
 
 | # | Topic | Question | Proposed default |
 |---|-------|----------|------------------|
-| A | **Score docs per node** | Only Credit Confirmation has a full weighted spec today. Liquidity, Breadth, High-Beta, Basis need equivalent score-calculation docs or interim weight tables. | Bridge drafts interim weights from TC component_inputs; Blueprint signs off per node. |
-| B | **`rv_series` catalog** | Exact `series_id` list and `quartile_direction` per node not yet registered in Master DD. | Lock table in §6.1 as v1 seed; extend via YAML only. |
+| A | **Score docs per node** | ✅ **Locked** — `04_Score_Calculation/Phase2_Interim_Node_Score_Weights.md` + `node_score_weights` in Master DD. Credit remains C1 authoritative. | Promote to full v1.0 docs post-MVP. |
+| B | **`rv_series` catalog** | ✅ **Locked** — `rv_series` block in `data_dictionary.yaml` (10 series, all five nodes). | Extend via YAML only; no ad-hoc series IDs in pipeline. |
 | C | **History granularity** | Barchart history is daily; 1M window = 22 trading days — confirm desk uses calendar vs trading-day count. | Trading-day count (locked in §6.2); flag if Koyfin series differ. |
 | D | **Multiple active series** | When a node has 2+ RV series (e.g. credit: OAS + HYG/LQD), which drives `relative_value.rationale`? | Primary series per node in `rv_series.primary: true`; operator can switch `active_series_id`. |
 | E | **Fallback threshold** | How many `component_inputs` required before switching from weighted score to `horizon_net_fallback`? | Locked: **< 2 components** triggers fallback (see §1). |

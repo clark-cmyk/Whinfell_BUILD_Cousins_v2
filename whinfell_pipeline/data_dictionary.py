@@ -220,6 +220,46 @@ def scan_operator_violations(repo_root: Path | None = None, data: dict[str, Any]
     return violations
 
 
+def get_rv_series_registry(data: dict[str, Any] | None = None) -> dict[str, Any]:
+    dd = data or load_data_dictionary()
+    return dict(dd.get("rv_series") or {})
+
+
+def rv_series_catalog(data: dict[str, Any] | None = None) -> dict[str, dict[str, Any]]:
+    """Return series_id → spec from Master DD rv_series.series."""
+    reg = get_rv_series_registry(data)
+    raw = reg.get("series") or {}
+    return {str(k): dict(v) for k, v in raw.items()}
+
+
+def rv_series_for_node(node_id: str, data: dict[str, Any] | None = None) -> list[dict[str, Any]]:
+    """All RV series owned by a ladder node_id."""
+    out: list[dict[str, Any]] = []
+    for sid, spec in rv_series_catalog(data).items():
+        if spec.get("node_id") == node_id:
+            out.append({"series_id": sid, **spec})
+    return out
+
+
+def rv_series_primary(node_id: str, data: dict[str, Any] | None = None) -> str | None:
+    for row in rv_series_for_node(node_id, data):
+        if row.get("primary"):
+            return str(row["series_id"])
+    rows = rv_series_for_node(node_id, data)
+    return str(rows[0]["series_id"]) if rows else None
+
+
+def get_node_score_weights(data: dict[str, Any] | None = None) -> dict[str, Any]:
+    dd = data or load_data_dictionary()
+    return dict(dd.get("node_score_weights") or {})
+
+
+def node_score_components(node_id: str, data: dict[str, Any] | None = None) -> list[dict[str, Any]]:
+    nodes = (get_node_score_weights(data).get("nodes") or {})
+    spec = nodes.get(node_id) or {}
+    return list(spec.get("components") or [])
+
+
 def badge_default_payload(data: dict[str, Any] | None = None) -> dict[str, str]:
     info = master_dictionary_info(data)
     return {

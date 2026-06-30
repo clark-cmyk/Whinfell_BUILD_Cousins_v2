@@ -453,6 +453,9 @@ canonical_assets:
   dxy_continuous:
     class: fx_futures
     sources: {barchart: DXY00}
+  btc_near_contract:
+    class: crypto_futures
+    sources: {koyfin: null, barchart: BTM26}
 
   # China access
   ashr:
@@ -671,6 +674,178 @@ classification:
     - barchart_curves.all
     - barchart_curve_history
     - koyfin_watchlists.WTM-Import-Curves
+
+# ---------------------------------------------------------------------------
+# RV / basis series registry (Phase 2 — quartile_direction per series)
+# ---------------------------------------------------------------------------
+rv_series:
+  version: "1.0"
+  status: Locked
+  date: "2026-06-29"
+  lookback_trading_days:
+    1m: 22
+    3m: 63
+    6m: 126
+    12m: 252
+    3y: 756
+  quartile_direction_values: [higher_is_richer, higher_is_cheaper]
+  richness_labels: [cheap, fair, rich, extreme]
+  series:
+    usgg2y10y:
+      node_id: liquidity
+      label: "US 2s10s spread"
+      quartile_direction: higher_is_richer
+      unit: pct
+      primary: true
+      history_source: koyfin_dated_series
+      history_key: USGG2Y10Y
+      horizons_supported: [1m, 3m, 6m, 12m, 3y]
+      canonical_assets: [us10y]
+    sofr_ois_spread:
+      node_id: liquidity
+      label: "SOFR front-end stress"
+      quartile_direction: higher_is_cheaper
+      unit: bps
+      primary: false
+      history_source: koyfin_dated_series
+      history_key: SOFR
+      horizons_supported: [1m, 3m, 6m, 12m, 3y]
+      canonical_assets: [sofr]
+    hy_oas_proxy:
+      node_id: credit
+      label: "HY OAS proxy"
+      quartile_direction: higher_is_cheaper
+      unit: bps
+      primary: true
+      history_source: koyfin_dated_series
+      history_key: HYOAS
+      horizons_supported: [1m, 3m, 6m, 12m, 3y]
+      canonical_assets: [hyg]
+    hyg_lqd_ratio:
+      node_id: credit
+      label: "HYG / LQD ratio"
+      quartile_direction: higher_is_richer
+      unit: ratio
+      primary: false
+      history_source: koyfin_dated_series
+      history_key: HYG_LQD
+      horizons_supported: [1m, 3m, 6m, 12m, 3y]
+      canonical_assets: [hyg, jaaa]
+    iwm_spy_ratio:
+      node_id: breadth
+      label: "IWM / SPY participation"
+      quartile_direction: higher_is_richer
+      unit: ratio
+      primary: true
+      history_source: koyfin_dated_series
+      history_key: IWM_SPY
+      horizons_supported: [1m, 3m, 6m, 12m, 3y]
+      canonical_assets: [spy]
+    xlf_xlu_relative:
+      node_id: breadth
+      label: "XLF vs XLU relative"
+      quartile_direction: higher_is_richer
+      unit: ratio
+      primary: false
+      history_source: koyfin_dated_series
+      history_key: XLF_XLU
+      horizons_supported: [1m, 3m, 6m, 12m, 3y]
+      canonical_assets: [xlre]
+    ibit_qqq_beta_spread:
+      node_id: highbeta
+      label: "IBIT vs QQQ beta spread"
+      quartile_direction: higher_is_richer
+      unit: ratio
+      primary: true
+      history_source: koyfin_dated_series
+      history_key: IBIT_QQQ
+      horizons_supported: [1m, 3m, 6m, 12m, 3y]
+      canonical_assets: [btc_vehicle_ibit, qqq]
+    btc_spy_corr:
+      node_id: highbeta
+      label: "BTC / SPY correlation"
+      quartile_direction: higher_is_richer
+      unit: ratio
+      primary: false
+      history_source: koyfin_dated_series
+      history_key: BTC_SPY_CORR
+      horizons_supported: [1m, 3m, 6m, 12m, 3y]
+      canonical_assets: [btc_spot_usd, spy]
+    btc_calendar_bt_near_deferred:
+      node_id: basis
+      label: "BT near-deferred calendar"
+      quartile_direction: higher_is_richer
+      unit: pct
+      primary: true
+      history_source: barchart_spread_history
+      history_key: BTM26
+      horizons_supported: [1m, 3m, 6m, 12m, 3y]
+      canonical_assets: [btc_near_contract]
+    btc_basis_vs_refs:
+      node_id: basis
+      label: "Basis vs ref band"
+      quartile_direction: higher_is_richer
+      unit: pct
+      primary: false
+      history_source: barchart_spread_history
+      history_key: BTC_BASIS_REFS
+      horizons_supported: [1m, 3m, 6m, 12m, 3y]
+      canonical_assets: [btc_near_contract, btc_vehicle_ibit]
+
+# ---------------------------------------------------------------------------
+# Node composite score weights (Phase 2 interim — non-credit nodes)
+# ---------------------------------------------------------------------------
+node_score_weights:
+  version: "1.0-interim"
+  status: Locked
+  date: "2026-06-29"
+  design:
+    base_score: 50
+    clamp_min: 0
+    clamp_max: 100
+    direction_multipliers: {bullish: 1.0, bearish: -1.0, mixed: 0.5, unavailable: 0}
+    fallback_min_components: 2
+    fallback_field: horizon_net
+    interim_doc: "04_Score_Calculation/Phase2_Interim_Node_Score_Weights.md"
+    authoritative_credit_doc: "04_Score_Calculation/Whinfell_Credit_Confirmation_Score_Logic.md"
+  nodes:
+    liquidity:
+      display_name: "Liquidity & Rates"
+      components:
+        - {id: usgg2y10y_direction, weight_pct: 30, asset_ids: [us10y], signal: "2s10s 5D+20D direction"}
+        - {id: sofr_funding_stress, weight_pct: 25, asset_ids: [sofr], signal: "SOFR / front-end funding impulse"}
+        - {id: us10y_impulse, weight_pct: 20, asset_ids: [us10y], signal: "10Y yield 3M change"}
+        - {id: dxy_liquidity, weight_pct: 15, asset_ids: [dxy_continuous], signal: "DXY 5D+20D (liquidity conditions)"}
+        - {id: real_rates_proxy, weight_pct: 10, asset_ids: [us10y], signal: "Real rates / duration pressure proxy"}
+    breadth:
+      display_name: "Equity Breadth"
+      components:
+        - {id: iwm_spy_ratio, weight_pct: 30, asset_ids: [spy], signal: "IWM/SPY ratio 5D+20D"}
+        - {id: equal_cap_participation, weight_pct: 25, asset_ids: [spy], signal: "Equal-weight vs cap-weight participation"}
+        - {id: xlf_xlu_relative, weight_pct: 20, asset_ids: [xlre], signal: "Financials vs defensives 5D+20D"}
+        - {id: cyclical_participation, weight_pct: 15, asset_ids: [spy, qqq], signal: "Cyclicals keeping pace with index"}
+        - {id: sector_breadth, weight_pct: 10, asset_ids: [spy], signal: "Multi-sector participation breadth"}
+    highbeta:
+      display_name: "High-Beta / BTC"
+      components:
+        - {id: ibit_qqq_relative, weight_pct: 30, asset_ids: [btc_vehicle_ibit, qqq], signal: "IBIT vs QQQ 5D+20D"}
+        - {id: ibit_spy_beta, weight_pct: 25, asset_ids: [btc_vehicle_ibit, spy], signal: "IBIT beta transmission vs SPY"}
+        - {id: btc_spot_momentum, weight_pct: 20, asset_ids: [btc_spot_usd], signal: "BTC spot 5D+20D momentum"}
+        - {id: btc_spy_decoupling, weight_pct: 15, asset_ids: [btc_spot_usd, spy], signal: "BTC/SPY correlation trend"}
+        - {id: eth_btc_confirm, weight_pct: 10, asset_ids: [eth_spot_usd, btc_spot_usd], signal: "ETH/BTC high-beta confirmation"}
+    basis:
+      display_name: "Basis & Term Structure"
+      components:
+        - {id: btc_calendar_level, weight_pct: 30, asset_ids: [btc_near_contract], signal: "Near-deferred calendar level vs refs"}
+        - {id: btc_calendar_direction, weight_pct: 25, asset_ids: [btc_near_contract], signal: "Calendar spread 5D+20D direction"}
+        - {id: contango_stability, weight_pct: 20, asset_ids: [btc_near_contract], signal: "Roll / contango stability"}
+        - {id: basis_vs_ref_band, weight_pct: 15, asset_ids: [btc_near_contract], signal: "Spread vs ref_low/mid/high"}
+        - {id: ibit_futures_basis_gap, weight_pct: 10, asset_ids: [btc_vehicle_ibit, btc_near_contract], signal: "ETF vs futures basis consistency"}
+    credit:
+      display_name: "Credit Confirmation"
+      authoritative: true
+      doc: "04_Score_Calculation/Whinfell_Credit_Confirmation_Score_Logic.md"
+      component_count: 8
 
 # ---------------------------------------------------------------------------
 # Transmission output blocks (hydration bundle + WTM export extensions)

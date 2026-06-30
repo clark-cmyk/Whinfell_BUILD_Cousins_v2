@@ -47,6 +47,16 @@ Full folder map: `project_structure` in YAML.
 
 ---
 
+## 2b. Phase 2 extensions (locked June 29, 2026)
+
+| Block | Location | Purpose |
+|-------|----------|---------|
+| `rv_series` | `data_dictionary.yaml` | Per-series `quartile_direction`, history keys, primary flag |
+| `node_score_weights` | `data_dictionary.yaml` | Interim composite score weights per ladder node |
+| Interim score doc | `04_Score_Calculation/Phase2_Interim_Node_Score_Weights.md` | Human-readable weight tables (non-credit nodes) |
+
+---
+
 ## 3. File naming conventions
 
 **Staged contract:**

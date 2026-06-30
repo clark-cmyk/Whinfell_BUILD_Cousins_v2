@@ -20,13 +20,19 @@ from whinfell_pipeline.data_dictionary import (
     get_canonical_filename_patterns,
     get_column_mappings,
     get_json_field_map,
+    get_node_score_weights,
     get_project_structure,
+    get_rv_series_registry,
     get_ticker_standards,
     get_watchlist_names,
+    node_score_components,
     normalize_glob_rules,
     legacy_alias,
     load_data_dictionary,
     master_dictionary_info,
+    rv_series_catalog,
+    rv_series_for_node,
+    rv_series_primary,
     snapshot_field_map,
     source_system_ids,
 )
@@ -50,6 +56,8 @@ class TestDataDictionary(unittest.TestCase):
             "json_structures",
             "column_mappings",
             "ticker_standards",
+            "rv_series",
+            "node_score_weights",
         ):
             self.assertIn(key, dd, key)
         self.assertEqual(get_project_structure()["repo_root"], "~/Desktop/Whinfell_BUILD_Cousins")
@@ -108,6 +116,32 @@ class TestDataDictionary(unittest.TestCase):
         fm = snapshot_field_map()
         self.assertEqual(fm["Last Price"], "last_price")
         self.assertEqual(fm["Volatility 1M"], "vol_1m")
+
+    def test_rv_series_registry_locked(self):
+        reg = get_rv_series_registry()
+        self.assertEqual(reg["version"], "1.0")
+        self.assertEqual(reg["status"], "Locked")
+        catalog = rv_series_catalog()
+        self.assertIn("btc_calendar_bt_near_deferred", catalog)
+        self.assertEqual(catalog["hy_oas_proxy"]["quartile_direction"], "higher_is_cheaper")
+        self.assertEqual(catalog["btc_calendar_bt_near_deferred"]["quartile_direction"], "higher_is_richer")
+        self.assertEqual(rv_series_primary("basis"), "btc_calendar_bt_near_deferred")
+        basis_rows = rv_series_for_node("basis")
+        self.assertGreaterEqual(len(basis_rows), 1)
+        horizons = reg["lookback_trading_days"]
+        self.assertEqual(horizons["3m"], 63)
+
+    def test_node_score_weights_interim(self):
+        nsw = get_node_score_weights()
+        self.assertEqual(nsw["status"], "Locked")
+        liq = node_score_components("liquidity")
+        self.assertEqual(len(liq), 5)
+        self.assertEqual(sum(c["weight_pct"] for c in liq), 100)
+        for node_id in ("breadth", "highbeta", "basis"):
+            comps = node_score_components(node_id)
+            self.assertEqual(len(comps), 5)
+            self.assertEqual(sum(c["weight_pct"] for c in comps), 100)
+        self.assertEqual(nsw["design"]["fallback_min_components"], 2)
 
 
 if __name__ == "__main__":
