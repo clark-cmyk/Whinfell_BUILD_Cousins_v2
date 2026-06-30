@@ -60,6 +60,23 @@ class TestCsvDownloadStage(unittest.TestCase):
             self.assertEqual(meta_data["operator"], "test")
             self.assertEqual(meta_data["status"], "staged")
 
+    def test_stage_flows_wide_csv_without_transform(self):
+        flows_src = REPO_ROOT / "whinfell_pipeline" / "examples" / "flows" / "WTM-Flows-Global-head.csv"
+        self.assertTrue(flows_src.is_file(), f"missing fixture {flows_src}")
+        with tempfile.TemporaryDirectory() as tmp:
+            downloads = Path(tmp) / "downloads"
+            staged_root = Path(tmp) / "staged_raw"
+            downloads.mkdir()
+            src = downloads / "flows_20260629_1017.csv"
+            src.write_text(flows_src.read_text(encoding="utf-8"), encoding="utf-8")
+            cmd_init(staged_root)
+            fr = stage_file(src, staged_root, operator="test")
+            self.assertEqual(fr.status, "staged", fr.errors)
+            self.assertEqual(fr.dataset, "flows")
+            dest = staged_dataset_dir(staged_root, SOURCE_KOYFIN, "flows") / src.name
+            self.assertTrue(dest.exists())
+            self.assertIn("Date", dest.read_text(encoding="utf-8"))
+
     def test_quarantine_bad_filename(self):
         with tempfile.TemporaryDirectory() as tmp:
             downloads = Path(tmp) / "downloads"

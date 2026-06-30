@@ -52,6 +52,14 @@ class TestTransmissionControlCockpit(unittest.TestCase):
             'id="basisSummaryStrip"',
             'id="basisTacticalBanner"',
             "__creditMissionProbe",
+            "__liquidityMissionProbe",
+            "__breadthMissionProbe",
+            "__highbetaMissionProbe",
+            "function runMissionSurfaceProbe",
+            'id="btnTheme"',
+            "function applyConsoleTheme",
+            "function initConsoleTheme",
+            "'liquidity'",
             'id="cockpitHorizonRow"',
             "header-instrument-stack",
             "node-coverage-banner--status-rail",
@@ -59,7 +67,10 @@ class TestTransmissionControlCockpit(unittest.TestCase):
             "basis-tactical-banner",
             "basis-implication-rail",
             "operator-actions-strip",
-            "2.2-MISSION-2026-06-29",
+            "2.2-DOCS-FULL-2026-06-30",
+            'id="btnDeskDocs"',
+            "DESK_DOC_CATALOG",
+            'id="deskDocsPanel"',
             "function buildSignalDiagnostics",
             "why-list--labeled",
             "hydration-session-degraded",
@@ -74,6 +85,10 @@ class TestTransmissionControlCockpit(unittest.TestCase):
             ".funds-flow-etf-row",
             ".funds-flow-degrade-banner",
             ".funds-flow-verdict-supportive",
+            'id="ingestProvenanceAudit"',
+            "function renderIngestProvenanceAudit",
+            "ingest-audit-table",
+            "ingest_provenance",
         ):
             self.assertIn(marker, text, f"missing {marker}")
 
@@ -108,11 +123,17 @@ class TestTransmissionControlCockpit(unittest.TestCase):
             self.assertIn("railRendered", proc.stdout)
             self.assertIn("fundsFlowCardRendered", proc.stdout)
             self.assertIn("creditMissionSurface", proc.stdout)
+            self.assertIn("creditRvHorizonFallback", proc.stdout)
+            self.assertIn("liquidityMissionSurface", proc.stdout)
+            self.assertIn("breadthMissionSurface", proc.stdout)
+            self.assertIn("highbetaMissionSurface", proc.stdout)
+            self.assertIn("themeToggle", proc.stdout)
             self.assertIn("Composite fallback", proc.stdout)
             self.assertIn("horizon-net fallback", proc.stdout)
             self.assertIn("tacticalLead", proc.stdout)
             self.assertIn("tacticalSuffix", proc.stdout)
             self.assertIn("Tight + China Caution", proc.stdout)
+            self.assertIn("ingestAudit", proc.stdout)
 
 
 if __name__ == "__main__":

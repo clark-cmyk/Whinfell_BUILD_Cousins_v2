@@ -14,6 +14,7 @@ from whinfell_pipeline.node_cockpits import CANONICAL_NODE_IDS, build_node_cockp
 from whinfell_pipeline.rv_history import (
     default_dated_series_path,
     ensure_dated_series_fixture,
+    load_koyfin_rv_series,
     load_rv_history,
 )
 
@@ -44,6 +45,16 @@ class TestRvHistory(unittest.TestCase):
                 self.assertIn("percentile", horizons[hz])
                 self.assertIn("quartile", horizons[hz])
                 self.assertGreaterEqual(horizons[hz]["n_observations"], 2)
+
+    def test_load_koyfin_rv_series_from_quarantine_wide_sample(self):
+        sample = REPO_ROOT / "staged_raw/quarantine/20260628/rates_20260628_1119.csv"
+        if not sample.is_file():
+            self.skipTest("rates wide sample missing")
+        from whinfell_pipeline.rv_history import _series_from_wide_csv
+
+        series = _series_from_wide_csv(sample)
+        self.assertIn("SOFR", series)
+        self.assertGreaterEqual(len(series["SOFR"]), 100)
 
     def test_build_node_cockpits_uses_spread_history_param(self):
         history = load_rv_history(REPO_ROOT)

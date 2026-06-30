@@ -612,7 +612,7 @@ function testUiAuditProbe(t, bundle) {
   }
   const result = t.__uiAuditProbe(bundle);
   if (result.error) throw new Error(result.error);
-  if (result.consoleBuild !== '2.2-DOCS-LINKS-2026-06-30') {
+  if (result.consoleBuild !== '2.2-DOCS-FULL-2026-06-30') {
     throw new Error(`unexpected console build: ${result.consoleBuild}`);
   }
   if (!result.hasFlipchartState) {

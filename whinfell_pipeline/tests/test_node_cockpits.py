@@ -48,6 +48,23 @@ class TestNodeCockpits(unittest.TestCase):
             self.assertIn("rv_basis", cockpit)
             self.assertGreaterEqual(len(cockpit["implementations"]), 1)
 
+    def test_liquidity_can_use_weighted_components_with_history(self):
+        from whinfell_pipeline.rv_history import ensure_dated_series_fixture, load_rv_history
+
+        ensure_dated_series_fixture(REPO_ROOT, sessions=120)
+        history = load_rv_history(REPO_ROOT)
+        cockpits = build_node_cockpits(
+            global_payload={"whinfell_score": 58, "transmission_state": "stressed"},
+            suggested_tracer=self._sample_tracer(),
+            as_of=__import__("datetime").datetime(2026, 6, 30, tzinfo=__import__("datetime").timezone.utc),
+            freshness_status="fresh",
+            spread_history=history,
+        )
+        liq = cockpits["liquidity"]
+        live = [c for c in liq["component_inputs"] if c.get("source") == "rv_history"]
+        if live:
+            self.assertIn(liq["composite_score_source"], ("weighted_components", "horizon_net_fallback"))
+
     def test_credit_uses_horizon_fallback(self):
         cockpits = build_node_cockpits(
             global_payload={"whinfell_score": 50},
@@ -68,6 +85,7 @@ class TestNodeCockpits(unittest.TestCase):
             },
             as_of=__import__("datetime").datetime(2026, 6, 27, tzinfo=__import__("datetime").timezone.utc),
             freshness_status="fresh",
+            spread_history={},
         )
         weakest = [nid for nid, c in cockpits.items() if c["is_weakest_link"]]
         self.assertEqual(weakest, ["liquidity"])
@@ -128,6 +146,18 @@ class TestNodeCockpits(unittest.TestCase):
         self.assertIn("RV Direction: higher_is_richer", block)
         self.assertIn("Key Observation:", block)
 
+    def test_export_block_includes_funds_flow_lines(self):
+        cockpits = build_node_cockpits(
+            global_payload={"whinfell_score": 58, "transmission_state": "stressed"},
+            suggested_tracer=self._sample_tracer(),
+            as_of=__import__("datetime").datetime(2026, 6, 27, tzinfo=__import__("datetime").timezone.utc),
+            freshness_status="fresh",
+        )
+        block = build_node_cockpit_export_block(cockpits["credit"])
+        self.assertIn("Funds Flow Verdict:", block)
+        self.assertIn("Funds Flow Status:", block)
+        self.assertIn("Funds Flow Summary:", block)
+
     def test_wtm_export_v22_includes_all_nodes(self):
         cockpits = build_node_cockpits(
             global_payload={"whinfell_score": 58, "transmission_state": "stressed", "regime_tag": "Test"},
@@ -149,6 +179,7 @@ class TestNodeCockpits(unittest.TestCase):
         self.assertIn("node_cockpits", bundle)
         self.assertIn("cockpit_context", bundle)
         self.assertIn("wtm_export_v22", bundle)
+        self.assertIn("ingest_provenance", bundle)
         self.assertEqual(set(bundle["node_cockpits"].keys()), set(CANONICAL_NODE_IDS))
         self.assertIn(DECISION_EXPORT_FORMAT_V22, bundle["wtm_export_v22"])
         self.assertIn("WTM EXPORT v2.1", bundle["wtm_export_v21"])

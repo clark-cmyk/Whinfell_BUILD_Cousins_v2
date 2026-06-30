@@ -2605,9 +2605,9 @@ window.DICTIONARY_BADGE_DEFAULT = {
             <p><strong class="text-slate-200">Track toggle:</strong> Both · Global · China filters visible clusters without hiding intake fields.</p>
             <p><strong class="text-slate-200">WTM EXPORT v2.1 (locked):</strong> Canonical handshake — Global core + China SQ3 + optional Signal Tracer lines + provenance (Snapshot ID, Lineage Hash, Data As Of, Freshness). Spec: <a href="https://github.com/clark-cmyk/Whinfell_BUILD_Cousins/blob/main/whinfell_pipeline/WTM_EXPORT_v2.1_SPEC.md" target="_blank" rel="noopener noreferrer" class="desk-doc-link">WTM_EXPORT_v2.1_SPEC.md</a> · <a href="https://github.com/clark-cmyk/Whinfell_BUILD_Cousins/blob/main/whinfell_pipeline/WTM_EXPORT_v2.2_SPEC.md" target="_blank" rel="noopener noreferrer" class="desk-doc-link">v2.2</a>.</p>
             <p><strong class="text-slate-200">SQ3 (China track):</strong> Policy STR. (35%) + State IMP. (35%) + Growth IMP. (30%). Full math + dual-track gate: <a href="https://github.com/clark-cmyk/Whinfell_BUILD_Cousins/blob/main/08_Deliverables/Whinfell_SQ3_Reference_v1.0.md" target="_blank" rel="noopener noreferrer" class="desk-doc-link">SQ3 Reference v1.0</a>.</p>
-            <p><strong class="text-slate-200">Daily CSV chain (Comet runbook):</strong> <code class="text-[9px]">python3 run_csv_download.py daily --operator desk --window 24h --hydrate-output data/hydration/latest.json</code> — copies Downloads → <code class="text-[9px]">staged_raw/</code> (never moves), writes <code class="text-[9px]">.meta.json</code> sidecars, quarantines bad files, emits manifests, then <code class="text-[9px]">collect</code> → Parquet and <code class="text-[9px]">hydrate</code>. Manual steps: <code class="text-[9px]">init</code> · <code class="text-[9px]">stage</code> · <code class="text-[9px]">collect</code> · <code class="text-[9px]">hydrate</code>. Alt: <code class="text-[9px]">python -m whinfell_pipeline.ingest --staged</code>.</p>
-            <p><strong class="text-slate-200">Daily hydration (Comet runbook):</strong> <code class="text-[9px]">python3 run_csv_download.py daily --hydrate-output data/hydration/latest.json</code> then <strong>Import Latest Hydration Bundle</strong> (select that file). Status chip under the button confirms last import. Auto-populates Global intake, China policy, BTC bias + L3 basis when present, and tracer <em>suggestions</em> — never written to the horizon matrix until you Accept.</p>
-            <p><strong class="text-slate-200">Hybrid Signal Tracer (2.2b):</strong> Import surfaces amber <strong>Suggestions Pending</strong> panel — <strong>Accept</strong> writes marks and shows green <strong>Operator Confirmed</strong>; <strong>Dismiss</strong> clears suggestions only. <strong>Manual Override</strong> or horizon edits after hydration set amber matrix chrome, command bar <strong>Override</strong>, and provenance <strong>Manual override active</strong>. Intake/gross/L3-only edits flip command bar <strong>Override</strong> without changing tracer flow. Matrix never auto-fills on import (<code class="text-[9px]">confirm_required</code>).</p>
+            <p><strong class="text-slate-200">Daily CSV chain (Comet runbook):</strong> <code class="text-[9px]">python3 run_csv_download.py daily --operator desk --window 24h --hydrate-output data/hydration/latest.json</code> — copies Downloads → <code class="text-[9px]">staged_raw/</code> (never moves), writes <code class="text-[9px]">.meta.json</code> sidecars, quarantines bad files, emits manifests, then <code class="text-[9px]">collect</code> → Parquet and <code class="text-[9px]">hydrate</code>. Runbooks: <a href="https://github.com/clark-cmyk/Whinfell_BUILD_Cousins/blob/main/08_Deliverables/Whinfell_Data_Update_Simple_Guide.md" target="_blank" rel="noopener noreferrer" class="desk-doc-link">Simple data update</a> · <a href="https://github.com/clark-cmyk/Whinfell_BUILD_Cousins/blob/main/08_Deliverables/Perplexity_Comet_Collection_Instructions.md" target="_blank" rel="noopener noreferrer" class="desk-doc-link">Comet collection</a> · <a href="https://github.com/clark-cmyk/Whinfell_BUILD_Cousins/blob/main/08_Deliverables/Fast_CSV_Collect_Guide.md" target="_blank" rel="noopener noreferrer" class="desk-doc-link">Fast CSV collect</a>.</p>
+            <p><strong class="text-slate-200">Daily hydration (Comet runbook):</strong> <code class="text-[9px]">python3 run_csv_download.py daily --hydrate-output data/hydration/latest.json</code> then <strong>Import Latest Hydration Bundle</strong> (select that file). Status chip under the button confirms last import. Auto-populates Global intake, China policy, BTC bias + L3 basis when present, and tracer <em>suggestions</em> — never written to the horizon matrix until you Accept. Field audit: header <strong>Explain</strong> → Hydration field log · <a href="https://github.com/clark-cmyk/Whinfell_BUILD_Cousins/blob/main/08_Deliverables/Whinfell_Desk_User_Manual_v1.0.md" target="_blank" rel="noopener noreferrer" class="desk-doc-link">Desk User Manual §3</a>.</p>
+            <p><strong class="text-slate-200">Hybrid Signal Tracer (2.2b):</strong> Import surfaces amber <strong>Suggestions Pending</strong> panel — <strong>Accept</strong> writes marks and shows green <strong>Operator Confirmed</strong>; <strong>Dismiss</strong> clears suggestions only. <strong>Manual Override</strong> or horizon edits after hydration set amber matrix chrome, command bar <strong>Override</strong>, and provenance <strong>Manual override active</strong>. Intake/gross/L3-only edits flip command bar <strong>Override</strong> without changing tracer flow. Matrix never auto-fills on import (<code class="text-[9px]">confirm_required</code>). Spec: <a href="https://github.com/clark-cmyk/Whinfell_BUILD_Cousins/blob/main/08_Deliverables/Whinfell_Phase2_Signal_Intelligence_Spec.md" target="_blank" rel="noopener noreferrer" class="desk-doc-link">Phase 2 signal intelligence</a>.</p>
             <p><strong class="text-slate-200">Progressive disclosure:</strong> Center pane keeps prompts collapsed until expanded; Gross Risk posture/capital/handover, shock config, and snapshots are in collapsible panels to reduce default density.</p>
             <p><strong class="text-slate-200">Freshness &amp; provenance:</strong> Command-bar chip + Data Provenance panel show snapshot ID, lineage hash, source channel, data as-of, and freshness (fresh &lt;4h · aging 4–24h · stale &gt;24h). Manual edits flag override until re-import.</p>
             <p><strong class="text-slate-200">Gate:</strong> Global &lt;50 blocks BTC. SQ3 &lt;50 flags dual-track impairment. See <a href="https://github.com/clark-cmyk/Whinfell_BUILD_Cousins/blob/main/08_Deliverables/Whinfell_Desk_User_Manual_v1.0.md" target="_blank" rel="noopener noreferrer" class="desk-doc-link">Desk User Manual</a>.</p>
@@ -2906,7 +2906,7 @@ const STORAGE_KEY = 'whinfell_transmission_control_v7';
 const LEGACY_KEYS = ['whinfell_transmission_control_v1', 'whinfell_transmission_control_v0', 'whinfell_operator_v1_1'];
 const STATE_VERSION = 7;
 /** Bump when operator-console UX changes — visible in header for reload verification. */
-const TC_CONSOLE_BUILD = '2.2-DOCS-LINKS-2026-06-30';
+const TC_CONSOLE_BUILD = '2.2-DOCS-FULL-2026-06-30';
 const DESK_GITHUB_BLOB = 'https://github.com/clark-cmyk/Whinfell_BUILD_Cousins/blob/main/';
 const DESK_GITHUB_RAW = 'https://raw.githubusercontent.com/clark-cmyk/Whinfell_BUILD_Cousins/main/';
 const DESK_PAGES_URL = 'https://clark-cmyk.github.io/Whinfell_BUILD_Cousins/';
@@ -2920,10 +2920,21 @@ const DESK_DOC_CATALOG = [
     { label: 'GitHub repo', path: DESK_REPO_URL, external: true },
     { label: 'Latest hydration JSON', path: DESK_PAGES_URL + 'data/hydration/latest.json', external: true },
     { label: 'Hydration field log JSON', path: DESK_PAGES_URL + 'data/hydration/hydration_log.json', external: true },
+    { label: 'Session activation', path: '08_Deliverables/BUILD_Cousins_Session_Activation.md' },
+    { label: 'Session activation — how to use', path: '08_Deliverables/BUILD_Cousins_Session_Activation_How_to_Use.md' },
+    { label: 'Phased development plan v1.0', path: '08_Deliverables/Whinfell_Phased_Development_Plan_v1.0.md' },
+    { label: 'Phased plan — how to use', path: '08_Deliverables/Whinfell_Phased_Development_Plan_How_to_Use.md' },
+    { label: 'Operator dashboard setup', path: '08_Deliverables/Whinfell_Operator_Dashboard_Setup_Guide.md' },
+    { label: 'Operator dashboard (legacy HTML)', path: '08_Deliverables/Whinfell_Operator_Dashboard.html' },
+
+    { label: 'Transmission Control source HTML', path: '08_Deliverables/Whinfell_Transmission_Control.html' },
   ]},
   { group: 'Daily operations', docs: [
     { label: 'Simple data update (Clark)', path: '08_Deliverables/Whinfell_Data_Update_Simple_Guide.md', audience: 'Clark' },
+    { label: 'Full data update guide', path: '08_Deliverables/Whinfell_Data_Update_Guide.md', audience: 'Clark' },
     { label: 'Expanded Operators Guide v1.5', path: '08_Deliverables/Whinfell_Expanded_Operators_Guide_v1.5.md' },
+    { label: 'Expanded Operators Guide v1.4', path: '08_Deliverables/Whinfell_Expanded_Operators_Guide_v1.4.md' },
+    { label: 'Expanded Operators Guide v1.2', path: '08_Deliverables/Whinfell_Expanded_Operators_Guide_v1.2.md' },
     { label: 'Quick Reference Card v1.5', path: '08_Deliverables/Whinfell_Quick_Reference_Card_v1.5.md' },
     { label: 'Comet browser blueprint', path: '08_Deliverables/Comet_Browser_Operations_Blueprint.md', audience: 'Comet' },
     { label: 'Perplexity + Comet collection', path: '08_Deliverables/Perplexity_Comet_Collection_Instructions.md', audience: 'Perplexity' },
@@ -2931,23 +2942,41 @@ const DESK_DOC_CATALOG = [
     { label: 'Fast CSV collect guide', path: '08_Deliverables/Fast_CSV_Collect_Guide.md' },
     { label: 'Perplexity Barchart/Koyfin playbook', path: '08_Deliverables/Perplexity_Barchart_Koyfin_Playbook.md', audience: 'Perplexity' },
     { label: 'Perplexity full collect prompt', path: '08_Deliverables/Perplexity_Full_Collection_Prompt.txt', audience: 'Perplexity' },
+    { label: 'Perplexity 2.2e update prompt', path: '08_Deliverables/Perplexity_2.2e_Update_Prompt.txt', audience: 'Perplexity' },
     { label: 'Grok operator prompt', path: '08_Deliverables/Whinfell_Grok_Operator_Prompt.txt', audience: 'Grok' },
+    { label: 'Comet adapter handoff manifest', path: '08_Deliverables/Comet_Adapter_Handoff/MANIFEST.md', audience: 'Comet' },
+    { label: 'CSV download entrypoint', path: 'run_csv_download.py', audience: 'Clark' },
   ]},
   { group: 'Scores · China · SQ3', docs: [
     { label: 'SQ3 Reference v1.0', path: '08_Deliverables/Whinfell_SQ3_Reference_v1.0.md', audience: 'G-Quant' },
     { label: 'Credit Confirmation Score (C1)', path: '04_Score_Calculation/Whinfell_Credit_Confirmation_Score_Logic.md', audience: 'G-Quant' },
+    { label: 'C1 score logic (deliverables copy)', path: '08_Deliverables/C1_Whinfell_Credit_Confirmation_Score_Logic.md', audience: 'G-Quant' },
+    { label: 'C1 — how to use', path: '08_Deliverables/C1_How_to_Use.md' },
+    { label: 'C1 kickoff brief', path: '04_Score_Calculation/C1_Kickoff_Brief.md' },
+    { label: 'C1 review log', path: '04_Score_Calculation/C1_Review_Log.md' },
+    { label: 'C2 — how to use', path: '08_Deliverables/C2_How_to_Use.md' },
+    { label: 'C3 — how to use', path: '08_Deliverables/C3_How_to_Use.md' },
     { label: 'Interim node score weights', path: '04_Score_Calculation/Phase2_Interim_Node_Score_Weights.md' },
     { label: 'Transmission ladder teach-in', path: '08_Deliverables/Whinfell_Transmission_Ladder_Teach_In.md' },
     { label: 'Ladder deep dive (interactive)', path: 'whinfell-transmission-ladder-deep-dive.html', local: true },
     { label: 'SQ3 engine (Python)', path: 'china_policy_track/sq3.py', audience: 'G-Quant' },
   ]},
   { group: 'Pipeline · specs', docs: [
-    { label: 'Master data dictionary', path: 'whinfell_pipeline/data_dictionary.yaml' },
+    { label: 'Master data dictionary (YAML)', path: 'whinfell_pipeline/data_dictionary.yaml' },
+    { label: 'Master data dictionary v1.0 (strategy)', path: '01_Strategy_Docs/Archive/Master_Data_Dictionary_v1.0.md' },
     { label: 'WTM EXPORT v2.1 spec', path: 'whinfell_pipeline/WTM_EXPORT_v2.1_SPEC.md' },
     { label: 'WTM EXPORT v2.2 spec', path: 'whinfell_pipeline/WTM_EXPORT_v2.2_SPEC.md' },
     { label: 'Phase 2 signal intelligence spec', path: '08_Deliverables/Whinfell_Phase2_Signal_Intelligence_Spec.md' },
     { label: 'ARCH-3 WTM import criteria', path: '08_Deliverables/ARCH-3_WTM_Import_Core_Criteria.md' },
+    { label: 'ARCH-3 WTM import handoff', path: '08_Deliverables/ARCH-3_WTM_Import_Core_Handoff.md' },
     { label: 'Desk URLs (Comet wired)', path: 'whinfell_pipeline/desk_urls.yaml' },
+    { label: 'WTM data architecture build plan', path: '01_Strategy_Docs/Archive/WTM_Data_Architecture_Build_Plan.md' },
+    { label: 'Phase 2 flows implementation spec', path: '01_Strategy_Docs/Archive/Phase2_Flows_Implementation_Spec.md' },
+    { label: 'Phase 2 node cockpit data model', path: '01_Strategy_Docs/Archive/Phase2_Node_Cockpit_Data_Model.md' },
+    { label: 'Phase 2 TC cockpit UI architecture', path: '01_Strategy_Docs/Archive/Phase2_TC_Cockpit_UI_Architecture.md' },
+    { label: 'Cockpit UI interaction standard', path: '01_Strategy_Docs/Archive/Whinfell_Cockpit_UI_Interaction_Standard.md' },
+    { label: 'Funds flow sponsorship design', path: '01_Strategy_Docs/Archive/Phase2_Funds_Flow_Sponsorship_Design.md' },
+    { label: 'Liquidity mission surface v1 plan', path: '01_Strategy_Docs/Liquidity_Mission_Surface_v1_Plan.md' },
   ]},
   { group: 'Mission surfaces · validation', docs: [
     { label: 'Desk feedback log', path: '08_Deliverables/Desk_Feedback_Log.md' },
@@ -2956,6 +2985,21 @@ const DESK_DOC_CATALOG = [
     { label: 'Liquidity mission surface handoff', path: '08_Deliverables/Liquidity_Mission_Surface_Desk_Handoff.md' },
     { label: 'TC review log', path: '08_Deliverables/Whinfell_Transmission_Control_Review_Log.md' },
     { label: 'Series ticker master (C3)', path: '08_Deliverables/C3_Whinfell_Series_Ticker_Master_List.md' },
+    { label: 'C4 test results summary', path: '08_Deliverables/C4_Test_Results_Summary.md' },
+    { label: 'C4.5 kickoff brief', path: '08_Deliverables/C4.5_Kickoff_Brief.md' },
+    { label: 'C4.5 desk announcement memo', path: '08_Deliverables/C4.5_Desk_Announcement_Memo.md' },
+    { label: 'C4.5 — how to use', path: '08_Deliverables/C4.5_How_to_Use.md' },
+    { label: 'C4.5 review log', path: '08_Deliverables/C4.5_Review_Log.md' },
+    { label: 'C4.6 review log', path: '08_Deliverables/C4.6_Review_Log.md' },
+    { label: 'Funds flow sponsorship GOAL', path: '08_Deliverables/Funds_Flow_Sponsorship_GOAL.md' },
+    { label: 'Funds flow sponsorship PLAN', path: '08_Deliverables/Funds_Flow_Sponsorship_PLAN.md' },
+    { label: 'Funds flow ingest arena debate', path: '08_Deliverables/Funds_Flow_Ingest_Arena_Debate.md' },
+  ]},
+  { group: 'Strategy · team', docs: [
+    { label: 'BUILD Cousins operating plan v1.0', path: '01_Strategy_Docs/Archive/BUILD_Cousins_Operating_Plan_v1.0.md' },
+    { label: 'BUILD Cousins team introduction', path: '01_Strategy_Docs/Archive/BUILD_Cousins_Team_Introduction.md' },
+    { label: 'BUILD TODO list', path: '01_Strategy_Docs/BUILD_TODO_List.md' },
+    { label: 'Progress log', path: '01_Strategy_Docs/Progress_Log.md' },
   ]},
 ];
 const HYDRATION_BUNDLE_VERSION = '1.2.0';
@@ -3119,6 +3163,10 @@ function deskDocAnchor(entry) {
   return `<a href="${escapeHtml(href)}" class="desk-doc-link" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>${aud}`;
 }
 
+function deskDocCatalogCount() {
+  return DESK_DOC_CATALOG.reduce((n, grp) => n + (grp.docs || []).length, 0);
+}
+
 function renderDeskDocsPanel() {
   const node = el('deskDocsList');
   if (!node) return;
@@ -3126,7 +3174,8 @@ function renderDeskDocsPanel() {
     const items = (grp.docs || []).map(d => `<li>${deskDocAnchor(d)}</li>`).join('');
     return `<div class="desk-docs-group"><div class="desk-docs-group-title">${escapeHtml(grp.group)}</div><ul class="desk-docs-list">${items}</ul></div>`;
   }).join('');
-  node.innerHTML = `<p class="text-[9px] mb-2">All links open on GitHub or the live desk preview. Agents: append <code class="text-[8px]">?raw=1</code> or use raw.githubusercontent.com paths from the manual index.</p>${groups}`;
+  const count = deskDocCatalogCount();
+  node.innerHTML = `<p class="text-[9px] mb-2"><strong class="text-slate-200">${count} documents</strong> — links open on GitHub or the live desk preview. Agents: use <a href="${escapeHtml(DESK_GITHUB_RAW)}08_Deliverables/Whinfell_Desk_User_Manual_v1.0.md" class="desk-doc-link" target="_blank" rel="noopener noreferrer">raw.githubusercontent.com</a> paths from the <a href="${escapeHtml(deskDocHref({ path: '08_Deliverables/Whinfell_Desk_User_Manual_v1.0.md' }))}" class="desk-doc-link" target="_blank" rel="noopener noreferrer">manual index</a>.</p>${groups}`;
 }
 
 function renderSignalDetailDocs() {
