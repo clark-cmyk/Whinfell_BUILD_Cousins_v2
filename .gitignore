@@ -32,6 +32,8 @@ whinfell_pipeline/tests/*
 !whinfell_pipeline/tests/test_transmission_control_cockpit.py
 !whinfell_pipeline/tests/test_rv_history.py
 !whinfell_pipeline/tests/test_flows_parser.py
+!whinfell_pipeline/tests/test_flows_production.py
+!whinfell_pipeline/tests/test_hardening_phase22.py
 !whinfell_pipeline/tests/goal_scratch.py
 !whinfell_pipeline/tests/html_load_check.mjs
 !whinfell_pipeline/tests/playwright_cockpit_capture.mjs
@@ -64,7 +66,14 @@ whinfell_pipeline/tests/*
 !whinfell_pipeline/tests/generate_phase1_evidence.py
 !whinfell_pipeline/tests/test_node_cockpits.py
 !whinfell_pipeline/tests/test_funds_flows.py
+!whinfell_pipeline/tests/test_flows_production.py
 !whinfell_pipeline/tests/test_export_contract.py
+!whinfell_pipeline/desk_live_session.py
+!scripts/desk_live_session.sh
+!scripts/ci_verify.sh
+!.github/
+!.github/workflows/
+!.github/workflows/whinfell_verify.yml
 !whinfell_pipeline/sync_dictionary_meta.py
 !whinfell_pipeline/batch_collect.py
 !whinfell_pipeline/desk_urls.yaml

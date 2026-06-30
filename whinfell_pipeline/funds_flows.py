@@ -12,6 +12,16 @@ from whinfell_pipeline.data_dictionary import (
     funds_flow_thresholds,
 )
 
+__all__ = [
+    "apply_confidence_delta",
+    "build_flows_sidecar_metadata",
+    "build_funds_flows",
+    "build_interpretation",
+    "load_flows_sidecar",
+    "merge_flow_rationale",
+    "resolve_degrade_mode",
+]
+
 _CONFIDENCE_TIERS = ("low", "medium", "high")
 
 _DEGRADE_NOTICES: dict[str, str] = {
@@ -63,8 +73,15 @@ def load_flows_sidecar(repo_root: Path | None = None) -> dict[str, Any] | None:
     return dict(data) if isinstance(data, dict) else None
 
 
-def build_flows_sidecar_metadata(sidecar: Mapping[str, Any] | None) -> dict[str, Any]:
+def build_flows_sidecar_metadata(
+    sidecar: Mapping[str, Any] | None,
+    *,
+    node_id: str = "credit",
+) -> dict[str, Any]:
     """Top-level hydration mirror — always present so degrade ≠ silent absence."""
+    from whinfell_pipeline.flows_parser import assess_flows_basket_health
+
+    health = assess_flows_basket_health(sidecar, node_id=node_id)
     if not sidecar:
         return {
             "as_of": "",
@@ -72,7 +89,8 @@ def build_flows_sidecar_metadata(sidecar: Mapping[str, Any] | None) -> dict[str,
             "ingest_mode": "disabled",
             "flows_status": "unavailable",
             "ticker_count": 0,
-            "warnings": ["missing_wtm_flows_file"],
+            "warnings": list(health.get("warnings") or ["missing_wtm_flows_file"]),
+            "basket_health": health,
         }
     tickers = sidecar.get("tickers") or {}
     ingest_mode = str(sidecar.get("ingest_mode") or "disabled")
@@ -81,13 +99,23 @@ def build_flows_sidecar_metadata(sidecar: Mapping[str, Any] | None) -> dict[str,
         flows_status = "fallback_1d"
     elif ingest_mode == "disabled":
         flows_status = "unavailable"
+    elif health.get("status") == "partial":
+        flows_status = "partial"
+    elif health.get("status") == "unavailable":
+        flows_status = "unavailable"
+
+    base_warnings = list(sidecar.get("warnings") or [])
+    health_warnings = list(health.get("warnings") or [])
+    warnings = list(dict.fromkeys(base_warnings + health_warnings))
+
     return {
         "as_of": sidecar.get("as_of") or "",
         "source_file": sidecar.get("source_file") or "",
         "ingest_mode": ingest_mode,
         "flows_status": flows_status,
         "ticker_count": len(tickers),
-        "warnings": list(sidecar.get("warnings") or []),
+        "warnings": warnings,
+        "basket_health": health,
     }
 
 

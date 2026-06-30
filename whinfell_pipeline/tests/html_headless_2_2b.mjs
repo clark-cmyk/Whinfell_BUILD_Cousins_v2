@@ -121,7 +121,7 @@ function seedDom(t) {
     'whinfellScore', 'transmissionState', 'regimeTag', 'chinaPolicyStrength', 'chinaStateImpulse',
     'chinaGrowthImpulse', 'chinaRegimeTag', 'grossA', 'grossB', 'posture', 'handoverNote',
     'l3NearMonth', 'l3BasisSpread', 'cmdWhinfellScore', 'cmdSq3Score', 'cmdGateLabel', 'cmdGrossRisk',
-    'cmdScoreZone', 'cmdFreshness', 'cmdHydrationBadge', 'cmdFreshnessMeta', 'cmdFreshnessDot', 'cmdFreshnessCluster',
+    'cmdScoreZone', 'cmdFreshness', 'cmdHydrationBadge', 'cmdFreshnessMeta', 'cmdFreshnessDot', 'cmdFreshnessCluster', 'cmdFreshnessSubCluster',
     'txHealthValue', 'txHealthMeta', 'gateText', 'gateChip', 'shockText', 'shockMeta', 'scoreCard',
     'suggestionTray', 'suggestionRows', 'layer2Chip', 'layer3Chip', 'layer2Rule', 'layer3Rule',
     'operatorConfidence', 'operatorConfidenceValue', 'executionIntent', 'executionIntentHint',

@@ -48,6 +48,8 @@ def step1_pytest() -> None:
             "whinfell_pipeline/tests/test_flows_parser.py",
             "whinfell_pipeline/tests/test_rv_history.py",
             "whinfell_pipeline/tests/test_transmission_control_cockpit.py",
+            "whinfell_pipeline/tests/test_flows_production.py",
+            "whinfell_pipeline/tests/test_hardening_phase22.py",
             "-q",
             "--tb=line",
         ],

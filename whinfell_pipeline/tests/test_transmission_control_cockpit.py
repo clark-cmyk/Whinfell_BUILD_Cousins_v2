@@ -27,6 +27,11 @@ class TestTransmissionControlCockpit(unittest.TestCase):
             "function setActiveNode",
             "function renderNodeCockpitShell",
             "function flipNode",
+            "function renderFundsFlowSponsorshipCard",
+            ".funds-flow-card",
+            ".funds-flow-etf-row",
+            ".funds-flow-degrade-banner",
+            ".funds-flow-verdict-supportive",
         ):
             self.assertIn(marker, text, f"missing {marker}")
 
@@ -59,6 +64,7 @@ class TestTransmissionControlCockpit(unittest.TestCase):
             self.assertIn("focusToggle", proc.stdout)
             self.assertIn("compareToggle", proc.stdout)
             self.assertIn("railRendered", proc.stdout)
+            self.assertIn("fundsFlowCardRendered", proc.stdout)
 
 
 if __name__ == "__main__":

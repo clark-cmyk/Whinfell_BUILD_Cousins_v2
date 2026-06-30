@@ -12,10 +12,24 @@ from typing import Any, Mapping
 
 from whinfell_pipeline.data_dictionary import (
     canonical_asset_for_ticker,
+    funds_flow_basket_for_node,
     funds_flow_column_map,
     funds_flow_sidecar_path,
     get_funds_flow_ingest,
 )
+
+__all__ = [
+    "assess_flows_basket_health",
+    "compute_rolling_metrics",
+    "default_flows_sidecar_path",
+    "detect_flows_format",
+    "ensure_flows_sidecar",
+    "find_latest_quarantine_flows_csv",
+    "parse_and_write",
+    "parse_flows_csv",
+    "try_parse_flows_csv",
+    "write_flows_sidecar",
+]
 
 _SIDECAR_VERSION = "1.0.0"
 _DATE_FORMATS = ("%Y-%m-%d", "%m/%d/%Y", "%m-%d-%Y")
@@ -280,11 +294,27 @@ def try_parse_flows_csv(path: Path | str) -> dict[str, Any] | None:
         return None
 
 
+def find_latest_quarantine_flows_csv(repo_root: Path) -> Path | None:
+    """Newest quarantine WTM-Flows-Global.csv (or flows_global.csv fallback)."""
+    quarantine = repo_root / "staged_raw" / "quarantine"
+    if not quarantine.is_dir():
+        return None
+    for day_dir in sorted(quarantine.iterdir(), reverse=True):
+        if not day_dir.is_dir():
+            continue
+        for name in ("WTM-Flows-Global.csv", "flows_global.csv"):
+            p = day_dir / name
+            if p.is_file():
+                return p
+    return None
+
+
 def _canonical_flows_csv_paths(repo_root: Path) -> list[Path]:
-    """Desk + fixture sources in priority order for hydrate-time sidecar ensure."""
-    candidates: list[Path] = [
-        repo_root / "whinfell_pipeline" / "examples" / "flows" / "WTM-Flows-Global-head.csv",
-    ]
+    """Production quarantine CSV first; head fixture as fallback."""
+    candidates: list[Path] = []
+    latest = find_latest_quarantine_flows_csv(repo_root)
+    if latest is not None:
+        candidates.append(latest)
     quarantine = repo_root / "staged_raw" / "quarantine"
     if quarantine.is_dir():
         for day_dir in sorted(quarantine.iterdir(), reverse=True):
@@ -292,38 +322,136 @@ def _canonical_flows_csv_paths(repo_root: Path) -> list[Path]:
                 continue
             for name in ("WTM-Flows-Global.csv", "flows_global.csv"):
                 p = day_dir / name
-                if p.is_file():
+                if p.is_file() and p not in candidates:
                     candidates.append(p)
             for p in sorted(day_dir.glob("flows_*.csv"), reverse=True):
-                candidates.append(p)
+                if p not in candidates:
+                    candidates.append(p)
+    head_fixture = repo_root / "whinfell_pipeline" / "examples" / "flows" / "WTM-Flows-Global-head.csv"
+    if head_fixture.is_file():
+        candidates.append(head_fixture)
     return candidates
 
 
-def _sidecar_is_healthy(payload: Mapping[str, Any] | None) -> bool:
+def assess_flows_basket_health(
+    sidecar: Mapping[str, Any] | None,
+    node_id: str = "credit",
+) -> dict[str, Any]:
+    """Assess node basket coverage against L1 sidecar tickers."""
+    basket = funds_flow_basket_for_node(node_id) or {}
+    etfs = list(basket.get("etfs") or [])
+    expected = [str(e.get("ticker") or "").upper() for e in etfs if e.get("ticker")]
+
+    if not sidecar:
+        return {
+            "status": "unavailable",
+            "node_id": node_id,
+            "missing_tickers": expected,
+            "warnings": ["missing_wtm_flows_file"],
+        }
+
+    sidecar_tickers = sidecar.get("tickers") or {}
+    missing_tickers: list[str] = []
+    for ticker in expected:
+        row = sidecar_tickers.get(ticker)
+        if not isinstance(row, dict):
+            missing_tickers.append(ticker)
+            continue
+        rolling = row.get("rolling") or {}
+        if rolling.get("flow_pct_aum_5d") is None:
+            missing_tickers.append(ticker)
+
+    warnings: list[str] = list(sidecar.get("warnings") or [])
+    if not expected:
+        return {
+            "status": "unavailable",
+            "node_id": node_id,
+            "missing_tickers": [],
+            "warnings": warnings + ["no_basket_defined"],
+        }
+    if not missing_tickers:
+        status = "ok"
+    elif len(missing_tickers) < len(expected):
+        status = "partial"
+        warnings.append("partial_basket_coverage")
+        warnings.append(f"missing_basket_etfs:{','.join(missing_tickers)}")
+    else:
+        status = "unavailable"
+        if "missing_wtm_flows_file" not in warnings:
+            warnings.append("missing_wtm_flows_file")
+
+    deduped = list(dict.fromkeys(warnings))
+    return {
+        "status": status,
+        "node_id": node_id,
+        "missing_tickers": missing_tickers,
+        "warnings": deduped,
+    }
+
+
+def _sidecar_is_viable(payload: Mapping[str, Any] | None) -> bool:
+    """Minimum production parse — timeseries sidecar with at least one ticker."""
     if not payload or not isinstance(payload, dict):
         return False
     if str(payload.get("ingest_mode") or "") != "timeseries_primary":
         return False
-    tickers = payload.get("tickers") or {}
+    return len(payload.get("tickers") or {}) >= 1
+
+
+def _sidecar_is_healthy(payload: Mapping[str, Any] | None) -> bool:
+    if not _sidecar_is_viable(payload):
+        return False
+    tickers = (payload or {}).get("tickers") or {}
     return len(tickers) >= 10
 
 
 def ensure_flows_sidecar(repo_root: Path | None = None) -> dict[str, Any] | None:
-    """Ensure L1 sidecar via flows_parser when missing or unhealthy; idempotent when healthy."""
+    """Ensure L1 sidecar; refresh when quarantine CSV is newer than sidecar mtime."""
     root = repo_root or Path(__file__).resolve().parents[1]
     out_path = default_flows_sidecar_path(root)
+    latest_quarantine = find_latest_quarantine_flows_csv(root)
+    existing: dict[str, Any] | None = None
+    should_refresh = not out_path.is_file()
+
     if out_path.is_file():
         try:
             existing = json.loads(out_path.read_text(encoding="utf-8"))
-            if _sidecar_is_healthy(existing):
+            if not _sidecar_is_healthy(existing):
+                should_refresh = True
+            elif latest_quarantine is not None and latest_quarantine.stat().st_mtime > out_path.stat().st_mtime:
+                should_refresh = True
+            elif not should_refresh:
                 return dict(existing)
         except (json.JSONDecodeError, OSError):
-            pass
-    for csv_path in _canonical_flows_csv_paths(root):
-        payload = try_parse_flows_csv(csv_path)
-        if payload and _sidecar_is_healthy(payload):
+            should_refresh = True
+
+    if should_refresh:
+        def _try_refresh(csv_path: Path, *, require_healthy: bool) -> dict[str, Any] | None:
+            payload = try_parse_flows_csv(csv_path)
+            if not payload:
+                return None
+            ok = _sidecar_is_healthy(payload) if require_healthy else _sidecar_is_viable(payload)
+            if not ok:
+                return None
             write_flows_sidecar(payload, out_path)
             return payload
+
+        quarantine_is_newer = (
+            latest_quarantine is not None
+            and out_path.is_file()
+            and latest_quarantine.stat().st_mtime > out_path.stat().st_mtime
+        )
+        if quarantine_is_newer:
+            refreshed = _try_refresh(latest_quarantine, require_healthy=False)
+            if refreshed is not None:
+                return refreshed
+        for csv_path in _canonical_flows_csv_paths(root):
+            refreshed = _try_refresh(csv_path, require_healthy=True)
+            if refreshed is not None:
+                return refreshed
+
+    if existing is not None:
+        return dict(existing)
     if out_path.is_file():
         try:
             return dict(json.loads(out_path.read_text(encoding="utf-8")))

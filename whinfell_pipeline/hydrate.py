@@ -14,7 +14,7 @@ from china_policy_track.sq3 import calculate_sq3
 from china_policy_track.storage import default_parquet_path as china_default
 from china_policy_track.storage import read_observations as read_china
 from whinfell_pipeline.export_contract import ProvenanceMeta, build_wtm_export_v21, build_wtm_export_v22
-from whinfell_pipeline.flows_parser import ensure_flows_sidecar
+from whinfell_pipeline.flows_parser import assess_flows_basket_health, ensure_flows_sidecar
 from whinfell_pipeline.funds_flows import build_flows_sidecar_metadata
 from whinfell_pipeline.node_cockpits import build_cockpit_context, build_node_cockpits
 from whinfell_pipeline.rv_history import ensure_dated_series_fixture, load_rv_history
@@ -404,7 +404,9 @@ def build_hydration_bundle(
         "wtm_export_v22": wtm_block_v22,
         "warnings": [] if g_obs and c_obs else (["Partial hydration — single track only"] if g_obs or c_obs else []),
     }
-    bundle["flows_sidecar"] = build_flows_sidecar_metadata(flows_data)
+    flows_health = assess_flows_basket_health(flows_data, node_id="credit")
+    bundle["flows_health"] = flows_health
+    bundle["flows_sidecar"] = build_flows_sidecar_metadata(flows_data, node_id="credit")
     return bundle
 
 

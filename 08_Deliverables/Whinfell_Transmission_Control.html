@@ -59,6 +59,9 @@ window.DICTIONARY_BADGE_DEFAULT = {
     .freshness-dot-fresh { background: #3dd68c; box-shadow: 0 0 6px rgba(61,214,140,0.5); }
     .freshness-dot-aging { background: #f5a623; box-shadow: 0 0 6px rgba(245,166,35,0.45); }
     .freshness-dot-stale { background: #f56565; box-shadow: 0 0 6px rgba(245,101,101,0.45); }
+    .freshness-sub-cluster { display: flex; flex-wrap: wrap; align-items: center; gap: 3px 4px; font-size: 8px; color: #8b9cb3; margin-top: 3px; line-height: 1.2; }
+    .freshness-sub-item { display: inline-flex; align-items: center; gap: 3px; white-space: nowrap; }
+    .freshness-sub-sep { opacity: 0.45; user-select: none; }
     .cmd-authority-pipeline { border-color: rgba(61,139,253,0.45); background: rgba(61,139,253,0.08); color: #3d8bfd; }
     .cmd-authority-override { border-color: rgba(245,166,35,0.45); background: rgba(245,166,35,0.1); color: #f5a623; }
     .tracer-flow-suggested { border-color: rgba(245,166,35,0.55) !important; box-shadow: 0 0 12px rgba(245,166,35,0.08); }
@@ -638,6 +641,217 @@ window.DICTIONARY_BADGE_DEFAULT = {
       background: rgba(214,163,74,.12);
     }
 
+    .funds-flow-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 12px;
+      font-variant-numeric: tabular-nums;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-height: 150px;
+    }
+
+    .funds-flow-card--compare {
+      min-height: 120px;
+      max-height: 120px;
+      overflow: hidden;
+      padding: 8px 10px;
+      gap: 4px;
+    }
+
+    .funds-flow-card--expanded {
+      min-height: auto;
+    }
+
+    .funds-flow-card--unavailable {
+      min-height: auto;
+      border-style: dashed;
+      opacity: 0.85;
+    }
+
+    .funds-flow-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .funds-flow-card-title {
+      margin: 0;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .funds-flow-meta-chip {
+      font-size: 7px;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 2px 5px;
+      border-radius: 3px;
+      border: 1px solid rgba(214,163,74,.45);
+      color: var(--amber);
+      background: rgba(214,163,74,.12);
+      align-self: flex-start;
+    }
+
+    .funds-flow-degrade-banner {
+      font-size: 9px;
+      color: var(--amber);
+      background: rgba(214,163,74,.08);
+      border: 1px solid rgba(214,163,74,.25);
+      border-radius: 4px;
+      padding: 4px 6px;
+      line-height: 1.35;
+    }
+
+    .funds-flow-verdict-badge {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: capitalize;
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--muted);
+    }
+
+    .funds-flow-verdict-supportive {
+      border-color: rgba(79,179,122,.4);
+      color: var(--green);
+      background: rgba(79,179,122,.1);
+    }
+
+    .funds-flow-verdict-neutral,
+    .funds-flow-verdict-mixed {
+      border-color: rgba(158,172,187,.35);
+      color: var(--muted);
+      background: rgba(158,172,187,.08);
+    }
+
+    .funds-flow-verdict-diverging {
+      border-color: rgba(214,163,74,.45);
+      color: var(--amber);
+      background: rgba(214,163,74,.1);
+    }
+
+    .funds-flow-aggregate {
+      font-size: 10px;
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    .funds-flow-etf-table {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .funds-flow-etf-header {
+      display: grid;
+      grid-template-columns: 52px 1fr 1fr auto;
+      gap: 6px;
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding-bottom: 2px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .funds-flow-etf-header--no5d {
+      grid-template-columns: 52px 1fr auto;
+    }
+
+    .funds-flow-etf-row {
+      display: grid;
+      grid-template-columns: 52px 1fr 1fr auto;
+      gap: 6px;
+      font-size: 10px;
+      align-items: center;
+      padding: 3px 0;
+      border-left: 2px solid transparent;
+    }
+
+    .funds-flow-etf-row--no5d {
+      grid-template-columns: 52px 1fr auto;
+    }
+
+    .funds-flow-etf-row--primary {
+      border-left-color: var(--blue);
+      padding-left: 4px;
+    }
+
+    .funds-flow-etf-ticker {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .funds-flow-etf-ticker--primary::after {
+      content: ' *';
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+    .funds-flow-etf-val {
+      text-align: right;
+      color: var(--text);
+    }
+
+    .funds-flow-etf-val--muted {
+      color: var(--muted);
+    }
+
+    .funds-flow-etf-spark {
+      font-size: 8px;
+      color: var(--muted);
+      opacity: 0.65;
+      letter-spacing: 1px;
+      text-align: right;
+      min-width: 28px;
+    }
+
+    .funds-flow-interpretation {
+      font-size: 10px;
+      color: var(--muted);
+      line-height: 1.4;
+      margin-top: 2px;
+    }
+
+    .funds-flow-caution {
+      font-size: 10px;
+      color: var(--amber);
+      line-height: 1.35;
+    }
+
+    .funds-flow-footer {
+      font-size: 8px;
+      color: var(--muted);
+      margin-top: auto;
+      padding-top: 4px;
+      border-top: 1px solid var(--border);
+    }
+
+    .funds-flow-change-mind {
+      font-size: 10px;
+      color: var(--text);
+      line-height: 1.4;
+      padding: 6px 8px;
+      background: rgba(76,142,217,.06);
+      border: 1px solid rgba(76,142,217,.2);
+      border-radius: 4px;
+    }
+
+    .funds-flow-diagnostic {
+      font-size: 9px;
+      color: var(--muted);
+      font-family: ui-monospace, monospace;
+    }
+
     .cockpit-main { min-height: 320px; }
 
     .cockpit-chart-area {
@@ -937,6 +1151,7 @@ window.DICTIONARY_BADGE_DEFAULT = {
           <strong id="cmdFreshness">—</strong>
         </div>
         <span id="cmdFreshnessMeta" class="meta" title="">—</span>
+        <div id="cmdFreshnessSubCluster" class="freshness-sub-cluster" aria-label="Source freshness"></div>
         <details class="why-details" data-why-signal="freshness"><summary>WHY</summary><div id="whyFreshness" class="why-body"></div></details>
       </div>
     </section>
@@ -2207,6 +2422,122 @@ function freshnessLabelFromStatus(status) {
   return '—';
 }
 
+function flowsStatusToDotStatus(flowsStatus) {
+  if (flowsStatus === 'ok') return 'fresh';
+  if (flowsStatus === 'partial' || flowsStatus === 'fallback_1d') return 'aging';
+  if (flowsStatus === 'unavailable') return 'stale';
+  return 'unknown';
+}
+
+function resolveFlowsStatusFromState(state) {
+  const sidecar = state.hydration?.flows_sidecar;
+  if (sidecar?.flows_status) return sidecar.flows_status;
+  const cockpits = state.hydration?.node_cockpits || {};
+  const statuses = Object.values(cockpits)
+    .map(c => c?.funds_flows?.flows_meta?.flows_status)
+    .filter(Boolean);
+  if (!statuses.length) return 'unavailable';
+  if (statuses.some(s => s === 'unavailable')) return 'unavailable';
+  if (statuses.some(s => s === 'partial' || s === 'fallback_1d')) {
+    return statuses.find(s => s === 'partial' || s === 'fallback_1d') || 'partial';
+  }
+  return statuses.every(s => s === 'ok') ? 'ok' : (statuses.find(s => s !== 'ok') || 'unavailable');
+}
+
+function scanRvBasisFreshness(nodeCockpits) {
+  let latestEnd = null;
+  let hasData = false;
+  const cockpits = nodeCockpits || {};
+  Object.values(cockpits).forEach(cockpit => {
+    const seriesMap = cockpit?.rv_basis?.series || {};
+    Object.values(seriesMap).forEach(series => {
+      const horizons = series?.horizons || {};
+      Object.values(horizons).forEach(hz => {
+        if (hz?.n_observations > 0 || hz?.current_value != null) {
+          hasData = true;
+          const end = hz?.lookback_end;
+          if (end && (!latestEnd || end > latestEnd)) latestEnd = end;
+        }
+      });
+    });
+  });
+  return {
+    hasData,
+    asOf: latestEnd ? `${latestEnd}T12:00:00Z` : null,
+  };
+}
+
+function resolveBarchartBundleAsOf(bundle) {
+  if (!bundle || typeof bundle !== 'object') return null;
+  if (bundle.barchart?.as_of) return bundle.barchart.as_of;
+  const exec = bundle.execution || {};
+  if (exec.as_of) return exec.as_of;
+  if (exec.timestamp) return exec.timestamp;
+  if (String(exec.source || '').toLowerCase() === 'barchart' && bundle.as_of) return bundle.as_of;
+  return null;
+}
+
+function buildFreshnessSubCluster(state) {
+  const prov = state.provenance || createEmptyProvenance();
+  const hydration = state.hydration || createEmptyHydration();
+  const globalStatus = prov.freshnessStatus || computeFreshnessFromIso(prov.dataAsOf).status;
+  const flowsRaw = resolveFlowsStatusFromState(state);
+  const flowsDot = flowsStatusToDotStatus(flowsRaw);
+  const chinaAsOf = hydration.china_as_of || null;
+  const chinaStatus = chinaAsOf ? computeFreshnessFromIso(chinaAsOf).status : 'stale';
+  const rvScan = scanRvBasisFreshness(hydration.node_cockpits);
+  const barchartBundleAsOf = hydration.barchart_as_of || state.meta?.lastBarchart || null;
+  let barchartStatus = 'stale';
+  let barchartTitle = 'no Barchart / rv_basis data';
+  if (barchartBundleAsOf) {
+    barchartStatus = computeFreshnessFromIso(barchartBundleAsOf).status;
+    barchartTitle = `Barchart as-of ${barchartBundleAsOf}`;
+  } else if (rvScan.asOf) {
+    barchartStatus = computeFreshnessFromIso(rvScan.asOf).status;
+    barchartTitle = `rv_basis lookback_end ${rvScan.asOf.slice(0, 10)}`;
+  } else if (rvScan.hasData) {
+    barchartStatus = 'aging';
+    barchartTitle = 'rv_basis populated — as_of unknown';
+  }
+  return {
+    global: {
+      key: 'global',
+      label: 'Global',
+      status: globalStatus,
+      title: prov.dataAsOf ? `Global as-of ${prov.dataAsOf}` : 'Global provenance missing as-of',
+    },
+    flows: {
+      key: 'flows',
+      label: 'Flows',
+      status: flowsDot,
+      title: `flows_status: ${flowsRaw}`,
+    },
+    china: {
+      key: 'china',
+      label: 'China',
+      status: chinaStatus,
+      title: chinaAsOf ? `China as-of ${chinaAsOf}` : 'China payload missing as_of',
+    },
+    barchart: {
+      key: 'barchart',
+      label: 'Barchart',
+      status: barchartStatus,
+      title: barchartTitle,
+    },
+  };
+}
+
+function renderFreshnessSubClusterHtml(sources) {
+  const order = ['global', 'flows', 'china', 'barchart'];
+  return order.map((key, i) => {
+    const s = sources[key];
+    const dotCls = freshnessDotCls(s.status);
+    const sep = i < order.length - 1 ? '<span class="freshness-sub-sep">·</span>' : '';
+    const title = escapeHtml(s.title || s.label || '');
+    return `<span class="freshness-sub-item" title="${title}"><span class="${dotCls}"></span>${escapeHtml(s.label)}</span>${sep}`;
+  }).join('');
+}
+
 function defaultPipelineGross(score) {
   if (Number.isNaN(score)) return { bookA: '', posture: '' };
   const posture = suggestPosture(score);
@@ -2389,6 +2720,16 @@ function createEmptyPanelState() {
   return { scroll_positions: {}, expanded_sections: {} };
 }
 
+function createEmptyHydration() {
+  return {
+    node_cockpits: null,
+    cockpit_context: null,
+    flows_sidecar: null,
+    china_as_of: null,
+    barchart_as_of: null,
+  };
+}
+
 function createEmptyState() {
   return {
     version: STATE_VERSION,
@@ -2397,7 +2738,7 @@ function createEmptyState() {
     provenance: createEmptyProvenance(),
     commandBarAuthority: createEmptyCommandBarAuthority(),
     suggestedTracer: null,
-    hydration: { node_cockpits: null, cockpit_context: null },
+    hydration: createEmptyHydration(),
     navigation: createEmptyNavigation(),
     chart: createEmptyChartState(),
     panel: createEmptyPanelState(),
@@ -3598,8 +3939,57 @@ function dismissSuggestedTracer() {
   showToast('Tracer suggestions dismissed — matrix unchanged');
 }
 
-function hydrateFromBundle(bundle) {
+function scoreHydrationBundleQuality(bundle) {
+  if (!bundle || typeof bundle !== 'object') return 0;
+  let score = 0;
+  const flows = bundle.flows_sidecar?.flows_status;
+  if (flows === 'ok') score += 40;
+  else if (flows === 'partial' || flows === 'fallback_1d') score += 22;
+  else if (flows === 'unavailable') score += 4;
+  const cockpits = bundle.node_cockpits;
+  if (!cockpits) return score;
+  score += 10;
+  for (const row of LADDER) {
+    const c = cockpits[row.id];
+    if (!c) continue;
+    score += 2;
+    const sid = c.rv_basis?.active_series_id;
+    const hz = sid && c.rv_basis?.series?.[sid]?.horizons;
+    if (hz && Object.keys(hz).length >= 5) score += 4;
+    const fm = c.funds_flows?.flows_meta?.flows_status;
+    if (fm === 'ok') score += 2;
+    else if (fm && fm !== 'unavailable') score += 1;
+  }
+  return score;
+}
+
+function assessHydrationImportGuard(incoming, currentState) {
+  const incomingScore = scoreHydrationBundleQuality(incoming);
+  const currentBundle = {
+    node_cockpits: currentState?.hydration?.node_cockpits,
+    flows_sidecar: currentState?.hydration?.flows_sidecar,
+  };
+  const currentScore = scoreHydrationBundleQuality(currentBundle);
+  const downgrade = currentScore >= 45 && incomingScore < currentScore - 12;
+  return {
+    allowed: !downgrade,
+    downgrade,
+    incomingScore,
+    currentScore,
+    reason: downgrade
+      ? 'Import blocked: incoming bundle is degraded vs current hydrated session.'
+      : '',
+  };
+}
+
+function hydrateFromBundle(bundle, options = {}) {
   if (!bundle || typeof bundle !== 'object') throw new Error('Invalid hydration bundle');
+
+  const guard = assessHydrationImportGuard(bundle, appState);
+  if (!guard.allowed && !options.force) {
+    showToast(`${guard.reason} Shift+click Import to force.`);
+    return false;
+  }
 
   const isHydration = bundle.hydration_version || bundle.source === 'parquet_hydration';
   const isPipeline = bundle.bundle_version && bundle.global;
@@ -3704,12 +4094,21 @@ function hydrateFromBundle(bundle) {
     };
   }
 
+  appState.hydration = appState.hydration || createEmptyHydration();
+  if (bundle.flows_sidecar) {
+    appState.hydration.flows_sidecar = bundle.flows_sidecar;
+  }
+  if (bundle.china?.as_of) {
+    appState.hydration.china_as_of = bundle.china.as_of;
+  }
+  const barchartAsOf = resolveBarchartBundleAsOf(bundle);
+  if (barchartAsOf) {
+    appState.hydration.barchart_as_of = barchartAsOf;
+  }
   if (bundle.node_cockpits) {
-    appState.hydration = appState.hydration || { node_cockpits: null, cockpit_context: null };
     appState.hydration.node_cockpits = bundle.node_cockpits;
   }
   if (bundle.cockpit_context) {
-    appState.hydration = appState.hydration || { node_cockpits: null, cockpit_context: null };
     appState.hydration.cockpit_context = bundle.cockpit_context;
     if (bundle.cockpit_context.weakest_node_id && LADDER.some(r => r.id === bundle.cockpit_context.weakest_node_id)) {
       appState.navigation = appState.navigation || createEmptyNavigation();
@@ -3722,15 +4121,17 @@ function hydrateFromBundle(bundle) {
   renderAll();
   markDirty();
   const label = isHydration ? 'Parquet hydration' : (isPipeline ? 'Pipeline bundle' : 'Hydration');
-  showToast(`${label} applied · ${bundle.freshness_status || 'freshness updated'}`);
+  const degradeNote = guard.downgrade && options.force ? ' · forced degraded import' : '';
+  showToast(`${label} applied · ${bundle.freshness_status || 'freshness updated'}${degradeNote}`);
+  return true;
 }
 
-function importHydrationFile(file) {
+function importHydrationFile(file, options = {}) {
   const reader = new FileReader();
   reader.onload = () => {
     try {
       const bundle = JSON.parse(reader.result);
-      hydrateFromBundle(bundle);
+      hydrateFromBundle(bundle, options);
     } catch (err) {
       showToast('Invalid hydration JSON: ' + (err.message || 'parse error'));
     }
@@ -3931,6 +4332,9 @@ function buildStateFromDOM() {
     hydration: {
       node_cockpits: appState.hydration?.node_cockpits || null,
       cockpit_context: appState.hydration?.cockpit_context || null,
+      flows_sidecar: appState.hydration?.flows_sidecar || null,
+      china_as_of: appState.hydration?.china_as_of || null,
+      barchart_as_of: appState.hydration?.barchart_as_of || null,
     },
     navigation: { ...createEmptyNavigation(), ...(appState.navigation || {}) },
     chart: { ...createEmptyChartState(), ...(appState.chart || {}) },
@@ -4567,6 +4971,10 @@ function renderCommandBar(state, gate) {
   const snapMeta = metrics.snapshotId ? metrics.snapshotId : '';
   el('cmdFreshnessMeta').textContent = snapMeta || (metrics.dataAsOf ? new Date(metrics.dataAsOf).toLocaleString() : 'No pipeline timestamp');
   el('cmdFreshnessMeta').title = metrics.dataAsOf ? String(metrics.dataAsOf) : '';
+  const subCluster = el('cmdFreshnessSubCluster');
+  if (subCluster) {
+    subCluster.innerHTML = renderFreshnessSubClusterHtml(buildFreshnessSubCluster(state));
+  }
 
   const badge = el('cmdHydrationBadge');
   const freshCluster = el('cmdFreshnessCluster');
@@ -4742,7 +5150,7 @@ function deriveStubNodeCockpit(nodeId, state) {
     horizon_marks: marks,
     horizon_net: net,
     is_weakest_link: health.weakestStage === row.name,
-    key_observation: `${row.short} node — import hydration for pipeline cockpit or mark horizons in tracer.`,
+    key_observation: `${row.short} — no pipeline hydration; tracer horizon fallback only.`,
     confidence: 'low',
     gate_interaction: {
       zone: gate.zone?.key || 'amber',
@@ -4754,7 +5162,7 @@ function deriveStubNodeCockpit(nodeId, state) {
     directional: {
       posture: gate.blocked ? 'no_trade' : 'neutral',
       conviction: 'low',
-      rationale: 'Stub cockpit — hydrate for pipeline directional read.',
+      rationale: 'Directional read requires hydration import — not inferred from tracer alone.',
       blocked: !!gate.blocked,
       block_reason: gate.blocked ? gate.rule : '',
     },
@@ -4762,7 +5170,7 @@ function deriveStubNodeCockpit(nodeId, state) {
       posture: 'neutral',
       structure: row.sub,
       conviction: 'low',
-      rationale: 'RV panel pending hydration.',
+      rationale: 'Relative value panel unavailable until hydration bundle is imported.',
       blocked: false,
       block_reason: '',
     },
@@ -4771,13 +5179,14 @@ function deriveStubNodeCockpit(nodeId, state) {
       active_horizon: appState.chart?.shared_horizon || '3m',
       active_series_id: null,
       richness_label: null,
-      quartile_context: 'Import hydration bundle for quartile rankings.',
+      quartile_context: 'RV quartiles require hydration — history not loaded.',
       series: {},
-      _degraded: true,
+      _fallback_mode: true,
     },
     funds_flows: {
       enabled: false,
-      flows_meta: { flows_status: 'unavailable', flows_degraded: true },
+      flows_meta: { flows_status: 'unavailable', flows_degraded: true, fallback_reason: 'missing_wtm_flows_file' },
+      interpretation: { degrade_notice: 'Flows unavailable — degraded, not neutral.' },
     },
   };
 }
@@ -4865,6 +5274,165 @@ function flowsDegradeChip(cockpit) {
   return `<span class="flows-degrade-chip" title="Flows ${escapeHtml(status)}">${escapeHtml(status)}</span>`;
 }
 
+const FLOWS_SOURCE_LABELS = {
+  wtm_flows_timeseries: 'WTM-Flows',
+  credit_cross_section: 'Credit cross-section',
+  none: 'None',
+};
+
+const FLOWS_SPARK_CHARS = ['▁', '▂', '▃', '▄', '▅', '▆', '▇'];
+
+function formatFlowPctAum(value) {
+  if (value == null || Number.isNaN(Number(value))) return '—';
+  const n = Number(value);
+  const sign = n > 0 ? '+' : '';
+  return `${sign}${n.toFixed(2)}%`;
+}
+
+function formatFlowsSourceLabel(source) {
+  return FLOWS_SOURCE_LABELS[source] || String(source || '—').replace(/_/g, ' ');
+}
+
+function fundsFlowVerdictClass(verdict) {
+  const k = String(verdict || '').toLowerCase();
+  if (k === 'supportive') return 'funds-flow-verdict-supportive';
+  if (k === 'diverging') return 'funds-flow-verdict-diverging';
+  if (k === 'neutral' || k === 'mixed') return 'funds-flow-verdict-neutral';
+  return '';
+}
+
+function sortFundsFlowEtfs(etfs) {
+  const rows = Array.isArray(etfs) ? [...etfs] : [];
+  rows.sort((a, b) => {
+    const aPrimary = a.basket_role === 'primary' ? 1 : 0;
+    const bPrimary = b.basket_role === 'primary' ? 1 : 0;
+    if (aPrimary !== bPrimary) return bPrimary - aPrimary;
+    const aAbs = Math.abs(Number(a.flow_pct_aum_5d ?? a.flow_pct_aum_1d) || 0);
+    const bAbs = Math.abs(Number(b.flow_pct_aum_5d ?? b.flow_pct_aum_1d) || 0);
+    return bAbs - aAbs;
+  });
+  return rows.slice(0, 5);
+}
+
+function persistenceSparkline(score) {
+  if (score == null || Number.isNaN(Number(score))) return '';
+  const n = Math.max(0, Math.min(1, Number(score)));
+  const len = 5;
+  const idx = Math.round(n * (FLOWS_SPARK_CHARS.length - 1));
+  const ch = FLOWS_SPARK_CHARS[idx] || FLOWS_SPARK_CHARS[0];
+  return FLOWS_SPARK_CHARS.slice(0, len).map((c, i) => (i < Math.ceil(n * len) ? ch : c)).join('');
+}
+
+function dataStatusTooltip(status) {
+  const map = {
+    ok: 'Full 1D + 5D data',
+    partial_1d_only: '1D only — 5D unavailable',
+    missing: 'Ticker missing from WTM-Flows',
+  };
+  return map[status] || status || '';
+}
+
+function renderFundsFlowSponsorshipCard(cockpit, opts = {}) {
+  const variant = opts.variant || 'rail';
+  const ff = cockpit?.funds_flows;
+  const meta = ff?.flows_meta || {};
+  const interpretation = ff?.interpretation || {};
+  const aggregate = ff?.aggregate || {};
+  const flowsStatus = meta.flows_status || 'unavailable';
+  const show5d = flowsStatus !== 'fallback_1d' && meta.degrade_mode !== 'fallback_1d_credit';
+  const isUnavailable = !ff?.enabled || flowsStatus === 'unavailable';
+  const showVerdict = !isUnavailable && ['ok', 'partial', 'fallback_1d'].includes(flowsStatus);
+
+  if (isUnavailable) {
+    const notice = interpretation.degrade_notice || 'Flows unavailable — degraded, not neutral.';
+    return `<section class="funds-flow-card funds-flow-card--unavailable" data-variant="${escapeHtml(variant)}" data-degrade="unavailable">
+      <div class="funds-flow-card-header">
+        <h4 class="funds-flow-card-title">Funds Flow Sponsorship</h4>
+        ${flowsStatus !== 'ok' ? `<span class="funds-flow-meta-chip">${escapeHtml(flowsStatus)} · ${escapeHtml(formatFlowsSourceLabel(meta.flows_source))}</span>` : ''}
+      </div>
+      <p class="funds-flow-interpretation">${escapeHtml(notice)}</p>
+    </section>`;
+  }
+
+  const variantCls = variant === 'compare' ? ' funds-flow-card--compare'
+    : variant === 'expanded' ? ' funds-flow-card--expanded' : '';
+  const parts = [];
+
+  parts.push(`<div class="funds-flow-card-header"><h4 class="funds-flow-card-title">Funds Flow Sponsorship</h4></div>`);
+
+  if (meta.flows_status && meta.flows_status !== 'ok') {
+    parts.push(`<span class="funds-flow-meta-chip">${escapeHtml(meta.flows_status)} · ${escapeHtml(formatFlowsSourceLabel(meta.flows_source))}</span>`);
+  }
+
+  if (meta.flows_degraded && interpretation.degrade_notice) {
+    parts.push(`<div class="funds-flow-degrade-banner">${escapeHtml(interpretation.degrade_notice)}</div>`);
+  }
+
+  if (showVerdict && aggregate.verdict) {
+    parts.push(`<span class="funds-flow-verdict-badge ${fundsFlowVerdictClass(aggregate.verdict)}">${escapeHtml(aggregate.verdict)}</span>`);
+  }
+
+  const pos = aggregate.positive_count ?? '—';
+  const total = aggregate.total_count ?? '—';
+  const agg1d = formatFlowPctAum(aggregate.flow_pct_aum_1d);
+  let aggLine = `1D ${agg1d} AUM`;
+  if (show5d && aggregate.flow_pct_aum_5d != null) {
+    aggLine += ` · 5D ${formatFlowPctAum(aggregate.flow_pct_aum_5d)} AUM`;
+  }
+  aggLine += ` · ${pos}/${total} positive`;
+
+  parts.push(`<p class="funds-flow-aggregate">${escapeHtml(aggLine)}</p>`);
+
+  const etfs = sortFundsFlowEtfs(ff.etfs);
+  const showSparklines = variant !== 'compare';
+  const etfLimit = variant === 'expanded' ? etfs.length : etfs.length;
+  if (etfLimit > 0) {
+    const headerCols = show5d
+      ? '<span>Ticker</span><span>1D</span><span>5D</span><span></span>'
+      : '<span>Ticker</span><span>1D</span><span></span>';
+    const headerCls = show5d ? 'funds-flow-etf-header' : 'funds-flow-etf-header funds-flow-etf-header--no5d';
+    const rows = etfs.map(etf => {
+      const isPrimary = etf.basket_role === 'primary';
+      const rowCls = `funds-flow-etf-row${isPrimary ? ' funds-flow-etf-row--primary' : ''}${show5d ? '' : ' funds-flow-etf-row--no5d'}`;
+      const tickerCls = `funds-flow-etf-ticker${isPrimary ? ' funds-flow-etf-ticker--primary' : ''}`;
+      const val5d = show5d
+        ? `<span class="funds-flow-etf-val${etf.flow_pct_aum_5d == null ? ' funds-flow-etf-val--muted' : ''}" title="${escapeHtml(dataStatusTooltip(etf.data_status))}">${etf.flow_pct_aum_5d == null ? '—' : formatFlowPctAum(etf.flow_pct_aum_5d)}</span>`
+        : '';
+      const spark = showSparklines && show5d && etf.persistence_score != null
+        ? `<span class="funds-flow-etf-spark" title="Persistence ${etf.persistence_score}">${persistenceSparkline(etf.persistence_score)}</span>`
+        : '<span class="funds-flow-etf-spark"></span>';
+      return `<div class="${rowCls}">
+        <span class="${tickerCls}">${escapeHtml(etf.ticker || '—')}</span>
+        <span class="funds-flow-etf-val">${formatFlowPctAum(etf.flow_pct_aum_1d)}</span>
+        ${val5d}
+        ${spark}
+      </div>`;
+    }).join('');
+    parts.push(`<div class="funds-flow-etf-table"><div class="${headerCls}">${headerCols}</div>${rows}</div>`);
+  }
+
+  if (interpretation.summary) {
+    parts.push(`<p class="funds-flow-interpretation">${escapeHtml(interpretation.summary)}</p>`);
+  }
+  if (interpretation.divergence_flag && interpretation.caution_line) {
+    parts.push(`<p class="funds-flow-caution">⚠ ${escapeHtml(interpretation.caution_line)}</p>`);
+  }
+
+  if (variant === 'expanded') {
+    if (interpretation.change_mind_trigger) {
+      parts.push(`<div class="funds-flow-change-mind"><strong>Change mind:</strong> ${escapeHtml(interpretation.change_mind_trigger)}</div>`);
+    }
+    if (meta.degrade_mode) {
+      parts.push(`<p class="funds-flow-diagnostic">degrade_mode: ${escapeHtml(meta.degrade_mode)} · fallback: ${escapeHtml(meta.fallback_reason || '—')} · penalty: ${meta.flows_confidence_penalty ?? 0}</p>`);
+    }
+  }
+
+  const asOf = ff.as_of || '';
+  parts.push(`<p class="funds-flow-footer">Source: ${escapeHtml(formatFlowsSourceLabel(meta.flows_source))}${asOf ? ` · ${escapeHtml(asOf)}` : ''}</p>`);
+
+  return `<section class="funds-flow-card${variantCls}" data-variant="${escapeHtml(variant)}" data-degrade="${escapeHtml(meta.degrade_mode || flowsStatus)}">${parts.join('')}</section>`;
+}
+
 function renderNodeRail(state) {
   const rail = el('nodeRail');
   if (!rail) return;
@@ -4914,16 +5482,7 @@ function renderCockpitDecisionRail(cockpit) {
   const dir = cockpit.directional || {};
   const rv = cockpit.relative_value || {};
   const gate = cockpit.gate_interaction || {};
-  const flows = cockpit.funds_flows || {};
-  const flowsMeta = flows.flows_meta || {};
-  let flowsBlock = '';
-  if (flowsMeta.flows_status === 'unavailable' || !flows.enabled) {
-    flowsBlock = `<div class="cockpit-card"><h4>Funds flow</h4><p class="cockpit-sub">Flows unavailable — not neutral.</p></div>`;
-  } else if (flowsMeta.flows_degraded) {
-    flowsBlock = `<div class="cockpit-card"><h4>Funds flow</h4><p class="cockpit-line">${escapeHtml(flows.aggregate?.verdict || '—')}</p><p class="cockpit-sub text-wtm-amber">${escapeHtml(flowsMeta.flows_status || 'degraded')}</p></div>`;
-  } else if (flows.aggregate?.verdict) {
-    flowsBlock = `<div class="cockpit-card"><h4>Funds flow</h4><p class="cockpit-line">${escapeHtml(flows.aggregate.verdict)}</p></div>`;
-  }
+  const flowsBlock = renderFundsFlowSponsorshipCard(cockpit, { variant: 'rail' });
   rail.innerHTML = `
     <div class="cockpit-card">
       <h4>Signal</h4>
@@ -5051,7 +5610,7 @@ function renderCockpitChart(cockpit) {
   el('cockpitChartTitle').textContent = series?.label || `${row?.short || 'Node'} · RV / Basis`;
   el('cockpitChartSubtitle').textContent = series
     ? `${series.quartile_direction || ''} · ${RV_HORIZON_LABELS[horizon] || horizon} lookback`
-    : (cockpit.rv_basis?._degraded ? 'Hydration required — quartile rankings not loaded' : 'No series populated');
+    : (cockpit.rv_basis?._fallback_mode ? 'RV quartiles require hydration — history not loaded' : 'No series populated');
 
   if (hz) {
     const unit = hz.unit || '';
@@ -5093,7 +5652,7 @@ function renderCockpitDetailBand(cockpit) {
     const marks = cockpit.horizon_marks || {};
     band.innerHTML = `<div class="cockpit-component-strip">
       ${HORIZONS.map(h => `<span class="cockpit-component-chip">${HORIZON_LABELS[h]} ${HORIZON_DISPLAY[marks[h] || ''] || '—'}</span>`).join('')}
-      <span class="cockpit-component-chip text-wtm-muted">Import hydration for component feed</span>
+      <span class="cockpit-component-chip text-wtm-muted">Component feed requires hydration import</span>
     </div>`;
     return;
   }
@@ -5165,11 +5724,8 @@ function renderFocusLayer(cockpit, state) {
     if (!hz) return '';
     return `<tr><td>${RV_HORIZON_LABELS[h]}</td><td>${hz.current_value} ${hz.unit || ''}</td><td>${hz.percentile}</td><td>Q${hz.quartile}</td><td class="${richnessClass(hz.richness_label)}">${hz.richness_label}</td></tr>`;
   }).join('') : '<tr><td colspan="5">No horizon data</td></tr>';
-  const flows = cockpit.funds_flows || {};
-  const fm = flows.flows_meta || {};
-  let flowsLine = 'Flows unavailable — not neutral.';
-  if (fm.flows_status === 'ok' && flows.aggregate?.verdict) flowsLine = `${flows.aggregate.verdict} · ${fm.flows_source}`;
-  else if (fm.flows_degraded) flowsLine = `${fm.flows_status} · ${fm.fallback_reason || 'degraded'}`;
+  const flowsCard = renderFundsFlowSponsorshipCard(cockpit, { variant: 'expanded' });
+  const changeMindFallback = cockpit.funds_flows?.interpretation?.change_mind_trigger || dir.invalidation || '—';
 
   layer.innerHTML = `
     <div class="cockpit-card"><h3>Thesis</h3>
@@ -5189,10 +5745,10 @@ function renderFocusLayer(cockpit, state) {
     <div class="cockpit-card"><h3>Drivers</h3>
       <p class="cockpit-sub">${(cockpit.component_inputs || []).map(c => `${escapeHtml(c.label || '')} ${c.value}`).join(' · ') || 'Horizon marks only — import hydration for feed.'}</p>
     </div>
-    <div class="cockpit-card"><h3>Funds flow</h3><p class="cockpit-sub">${escapeHtml(flowsLine)}</p></div>
-    <div class="cockpit-card"><h3>Change mind</h3>
-      <p class="cockpit-sub">${escapeHtml(flows.interpretation?.change_mind_trigger || dir.invalidation || '—')}</p>
-    </div>`;
+    <div class="cockpit-card"><h3>Allocator sponsorship (confirming evidence)</h3>${flowsCard}</div>
+    ${!cockpit.funds_flows?.interpretation?.change_mind_trigger ? `<div class="cockpit-card"><h3>Change mind</h3>
+      <p class="cockpit-sub">${escapeHtml(changeMindFallback)}</p>
+    </div>` : ''}`;
   if (typeof appState.navigation._focus_scroll === 'number') layer.scrollTop = appState.navigation._focus_scroll;
 }
 
@@ -5207,14 +5763,13 @@ function renderCompareLayer(state) {
     const series = cockpit.rv_basis?.series?.[cockpit.rv_basis?.active_series_id];
     const hz = series?.horizons?.[horizon];
     const rvLine = hz ? `Q${hz.quartile} · ${hz.richness_label} · ${hz.percentile}th` : (cockpit.rv_basis?.quartile_context || '—');
-    const fm = cockpit.funds_flows?.flows_meta || {};
-    const flowsChip = fm.flows_status && fm.flows_status !== 'ok'
-      ? `<span class="flows-degrade-chip">${escapeHtml(fm.flows_status)}</span>` : '';
+    const flowsCard = renderFundsFlowSponsorshipCard(cockpit, { variant: 'compare', horizon });
     return `<article class="compare-card">
-      <h4>${escapeHtml(row?.short || nodeId)} ${flowsChip}</h4>
+      <h4>${escapeHtml(row?.short || nodeId)}</h4>
       <p><strong>${escapeHtml(cockpit.band || '')}</strong> · ${cockpit.composite_score}</p>
       <p>${escapeHtml(cockpit.directional?.posture || '')} · ${escapeHtml(cockpit.directional?.rationale || '').slice(0, 80)}</p>
       <p class="${richnessClass(hz?.richness_label)}">${escapeHtml(rvLine)} · ${RV_HORIZON_LABELS[horizon]}</p>
+      ${flowsCard}
     </article>`;
   }).join('');
 }
@@ -5490,7 +6045,9 @@ async function copyText(text, btn, label) {
 el('btnSave').onclick = persistState;
 el('btnExport').onclick = exportForPerplexity;
 el('btnExportPipeline').onclick = exportPipelineBundle;
-el('btnImportHydration').onclick = () => {
+let _hydrationImportForce = false;
+el('btnImportHydration').onclick = (e) => {
+  _hydrationImportForce = !!(e && e.shiftKey);
   const hint = [
     'Select the hydration JSON file:',
     '',
@@ -5507,7 +6064,8 @@ el('btnImportHydration').onclick = () => {
 };
 el('hydrationFileInput').onchange = e => {
   const f = e.target.files?.[0];
-  if (f) importHydrationFile(f);
+  if (f) importHydrationFile(f, { force: _hydrationImportForce });
+  _hydrationImportForce = false;
   e.target.value = '';
 };
 el('btnAcceptTracer').onclick = acceptSuggestedTracer;

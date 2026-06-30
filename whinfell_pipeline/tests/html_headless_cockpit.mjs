@@ -14,6 +14,7 @@ const COCKPIT_BUNDLE = path.join(REPO, 'whinfell_pipeline/examples/cockpit_hydra
 const REQUIRED_FNS = [
   'drawRvBasisChart', 'toggleFocusMode', 'toggleCompareMode', 'setActiveNode',
   'renderNodeCockpitShell', 'flipNode', 'hydrateFromBundle', 'mergeNodeCockpit',
+  'renderFundsFlowSponsorshipCard',
 ];
 
 function extractBadgeDefault(html) {
@@ -44,7 +45,9 @@ this.__test = {
   LADDER, RV_HORIZONS, appState, hydrateFromBundle, mergeNodeCockpit,
   drawRvBasisChart, toggleFocusMode, toggleCompareMode, setActiveNode,
   renderNodeCockpitShell, flipNode, jumpToNode, activeNodeId, applyWorkspaceView,
-  applyCompareSelection, buildStateFromDOM, createEmptyState, createEmptyNavigation, document,
+  applyCompareSelection, buildStateFromDOM, createEmptyState, createEmptyNavigation,
+  renderFundsFlowSponsorshipCard, assessHydrationImportGuard, scoreHydrationBundleQuality,
+  setSharedHorizon, document,
 };
 `;
   return body;
@@ -153,6 +156,7 @@ function seedCockpitDom(t) {
     'cockpitCompareLayer', 'btnHeresWhy', 'btnCompareMode', 'nodeCockpitZone',
     'legacyConsoleZone', 'btnWorkspaceToggle',
     'whinfellScore', 'transmissionState', 'regimeTag', 'grossA', 'grossB',
+    'cmdFreshnessSubCluster', 'cmdFreshnessMeta', 'cmdFreshnessDot', 'cmdFreshnessCluster', 'cmdFreshness',
   ];
   ids.forEach(id => t.document.getElementById(id));
 }
@@ -233,6 +237,75 @@ function testRailNavigation(t, bundle) {
   return { activeNode: t.activeNodeId(), railRendered: true };
 }
 
+function testFundsFlowCard(t, bundle) {
+  hydrateCockpit(t, bundle);
+  t.setActiveNode('credit');
+  t.renderNodeCockpitShell(t.buildStateFromDOM());
+  const decisionRail = t.document.getElementById('cockpitDecisionRail');
+  if (!decisionRail.innerHTML.includes('funds-flow-card')) {
+    throw new Error('funds-flow-card not rendered in decision rail when hydrated');
+  }
+  if (!decisionRail.innerHTML.includes('funds-flow-verdict-supportive')) {
+    throw new Error('funds-flow verdict badge missing for credit supportive payload');
+  }
+  if (!decisionRail.innerHTML.includes('funds-flow-etf-row')) {
+    throw new Error('funds-flow ETF rows missing in decision rail');
+  }
+
+  const cockpit = t.mergeNodeCockpit('credit', t.buildStateFromDOM());
+  const compareHtml = t.renderFundsFlowSponsorshipCard(cockpit, { variant: 'compare' });
+  if (!compareHtml.includes('funds-flow-card--compare')) {
+    throw new Error('compare variant class missing from funds flow card');
+  }
+
+  t.toggleFocusMode(true);
+  const focus = t.document.getElementById('cockpitFocusLayer');
+  if (!focus.innerHTML.includes('funds-flow-card--expanded')) {
+    throw new Error('expanded funds-flow card missing in focus layer');
+  }
+  t.toggleFocusMode(false);
+
+  t.toggleCompareMode(true);
+  const compareLayer = t.document.getElementById('cockpitCompareLayer');
+  if (!compareLayer.innerHTML.includes('funds-flow-card--compare')) {
+    throw new Error('compare funds-flow card missing in compare layer');
+  }
+  t.toggleCompareMode(false);
+
+  return { fundsFlowCardRendered: true, verdict: 'supportive', variants: ['rail', 'compare', 'expanded'] };
+}
+
+function testStatePreservation(t, bundle) {
+  hydrateCockpit(t, bundle);
+  t.setActiveNode('breadth');
+  t.setSharedHorizon('6m');
+  const nodeBefore = t.activeNodeId();
+  const hzBefore = t.appState.chart?.shared_horizon;
+  t.toggleFocusMode(true);
+  t.toggleFocusMode(false);
+  if (t.activeNodeId() !== nodeBefore) throw new Error('active node lost after focus exit');
+  if (t.appState.chart?.shared_horizon !== hzBefore) throw new Error('shared horizon lost after focus exit');
+  t.toggleCompareMode(true);
+  t.toggleCompareMode(false);
+  if (t.activeNodeId() !== nodeBefore) throw new Error('active node lost after compare exit');
+  return { nodePreserved: nodeBefore, horizonPreserved: hzBefore };
+}
+
+function testImportGuard(t, bundle) {
+  hydrateCockpit(t, bundle);
+  const healthyScore = t.scoreHydrationBundleQuality(bundle);
+  const degraded = { flows_sidecar: { flows_status: 'unavailable' } };
+  const guard = t.assessHydrationImportGuard(degraded, t.appState);
+  if (!guard.downgrade) throw new Error('expected downgrade guard after healthy session');
+  if (guard.allowed) throw new Error('downgrade import should be blocked');
+  const applied = t.hydrateFromBundle(degraded, { force: false });
+  if (applied !== false) throw new Error('blocked import should return false');
+  if (!t.appState.hydration?.node_cockpits) throw new Error('healthy cockpits should remain after blocked import');
+  const forced = t.hydrateFromBundle(degraded, { force: true });
+  if (forced !== true) throw new Error('forced degraded import should succeed');
+  return { healthyScore, blocked: true, forcedOk: true };
+}
+
 function runSuite(script, bundle, label) {
   return {
     label,
@@ -240,6 +313,9 @@ function runSuite(script, bundle, label) {
     focus: testFocusMode(boot(script), bundle),
     compare: testCompareMode(boot(script), bundle),
     navigation: testRailNavigation(boot(script), bundle),
+    fundsFlow: testFundsFlowCard(boot(script), bundle),
+    statePreservation: testStatePreservation(boot(script), bundle),
+    importGuard: testImportGuard(boot(script), bundle),
   };
 }
 
@@ -261,7 +337,7 @@ if (JSON.stringify(snap(run1)) !== JSON.stringify(snap(run2))) {
 const out = [
   'html_headless_cockpit_ok',
   `Required functions: ${REQUIRED_FNS.join(', ')}.`,
-  'Blocks: drawRvBasisChart (5 horizons), toggleFocusMode, toggleCompareMode, setActiveNode/flipNode.',
+  'Blocks: drawRvBasisChart (5 horizons), toggleFocusMode, toggleCompareMode, setActiveNode/flipNode, fundsFlowCard.',
   'Executed twice (run1, run2) with identical snapshots.',
   JSON.stringify(run1, null, 2),
 ].join('\n');

@@ -330,7 +330,10 @@ class TestHydrateFundsIntegration(unittest.TestCase):
     def test_hydration_bundle_always_has_flows_sidecar_block(self):
         bundle = build_hydration_bundle()
         self.assertIn("flows_sidecar", bundle)
-        self.assertIn(bundle["flows_sidecar"]["flows_status"], ("ok", "unavailable", "fallback_1d"))
+        self.assertIn(
+            bundle["flows_sidecar"]["flows_status"],
+            ("ok", "partial", "unavailable", "fallback_1d"),
+        )
 
     def test_live_hydrate_flows_status_ok(self):
         """Acceptance #2: representative flows data → credit funds_flows.flows_status exactly ok."""
