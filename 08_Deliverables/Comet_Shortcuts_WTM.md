@@ -90,7 +90,7 @@ STEP 0 — Load machine plan
 STEP 1 — Koyfin required (4 exports → whinfell_drop)
   1. WTM-Rates-Credit        → rates_YYYYMMDD_HHMM.csv
   2. WTM-Equities-Breadth    → equities_YYYYMMDD_HHMM.csv
-  3. WTM-Credit-Confirmation → credit_YYYYMMDD_HHMM.csv  (legacy vendor: koyfin_WhinPump* — feeds crypto snapshot)
+  3. WTM-Credit-Confirmation → credit_YYYYMMDD_HHMM.csv  (feeds crypto snapshot; normalize handles vendor rename)
   4. WTM-China-Policy        → china_policy_YYYYMMDD_HHMM.csv  (REQUIRED for china_ladder)
   Each: open saved view → ⋮ Export → CSV → save to whinfell_drop
   Assist if navigation fails: USGG2Y10Y, IWM, HYG, KWEB/CSI300
@@ -262,7 +262,7 @@ STEP 0 — Load machine plan
 STEP 1 — Koyfin required (4 exports → whinfell_drop)
   1. WTM-Rates-Credit        → rates_YYYYMMDD_HHMM.csv
   2. WTM-Equities-Breadth    → equities_YYYYMMDD_HHMM.csv
-  3. WTM-Credit-Confirmation → credit_YYYYMMDD_HHMM.csv  (legacy vendor: koyfin_WhinPump* — feeds crypto snapshot)
+  3. WTM-Credit-Confirmation → credit_YYYYMMDD_HHMM.csv  (feeds crypto snapshot; normalize handles vendor rename)
   4. WTM-China-Policy        → china_policy_YYYYMMDD_HHMM.csv  (REQUIRED for china_ladder)
   Each: open saved view → ⋮ Export → CSV → save to whinfell_drop
   Assist if navigation fails: USGG2Y10Y, IWM, HYG, KWEB/CSI300

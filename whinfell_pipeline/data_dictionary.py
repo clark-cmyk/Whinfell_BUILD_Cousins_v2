@@ -143,6 +143,43 @@ def get_ticker_standards(data: dict[str, Any] | None = None) -> dict[str, Any]:
     return dict(dd.get("ticker_standards") or {})
 
 
+def normalize_glob_rules(data: dict[str, Any] | None = None) -> list[dict[str, Any]]:
+    """Return ordered detect_glob → canonical_template rules from Master DD."""
+    fnc = get_canonical_filename_patterns(data)
+    rules = fnc.get("normalize_rules")
+    if isinstance(rules, list) and rules:
+        return [dict(r) for r in rules]
+    return []
+
+
+def canonical_dataset_names(data: dict[str, Any] | None = None) -> list[str]:
+    fnc = get_canonical_filename_patterns(data)
+    return list(fnc.get("canonical_datasets") or [])
+
+
+def canonical_filename_patterns(data: dict[str, Any] | None = None) -> list[str]:
+    """Glob patterns for already-canonical staged filenames."""
+    datasets = canonical_dataset_names(data)
+    patterns = [f"{ds}_*" for ds in datasets]
+    patterns.extend(["btc_price_chart_*", "btc_correl_chart_*", "eth_correl_chart_*", "xrp_correl_chart_*", "sol_correl_chart_*", "options_*", "greeks_*"])
+    return patterns
+
+
+def raw_patterns_for_dataset(dataset: str, data: dict[str, Any] | None = None) -> list[str]:
+    """Vendor detect globs for a canonical dataset (from watchlist_names)."""
+    wl = get_watchlist_names(data)
+    out: list[str] = []
+    for view in (wl.get("koyfin_saved_views") or {}).values():
+        if view.get("dataset") == dataset and view.get("vendor_detect_glob"):
+            out.append(str(view["vendor_detect_glob"]))
+    for rule in normalize_glob_rules(data):
+        if rule.get("dataset") == dataset and rule.get("detect_glob"):
+            g = str(rule["detect_glob"])
+            if g not in out:
+                out.append(g)
+    return out
+
+
 def canonical_saved_view_names(data: dict[str, Any] | None = None) -> list[str]:
     views = (get_watchlist_names(data).get("koyfin_saved_views") or {})
     return list(views.keys())

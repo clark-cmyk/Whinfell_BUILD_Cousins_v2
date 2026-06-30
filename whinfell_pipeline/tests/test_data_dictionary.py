@@ -23,6 +23,7 @@ from whinfell_pipeline.data_dictionary import (
     get_project_structure,
     get_ticker_standards,
     get_watchlist_names,
+    normalize_glob_rules,
     legacy_alias,
     load_data_dictionary,
     master_dictionary_info,
@@ -56,7 +57,9 @@ class TestDataDictionary(unittest.TestCase):
         self.assertIn("WTM-Credit-Confirmation", views)
         self.assertIn("WTM-Rates-Credit", views)
         patterns = get_canonical_filename_patterns()
-        self.assertIn("credit_{YYYYMMDD}_{HHMM}.csv", patterns["vendor_to_canonical"]["koyfin_WhinPump"])
+        self.assertIn("credit_vendor_snapshot", patterns["vendor_to_canonical"])
+        rules = normalize_glob_rules()
+        self.assertTrue(any(r.get("dataset") == "credit" for r in rules))
         jfm = get_json_field_map()
         self.assertIn("whinfell_score", jfm["hydration_bundle"]["blocks"]["global"])
         cm = get_column_mappings()
@@ -64,7 +67,7 @@ class TestDataDictionary(unittest.TestCase):
         ts = get_ticker_standards()
         self.assertEqual(ts["koyfin"]["format"], "uppercase_plain")
         wl = get_watchlist_names()
-        self.assertEqual(wl["koyfin_saved_views"]["WTM-Credit-Confirmation"]["legacy_alias"], "WhinPump")
+        self.assertEqual(wl["koyfin_saved_views"]["WTM-Credit-Confirmation"]["dataset"], "credit")
 
     def test_source_systems_present(self):
         ids = source_system_ids()

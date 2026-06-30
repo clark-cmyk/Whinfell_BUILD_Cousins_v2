@@ -2,7 +2,7 @@
 WHINFELL DESK — PERPLEXITY FULL COLLECTION PROMPT
 Paste this entire block into Perplexity. Do not summarize or shorten.
 Authority: Clark · BUILD Cousins · Whinfell Transmission Control
-Updated: 2026-06-28
+Updated: 2026-06-29 · Master Data Dictionary v1.0 (Locked)
 ================================================================================
 
 ## THE PROBLEM (read before you do anything)
@@ -17,7 +17,7 @@ Previous Perplexity / Comet collection runs have FAILED the desk on three dimens
    rows in the browser agent. That work is NOT your job. Python on Clark's Mac handles
    rename, staging, parquet, and hydration. Your ONLY job is: open screen → export CSV → save file.
 
-3. **MISTAKES** — Slow loops caused wrong files (Simplify/WhinPump snapshots instead of
+3. **MISTAKES** — Slow loops caused wrong files (wrong watchlist snapshots instead of
    time-series), saves to ~/Downloads instead of whinfell_drop, duplicate "(1).csv" copies,
    ticker confusion (ER1 = Ether not Russell; QR1 = Russell), and manual renames that
    broke the staged classifier.
@@ -56,7 +56,7 @@ You ARE:
 | Save to ~/Downloads                         | **Save to ~/Downloads/whinfell_drop**   |
 | Rename files manually                         | **run_batch_collect.py normalizes**     |
 | Rebuild Koyfin panels from scratch            | **Open existing saved views by name**   |
-| Use Simplify/WhinPump for time-series history | **Use WTM dashboards or Date-column export** |
+| Use non-WTM watchlists for time-series history | **Use WTM-* saved views or Date-column export** |
 
 ================================================================================
 ## REPO & DROP FOLDER
@@ -85,22 +85,20 @@ STEP 1 — WTM-Rates-Credit
   Raw names also OK: koyfin_YYYY-MM-DD.csv
 
 STEP 2 — WTM-Equities-Breadth
-  Navigate: My Dashboards → WTM-Equities-Breadth
-            OR watchlist "Simplify All ETFs"
+  Navigate: My Dashboards → WTM-Equities-Breadth  (canonical — do not substitute other watchlists)
   Panels: IWM, SPY, XLI, XLF, XLU
   Assist: https://app.koyfin.com/etf/IWM.US
           https://app.koyfin.com/etf/SPY.US
   Target: equities_YYYYMMDD_HHMM.csv
-  Raw OK: koyfin_Simplify_All_ETFs_*
+  Normalize: run_batch_collect.py normalize maps legacy vendor names automatically
 
 STEP 3 — WTM-Credit-Confirmation
-  Navigate: My Dashboards → WTM-Credit-Confirmation
-            OR watchlist "WhinPump"
+  Navigate: My Dashboards → WTM-Credit-Confirmation  (canonical — required for crypto_sleeve)
   Panels: HYG, LQD, HYG/LQD ratio
   Assist: https://app.koyfin.com/etf/HYG.US
           https://app.koyfin.com/etf/LQD.US
   Target: credit_YYYYMMDD_HHMM.csv
-  Raw OK: koyfin_WhinPump*
+  Normalize: run_batch_collect.py normalize maps legacy vendor names automatically
 
 STEP 4 — WTM-China-Policy
   Navigate: My Dashboards → WTM-China-Policy
@@ -181,7 +179,7 @@ Daily collect does NOT require visiting each of these.
   ✗ Invent Whinfell scores, regime tags, or transmission states
   ✗ Save files to ~/Downloads (must be whinfell_drop subfolder)
   ✗ Keep duplicate "filename (1).csv" copies
-  ✗ Use koyfin_Simplify or koyfin_WhinPump as historical time-series
+  ✗ Use non-WTM watchlist exports as historical time-series
   ✗ Execute trades or change risk limits
   ✗ Skip the terminal command and tell Clark to rename manually
   ✗ Spend compute "verifying" data by opening every cell in CSV
@@ -197,7 +195,7 @@ Mode: FAST BATCH (8 exports)
 Exports completed:
   [ ] Step 1  koyfin_rates          (WTM-Rates-Credit)
   [ ] Step 2  koyfin_equities       (WTM-Equities-Breadth / Simplify ETFs)
-  [ ] Step 3  koyfin_credit         (WTM-Credit-Confirmation / WhinPump)
+  [ ] Step 3  koyfin_credit         (WTM-Credit-Confirmation)
   [ ] Step 4  koyfin_china          (WTM-China-Policy)
   [ ] Step 5  barchart_intraday     (major-commodities / dailymonitor0610)
   [ ] Step 6  barchart_daily        (BTM26 historical-download)

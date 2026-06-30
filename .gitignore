@@ -36,6 +36,13 @@ whinfell_pipeline/tests/*
 !whinfell_pipeline/collection_manifest.yaml
 !whinfell_pipeline/tests/test_data_dictionary.py
 !whinfell_pipeline/tests/test_master_dictionary_tc.py
+!whinfell_pipeline/tests/test_normalize_dictionary.py
+!whinfell_pipeline/tests/dd_badge_headless.mjs
+!whinfell_pipeline/sync_dictionary_meta.py
+!whinfell_pipeline/batch_collect.py
+!whinfell_pipeline/desk_urls.yaml
+!08_Deliverables/data_dictionary_meta.js
+!08_Deliverables/data_dictionary_meta.json
 !08_Deliverables/Comet_Browser_Operations_Blueprint.md
 !08_Deliverables/Whinfell_Expanded_Operators_Guide_v1.4.md
 staged_raw/**/*.csv

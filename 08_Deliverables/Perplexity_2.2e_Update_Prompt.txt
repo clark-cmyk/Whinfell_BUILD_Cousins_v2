@@ -44,7 +44,7 @@ Save ALL files to: **~/Downloads/whinfell_drop**
 |---|--------|--------|----------------------|
 | 1 | Koyfin | WTM-Rates-Credit | My Dashboards (or koyfin wide Date export) |
 | 2 | Koyfin | WTM-Equities-Breadth / Simplify All ETFs | watchlist |
-| 3 | Koyfin | WTM-Credit-Confirmation / WhinPump | watchlist |
+| 3 | Koyfin | WTM-Credit-Confirmation | watchlist |
 | 4 | Koyfin | WTM-China-Policy | dashboard |
 | 5 | Barchart | WTM-Futures-Intraday | https://www.barchart.com/futures/major-commodities |
 | 6 | Barchart | WTM-Futures-Daily | https://www.barchart.com/futures/quotes/BTM26/historical-download |
@@ -56,7 +56,7 @@ Save ALL files to: **~/Downloads/whinfell_drop**
 - `btm26_daily-nearby_historical-data-06-28-2026.csv`
 - `bitcoin-futures-prices-intraday-06-28-2026.csv`
 - `futures-spreads-btn26-06-28-2026.csv`
-- `koyfin_WhinPump*.csv`
+- legacy vendor names auto-renamed by `run_batch_collect.py normalize` → `credit_*.csv`
 - `koyfin_Simplify_All_ETFs_*.csv`
 
 The tool renames AND transforms them automatically.

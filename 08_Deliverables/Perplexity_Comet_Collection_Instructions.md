@@ -58,8 +58,8 @@ Wired URLs live in:
 | # | Saved view name | Wired URL / navigation | Save as (tool renames if needed) |
 |---|-----------------|------------------------|----------------------------------|
 | 1 | **WTM-Rates-Credit** | [app.koyfin.com](https://app.koyfin.com/) → My Dashboards → WTM-Rates-Credit | `rates_YYYYMMDD_HHMM.csv` |
-| 2 | **WTM-Equities-Breadth** | Dashboard **or** watchlist **Simplify All ETFs** | `equities_YYYYMMDD_HHMM.csv` |
-| 3 | **WTM-Credit-Confirmation** | Dashboard **or** watchlist **WhinPump** | `credit_YYYYMMDD_HHMM.csv` |
+| 2 | **WTM-Equities-Breadth** | My Dashboards → WTM-Equities-Breadth (canonical) | `equities_YYYYMMDD_HHMM.csv` |
+| 3 | **WTM-Credit-Confirmation** | My Dashboards → WTM-Credit-Confirmation (canonical) | `credit_YYYYMMDD_HHMM.csv` |
 | 4 | **WTM-China-Policy** | My Dashboards → WTM-China-Policy | `china_policy_YYYYMMDD_HHMM.csv` |
 
 **Koyfin export clicks:** Open view → `⋮` menu → **Export** → **CSV** → save to `whinfell_drop`.
@@ -241,7 +241,7 @@ No browser. ~30 seconds for all historical series.
 | All files quarantined | Expected until 2.2e transform — collection still valid for analytics |
 | `ready=False` on status | Missing rates, futures_intraday, or futures_daily |
 | Duplicate ` (1).csv` | Delete duplicate; keep one copy |
-| Opened wrong Koyfin export | Use Date-column time series — not Simplify/WhinPump for history |
+| Opened wrong Koyfin export | Use Date-column time series — not cross-section watchlist snapshots |
 
 ---
 

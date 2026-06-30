@@ -47,16 +47,15 @@ watchlist_names:
     WTM-Rates-Credit:
       dataset: rates
       filename_pattern: "rates_{YYYYMMDD}_{HHMM}.csv"
-      legacy_vendor_patterns: ["koyfin_????-??-??.csv"]
+      vendor_detect_glob: "koyfin_????-??-??.csv"
     WTM-Equities-Breadth:
       dataset: equities
       filename_pattern: "equities_{YYYYMMDD}_{HHMM}.csv"
-      legacy_vendor_patterns: ["koyfin_Simplify_All_ETFs_*"]
+      vendor_detect_glob: "koyfin_simplify_all_etfs_*"
     WTM-Credit-Confirmation:
       dataset: credit
       filename_pattern: "credit_{YYYYMMDD}_{HHMM}.csv"
-      legacy_vendor_patterns: ["koyfin_WhinPump*"]
-      legacy_alias: WhinPump
+      vendor_detect_glob: "koyfin_whinpump*"
       feeds: [crypto_sleeve_snapshot, global_score_proxy]
     WTM-China-Policy:
       dataset: china_policy
@@ -99,13 +98,47 @@ file_naming_conventions:
     product_flavor: "{product}_{flavor}_{YYYYMMDD}.csv"
     normalize_script: "scripts/normalize_whinfell_drop.sh"
     quarantine_dir: "data/staged/quarantine"
+  normalize_rules:
+    - detect_glob: "koyfin_whinpump*"
+      canonical_template: "credit_{YYYYMMDD}_{HHMM}.csv"
+      dataset: credit
+      saved_view: WTM-Credit-Confirmation
+    - detect_glob: "koyfin_simplify_all_etfs_*"
+      canonical_template: "equities_{YYYYMMDD}_{HHMM}.csv"
+      dataset: equities
+      saved_view: WTM-Equities-Breadth
+    - detect_glob: "koyfin_????-??-??.csv"
+      canonical_template: "rates_{YYYYMMDD}_{HHMM}.csv"
+      dataset: rates
+      saved_view: WTM-Rates-Credit
+    - detect_glob: "koyfin_????-??-??-?.csv"
+      canonical_template: "crypto_corr_series_{YYYYMMDD}_{HHMM}.csv"
+      dataset: crypto_corr_series
+    - detect_glob: "*_daily-nearby_historical-data-*"
+      canonical_template: "futures_daily_{YYYYMMDD}_{HHMM}.csv"
+      dataset: futures_daily
+      saved_view: WTM-Futures-Daily
+    - detect_glob: "*-prices-intraday-*"
+      canonical_template: "futures_intraday_{YYYYMMDD}_{HHMM}.csv"
+      dataset: futures_intraday
+      saved_view: WTM-Futures-Intraday
+    - detect_glob: "watchlist-*-intraday-*"
+      canonical_template: "futures_intraday_{YYYYMMDD}_{HHMM}.csv"
+      dataset: futures_intraday
+    - detect_glob: "futures-spreads-btn*"
+      canonical_template: "btc_basis_{YYYYMMDD}.csv"
+      dataset: btc_basis
+      saved_view: WTM-BTC-Basis
+    - detect_glob: "futures-spreads-btm*"
+      canonical_template: "btc_basis_{YYYYMMDD}.csv"
+      dataset: btc_basis
   vendor_to_canonical:
-    koyfin_WhinPump: "credit_{YYYYMMDD}_{HHMM}.csv"
-    koyfin_Simplify_All_ETFs: "equities_{YYYYMMDD}_{HHMM}.csv"
-    koyfin_YYYY-MM-DD: "rates_{YYYYMMDD}_{HHMM}.csv"
-    koyfin_YYYY-MM-DD-N: "crypto_corr_series_{YYYYMMDD}_{HHMM}.csv"
-    btm26_daily-nearby_historical-data: "futures_daily_{YYYYMMDD}_{HHMM}.csv"
-    futures-spreads-btn26: "btc_basis_{YYYYMMDD}.csv"
+    credit_vendor_snapshot: "credit_{YYYYMMDD}_{HHMM}.csv"
+    equities_vendor_snapshot: "equities_{YYYYMMDD}_{HHMM}.csv"
+    rates_vendor_wide: "rates_{YYYYMMDD}_{HHMM}.csv"
+    correl_vendor_export: "crypto_corr_series_{YYYYMMDD}_{HHMM}.csv"
+    futures_daily_vendor: "futures_daily_{YYYYMMDD}_{HHMM}.csv"
+    btc_basis_vendor: "btc_basis_{YYYYMMDD}.csv"
   canonical_datasets:
     - rates
     - equities
@@ -193,7 +226,7 @@ source_systems:
     description: Broad watchlist/snapshot export (Ticker, Last Price, returns, vol)
     detect:
       headers_any: ["Ticker", "Last Price"]
-      filename_patterns: ["koyfin_WhinPump*", "crypto_snapshot_*", "credit_*"]
+      filename_patterns: ["crypto_snapshot_*", "credit_*"]
     parser: whinfell_pipeline.crypto_sleeve.parse_snapshot_rows
     outputs: [snapshot_validation, universe_membership]
     raw_metadata_field: _raw
