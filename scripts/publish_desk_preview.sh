@@ -20,16 +20,18 @@ fi
 
 bash scripts/build_desk_preview.sh
 
-# Pages must be enabled once per repo (Settings → Pages → GitHub Actions).
-# Without this, deploy-pages returns 404 and the site shows "There isn't a GitHub Pages site here."
+# Pages deploys from gh-pages branch (peaceiris action). Enable once: Settings → Pages → gh-pages / root.
 if command -v gh >/dev/null 2>&1; then
   if ! gh api repos/clark-cmyk/Whinfell_BUILD_Cousins/pages --silent 2>/dev/null; then
-    echo "publish_desk_preview: enabling GitHub Pages (workflow source)…" >&2
-    if gh api -X POST repos/clark-cmyk/Whinfell_BUILD_Cousins/pages -f build_type=workflow 2>/dev/null; then
+    echo "publish_desk_preview: enabling GitHub Pages (gh-pages branch)…" >&2
+    if gh api -X POST repos/clark-cmyk/Whinfell_BUILD_Cousins/pages \
+      --input - <<'EOF' 2>/dev/null; then
+{"build_type":"legacy","source":{"branch":"gh-pages","path":"/"}}
+EOF
       echo "publish_desk_preview: Pages enabled → https://clark-cmyk.github.io/Whinfell_BUILD_Cousins/" >&2
     else
       echo "publish_desk_preview: WARN — could not auto-enable Pages." >&2
-      echo "  Manual: repo → Settings → Pages → Build: GitHub Actions → save" >&2
+      echo "  Manual: repo → Settings → Pages → Deploy from branch gh-pages / root" >&2
       echo "  Then: gh workflow run desk-preview-pages.yml --ref main" >&2
     fi
   fi
