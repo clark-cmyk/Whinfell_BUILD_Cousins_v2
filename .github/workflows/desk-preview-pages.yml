@@ -1,5 +1,5 @@
-# Free GitHub Pages deploy — Transmission Control desk preview
-# Enable once: Repo Settings → Pages → Build and deployment → Source: GitHub Actions
+# GitHub Pages deploy — Transmission Control + BasisWatch desk preview
+# Uses gh-pages branch (reliable) — enable once: Settings → Pages → Deploy from branch gh-pages / root
 name: Desk preview (GitHub Pages)
 
 on:
@@ -19,26 +19,17 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
-  group: desk-preview-pages
-  cancel-in-progress: true
+  group: pages
+  cancel-in-progress: false
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
     steps:
       - uses: actions/checkout@v4
-
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
 
       - name: Build static desk preview
         run: bash scripts/build_desk_preview.sh
@@ -50,23 +41,13 @@ jobs:
           test -f _desk_preview_out/basis_watch_panel.js
           ls -la _desk_preview_out/
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: _desk_preview_out
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deploy
-        uses: actions/deploy-pages@v4
-        timeout-minutes: 8
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_desk_preview_out
+          publish_branch: gh-pages
+          force_orphan: true
+          user_name: github-actions[bot]
+          user_email: 41898282+github-actions[bot]@users.noreply.github.com
+          commit_message: 'desk preview deploy ${{ github.sha }}'
