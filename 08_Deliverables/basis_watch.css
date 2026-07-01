@@ -1,6 +1,12 @@
 /* WTM BasisWatch — Whinfell · TeamLibby · BUILD Cousins
    CME BasisWatch-inspired · dual-theme institutional polish */
 
+html {
+  color-scheme: dark;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+[data-theme="light"] { color-scheme: light; }
+
 :root, [data-theme="dark"] {
   --bw-bg: #090d12;
   --bw-bg-gradient: linear-gradient(165deg, #0c1219 0%, #080b10 55%, #0a0e14 100%);
@@ -98,6 +104,18 @@
 }
 
 .bw-standalone * { box-sizing: border-box; }
+
+.bw-standalone ::selection {
+  background: var(--bw-accent-soft);
+  color: var(--bw-text);
+}
+
+.bw-standalone ::-webkit-scrollbar { width: 8px; height: 8px; }
+.bw-standalone ::-webkit-scrollbar-thumb {
+  background: var(--bw-border-strong);
+  border-radius: 4px;
+}
+.bw-standalone ::-webkit-scrollbar-track { background: transparent; }
 
 .bw-topbar {
   display: flex;
@@ -229,6 +247,44 @@
 }
 .bw-standalone #bwCurveCanvas { height: 280px; }
 
+.bw-chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  margin-top: 8px;
+  padding: 0 2px;
+  font-size: 10px;
+  color: var(--bw-muted);
+}
+.bw-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+.bw-legend-swatch {
+  display: inline-block;
+  width: 18px;
+  height: 3px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.bw-legend-swatch--spot {
+  background: transparent;
+  border-top: 2px dashed var(--bw-chart-spot-label);
+  height: 0;
+  width: 20px;
+}
+.bw-legend-swatch--curve {
+  background: linear-gradient(90deg, var(--bw-chart-curve), var(--bw-chart-front));
+}
+.bw-legend-swatch--front {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--bw-chart-front);
+}
+
 .bw-main-body { padding: 0 14px 14px; }
 
 /* ── Embedded panel (Transmission Control) ── */
@@ -323,6 +379,34 @@
   color: var(--bw-green);
   background: transparent;
 }
+.bw-btn--popout:hover {
+  background: var(--bw-heat-cold-bg);
+  color: var(--bw-green);
+}
+.bw-btn--theme {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 108px;
+  justify-content: center;
+}
+.bw-theme-icon {
+  font-size: 13px;
+  line-height: 1;
+  opacity: 0.9;
+}
+[data-theme="light"] .bw-btn--theme .bw-theme-icon::before { content: "☾"; }
+[data-theme="dark"] .bw-btn--theme .bw-theme-icon::before { content: "☀"; }
+.bw-btn--theme .bw-theme-icon { font-size: 0; }
+.bw-btn--theme .bw-theme-icon::before { font-size: 13px; }
+
+.bw-view-tab:focus-visible,
+.bw-asset-btn:focus-visible,
+.bw-btn:focus-visible,
+.bw-toolbar select:focus-visible {
+  outline: 2px solid var(--bw-accent);
+  outline-offset: 2px;
+}
 
 .bw-toolbar {
   display: flex;
@@ -367,7 +451,13 @@
   gap: 8px;
   padding: 12px;
 }
-.bw-standalone .bw-summary-grid { grid-template-columns: 1fr; }
+.bw-standalone .bw-summary-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+@media (max-width: 400px) {
+  .bw-standalone .bw-summary-grid { grid-template-columns: 1fr; }
+}
 
 .bw-card {
   padding: 10px 12px;
@@ -532,6 +622,36 @@
   text-align: center;
 }
 #bwDataNote { font-size: 10px; color: var(--bw-muted); max-width: 360px; }
+
+.bw-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 16px;
+  padding: 14px 20px 22px;
+  font-size: 10px;
+  color: var(--bw-muted);
+  border-top: 1px solid var(--bw-border);
+  background: var(--bw-surface-glass);
+}
+.bw-footer #bwFooterStamp {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--bw-accent-dim);
+  letter-spacing: 0.02em;
+}
+
+/* Panel + chart surfaces — smooth theme handoff */
+.bw-panel,
+.bw-card,
+.bw-control-strip,
+.bw-topbar,
+.bw-heat-cell,
+.bw-cross-pill,
+#bwCurveCanvas {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
 
 /* ── Callout strip (richest / steepest) ── */
 .bw-callout-strip {

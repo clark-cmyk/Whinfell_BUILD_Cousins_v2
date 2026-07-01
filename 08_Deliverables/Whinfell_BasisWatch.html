@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Whinfell WTM BasisWatch — CME-style crypto futures basis, implied rate, and TradFi cross-asset bridge." />
+  <meta name="theme-color" content="#090d12" id="bwThemeColor" />
   <title>WTM BasisWatch &amp; Implied Rate — Whinfell</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,7 +22,10 @@
     <div class="bw-topbar-actions">
       <span id="bwStatusChip" class="bw-status-chip bw-status-chip--live">Live</span>
       <span id="bwBuildBadge" class="bw-status-chip" style="color:var(--bw-muted)">—</span>
-      <button type="button" id="btnBwTheme" class="bw-btn" aria-pressed="false">Light mode</button>
+      <button type="button" id="btnBwTheme" class="bw-btn bw-btn--theme" aria-pressed="false" title="Toggle light / dark theme">
+        <span class="bw-theme-icon" aria-hidden="true">☀</span>
+        <span class="bw-theme-label">Light mode</span>
+      </button>
       <a href="./" class="bw-btn bw-btn--primary" title="Return to Transmission Control">← Transmission Control</a>
     </div>
   </header>
@@ -67,6 +72,11 @@
         </div>
         <div class="bw-chart-wrap">
           <canvas id="bwCurveCanvas" aria-label="Futures curve vs spot"></canvas>
+          <div id="bwChartLegend" class="bw-chart-legend" aria-hidden="true">
+            <span class="bw-legend-item"><i class="bw-legend-swatch bw-legend-swatch--spot"></i>Spot (CF proxy)</span>
+            <span class="bw-legend-item"><i class="bw-legend-swatch bw-legend-swatch--curve"></i>Futures curve</span>
+            <span class="bw-legend-item"><i class="bw-legend-swatch bw-legend-swatch--front"></i>Front contract</span>
+          </div>
         </div>
         <div class="bw-main-body" id="bwMainView"></div>
       </section>
@@ -87,6 +97,12 @@
       </aside>
     </div>
   </main>
+
+  <footer class="bw-footer">
+    <span>Whinfell · BUILD Cousins · TeamLibby</span>
+    <span id="bwFooterStamp">—</span>
+    <span>CME-inspired basis &amp; implied rate · desk hydration</span>
+  </footer>
 
   <script src="basis_watch_panel.js"></script>
 </body>

@@ -5,7 +5,8 @@
 (function basisWatchPanel(global) {
   'use strict';
 
-  const BW_BUILD = '2.4-BASISWATCH-STANDALONE-2026-07-01';
+  const BW_BUILD = '2.5-BASISWATCH-STANDALONE-2026-07-01';
+  const THEME_COLORS = { dark: '#090d12', light: '#eef1f5' };
   const PREFS_KEY = 'whinfell_basiswatch_prefs';
   const THEME_KEY = 'whinfell_tc_theme';
   const HYDRATION_URL = 'data/hydration/latest.json';
@@ -116,9 +117,14 @@
     document.documentElement.setAttribute('data-theme', next);
     const btn = el('btnBwTheme');
     if (btn) {
-      btn.textContent = next === 'dark' ? 'Light mode' : 'Dark mode';
+      const label = btn.querySelector('.bw-theme-label');
+      if (label) label.textContent = next === 'dark' ? 'Light mode' : 'Dark mode';
+      else btn.textContent = next === 'dark' ? 'Light mode' : 'Dark mode';
       btn.setAttribute('aria-pressed', next === 'light' ? 'true' : 'false');
+      btn.title = next === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
     }
+    const themeColor = el('bwThemeColor');
+    if (themeColor) themeColor.setAttribute('content', THEME_COLORS[next] || THEME_COLORS.dark);
     try { localStorage.setItem(THEME_KEY, next); } catch { /* ignore */ }
   }
 
@@ -448,6 +454,14 @@
       shapeBadge.textContent = `${model.shape} · ${model.rollLabel}`;
     }
 
+    const curveMeta = el('bwCurveMeta');
+    if (curveMeta) {
+      const front = model.front;
+      curveMeta.textContent = front
+        ? `${model.asset.label} · ${front.symbol} · ${model.contracts.length} nodes`
+        : `${model.asset.label} · awaiting curve`;
+    }
+
     const summary = el('bwSummaryCards');
     if (summary) summary.innerHTML = renderSummaryCards(model, standalone);
 
@@ -470,6 +484,9 @@
 
     const buildBadge = el('bwBuildBadge');
     if (buildBadge) buildBadge.textContent = BW_BUILD;
+
+    const footerStamp = el('bwFooterStamp');
+    if (footerStamp) footerStamp.textContent = BW_BUILD;
   }
 
   function persistBasisWatchPrefs(state) {
@@ -536,8 +553,12 @@
 
     el('btnBwTheme')?.addEventListener('click', () => {
       const cur = document.documentElement.getAttribute('data-theme') || 'dark';
-      applyTheme(cur === 'dark' ? 'light' : 'dark');
+      const next = cur === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
       renderPanel(getState());
+      if (typeof global.dispatchEvent === 'function') {
+        try { global.dispatchEvent(new CustomEvent('whinfell-theme-change', { detail: { theme: next } })); } catch { /* ignore */ }
+      }
     });
 
     document.querySelectorAll('.bw-view-tab').forEach(btn => {
