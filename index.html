@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Whinfell Operator Dashboard — C4.5 v1.1</title>
+  <style>
+    :root {
+      --bg: #0f1419; --surface: #1a2332; --surface2: #243044; --border: #2d3a4f;
+      --text: #e8edf4; --muted: #8b9cb3; --accent: #3d8bfd; --accent-dim: #2563b8;
+      --green: #3dd68c; --amber: #f5a623; --red: #f56565;
+      --font: "Segoe UI", system-ui, -apple-system, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font); background: var(--bg); color: var(--text);
+      height: 100vh; display: flex; flex-direction: column; overflow: hidden;
+    }
+    header {
+      display: flex; align-items: stretch; justify-content: space-between;
+      padding: 0; background: var(--surface);
+      border-bottom: 1px solid var(--border); flex-shrink: 0;
+    }
+    .header-brand {
+      flex: 1; padding: 12px 20px; display: flex; flex-direction: column; justify-content: center; gap: 3px;
+    }
+    .header-brand-row { display: flex; align-items: center; gap: 10px; }
+    header h1 { font-size: 15px; font-weight: 600; }
+    .version-badge {
+      font-size: 9px; font-weight: 700; color: var(--accent); background: rgba(61,139,253,0.15);
+      border: 1px solid rgba(61,139,253,0.35); padding: 2px 8px; border-radius: 4px;
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    header .meta { font-size: 11px; color: var(--muted); }
+    .header-controls {
+      display: flex; flex-direction: column; align-items: flex-end; justify-content: center;
+      gap: 6px; padding: 12px 20px; border-left: 1px solid var(--border);
+      background: rgba(0,0,0,0.15); min-width: 200px;
+    }
+    .header-controls .save-status { margin-top: 0; text-align: right; }
+    .btn {
+      background: var(--surface2); border: 1px solid var(--border); color: var(--text);
+      padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;
+    }
+    .btn:hover:not(:disabled) { background: var(--border); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .btn-primary { background: var(--accent-dim); border-color: var(--accent); }
+    .btn-primary:hover:not(:disabled) { background: var(--accent); }
+    .how-to-use {
+      flex-shrink: 0; background: rgba(61, 139, 253, 0.08);
+      border-bottom: 1px solid var(--border); padding: 10px 16px;
+      font-size: 11px; color: var(--muted); line-height: 1.55;
+    }
+    .how-to-use strong { color: var(--accent); }
+    .settings-bar {
+      flex-shrink: 0; background: var(--surface2);
+      border-bottom: 1px solid var(--border); padding: 10px 16px;
+    }
+    .settings-bar h2, .section-label {
+      font-size: 11px; font-weight: 700; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;
+    }
+    .settings-grid {
+      display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: end;
+    }
+    @media (max-width: 800px) { .settings-grid { grid-template-columns: 1fr; } }
+    .settings-field label, .field label {
+      display: block; font-size: 10px; color: var(--muted);
+      margin-bottom: 3px; font-weight: 600;
+    }
+    .settings-field input {
+      width: 100%; background: var(--bg); border: 1px solid var(--border);
+      color: #6eb6ff; padding: 7px 10px; border-radius: 5px; font-size: 11px;
+    }
+    .save-status { font-size: 10px; color: var(--muted); min-height: 14px; margin-top: 4px; }
+    .save-status.ok { color: var(--green); }
+    .main-split {
+      display: grid; grid-template-columns: 3fr 2fr; flex: 1;
+      min-height: 0; gap: 1px; background: var(--border);
+    }
+    .pane { display: flex; flex-direction: column; background: var(--bg); min-height: 0; }
+    .pane-header {
+      padding: 10px 14px; background: var(--surface);
+      border-bottom: 1px solid var(--border); flex-shrink: 0;
+    }
+    .pane-header h2 { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+    .pane-header .sub { font-size: 10px; color: var(--muted); }
+    .pane-scroll { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+    .status-compact {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px; text-align: center;
+    }
+    .status-compact .status-url {
+      font-size: 10px; color: #6eb6ff; word-break: break-all;
+      background: var(--bg); padding: 8px 10px; border-radius: 6px;
+      border: 1px solid var(--border); margin: 8px 0; text-align: left;
+    }
+    .status-compact .status-url.empty { color: var(--muted); font-style: italic; }
+    .status-meta { font-size: 10px; color: var(--muted); margin-bottom: 8px; }
+    .btn-live {
+      background: linear-gradient(180deg, #3d8bfd 0%, #1d5fbf 100%);
+      border: 1px solid #5ca0ff; color: #fff; font-weight: 700;
+      font-size: 13px; padding: 10px 24px; border-radius: 8px; cursor: pointer; width: 100%;
+    }
+    .btn-live:hover { filter: brightness(1.1); }
+    .btc-card {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 12px 12px 14px; transition: opacity 0.2s, border-color 0.2s;
+      border-left-width: 4px;
+    }
+    .btc-card.chip-allowed { border-left-color: var(--green); }
+    .btc-card.chip-tight { border-left-color: var(--amber); }
+    .btc-card.chip-blocked { border-left-color: var(--red); }
+    .btc-card.chip-neutral { border-left-color: var(--border); }
+    .btc-card.gate-blocked { opacity: 0.42; pointer-events: none; filter: grayscale(0.45); }
+    .btc-card h3 { font-size: 12px; font-weight: 700; margin-bottom: 2px; }
+    .btc-card .layer-tag { font-size: 9px; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+    .btc-card p { font-size: 10px; color: var(--muted); line-height: 1.5; margin: 6px 0 10px; }
+    .btc-gate-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; gap: 8px; }
+    .status-chip {
+      font-size: 11px; font-weight: 800; padding: 5px 12px; border-radius: 6px;
+      letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0;
+    }
+    .status-chip.allowed { background: rgba(61,221,140,0.22); color: var(--green); border: 1px solid var(--green); }
+    .status-chip.tight { background: rgba(245,166,35,0.22); color: var(--amber); border: 1px solid var(--amber); }
+    .status-chip.blocked { background: rgba(245,101,101,0.22); color: var(--red); border: 1px solid var(--red); }
+    .status-chip.neutral { background: var(--bg); color: var(--muted); border: 1px solid var(--border); }
+    .utility {
+      flex-shrink: 0; background: var(--surface);
+      border-top: 1px solid var(--border); max-height: 46vh;
+      display: flex; flex-direction: column;
+    }
+    .wtm-intake-block {
+      flex-shrink: 0; border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(61,139,253,0.06) 0%, var(--surface) 100%);
+    }
+    .gate-banner {
+      padding: 14px 20px; font-size: 14px; font-weight: 800;
+      text-align: center; letter-spacing: 0.04em; line-height: 1.35;
+    }
+    .gate-banner .gate-sub { display: block; font-size: 10px; font-weight: 500; margin-top: 3px; opacity: 0.85; }
+    .gate-banner.red { background: rgba(245,101,101,0.22); color: #ff8a8a; border-bottom: 2px solid var(--red); }
+    .gate-banner.amber { background: rgba(245,166,35,0.18); color: #ffc966; border-bottom: 2px solid var(--amber); }
+    .gate-banner.green { background: rgba(61,221,140,0.15); color: #6eeea8; border-bottom: 2px solid var(--green); }
+    .gate-banner.neutral { background: var(--bg); color: var(--muted); border-bottom: 1px solid var(--border); font-size: 12px; font-weight: 600; }
+    .wtm-intake { padding: 12px 16px 14px; }
+    .wtm-intake-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; align-items: end;
+    }
+    @media (max-width: 900px) { .wtm-intake-grid { grid-template-columns: 1fr 1fr; } }
+    .tx-field-row { display: flex; gap: 8px; align-items: center; }
+    .tx-field-row select { flex: 1; min-width: 0; }
+    .regime-chip {
+      font-size: 9px; font-weight: 800; padding: 6px 8px; border-radius: 5px;
+      text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; flex-shrink: 0;
+    }
+    .regime-chip.tx-green { background: rgba(61,221,140,0.18); color: var(--green); border: 1px solid var(--green); }
+    .regime-chip.tx-amber { background: rgba(245,166,35,0.18); color: var(--amber); border: 1px solid var(--amber); }
+    .regime-chip.tx-orange { background: rgba(255,140,60,0.18); color: #ff9f5a; border: 1px solid #ff9f5a; }
+    .regime-chip.tx-red { background: rgba(245,101,101,0.18); color: var(--red); border: 1px solid var(--red); }
+    .regime-chip.tx-neutral { background: var(--bg); color: var(--muted); border: 1px solid var(--border); }
+    .gate-status-display {
+      display: flex; align-items: center; justify-content: center; min-height: 36px;
+      border-radius: 6px; font-size: 12px; font-weight: 800; letter-spacing: 0.04em;
+      text-transform: uppercase; background: var(--bg); border: 1px solid var(--border); color: var(--muted);
+    }
+    .gate-status-display.allowed { background: rgba(61,221,140,0.15); color: var(--green); border-color: var(--green); }
+    .gate-status-display.tight { background: rgba(245,166,35,0.15); color: var(--amber); border-color: var(--amber); }
+    .gate-status-display.blocked { background: rgba(245,101,101,0.15); color: var(--red); border-color: var(--red); }
+    .score-field-wrap { display: flex; align-items: center; gap: 8px; }
+    .score-field-wrap input { flex: 1; min-width: 0; }
+    .score-zone-mini {
+      font-size: 9px; font-weight: 700; padding: 4px 6px; border-radius: 4px; white-space: nowrap;
+    }
+    .score-zone-mini.green { color: var(--green); border: 1px solid var(--green); background: rgba(61,221,140,0.1); }
+    .score-zone-mini.amber { color: var(--amber); border: 1px solid var(--amber); background: rgba(245,166,35,0.1); }
+    .score-zone-mini.red { color: var(--red); border: 1px solid var(--red); background: rgba(245,101,101,0.1); }
+    .score-zone-mini.neutral { color: var(--muted); border: 1px solid var(--border); }
+    .field input, .field select, .field textarea {
+      width: 100%; background: var(--surface2); border: 1px solid var(--border);
+      color: var(--text); padding: 7px 10px; border-radius: 6px; font-size: 12px;
+    }
+    .field input[readonly] { color: var(--muted); cursor: default; }
+    .field textarea { min-height: 60px; resize: vertical; font-family: var(--font); }
+    .utility-tabs { display: flex; border-bottom: 1px solid var(--border); flex-shrink: 0; overflow-x: auto; }
+    .tab {
+      padding: 9px 16px; font-size: 11px; font-weight: 500; color: var(--muted);
+      cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap;
+    }
+    .tab:hover { color: var(--text); }
+    .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .utility-body { overflow-y: auto; padding: 14px 16px; flex: 1; }
+    .panel { display: none; } .panel.active { display: block; }
+    .workflow-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+    @media (max-width: 900px) { .workflow-grid { grid-template-columns: 1fr 1fr; } }
+    .wf-step {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px;
+    }
+    .wf-step .min { font-size: 10px; color: var(--accent); font-weight: 700; margin-bottom: 4px; }
+    .wf-step .action { font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+    .wf-step .tool { font-size: 11px; color: var(--muted); }
+    .prompt-list { display: flex; flex-direction: column; gap: 10px; }
+    .prompt-card {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px;
+    }
+    .prompt-card header {
+      background: none; border: none; padding: 0 0 8px 0;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .prompt-card h3 { font-size: 13px; font-weight: 600; }
+    .prompt-card .prompt-desc { font-size: 10px; color: var(--muted); margin-top: 2px; font-weight: 400; }
+    .prompt-card pre {
+      font-size: 11px; line-height: 1.55; color: var(--muted);
+      white-space: pre-wrap; background: var(--bg); padding: 10px;
+      border-radius: 6px; border: 1px solid var(--border);
+      font-family: "SF Mono", Consolas, monospace;
+    }
+    .copied { color: var(--green) !important; }
+    .risk-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px; align-items: end;
+    }
+    .daily-rule {
+      margin-top: 10px; padding: 10px 12px; background: var(--bg);
+      border: 1px solid var(--amber); border-radius: 6px;
+      font-size: 11px; color: var(--amber); line-height: 1.5;
+    }
+    .ticker-ref { font-size: 11px; color: var(--muted); }
+    .url-instructions {
+      padding: 10px 12px; background: var(--bg); border: 1px solid var(--border);
+      border-radius: 6px; font-size: 11px; color: var(--muted); line-height: 1.55;
+    }
+    .url-instructions ol { margin: 6px 0 0 18px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-brand">
+    <div class="header-brand-row">
+      <h1>Whinfell Operator Dashboard</h1>
+      <span class="version-badge">C4.5 v1.1</span>
+    </div>
+    <div class="meta">WTM Action Layer · No iframes · Gate-enforced BTC</div>
+  </div>
+  <div class="header-controls">
+    <div class="save-status" id="saveStatusHeader">—</div>
+    <button class="btn btn-primary" id="btnSave">Save Settings</button>
+  </div>
+</header>
+
+<div class="how-to-use">
+  <strong>WTM Action Layer:</strong>
+  1) Enter <strong>WTM Intake</strong> from Koyfin (Score + Transmission + Regime Tag) ·
+  2) Confirm <strong>Gate Status</strong> banner ·
+  3) Open Live Koyfin + Barchart ·
+  4) Use BTC cards (right pane) only when gate allows ·
+  5) Run <strong>WTM Prompts A–E</strong> ·
+  6) Update Gross Risk
+</div>
+
+<section class="settings-bar">
+  <h2>URL Settings — saved in this browser (localStorage)</h2>
+  <div class="settings-grid">
+    <div class="settings-field">
+      <label for="urlKoyfin">Koyfin Whinfell Workspace URL</label>
+      <input type="url" id="urlKoyfin" placeholder="https://app.koyfin.com/your-workspace" />
+    </div>
+    <div class="settings-field">
+      <label for="urlBarchart">Barchart Futures / Basis URL</label>
+      <input type="url" id="urlBarchart" placeholder="https://www.barchart.com/futures/major-commodities" />
+    </div>
+    <div>
+      <button class="btn btn-primary" id="btnSave2" style="width:100%">Save Settings</button>
+      <div class="save-status" id="saveStatus">—</div>
+    </div>
+  </div>
+</section>
+
+<section class="main-split">
+  <div class="pane">
+    <div class="pane-header">
+      <h2>Koyfin — Whinfell Transmission Map</h2>
+      <div class="sub">Transmission Banner · Whinfell Score · Credit Inputs</div>
+    </div>
+    <div class="pane-scroll">
+      <div class="status-compact">
+        <div class="section-label">Koyfin Workspace</div>
+        <div class="status-url" id="displayUrlKoyfin">No URL saved</div>
+        <div class="status-meta">Last opened: <strong id="lastOpenedKoyfin">Never</strong></div>
+        <button class="btn-live" id="btnOpenKoyfin">Open Live Koyfin ↗</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane">
+    <div class="pane-header">
+      <h2>Barchart — Futures &amp; Basis + BTC Action</h2>
+      <div class="sub">Futures Leadership · BTC Options (L2) · Calendar Arb (L3)</div>
+    </div>
+    <div class="pane-scroll">
+      <div class="status-compact">
+        <div class="section-label">Barchart Execution View</div>
+        <div class="status-url" id="displayUrlBarchart">No URL saved</div>
+        <div class="status-meta">Last opened: <strong id="lastOpenedBarchart">Never</strong></div>
+        <button class="btn-live" id="btnOpenBarchart">Open Live Barchart ↗</button>
+      </div>
+
+      <div class="btc-card chip-neutral" id="btcOptionsCard">
+        <div class="btc-gate-row">
+          <div><div class="layer-tag">WTM Layer 2</div><h3>BTC Options Workflow</h3></div>
+          <span class="status-chip neutral" id="gatePillL2">—</span>
+        </div>
+        <p>Structured BTC options evaluation gated by WTM intake. Copy Layer 2 prompt when gate status is ALLOWED or Tight Risk Band (reduced sizing).</p>
+        <button class="btn" id="btnCopyL2">Copy Layer 2 Prompt</button>
+      </div>
+
+      <div class="btc-card chip-neutral" id="btcCalendarCard">
+        <div class="btc-gate-row">
+          <div><div class="layer-tag">WTM Layer 3</div><h3>BTC Calendar Arb Agent</h3></div>
+          <span class="status-chip neutral" id="gatePillL3">—</span>
+        </div>
+        <p>Calendar spread arb agent for BTC basis structures. Blocked when Gate Status = NO NEW BTC RISK (Score &lt; 50).</p>
+        <button class="btn" id="btnCopyL3">Copy Layer 3 Prompt</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="utility">
+  <div class="wtm-intake-block">
+    <div class="gate-banner neutral" id="gateBanner">
+      Enter Whinfell Score to calculate Gate Status
+      <span class="gate-sub" id="gateBannerSub">WTM intake drives all BTC gate enforcement</span>
+    </div>
+    <div class="wtm-intake">
+      <div class="section-label">WTM Intake — Regime &amp; Gate Logic</div>
+      <div class="wtm-intake-grid">
+        <div class="field">
+          <label for="whinfellScore">Whinfell Score</label>
+          <div class="score-field-wrap">
+            <input type="number" id="whinfellScore" min="0" max="100" placeholder="58" />
+            <span class="score-zone-mini neutral" id="scoreZoneMini">—</span>
+          </div>
+        </div>
+        <div class="field">
+          <label for="transmissionState">Transmission State</label>
+          <div class="tx-field-row">
+            <select id="transmissionState">
+              <option value="">— Select —</option>
+              <option value="normal">Normal</option>
+              <option value="stressed">Stressed</option>
+              <option value="disorderly">Disorderly</option>
+              <option value="crisis">Crisis</option>
+            </select>
+            <span class="regime-chip tx-neutral" id="txChip">—</span>
+          </div>
+        </div>
+        <div class="field">
+          <label for="regimeTag">Regime Tag</label>
+          <input type="text" id="regimeTag" list="regimeTags" placeholder="e.g. Risk-On / Fragile" />
+          <datalist id="regimeTags">
+            <option value="Risk-On / Constructive"></option>
+            <option value="Neutral / Range"></option>
+            <option value="Fragile / Selective"></option>
+            <option value="Stress / Compression"></option>
+            <option value="Crisis / Risk-Off"></option>
+          </datalist>
+        </div>
+        <div class="field">
+          <label>Gate Status</label>
+          <div class="gate-status-display" id="gateStatusDisplay">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="utility-tabs">
+    <div class="tab active" data-tab="workflow">5-Min Workflow</div>
+    <div class="tab" data-tab="prompts">WTM Prompts A–E</div>
+    <div class="tab" data-tab="risk">Gross Risk</div>
+    <div class="tab" data-tab="tickers">Quick Tickers</div>
+    <div class="tab" data-tab="setup">Setup Help</div>
+  </div>
+  <div class="utility-body">
+    <div class="panel active" id="panel-workflow">
+      <div class="workflow-grid">
+        <div class="wf-step"><div class="min">MIN 1</div><div class="action">Koyfin → WTM Intake (Score, Transmission, Tag)</div><div class="tool">WTM panel</div></div>
+        <div class="wf-step"><div class="min">MIN 2</div><div class="action">Confirm Gate Status banner</div><div class="tool">Auto-calculated</div></div>
+        <div class="wf-step"><div class="min">MIN 3</div><div class="action">Open Live Koyfin + Barchart</div><div class="tool">Status panels</div></div>
+        <div class="wf-step"><div class="min">MIN 4</div><div class="action">Run WTM Prompts A + B</div><div class="tool">Prompts tab</div></div>
+        <div class="wf-step"><div class="min">MIN 5</div><div class="action">BTC cards (if allowed) + Gross Risk</div><div class="tool">Right pane + Risk tab</div></div>
+      </div>
+    </div>
+    <div class="panel" id="panel-prompts"><div class="prompt-list" id="promptList"></div></div>
+    <div class="panel" id="panel-risk">
+      <div class="risk-grid">
+        <div class="field"><label>Gross Risk — Book A ($mm)</label><input type="number" id="grossA" step="0.1" /></div>
+        <div class="field"><label>Gross Risk — Book B ($mm)</label><input type="number" id="grossB" step="0.1" /></div>
+        <div class="field"><label>Total Gross</label><input type="text" id="grossTotal" readonly /></div>
+        <div class="field">
+          <label>Basis Preference</label>
+          <select id="basisPref">
+            <option value="">— Select —</option>
+            <option value="client">Client Basis favored</option>
+            <option value="outright">Outright Basis allowed</option>
+            <option value="avoid">Avoid outright</option>
+          </select>
+        </div>
+        <div class="field" style="grid-column:1/-1">
+          <label>Watch Items / Handover</label>
+          <textarea id="handoverNote" placeholder="Gate status, regime tag, risks…"></textarea>
+        </div>
+      </div>
+      <div class="daily-rule"><strong>Daily Rule:</strong> Update Gross Risk after morning review and after any material trade.</div>
+    </div>
+    <div class="panel" id="panel-tickers">
+      <p class="ticker-ref" style="margin-bottom:10px">C3 Master List — click to open Barchart:</p>
+      <div id="tickerChips" style="display:flex;flex-wrap:wrap;gap:6px;"></div>
+    </div>
+    <div class="panel" id="panel-setup">
+      <div class="url-instructions">
+        <strong>C4.5 v1.1 — WTM Action Layer</strong>
+        <ol>
+          <li>Enter WTM Intake: Score, Transmission State, Regime Tag</li>
+          <li>Gate Status auto-calculates: Allowed (≥65) · Tight Risk Band (50–64) · NO NEW BTC RISK (&lt;50)</li>
+          <li>BTC Options (L2) + Calendar Arb (L3) cards live under Barchart pane — respect gate</li>
+          <li>Run WTM Prompts A–E from Prompts tab</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+const STORAGE_KEY = 'whinfell_operator_v1_1';
+const LEGACY_KEYS = ['whinfell_operator_v2', 'whinfell_operator_v1'];
+const DEFAULTS = {
+  urlKoyfin: 'https://app.koyfin.com/',
+  urlBarchart: 'https://www.barchart.com/futures/major-commodities',
+};
+
+const TX_LABELS = { normal: 'Normal', stressed: 'Stressed', disorderly: 'Disorderly', crisis: 'Crisis' };
+const TX_CHIP = {
+  normal: { label: 'Normal', cls: 'tx-green' },
+  stressed: { label: 'Stressed', cls: 'tx-amber' },
+  disorderly: { label: 'Disorderly', cls: 'tx-orange' },
+  crisis: { label: 'Crisis', cls: 'tx-red' },
+};
+
+function getBtcChipLabel(gate) {
+  if (gate.key === 'blocked') return 'BLOCKED';
+  if (gate.key === 'tight') return 'Tight Risk';
+  if (gate.key === 'allowed') return 'Allowed';
+  return '—';
+}
+
+function getScoreZoneMini(score) {
+  if (isNaN(score)) return { text: '—', cls: 'neutral' };
+  if (score >= 65) return { text: 'Green', cls: 'green' };
+  if (score >= 50) return { text: 'Amber', cls: 'amber' };
+  return { text: 'Red', cls: 'red' };
+}
+
+const PROMPT_L2 = `WTM Layer 2 — BTC Options Workflow
+
+Context: Whinfell Transmission Model intake complete.
+- Whinfell Score: [from intake]
+- Transmission State: [from intake]
+- Regime Tag: [from intake]
+- Gate Status: [Allowed / Tight Risk Band / NO NEW BTC RISK]
+
+Task:
+1) Confirm gate permits BTC options activity (if Tight Risk Band → reduced sizing only)
+2) Map IBIT/BTC vol surface vs credit transmission alignment
+3) Recommend structure: covered / spread / collar — with max notional
+4) State invalidation: score threshold, vol spike, credit impairment
+5) Output: EXECUTE (sized) / WATCH / BLOCKED`;
+
+const PROMPT_L3 = `WTM Layer 3 — BTC Calendar Arb Agent
+
+Context: Whinfell Transmission Model intake complete.
+- Whinfell Score: [from intake]
+- Transmission State: [from intake]
+- Regime Tag: [from intake]
+- Gate Status: [Allowed / Tight Risk Band / NO NEW BTC RISK]
+
+Task:
+1) Verify gate status permits calendar arb (BLOCKED if Score < 50)
+2) Read near vs far BTC basis from Barchart — compute ΔBasis attractiveness
+3) Rank calendar spread opportunities vs WTM transmission read
+4) If Tight Risk Band: client basis structures only, reduced size
+5) Output one-line action: EXECUTE / WATCH / BLOCKED with size and risks`;
+
+const PROMPTS = [
+  { id: 'A', title: 'WTM Transmission Read & Regime Classification', desc: 'Classify today\u2019s overall regime and key signals.', text: `Using the current Whinfell Transmission Map (regime banner, Whinfell Score, credit inputs, rates, breadth, futures leadership, and BTC/IBIT behavior), classify today\u2019s transmission state.
+
+1. State: Risk-On, Fragile Risk-On, Neutral, Risk-Off, or Crisis.
+2. Whinfell Score and zone (Green / Amber / Red).
+3. Top 2 confirming signals and top 2 disconfirming signals.
+4. One-line desk posture recommendation and what would cause an upgrade or downgrade.
+
+Be concise and transmission-focused.` },
+  { id: 'B', title: 'WTM Posture & Gross-Risk Recommendation', desc: 'Set daily gross risk and sizing.', text: `Using current Whinfell Score, transmission state, and desk posture, recommend gross risk and position sizing for today.
+
+1. Recommended gross risk range (% of capital deployed).
+2. Max per-trade risk (% and dollar amount).
+3. Max concurrent trades.
+4. For a candidate trade (entry, stop, target, account size), calculate: contract/share count, notional, risk $, reward $, and R-multiple.
+
+Keep sizing conservative and aligned with the current Whinfell regime.` },
+  { id: 'C', title: 'WTM Trade Evaluation & Ranking', desc: 'Evaluate and rank candidate trades.', text: `Given a list of candidate trades (tickers, direction, setup), evaluate each through the Whinfell lens and rank them.
+
+For each trade:
+- Regime fit
+- Basis/term-structure alignment
+- Liquidity and edge
+- Transmission confirmation
+
+Output a ranked list: Core, Tactical, Watchlist, with one-line justification and WTM Trade Score (0\u2013100). Flag any trades that should be banned due to regime mismatch.` },
+  { id: 'D', title: 'WTM Income Projection from Current Book', desc: 'Project income scenarios.', text: `Using the current book (positions, sizes, key levels) and Whinfell regime, build projected income scenarios for the next session/week.
+
+1. Base, favorable, and adverse scenarios with estimated P&L ($ and % of capital).
+2. Key drivers (carry, basis, directional, convexity).
+3. One-line income posture statement.
+
+Be realistic and tie directly to the current Whinfell Score and transmission state.` },
+  { id: 'E', title: 'WTM Divergence & Risk Compression', desc: 'Diagnose divergences and recommend risk actions.', text: `When the tape diverges from Whinfell transmission signals, diagnose and recommend risk compression.
+
+1. Describe key divergences (credit vs equities, BTC vs SPY, futures vs regime, etc.).
+2. Classify as transient or regime-threatening.
+3. Recommend concrete actions: reduce gross, rotate, tighten stops, or exit.
+4. State what evidence would justify re-expanding risk.
+
+Be concise and action-oriented.` },
+];
+
+const TICKERS = ['HYG','LQD','XLF','XLU','SPY','IWM','IBIT','CL','RB','ES','RTY','GC'];
+
+function loadSettings() {
+  try {
+    let raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return { ...DEFAULTS, ...JSON.parse(raw) };
+    for (const key of LEGACY_KEYS) {
+      const legacy = localStorage.getItem(key);
+      if (legacy) return { ...DEFAULTS, ...JSON.parse(legacy), _migrated: true };
+    }
+    return { ...DEFAULTS };
+  } catch { return { ...DEFAULTS }; }
+}
+
+function collectFormData() {
+  return {
+    urlKoyfin: document.getElementById('urlKoyfin').value,
+    urlBarchart: document.getElementById('urlBarchart').value,
+    whinfellScore: document.getElementById('whinfellScore').value,
+    transmissionState: document.getElementById('transmissionState').value,
+    regimeTag: document.getElementById('regimeTag').value,
+    grossA: document.getElementById('grossA').value,
+    grossB: document.getElementById('grossB').value,
+    basisPref: document.getElementById('basisPref').value,
+    handoverNote: document.getElementById('handoverNote').value,
+    lastOpenedKoyfin: document.getElementById('lastOpenedKoyfin').dataset.ts || null,
+    lastOpenedBarchart: document.getElementById('lastOpenedBarchart').dataset.ts || null,
+    savedAt: new Date().toISOString(),
+  };
+}
+
+function getGate(score) {
+  if (isNaN(score)) return {
+    label: '—', key: 'unknown', bannerClass: 'neutral',
+    bannerText: 'Enter Whinfell Score to calculate Gate Status',
+    bannerSub: 'WTM intake drives all BTC gate enforcement',
+    chipClass: 'neutral', blocked: true, l2Disabled: true, l3Disabled: true,
+  };
+  if (score < 50) return {
+    label: 'NO NEW BTC RISK', key: 'blocked', bannerClass: 'red',
+    bannerText: 'NO NEW BTC RISK',
+    bannerSub: 'Score < 50 · BTC sections disabled · Defensive posture required',
+    chipClass: 'blocked', blocked: true, l2Disabled: true, l3Disabled: true,
+  };
+  if (score < 65) return {
+    label: 'Tight Risk Band', key: 'tight', bannerClass: 'amber',
+    bannerText: 'Tight Risk Band',
+    bannerSub: 'Score 50–64 · Reduced BTC sizing · Client basis favored',
+    chipClass: 'tight', blocked: false, l2Disabled: false, l3Disabled: false,
+  };
+  return {
+    label: 'Allowed', key: 'allowed', bannerClass: 'green',
+    bannerText: 'Allowed',
+    bannerSub: 'Score ≥ 65 · Full WTM action layer · BTC options + calendar arb permitted',
+    chipClass: 'allowed', blocked: false, l2Disabled: false, l3Disabled: false,
+  };
+}
+
+function updateTransmissionChip() {
+  const tx = document.getElementById('transmissionState').value;
+  const chip = document.getElementById('txChip');
+  if (!tx || !TX_CHIP[tx]) {
+    chip.textContent = '—';
+    chip.className = 'regime-chip tx-neutral';
+    return;
+  }
+  chip.textContent = TX_CHIP[tx].label;
+  chip.className = 'regime-chip ' + TX_CHIP[tx].cls;
+}
+
+function updateWtmLogic() {
+  const score = parseInt(document.getElementById('whinfellScore').value, 10);
+  const gate = getGate(score);
+  const chipLabel = getBtcChipLabel(gate);
+  const zone = getScoreZoneMini(score);
+
+  const zoneEl = document.getElementById('scoreZoneMini');
+  zoneEl.textContent = zone.text;
+  zoneEl.className = 'score-zone-mini ' + zone.cls;
+
+  const gateDisplay = document.getElementById('gateStatusDisplay');
+  gateDisplay.textContent = gate.label;
+  gateDisplay.className = 'gate-status-display ' + gate.chipClass;
+
+  const banner = document.getElementById('gateBanner');
+  banner.innerHTML = gate.bannerText + '<span class="gate-sub" id="gateBannerSub">' + gate.bannerSub + '</span>';
+  banner.className = 'gate-banner ' + gate.bannerClass;
+
+  updateTransmissionChip();
+
+  const btcChipClass = 'chip-' + (gate.key === 'unknown' ? 'neutral' : gate.chipClass);
+  ['gatePillL2', 'gatePillL3'].forEach(id => {
+    const el = document.getElementById(id);
+    el.textContent = chipLabel;
+    el.className = 'status-chip ' + gate.chipClass;
+  });
+
+  ['btcOptionsCard', 'btcCalendarCard'].forEach(id => {
+    const card = document.getElementById(id);
+    card.classList.remove('chip-allowed', 'chip-tight', 'chip-blocked', 'chip-neutral');
+    card.classList.add(btcChipClass);
+    card.classList.toggle('gate-blocked', gate.l2Disabled);
+  });
+
+  document.getElementById('btnCopyL2').disabled = gate.l2Disabled;
+  document.getElementById('btnCopyL3').disabled = gate.l3Disabled;
+}
+
+function setSaveStatus(text, ok) {
+  ['saveStatus', 'saveStatusHeader'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = text;
+    el.classList.toggle('ok', !!ok);
+  });
+}
+
+function saveSettings() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(collectFormData()));
+  setSaveStatus('Saved · ' + new Date().toLocaleString(), true);
+  updateStatusPanels();
+  updateWtmLogic();
+  ['btnSave','btnSave2'].forEach(id => {
+    const b = document.getElementById(id);
+    const o = b.textContent; b.textContent = 'Saved ✓';
+    setTimeout(() => b.textContent = o, 1200);
+  });
+}
+
+function applySettings(s) {
+  document.getElementById('urlKoyfin').value = s.urlKoyfin || DEFAULTS.urlKoyfin;
+  document.getElementById('urlBarchart').value = s.urlBarchart || DEFAULTS.urlBarchart;
+  if (s.whinfellScore != null && s.whinfellScore !== '') document.getElementById('whinfellScore').value = s.whinfellScore;
+  if (s.transmissionState) document.getElementById('transmissionState').value = s.transmissionState;
+  if (s.regimeTag) document.getElementById('regimeTag').value = s.regimeTag;
+  if (s.grossA != null) document.getElementById('grossA').value = s.grossA;
+  if (s.grossB != null) document.getElementById('grossB').value = s.grossB;
+  if (s.basisPref) document.getElementById('basisPref').value = s.basisPref;
+  if (s.handoverNote) document.getElementById('handoverNote').value = s.handoverNote;
+  setLastOpened('lastOpenedKoyfin', s.lastOpenedKoyfin);
+  setLastOpened('lastOpenedBarchart', s.lastOpenedBarchart);
+  updateGrossTotal();
+  updateWtmLogic();
+  updateStatusPanels();
+  if (s.savedAt) setSaveStatus('Saved · ' + new Date(s.savedAt).toLocaleString(), true);
+}
+
+function setLastOpened(elId, iso) {
+  const el = document.getElementById(elId);
+  if (iso) { el.textContent = new Date(iso).toLocaleString(); el.dataset.ts = iso; }
+  else { el.textContent = 'Never'; delete el.dataset.ts; }
+}
+
+function updateStatusPanels() {
+  const k = document.getElementById('urlKoyfin').value.trim();
+  const b = document.getElementById('urlBarchart').value.trim();
+  document.getElementById('displayUrlKoyfin').textContent = k || 'No URL saved — set above';
+  document.getElementById('displayUrlBarchart').textContent = b || 'No URL saved — set above';
+  document.getElementById('displayUrlKoyfin').classList.toggle('empty', !k);
+  document.getElementById('displayUrlBarchart').classList.toggle('empty', !b);
+}
+
+function openLive(source) {
+  const isKoyfin = source === 'koyfin';
+  const inputId = isKoyfin ? 'urlKoyfin' : 'urlBarchart';
+  const lastId = isKoyfin ? 'lastOpenedKoyfin' : 'lastOpenedBarchart';
+  const url = document.getElementById(inputId).value.trim();
+  if (!url) { alert('Please set and save a URL first.'); return; }
+  window.open(url, '_blank', 'noopener');
+  const now = new Date().toISOString();
+  setLastOpened(lastId, now);
+  const s = { ...loadSettings(), ...collectFormData(), [lastId]: now };
+  if (isKoyfin) s.urlKoyfin = url; else s.urlBarchart = url;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
+}
+
+function updateGrossTotal() {
+  const a = parseFloat(document.getElementById('grossA').value) || 0;
+  const b = parseFloat(document.getElementById('grossB').value) || 0;
+  document.getElementById('grossTotal').value = (a + b).toFixed(1) + ' $mm';
+}
+
+function renderPrompts() {
+  document.getElementById('promptList').innerHTML = PROMPTS.map(p => `
+    <div class="prompt-card">
+      <header>
+        <div><h3>Prompt ${p.id} \u2013 ${p.title}</h3>${p.desc ? `<div class="prompt-desc">${p.desc}</div>` : ''}</div>
+        <button class="btn copy-btn" data-text="${encodeURIComponent(p.text)}">Copy</button>
+      </header>
+      <pre>${p.text}</pre>
+    </div>`).join('');
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      await navigator.clipboard.writeText(decodeURIComponent(btn.dataset.text));
+      btn.textContent = 'Copied ✓';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  });
+}
+
+function renderTickers() {
+  document.getElementById('tickerChips').innerHTML = TICKERS.map(t =>
+    `<button class="btn" data-t="${t}">${t}</button>`).join('');
+  document.querySelectorAll('#tickerChips .btn').forEach(btn => {
+    btn.onclick = () => window.open(`https://www.barchart.com/stocks/quotes/${btn.dataset.t}`, '_blank');
+  });
+}
+
+async function copyPrompt(text, btn, defaultLabel) {
+  await navigator.clipboard.writeText(text);
+  const o = btn.textContent; btn.textContent = 'Copied ✓';
+  setTimeout(() => btn.textContent = o || defaultLabel, 2000);
+}
+
+function markUnsaved() {
+  setSaveStatus('Unsaved — click Save Settings', false);
+}
+
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.onclick = () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+  };
+});
+
+document.getElementById('btnSave').onclick = saveSettings;
+document.getElementById('btnSave2').onclick = saveSettings;
+document.getElementById('btnOpenKoyfin').onclick = () => openLive('koyfin');
+document.getElementById('btnOpenBarchart').onclick = () => openLive('barchart');
+document.getElementById('btnCopyL2').onclick = () => copyPrompt(PROMPT_L2, document.getElementById('btnCopyL2'), 'Copy Layer 2 Prompt');
+document.getElementById('btnCopyL3').onclick = () => copyPrompt(PROMPT_L3, document.getElementById('btnCopyL3'), 'Copy Layer 3 Prompt');
+
+['urlKoyfin','urlBarchart'].forEach(id => document.getElementById(id).onchange = () => { updateStatusPanels(); markUnsaved(); });
+['transmissionState','regimeTag','basisPref','handoverNote'].forEach(id => {
+  document.getElementById(id).onchange = () => { if (id === 'transmissionState') updateTransmissionChip(); markUnsaved(); };
+  if (id === 'regimeTag') document.getElementById(id).oninput = markUnsaved;
+});
+['grossA','grossB'].forEach(id => document.getElementById(id).oninput = () => { updateGrossTotal(); markUnsaved(); });
+document.getElementById('whinfellScore').oninput = () => { updateWtmLogic(); markUnsaved(); };
+
+applySettings(loadSettings());
+renderPrompts();
+renderTickers();
+updateWtmLogic();
+</script>
+</body>
+</html>
