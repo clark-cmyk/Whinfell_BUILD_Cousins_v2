@@ -68,6 +68,7 @@ class ProvenanceMeta:
     data_as_of: datetime | None = None
     source_channel: str = "manual"
     freshness_status: str = FreshnessStatus.UNKNOWN.value
+    output_kind: str = "derived_signals"
 
 
 @dataclass
@@ -336,6 +337,8 @@ def build_wtm_export_v21(
         lines.append(f"Data As Of: {data_as_of.astimezone(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}")
         lines.append(f"Source Channel: {prov.source_channel or 'manual'}")
         lines.append(f"Freshness Status: {freshness}")
+        if prov.output_kind:
+            lines.append(f"Output Kind: {prov.output_kind}")
 
     body = "\n".join(lines)
     sq3_for_ladder = china.get("sq3_score") or global_data.get("sq3_score")
@@ -516,6 +519,34 @@ def build_node_cockpit_export_block(cockpit: Mapping[str, Any]) -> str:
             lines.append(f"China Parallel Note: {china['note']}")
 
     lines.append(f"Key Observation: {cockpit.get('key_observation', '')}")
+
+    funds = cockpit.get("funds_flows") or {}
+    if funds:
+        meta = funds.get("flows_meta") or {}
+        agg = funds.get("aggregate") or {}
+        interp = funds.get("interpretation") or {}
+        lines.append(f"Funds Flow Enabled: {str(funds.get('enabled', False)).lower()}")
+        lines.append(f"Funds Flow Status: {meta.get('flows_status', '')}")
+        lines.append(f"Funds Flow Source: {meta.get('flows_source', '')}")
+        lines.append(f"Funds Flow Degraded: {str(meta.get('flows_degraded', False)).lower()}")
+        lines.append(f"Funds Flow Fallback Reason: {meta.get('fallback_reason', '')}")
+        lines.append(f"Funds Flow Verdict: {agg.get('verdict', 'neutral')}")
+        agg_1d = agg.get("flow_pct_aum_1d")
+        if agg_1d is not None:
+            sign = "+" if float(agg_1d) >= 0 else ""
+            lines.append(f"Funds Flow 1D: {sign}{float(agg_1d):.2f}% AUM")
+        agg_5d = agg.get("flow_pct_aum_5d")
+        if agg_5d is not None and meta.get("flows_status") != "fallback_1d":
+            sign = "+" if float(agg_5d) >= 0 else ""
+            lines.append(f"Funds Flow 5D: {sign}{float(agg_5d):.2f}% AUM")
+        pos = agg.get("positive_count")
+        total = agg.get("total_count")
+        if pos is not None and total is not None:
+            lines.append(f"Funds Flow Breadth: {pos}/{total}")
+        lines.append(f"Funds Flow Confidence Penalty: {meta.get('flows_confidence_penalty', 0)}")
+        summary = interp.get("summary") or "—"
+        lines.append(f"Funds Flow Summary: {summary}")
+
     return "\n".join(lines)
 
 

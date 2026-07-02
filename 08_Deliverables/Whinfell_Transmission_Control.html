@@ -21,21 +21,27 @@ window.DICTIONARY_BADGE_DEFAULT = {
 <!-- DD_BADGE_SYNC_END -->
 
   <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            wtm: {
-              bg: '#0b0f14', surface: '#141b24', card: '#1a2332', border: '#2a3548',
-              muted: '#8b9cb3', accent: '#3d8bfd', green: '#3dd68c', amber: '#f5a623', red: '#f56565',
+    if (typeof tailwind !== 'undefined') {
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              wtm: {
+                bg: '#0b0f14', surface: '#141b24', card: '#1a2332', border: '#2a3548',
+                muted: '#8b9cb3', accent: '#3d8bfd', green: '#3dd68c', amber: '#f5a623', red: '#f56565',
+              },
             },
+            fontFamily: { sans: ['"Segoe UI"', 'system-ui', 'sans-serif'] },
           },
-          fontFamily: { sans: ['"Segoe UI"', 'system-ui', 'sans-serif'] },
         },
-      },
-    };
+      };
+    }
   </script>
   <style>
+    /* Fallback if cdn.tailwindcss.com is blocked — keeps desk readable on GitHub Pages */
+    html, body { background: #0b0f14; color: #e8eef5; margin: 0; min-height: 100%; }
+    body { font-family: "Segoe UI", system-ui, sans-serif; }
+    .hidden, .zone-hidden, .panel-hidden { display: none !important; }
     .gate-glow-red { box-shadow: inset 0 -2px 0 0 #f56565, 0 0 24px rgba(245,101,101,0.12); }
     .gate-glow-amber { box-shadow: inset 0 -2px 0 0 #f5a623, 0 0 24px rgba(245,166,35,0.1); }
     .gate-glow-green { box-shadow: inset 0 -2px 0 0 #3dd68c, 0 0 24px rgba(61,221,140,0.1); }

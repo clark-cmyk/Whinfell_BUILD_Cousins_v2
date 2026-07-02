@@ -123,6 +123,9 @@ GitHub Actions redeploys in ~1–2 minutes. Only collaborators see the update.
 |---------|-----|
 | Pages 404 / not found | Confirm GitHub Pro active · Settings → Pages → GitHub Actions source · run workflow |
 | Wes sees 404 | Confirm invite accepted · signed into GitHub · using URL from Settings → Pages |
+| Wes sees raw HTML / code | Opened blob URL on GitHub — use **Pages URL** or header **Live desk ↗** · not `blob/main/.../Whinfell_Transmission_Control.html` |
+| **404 — There isn't a GitHub Pages site here** | Pages was **disabled** — enable once: Settings → Pages → **GitHub Actions** · or `gh api -X POST repos/clark-cmyk/Whinfell_BUILD_Cousins/pages -f build_type=workflow` · then `gh workflow run desk-preview-pages.yml --ref main` |
+| `publish_desk_preview` deploy 404 | Same as above — `deploy-pages` fails until Pages is enabled on the repo |
 | `latest.json` still public | Repo must stay private · Pages visibility must be **Private** |
 | Want to revert to public | `gh repo edit clark-cmyk/Whinfell_BUILD_Cousins --visibility public --accept-visibility-change-consequences` then set Pages visibility Public |
 

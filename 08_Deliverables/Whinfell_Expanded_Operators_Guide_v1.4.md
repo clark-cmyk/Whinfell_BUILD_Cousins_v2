@@ -41,19 +41,23 @@ open ~/Desktop/Whinfell_BUILD_Cousins/08_Deliverables/Whinfell_Operator_Dashboar
 
 ## 3. Daily CSV Chain (Comet Runbook — Primary Path)
 
-**One command (recommended):**
+**One command (recommended — use 48h window, not `today`):**
 
 ```bash
 cd ~/Desktop/Whinfell_BUILD_Cousins
+bash scripts/normalize_whinfell_drop.sh ~/Downloads/whinfell_drop
 python3 run_csv_download.py daily \
-  --operator desk \
-  --window 24h \
-  --hydrate-output data/hydration/latest.json
+  --operator cwt \
+  --window 48h \
+  --downloads ~/Downloads/whinfell_drop \
+  --staged-root ./staged_raw \
+  --hydrate-output data/hydration/latest.json \
+  --overwrite
 ```
 
-Then in Transmission Control: **Import Latest Hydration Bundle** (`data/hydration/latest.json`) → confirm status chip → review **Suggested Tracer** → **Accept** or **Dismiss** → **Save State**.
+Then in Transmission Control: **Import** `data/hydration/latest.json` → confirm import using **`lineage_hash`** (not file timestamp) → review **Suggested Tracer** → **Accept** or **Dismiss** → **Save State**.
 
-**Morning shortcut:** `scripts/morning_daily.sh`
+**Morning shortcut:** `./whinfell_daily_am.sh` or `python3 Whinfell_Daily_Launcher.py` (both run normalize + 48h chain)
 
 ### Step-by-step (manual control)
 
@@ -75,14 +79,16 @@ python3 run_csv_download.py hydrate --hydrate-output data/hydration/latest.json
 
 | Folder | Datasets |
 |--------|----------|
-| `source=koyfin/dataset=rates/` | + `credit`, `equities` |
+| `source=koyfin/dataset=rates/` | + `credit`, `equities`, `flows` |
 | `source=barchart/dataset=futures_intraday/` | + `futures_daily`, `options`, `greeks` |
 | `source=china_policy/` | CSV at source root |
 
 **Filename patterns (required):**
 
-- `{dataset}_{YYYYMMDD}_{HHMM}.csv` — e.g. `rates_20260627_1400.csv`
+- `{dataset}_{YYYYMMDD}_{HHMM}.csv` — e.g. `rates_20260627_1400.csv`, `flows_20260629_1017.csv`
 - `{product}_{flavor}_{YYYYMMDD}.csv` — e.g. `btc_basis_20260627.csv`
+
+**Pre-stage rename:** Raw Barchart/Koyfin/WTM export names → canonical contract via `scripts/normalize_whinfell_drop.sh` (includes `WTM-Flows*.csv`, `WTM-Global-Rates.csv`, `WTM-Equities-Breath.csv`, etc.).
 
 ### Sidecars, quarantine, manifests
 

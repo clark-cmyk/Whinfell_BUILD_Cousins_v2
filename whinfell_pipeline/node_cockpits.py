@@ -180,7 +180,21 @@ def _derive_component_inputs(
     horizon_marks: Mapping[str, str],
     *,
     as_of: str,
+    spread_history: Mapping[str, list[tuple[str, float]]] | None = None,
 ) -> list[dict[str, Any]]:
+    from whinfell_pipeline.component_router import derive_live_component_inputs
+
+    history = spread_history if spread_history is not None else _load_spread_history()
+    live = derive_live_component_inputs(
+        node_id,
+        horizon_marks,
+        as_of=as_of,
+        spread_history=history,
+    )
+    if live:
+        return live
+
+    # Legacy tracer-stub fallback when no registry components or history
     consensus = _mark_consensus(horizon_marks)
     direction_map = {"bullish": "up", "bearish": "down", "mixed": "flat", "unavailable": "flat"}
     direction = direction_map[consensus]
@@ -206,6 +220,7 @@ def _derive_component_inputs(
                 "contribution": contribution,
                 "direction": direction,
                 "as_of": as_of,
+                "source": "horizon_stub",
             }
         )
     return components
@@ -219,7 +234,8 @@ def _compute_composite_score(
     design = get_node_score_weights().get("design") or {}
     base = int(design.get("base_score") or 50)
     min_components = int(design.get("fallback_min_components") or 2)
-    scorable = [c for c in component_inputs if c.get("direction") != "flat" or c.get("contribution")]
+    live = [c for c in component_inputs if c.get("source") == "rv_history" and c.get("direction") != "flat"]
+    scorable = live or [c for c in component_inputs if c.get("direction") != "flat" or c.get("contribution")]
 
     if node_id == "credit" or len(scorable) < min_components:
         score = _horizon_net_to_score(horizon_net)
@@ -589,7 +605,10 @@ def build_node_cockpit(
     as_of_iso = as_of.astimezone(timezone.utc).isoformat()
     exec_payload = dict(execution or {})
     net = _horizon_net(horizon_marks)
-    component_inputs = _derive_component_inputs(node_id, horizon_marks, as_of=as_of_iso)
+    history = spread_history if spread_history is not None else _load_spread_history()
+    component_inputs = _derive_component_inputs(
+        node_id, horizon_marks, as_of=as_of_iso, spread_history=history,
+    )
     composite_score, score_source, confidence = _compute_composite_score(node_id, component_inputs, net)
     band, band_key = _score_to_band(composite_score)
     gate = _gate_interaction(_gate_zone(global_payload), composite_score)
@@ -658,7 +677,13 @@ def build_node_cockpits(
     for node_id in _NODE_ORDER:
         marks = dict(suggested_tracer.get(node_id) or default_marks)
         net = _horizon_net(marks)
-        components = _derive_component_inputs(node_id, marks, as_of=as_of.astimezone(timezone.utc).isoformat())
+        history = spread_history if spread_history is not None else _load_spread_history()
+        components = _derive_component_inputs(
+            node_id,
+            marks,
+            as_of=as_of.astimezone(timezone.utc).isoformat(),
+            spread_history=history,
+        )
         score, source, _ = _compute_composite_score(node_id, components, net)
         previews.append((node_id, score, STAGE_TIE_RANK.get(node_id, 99)))
 

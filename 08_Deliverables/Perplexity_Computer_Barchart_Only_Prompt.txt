@@ -1,0 +1,149 @@
+================================================================================
+WHINFELL DESK — PERPLEXITY COMPUTER: BARCHART CSV COLLECT ONLY
+Task name: **Barchart CSV Collect Only** (Koyfin skipped this session)
+Paste this ENTIRE block into Perplexity Computer. Do not summarize or shorten.
+Authority: Clark · BUILD Cousins · Whinfell Transmission Control
+Updated: 2026-07-01 · Comet DISABLED · Koyfin DISABLED this run
+================================================================================
+
+## TASK SCOPE
+
+**Task name:** Barchart CSV Collect Only
+
+**In scope:** Barchart watchlist + historical downloads only.
+**Out of scope:** All Koyfin views (rates, credit, equities, china, flows) — Clark handles Koyfin separately later.
+
+Your job: **Barchart CSV exports → whinfell_drop → one Python command → report.**
+
+Do NOT parse CSVs. Do NOT invent scores. Do NOT loop tickers one-by-one.
+
+================================================================================
+## PATHS
+================================================================================
+
+Repo:  ~/Desktop/Whinfell_BUILD_Cousins
+Drop:  ~/Downloads/whinfell_drop
+
+Before starting:
+  mkdir -p ~/Downloads/whinfell_drop
+
+================================================================================
+## BARCHART EXPORTS (4 steps — ONLY these)
+================================================================================
+
+**Export method (every step):**
+  Open URL → wait for table → **Download CSV** (top-right)
+  → Save to ~/Downloads/whinfell_drop
+  → Confirm .csv exists before next step
+
+---
+
+STEP 1 — WTM-Futures-Intraday  [REQUIRED · BasisWatch curve]
+  URL: https://www.barchart.com/my/watchlist?viewName=197689
+  What: Clark's saved intraday futures watchlist (BTC curve + DX/HG/ZM/TA etc.)
+  Target: futures_intraday_YYYYMMDD_HHMM.csv
+  Raw OK: watchlist-*-intraday-*.csv · *-prices-intraday-*.csv
+
+STEP 2 — WTM-Futures-Daily  [REQUIRED]
+  URL: https://www.barchart.com/futures/quotes/BTM26/historical-download
+  Action: Historical table → Download CSV (daily nearby)
+  Target: futures_daily_YYYYMMDD_HHMM.csv
+  Raw OK: *_daily-nearby_historical-data-*.csv
+
+STEP 3 — WTM-BTC-Basis  [OPTIONAL]
+  URL: https://www.barchart.com/futures/quotes/BTM26/spreads
+  Target: btc_basis_YYYYMMDD.csv
+  Raw OK: futures-spreads-btm* · futures-spreads-btn*
+
+STEP 4 — WTM-Barchart-Core / ARCH-4  [OPTIONAL · quartile history]
+  Export historical daily for core symbols (DX, HG, ZM, ES, CL) if Clark has saved lists
+  Assist: https://www.barchart.com/futures/quotes/DXM26/historical-download
+          https://www.barchart.com/futures/quotes/HGK26/historical-download
+  Target: futures_daily_* or barchart_core_* — raw names OK
+  Purpose: multi-day points[] for BasisWatch native quartiles
+
+================================================================================
+## RULES
+================================================================================
+
+| FORBIDDEN | REQUIRED |
+|-----------|----------|
+| Use Comet | Perplexity Computer only |
+| Open any Koyfin URL | Barchart steps 1–2 minimum |
+| Loop BT1→ER1→SA1 individually | Bulk watchlist + historical screens |
+| Parse CSV in chat | Export only |
+| Save to ~/Downloads root | ~/Downloads/whinfell_drop only |
+| Rename files manually | run_batch_collect.py normalize |
+
+================================================================================
+## AFTER EXPORTS — ONE COMMAND
+================================================================================
+
+  cd ~/Desktop/Whinfell_BUILD_Cousins
+  python3 -m whinfell_pipeline.batch_collect normalize
+  python3 -m whinfell_pipeline.batch_collect barchart-only
+
+Check:
+  python3 -m whinfell_pipeline.batch_collect status
+
+(Alternate: python3 run_batch_collect.py barchart-only — same module)
+
+Open Barchart tabs first (Clark local):
+  python3 run_batch_collect.py open
+
+Fallback:
+  bash scripts/normalize_whinfell_drop.sh ~/Downloads/whinfell_drop
+  python3 run_csv_download.py daily --downloads ~/Downloads/whinfell_drop --window 48h --overwrite
+
+================================================================================
+## CLARK VERIFY
+================================================================================
+
+1. TC → Import data/hydration/latest.json (partial update OK — Koyfin stale acceptable this run)
+2. BasisWatch rail: curve populates · build `3.0-BASISWATCH-QUARTILES-2026-07-01`
+3. Note in report: Koyfin skipped intentionally
+
+================================================================================
+## REPORT TO CLARK
+================================================================================
+
+WHINFELL COLLECT REPORT — BARCHART CSV COLLECT ONLY
+Task name: Barchart CSV Collect Only
+Date/Time: ___________
+Agent: Perplexity Computer
+
+Koyfin: SKIPPED (by design this session)
+
+Exports completed:
+  [ ] 1  Barchart intraday   (viewName=197689)  REQUIRED
+  [ ] 2  Barchart daily      (BTM26 historical) REQUIRED
+  [ ] 3  BTC basis spreads   (optional)
+  [ ] 4  ARCH-4 core history (optional)
+
+Files in whinfell_drop:
+  [list filenames — Barchart only]
+
+Pipeline:
+  Command run: YES / NO
+  files_staged: ___
+  files_quarantined: ___
+
+Errors: [none or terminal output]
+
+Next for Clark: Import latest.json → BasisWatch curve check
+
+================================================================================
+## BEGIN NOW
+================================================================================
+
+1. Confirm task: **Barchart CSV Collect Only** · Koyfin skipped.
+2. Execute Steps 1–2 (required).
+3. Steps 3–4 if time permits.
+4. Run pipeline command.
+5. Post report.
+
+Do not open Koyfin. Do not use Comet.
+
+================================================================================
+END OF PROMPT
+================================================================================

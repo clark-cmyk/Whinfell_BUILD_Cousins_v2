@@ -28,11 +28,13 @@ ENV_VAR_RE = re.compile(r"\$\{([A-Z0-9_]+)\}")
 _BATCH_DESK_KEYS: dict[str, tuple[str, str]] = {
     "koyfin_rates": ("koyfin", "WTM-Rates-Credit"),
     "koyfin_equities": ("koyfin", "WTM-Equities-Breadth"),
+    "koyfin_import_core": ("koyfin", "WTM-Import-Core"),
     "koyfin_credit": ("koyfin", "WTM-Credit-Confirmation"),
     "koyfin_china": ("koyfin", "WTM-China-Policy"),
     "koyfin_daily_spot": ("koyfin", "Whinfell-Daily-TimeSeries"),
     "barchart_futures_intraday": ("barchart", "WTM-Futures-Intraday"),
     "barchart_futures_daily": ("barchart", "WTM-Futures-Daily"),
+    "barchart_core_batch": ("barchart", "WTM-Barchart-Core"),
     "barchart_btc_basis": ("barchart", "WTM-BTC-Basis"),
     "koyfin_crypto_price": ("koyfin", "WTM-Crypto-Price"),
     "koyfin_crypto_correl_btc": ("koyfin", "WTM-Crypto-Correl"),
@@ -40,10 +42,18 @@ _BATCH_DESK_KEYS: dict[str, tuple[str, str]] = {
     "koyfin_crypto_correl_xrp": ("koyfin", "WTM-Crypto-Correl-XRP"),
     "koyfin_crypto_correl_sol": ("koyfin", "WTM-Crypto-Correl-SOL"),
     "koyfin_crypto_corr_series": ("koyfin", "WTM-Crypto-Snapshot"),
+    "koyfin_flows_global": ("koyfin", "WTM-Flows-Global"),
+    "koyfin_flows_gov": ("koyfin", "WTM-GOV-USPRC"),
 }
 
 DATE_MDY_RE = re.compile(r"(\d{2})-(\d{2})-(\d{4})")
 DATE_YMD_RE = re.compile(r"(\d{4})-(\d{2})-(\d{2})")
+BROWSER_DUPE_RE = re.compile(r" \(\d+\)(?=\.csv$)", re.I)
+
+
+def strip_browser_duplicate_suffix(filename: str) -> str:
+    """Normalize browser re-download names: 'file (1).csv' → 'file.csv'."""
+    return BROWSER_DUPE_RE.sub("", filename)
 
 
 @dataclass
@@ -205,9 +215,10 @@ def infer_canonical_name(filename: str, path: Path) -> str | None:
     """Map raw vendor filename → staged contract name (Master DD normalize_rules)."""
     from whinfell_pipeline.data_dictionary import normalize_glob_rules
 
+    clean_name = strip_browser_duplicate_suffix(filename)
     ymd = file_yyyymmdd(path)
     hhmm = file_hhmm(path)
-    lower = filename.lower()
+    lower = clean_name.lower()
 
     for rule in normalize_glob_rules():
         pattern = str(rule.get("detect_glob", "")).lower()

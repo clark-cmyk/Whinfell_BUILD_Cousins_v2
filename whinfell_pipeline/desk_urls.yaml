@@ -5,7 +5,8 @@
 #   python3 -m whinfell_pipeline.desk_china_chart_links
 #   python3 -m whinfell_pipeline.desk_china_ladder_models
 version: "1.0.0"
-updated: "2026-06-28"
+updated: "2026-06-30"
+# Clark watchlist URLs (Jun 30 PM refresh)
 desk: Clark
 drop_dir: "~/Downloads/whinfell_drop"
 
@@ -33,6 +34,40 @@ koyfin:
       - "https://app.koyfin.com/etf/IWM.US"
       - "https://app.koyfin.com/etf/SPY.US"
     dictionary_dataset: equities
+  WTM-Import-Core:
+    url: "${KOYFIN_VIEW_IMPORT_CORE_URL}"
+    wired_url: "https://app.koyfin.com/myw/70789aa7-8084-4e4c-85d3-09f9b78dcd3a"
+    replace_me: false
+    navigate: "My Watchlists → WTM-Import-Core (16-ticker canonical snapshot universe)"
+    export_menu: "⋮ menu → Export → CSV"
+    panels: [BTCUSD, ETHUSD, XRPUSD, SOLUSD, HYG, JAAA, BKLN, CWB, CBON, KHYB, SPY, QQQ, XLRE, SOFR, GC1, HG1]
+    dictionary_dataset: credit
+    canonical_name: "credit_{YYYYMMDD}_{HHMM}.csv"
+    raw_export_name: "koyfin_wtm-import-core_*.csv"
+    notes: "ARCH-3 primary credit + crypto sleeve snapshot. Env KOYFIN_VIEW_IMPORT_CORE_URL overrides wired_url."
+    assist_urls:
+      - "https://app.koyfin.com/crypto/BTCUSD"
+      - "https://app.koyfin.com/etf/HYG.US"
+  WTM-Flows-Global:
+    url: "${KOYFIN_VIEW_FLOWS_GLOBAL_URL}"
+    wired_url: "https://app.koyfin.com/myw/afb1f314-4de4-47b6-b02f-0de2601b62b9"
+    replace_me: false
+    navigate: "My Watchlists → WTM-Flows-Global (primary funds-flow time series)"
+    export_menu: "⋮ menu → Export → CSV"
+    dictionary_dataset: flows
+    canonical_name: "flows_{YYYYMMDD}_{HHMM}.csv"
+    raw_export_name: "WTM-Flows-Global.csv"
+    notes: "Wide dated flows export (Flow (D), AUM). Normalize: WTM-Flows*.csv → flows_*."
+  WTM-GOV-USPRC:
+    url: "${KOYFIN_VIEW_FLOWS_GOV_URL}"
+    wired_url: "https://app.koyfin.com/myw/e94a97b3-600d-47d4-91d3-a01f8749146d"
+    replace_me: false
+    navigate: "My Watchlists → WTM-GOV-USPRC (US–PRC government tickers · flows)"
+    export_menu: "⋮ menu → Export → CSV"
+    dictionary_dataset: flows
+    canonical_name: "flows_{YYYYMMDD}_{HHMM}.csv"
+    raw_export_name: "WTM-Flows-GOV-USPRC.csv"
+    notes: "Optional enrichment — save as WTM-Flows-GOV-USPRC.csv (or WTM-Flows*.csv) for normalize."
   WTM-Credit-Confirmation:
     url: "${KOYFIN_VIEW_CREDIT_URL}"
     replace_me: true
@@ -169,11 +204,13 @@ koyfin:
 
 barchart:
   home: "https://www.barchart.com/futures/major-commodities"
-  my_lists: "https://www.barchart.com/my/lists"
+  my_lists: "https://www.barchart.com/my/watchlist?viewName=197689"
   WTM-Futures-Intraday:
     url: "${BARCHART_SCREEN_INTRADAY_URL}"
-    wired_url: "https://www.barchart.com/futures/major-commodities"
-    navigate: "My Lists → dailymonitor0610 — OR Major Commodities futures screen"
+    wired_url: "https://www.barchart.com/my/watchlist?viewName=197689"
+    watchlist_view_name: "197689"
+    replace_me: false
+    navigate: "My Watchlist (viewName=197689) — desk intraday futures screen"
     export_menu: "Download CSV (top-right)"
     symbols: ["BTC1!", "ES1!", "CL1!", "GC1!", "ZN1!"]
     assist_urls:
@@ -182,13 +219,42 @@ barchart:
       - "https://www.barchart.com/futures/crypto"
     raw_export_patterns:
       - "*-prices-intraday-*.csv"
+      - "watchlist-*-intraday-*.csv"
       - "watchlist-dailymonitor0610-intraday-*.csv"
+    notes: "Env BARCHART_SCREEN_INTRADAY_URL overrides wired_url."
   WTM-Futures-Daily:
     url: "${BARCHART_SCREEN_DAILY_URL}"
     wired_url: "https://www.barchart.com/futures/quotes/BTM26/historical-download"
     navigate: "Quote page → Historical Data → Download (daily nearby)"
     export_menu: "Download CSV on historical table"
     symbols: ["BTM26", "ESM26", "CLN26", "GCM26", "ZNM26"]
+  WTM-Barchart-Core:
+    url: "${BARCHART_CORE_BATCH_URL}"
+    wired_url: "https://www.barchart.com/futures/major-commodities"
+    navigate: "ARCH-4 core batch — per-symbol Historical Data download (16 symbols)"
+    export_menu: "Download CSV on historical table for each symbol"
+    symbols_ref: barchart_core
+    symbols:
+      - "^BTCUSD"
+      - "^ETHUSD"
+      - "^XRPUSD"
+      - "^SOLUSD"
+      - IBIT
+      - GBTC
+      - SOFR
+      - "$HSI"
+      - "$VHSI"
+      - "$VXHY"
+      - CBON
+      - KHYB
+      - ASHR
+      - DXY00
+      - GCY00
+      - HGY00
+    raw_export_patterns:
+      - "*_daily_historical-data-*"
+      - "*_daily-nearby_historical-data-*"
+    notes: "ARCH-4 — optional daily core historical batch; API fast-path via BARCHART_API_KEY."
     assist_urls:
       - "https://www.barchart.com/futures/quotes/BTM26/historical-download"
       - "https://www.barchart.com/futures/quotes/ESM26/historical-download"

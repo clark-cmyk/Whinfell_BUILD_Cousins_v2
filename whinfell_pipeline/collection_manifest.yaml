@@ -52,8 +52,25 @@ batch_exports:
     canonical_name: "equities_{YYYYMMDD}_{HHMM}.csv"
     dictionary_dataset: equities
 
-  - id: koyfin_credit
+  - id: koyfin_import_core
     priority: 3
+    source: koyfin
+    dataset: credit
+    saved_view: WTM-Import-Core
+    url: "${KOYFIN_VIEW_IMPORT_CORE_URL}"
+    fallback_url: "https://app.koyfin.com/myw/70789aa7-8084-4e4c-85d3-09f9b78dcd3a"
+    clicks: 2
+    steps:
+      - "Open saved watchlist WTM-Import-Core (canonical snapshot universe)."
+      - "Export CSV → whinfell_drop/ (feeds crypto_sleeve + global score proxy)."
+    canonical_name: "credit_{YYYYMMDD}_{HHMM}.csv"
+    dictionary_dataset: credit
+    notes: >
+      ARCH-3 shipped — replaces interim WhinPump-only path. Tickers: data_dictionary.yaml koyfin_import_core.
+      Legacy WTM-Credit-Confirmation still accepted via normalize_rules.
+
+  - id: koyfin_credit
+    priority: 4
     source: koyfin
     dataset: credit
     saved_view: WTM-Credit-Confirmation
@@ -70,7 +87,7 @@ batch_exports:
       when staged. Vendor rename rules: whinfell_pipeline/data_dictionary.yaml normalize_rules.
 
   - id: koyfin_china
-    priority: 4
+    priority: 5
     source: koyfin
     dataset: china_policy
     saved_view: WTM-China-Policy
@@ -105,7 +122,7 @@ batch_exports:
     dataset: futures_intraday
     saved_view: WTM-Futures-Intraday
     url: "${BARCHART_SCREEN_INTRADAY_URL}"
-    fallback_url: "https://www.barchart.com/futures/major-commodities"
+    fallback_url: "https://www.barchart.com/my/watchlist?viewName=197689"
     clicks: 2
     steps:
       - "Open saved screen WTM-Futures-Intraday (BTC1!, ES1!, CL1!, IBIT in one screen)."
@@ -126,6 +143,31 @@ batch_exports:
       - "Download CSV → whinfell_drop/"
     canonical_name: "futures_daily_{YYYYMMDD}_{HHMM}.csv"
     dictionary_dataset: futures_daily
+
+  - id: barchart_core_batch
+    priority: 7
+    source: barchart
+    dataset: futures_daily
+    saved_view: WTM-Barchart-Core
+    url: "${BARCHART_CORE_BATCH_URL}"
+    fallback_url: "https://www.barchart.com/futures/major-commodities"
+    clicks: 16
+    optional: true
+    symbols_ref: barchart_core
+    steps:
+      - "ARCH-4 — download daily-nearby historical CSV for each symbol in universes.barchart_core (16 symbols)."
+      - "Quote page → Historical Data → Download for each: ^BTCUSD, ^ETHUSD, ^XRPUSD, ^SOLUSD, IBIT, GBTC, SOFR, $HSI, $VHSI, $VXHY, CBON, KHYB, ASHR, DXY00, GCY00, HGY00."
+      - "Save all to whinfell_drop/ (normalize maps *_daily_historical* → futures_daily_*)."
+      - "Fast-path when BARCHART_API_KEY set: python3 run_batch_collect.py fetch-tickers"
+    canonical_name: "futures_daily_{YYYYMMDD}_{HHMM}.csv"
+    dictionary_dataset: futures_daily
+    raw_filename_patterns:
+      - "*_daily_historical-data-*"
+      - "*_daily-nearby_historical-data-*"
+      - "*daily_historical-data*"
+    notes: >
+      ARCH-4 shipped — canonical 16-symbol core historical batch. Raw vendor files stage as
+      historical_timeseries (no WTM row squash). Feeds barchart_hydration sidecar.
 
   - id: barchart_btc_basis
     priority: 8
@@ -234,25 +276,45 @@ batch_exports:
       - "koyfin_*-*-??.csv"
     notes: "Non-crypto pairwise correlation series (credit vs SPY)."
 
-  - id: koyfin_flows
+  - id: koyfin_flows_global
     priority: 15
     optional: true
     source: koyfin
     dataset: flows
-    saved_view: WTM-Flows
-    url: "${KOYFIN_VIEW_FLOWS_URL}"
-    fallback_url: "https://app.koyfin.com/"
+    saved_view: WTM-Flows-Global
+    url: "${KOYFIN_VIEW_FLOWS_GLOBAL_URL}"
+    fallback_url: "https://app.koyfin.com/myw/afb1f314-4de4-47b6-b02f-0de2601b62b9"
     clicks: 2
     steps:
-      - "Open saved view WTM-Flows (expand to full basket tickers)."
-      - "Export CSV → whinfell_drop/ (normalize → flows_{YYYYMMDD}_{HHMM}.csv)"
+      - "Open watchlist WTM-Flows-Global."
+      - "Export CSV → whinfell_drop/ as WTM-Flows-Global.csv (normalize → flows_{YYYYMMDD}_{HHMM}.csv)"
     canonical_name: "flows_{YYYYMMDD}_{HHMM}.csv"
     dictionary_dataset: flows
     raw_filename_patterns:
+      - "WTM-Flows-Global.csv"
       - "WTM-Flows*.csv"
     notes: >
-      Optional confirmation layer — not in required_batch_ids.
-      Vendor rename: whinfell_pipeline/data_dictionary.yaml normalize_rules.
+      Primary funds-flow time series. Optional — not in required_batch_ids.
+
+  - id: koyfin_flows_gov
+    priority: 16
+    optional: true
+    source: koyfin
+    dataset: flows
+    saved_view: WTM-GOV-USPRC
+    url: "${KOYFIN_VIEW_FLOWS_GOV_URL}"
+    fallback_url: "https://app.koyfin.com/myw/e94a97b3-600d-47d4-91d3-a01f8749146d"
+    clicks: 2
+    steps:
+      - "Open watchlist WTM-GOV-USPRC (US–PRC government tickers)."
+      - "Export CSV → whinfell_drop/ as WTM-Flows-GOV-USPRC.csv"
+    canonical_name: "flows_{YYYYMMDD}_{HHMM}.csv"
+    dictionary_dataset: flows
+    raw_filename_patterns:
+      - "WTM-Flows-GOV-USPRC.csv"
+      - "WTM-Flows*.csv"
+    notes: >
+      Optional US–PRC gov flows enrichment. Same flows_* contract via normalize_rules.
 
 # Minimum files before auto-pipeline runs (required batch ids)
 required_batch_ids:

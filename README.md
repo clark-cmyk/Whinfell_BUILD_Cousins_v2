@@ -1,40 +1,40 @@
 # Whinfell BUILD Cousins
 
-Whinfell Transmission Control Tool — **BETA 2026-06-30**
+Transmission Control desk, data pipeline, and operator documentation.
 
-Parallel execution team supporting the Whinfell Transmission Map build.
+## Open the desk (Wes / reviewers)
 
-## Desk preview (private GitHub Pages)
+**Do not** open `Whinfell_Transmission_Control.html` via GitHub’s file browser — that shows raw HTML source.
 
-**Access:** Private repo · **GitHub Pro required** · collaborators only (e.g. Wes)  
-**Setup:** [`08_Deliverables/Desk_Preview_Private_Access_Setup.md`](08_Deliverables/Desk_Preview_Private_Access_Setup.md)
+| Use this | URL |
+|----------|-----|
+| **Live desk (recommended)** | [https://clark-cmyk.github.io/Whinfell_BUILD_Cousins/](https://clark-cmyk.github.io/Whinfell_BUILD_Cousins/) |
+| **BasisWatch (standalone)** | [Whinfell_BasisWatch.html](https://clark-cmyk.github.io/Whinfell_BUILD_Cousins/Whinfell_BasisWatch.html) |
+| Hydration bundle (auto-loaded on Pages) | [latest.json](https://clark-cmyk.github.io/Whinfell_BUILD_Cousins/data/hydration/latest.json) |
 
-After Pro upgrade + invite: open URL from repo **Settings → Pages** (signed into GitHub).
+1. Accept the GitHub collaborator invite (read access is enough).
+2. Sign in at [github.com](https://github.com).
+3. Open the **Live desk** URL above.
+4. Hard-refresh: `Cmd+Shift+R` (Mac) or `Ctrl+Shift+R` (Windows).
 
-Publish: `bash scripts/publish_desk_preview.sh` after `whinfell_daily_am.sh`
+Private repo: GitHub Pages requires **GitHub Pro** and **Private** visibility. Setup: `08_Deliverables/Desk_Preview_Private_Access_Setup.md`.
 
-## Folder Structure
+## Clark — local + publish
 
-- 01_Strategy_Docs/       ← Operating plans & approvals
-- 02_Prompt_Library/      ← All saved prompts
-- 03_Dashboard_Build/     ← Dashboard specs & iterations
-- 04_Score_Calculation/   ← Credit Confirmation Score logic
-- 05_Fallback_Tools/      ← Excel / Google Sheet backups
-- 06_Testing_Logs/        ← Prompt testing results
-- 07_Reference_Materials/ ← Ticker lists, definitions
-- 08_Deliverables/        ← Final approved outputs (Transmission Control HTML)
-- china_policy_track/     ← China Policy data models, Parquet schema, ingestion
-- data/china_policy/      ← China Policy Parquet storage (isolated from data/global/)
-- staged_raw/             ← Operator CSV staging (Comet runbook → Parquet)
-- run_csv_download.py     ← Daily CSV chain: stage → collect → hydrate
-- scripts/morning_daily.sh  ← Morning one-liner (Comet blueprint)
-- 08_Deliverables/Comet_Browser_Operations_Blueprint.md ← Backup views + shortcuts
-- whinfell_pipeline/      ← Ingest, hydrate, WTM EXPORT v2.1 spec
+```bash
+# Local console
+open 08_Deliverables/Whinfell_Transmission_Control.html
 
-## Naming authority
+# Morning chain + publish to Pages
+bash scripts/publish_desk_preview.sh
+```
 
-**Master Data Dictionary v1.0 (Locked, June 29, 2026)** — machine registry: `whinfell_pipeline/data_dictionary.yaml`
+Full manual: `08_Deliverables/Whinfell_Desk_User_Manual_v1.0.md`
 
-Phased roadmap: [`08_Deliverables/Whinfell_Phased_Development_Plan_v1.0.md`](08_Deliverables/Whinfell_Phased_Development_Plan_v1.0.md)
+## Repo hygiene
 
-This team works autonomously once the Operating Plan is approved.
+```bash
+bash scripts/archive_repo_duplicates.sh
+```
+
+Moves macOS `" 2"` duplicates and `.crdownload` files into `Archive/repo_cleanup_*`.

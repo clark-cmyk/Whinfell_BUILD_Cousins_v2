@@ -224,6 +224,7 @@ def write_meta_sidecar(
     status: str,
     errors: list[str] | None = None,
     warnings: list[str] | None = None,
+    route: dict[str, Any] | None = None,
 ) -> Path:
     meta_path = csv_path.with_suffix(csv_path.suffix + ".meta.json")
     payload = {
@@ -243,6 +244,8 @@ def write_meta_sidecar(
         "errors": errors or [],
         "warnings": warnings or [],
     }
+    if route:
+        payload["route"] = route
     meta_path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
     return meta_path
 
@@ -401,6 +404,17 @@ def stage_file(
 
     fr = StageFileResult(source_path=str(src.resolve()))
     temp_stage: Path | None = None
+    route_meta: dict[str, Any] | None = None
+    try:
+        from whinfell_pipeline.source_router import route_ingest
+
+        route = route_ingest(src)
+        route_meta = route.to_meta()
+        if route.warnings:
+            fr.warnings.extend(route.warnings)
+    except Exception as exc:
+        fr.warnings.append(f"route_ingest skipped: {exc}")
+
     try:
         source, dataset = infer_staged_destination(src.name)
     except ValueError as exc:
@@ -425,7 +439,7 @@ def stage_file(
             return fr
 
     try:
-        if source == SOURCE_CRYPTO:
+        if source == SOURCE_CRYPTO or dataset == "flows":
             stage_src = src
         else:
             prepared = prepare_staged_csv(src, source=source, dataset=dataset)
@@ -478,6 +492,7 @@ def stage_file(
         dataset=dataset,
         status="staged",
         warnings=validation.warnings,
+        route=route_meta,
     )
     fr.meta_path = str(meta)
     fr.warnings.extend(_maybe_ingest_crypto_snapshot_from_credit(src, dataset))

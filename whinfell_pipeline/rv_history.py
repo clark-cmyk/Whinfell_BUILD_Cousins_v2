@@ -2,13 +2,27 @@
 
 from __future__ import annotations
 
+import csv
 import json
-from datetime import date, timedelta
+import re
+from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
 from whinfell_pipeline.data_dictionary import get_rv_series_registry
 from whinfell_pipeline.node_cockpits import default_spread_history_path
+
+# Koyfin wide-export column → rv_series history_key (ARCH-1 live quartiles)
+_KOYFIN_DIRECT_COLUMNS: dict[str, str] = {
+    "sofr close": "SOFR",
+    "btcusd / spy corr": "BTC_SPY_CORR",
+    "iwm / spy corr": "IWM_SPY",
+}
+
+_KOYFIN_RATIO_PAIRS: dict[str, tuple[str, str]] = {
+    "HYG_LQD": ("HYG Close", "LQD Close"),
+    "IBIT_QQQ": ("IBIT Close", "QQQ Close"),
+}
 
 
 def default_dated_series_path(repo_root: Path | None = None) -> Path:
@@ -119,6 +133,97 @@ def _lookup_history(
     return []
 
 
+def _parse_koyfin_date(raw: str) -> str | None:
+    s = str(raw or "").strip()
+    if not s:
+        return None
+    for fmt in ("%m-%d-%Y", "%Y-%m-%d", "%m/%d/%Y"):
+        try:
+            return datetime.strptime(s, fmt).date().isoformat()
+        except ValueError:
+            continue
+    return None
+
+
+def _header_index(headers: list[str]) -> dict[str, str]:
+    return {h.strip().lower(): h for h in headers if h and h.strip()}
+
+
+def _series_from_wide_csv(path: Path) -> dict[str, list[tuple[str, float]]]:
+    out: dict[str, list[tuple[str, float]]] = {}
+    try:
+        with path.open(encoding="utf-8", errors="replace", newline="") as fh:
+            reader = csv.DictReader(fh)
+            headers = list(reader.fieldnames or [])
+            if not headers:
+                return out
+            idx = _header_index(headers)
+            date_col = idx.get("date")
+            if not date_col:
+                return out
+
+            direct_cols: dict[str, str] = {}
+            for col_lower, hk in _KOYFIN_DIRECT_COLUMNS.items():
+                if col_lower in idx:
+                    direct_cols[idx[col_lower]] = hk
+
+            ratio_cols: dict[str, tuple[str, str]] = {}
+            for hk, (num_pat, den_pat) in _KOYFIN_RATIO_PAIRS.items():
+                num = idx.get(num_pat.lower())
+                den = idx.get(den_pat.lower())
+                if num and den:
+                    ratio_cols[hk] = (num, den)
+
+            for row in reader:
+                d = _parse_koyfin_date(row.get(date_col) or "")
+                if not d:
+                    continue
+                for col, hk in direct_cols.items():
+                    val = row.get(col)
+                    if val is None or str(val).strip() == "":
+                        continue
+                    try:
+                        v = float(str(val).replace(",", ""))
+                    except ValueError:
+                        continue
+                    out.setdefault(hk, []).append((d, v))
+                for hk, (num_col, den_col) in ratio_cols.items():
+                    try:
+                        num = float(str(row.get(num_col) or "").replace(",", ""))
+                        den = float(str(row.get(den_col) or "").replace(",", ""))
+                    except ValueError:
+                        continue
+                    if den == 0:
+                        continue
+                    out.setdefault(hk, []).append((d, round(num / den, 6)))
+
+            for hk in list(out.keys()):
+                out[hk] = sorted(out[hk], key=lambda x: x[0])
+    except OSError:
+        return {}
+    return out
+
+
+def load_koyfin_rv_series(repo_root: Path | None = None) -> dict[str, list[tuple[str, float]]]:
+    """Extract RV history from staged Koyfin wide exports (rates/equities/credit)."""
+    root = repo_root or Path(__file__).resolve().parents[1]
+    staged = root / "staged_raw"
+    patterns = ("rates_*.csv", "equities_*.csv", "credit_*.csv")
+    candidates: list[Path] = []
+    for pat in patterns:
+        candidates.extend(staged.glob(f"source=koyfin/dataset=*/{pat}"))
+        candidates.extend(staged.glob(f"**/source=koyfin/**/{pat}"))
+    candidates = sorted({p.resolve() for p in candidates if p.is_file()}, key=lambda p: p.stat().st_mtime, reverse=True)
+
+    merged: dict[str, list[tuple[str, float]]] = {}
+    for path in candidates[:6]:
+        chunk = _series_from_wide_csv(path)
+        for hk, vals in chunk.items():
+            if len(vals) >= 2 and (hk not in merged or len(vals) > len(merged[hk])):
+                merged[hk] = vals
+    return merged
+
+
 def load_rv_history(repo_root: Path | None = None) -> dict[str, list[tuple[str, float]]]:
     """Load merged history keyed by rv_series history_key."""
     root = repo_root or Path(__file__).resolve().parents[1]
@@ -133,6 +238,7 @@ def load_rv_history(repo_root: Path | None = None) -> dict[str, list[tuple[str, 
             spread_idx[k] = v
 
     dated_idx = _load_dated_series_bundle(dated_path)
+    koyfin_idx = load_koyfin_rv_series(root)
 
     reg = get_rv_series_registry()
     out: dict[str, list[tuple[str, float]]] = {}
@@ -142,9 +248,13 @@ def load_rv_history(repo_root: Path | None = None) -> dict[str, list[tuple[str, 
         hk = str(row.get("history_key") or "")
         if not hk:
             continue
+        key = hk.upper()
+        if key in koyfin_idx and len(koyfin_idx[key]) >= 2:
+            out[key] = koyfin_idx[key]
+            continue
         vals = _lookup_history(hk, spread_idx, dated_idx)
         if vals:
-            out[hk.upper()] = vals
+            out[key] = vals
     return out
 
 

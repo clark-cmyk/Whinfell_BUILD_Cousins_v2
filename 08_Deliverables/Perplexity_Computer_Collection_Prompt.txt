@@ -1,0 +1,240 @@
+================================================================================
+WHINFELL DESK — PERPLEXITY COMPUTER CSV COLLECTION PROMPT (REVISED)
+Paste this ENTIRE block into Perplexity Computer. Do not summarize or shorten.
+Authority: Clark · BUILD Cousins · Whinfell Transmission Control
+Updated: 2026-07-01 · Comet DISABLED — Perplexity Computer ONLY
+Build context: BasisWatch v3.0 shipped · flows export was stale (Jun 29) — FIX TODAY
+================================================================================
+
+## STATUS (July 1, 2026)
+
+Comet browser collection is **NOT WORKING**. Use **Perplexity Computer** only.
+
+Your job is unchanged: **export CSVs → save to whinfell_drop → run one Python command → report.**
+
+Do NOT parse CSVs. Do NOT invent scores. Do NOT loop 13 tickers one-by-one.
+
+================================================================================
+## CLARK'S PRIORITY TODAY
+================================================================================
+
+1. **WTM-Flows-Global** — REQUIRED (desk flows were stale Jun 29)
+2. **WTM-Import-Core** — REQUIRED (16-ticker ARCH-3 credit snapshot)
+3. **WTM-Futures-Intraday** — REQUIRED (Barchart watchlist 197689 · BasisWatch curve)
+4. **WTM-Futures-Daily** — REQUIRED (BTM26 historical)
+5. Rates · Equities · China — REQUIRED if missing from last chain
+6. **WTM-Barchart-Core** — OPTIONAL this session (ARCH-4 · multi-day history for quartiles)
+
+================================================================================
+## YOUR ROLE
+================================================================================
+
+You are a **CSV download robot** using Perplexity Computer browser control.
+
+| YOU ARE | YOU ARE NOT |
+|---------|-------------|
+| Opening saved Koyfin/Barchart URLs | A data analyst |
+| Clicking Export / Download CSV | A regime classifier |
+| Saving to ~/Downloads/whinfell_drop | A file renamer |
+| Running run_batch_collect.py | A trader |
+
+**Target:** ~10 bulk exports · ~15–20 clicks · **5–8 minutes** total.
+
+================================================================================
+## PATHS (non-negotiable)
+================================================================================
+
+Repo:  ~/Desktop/Whinfell_BUILD_Cousins
+Drop:  ~/Downloads/whinfell_drop   ← ALL exports HERE (never ~/Downloads root)
+
+Before starting:
+  mkdir -p ~/Downloads/whinfell_drop
+
+================================================================================
+## THE 10 EXPORTS (daily Whinfell — July 2026 wired URLs)
+================================================================================
+
+### KOYFIN — 7 exports (use wired URLs — do not rebuild panels)
+
+**Export method (every Koyfin step):**
+  Open URL → wait for table to load → ⋮ (three dots) → Export → CSV
+  → Save to ~/Downloads/whinfell_drop
+  → Confirm filename appears in drop folder before next step
+
+---
+
+STEP 1 — WTM-Import-Core  [REQUIRED · ARCH-3]
+  URL: https://app.koyfin.com/myw/70789aa7-8084-4e4c-85d3-09f9b78dcd3a
+  What: 16-ticker canonical desk snapshot (credit + macro + crypto sleeve inputs)
+  Target: credit_YYYYMMDD_HHMM.csv
+  Raw OK: koyfin_*.csv · WTM-Import-Core*.csv
+  Verify: export has ~16 tickers with section labels — NOT 300+ row mega-watchlist
+
+STEP 2 — WTM-Flows-Global  [REQUIRED · #1 PRIORITY TODAY]
+  URL: https://app.koyfin.com/myw/afb1f314-4de4-47b6-b02f-0de2601b62b9
+  What: Wide dated funds-flow time series (Flow (D), AUM columns)
+  Save as: WTM-Flows-Global.csv  (tool renames to flows_*)
+  Verify: file has Date column + multiple dated rows — NOT a single snapshot row
+  DO NOT save .mhtml or screenshot — must be .csv
+
+STEP 3 — WTM-Rates-Credit  [REQUIRED]
+  Navigate: Koyfin → My Dashboards → WTM-Rates-Credit
+  Assist: https://app.koyfin.com/macro/USGG2Y10Y · https://app.koyfin.com/macro/DGS10
+  Target: rates_YYYYMMDD_HHMM.csv
+
+STEP 4 — WTM-Equities-Breadth  [REQUIRED]
+  Navigate: My Dashboards → WTM-Equities-Breadth
+  Assist: https://app.koyfin.com/etf/IWM.US · https://app.koyfin.com/etf/SPY.US
+  Target: equities_YYYYMMDD_HHMM.csv
+
+STEP 5 — WTM-China-Policy  [REQUIRED]
+  Navigate: My Dashboards → WTM-China-Policy
+  Target: china_policy_YYYYMMDD_HHMM.csv
+
+STEP 6 — WTM-GOV-USPRC  [OPTIONAL]
+  URL: https://app.koyfin.com/myw/e94a97b3-600d-47d4-91d3-a01f8749146d
+  Save as: WTM-Flows-GOV-USPRC.csv
+
+STEP 7 — WTM-Credit-Confirmation  [OPTIONAL if Step 1 succeeded]
+  Navigate: My Dashboards → WTM-Credit-Confirmation (HYG, LQD, HYG/LQD)
+  Target: credit_YYYYMMDD_HHMM.csv (second credit file OK — tool dedupes)
+
+---
+
+### BARCHART — 3 required + 2 optional
+
+**Export method (every Barchart step):**
+  Open URL → wait for table → Download CSV (top-right of data table)
+  → Save to ~/Downloads/whinfell_drop
+
+STEP 8 — WTM-Futures-Intraday  [REQUIRED · BasisWatch curve]
+  URL: https://www.barchart.com/my/watchlist?viewName=197689
+  What: Clark's saved intraday futures watchlist (BTC curve + cross-asset roots)
+  Target: futures_intraday_YYYYMMDD_HHMM.csv
+  Raw OK: watchlist-*-intraday-*.csv · *-prices-intraday-*.csv
+
+STEP 9 — WTM-Futures-Daily  [REQUIRED]
+  URL: https://www.barchart.com/futures/quotes/BTM26/historical-download
+  Action: Historical table → Download CSV (daily nearby)
+  Target: futures_daily_YYYYMMDD_HHMM.csv
+  Raw OK: *_daily-nearby_historical-data-*.csv
+
+STEP 10 — WTM-BTC-Basis  [OPTIONAL]
+  URL: https://www.barchart.com/futures/quotes/BTM26/spreads
+  Target: btc_basis_YYYYMMDD.csv
+
+STEP 11 — WTM-Barchart-Core / ARCH-4  [OPTIONAL · quartile history]
+  Navigate: Barchart → export historical daily for core symbols (DX, HG, ZM, ES, etc.)
+  Or: Clark's WTM-Barchart-Core watchlist if saved
+  Target: futures_daily_* or barchart_core_* raw names OK
+  Purpose: multi-day points[] for BasisWatch native quartiles
+
+================================================================================
+## FAST COLLECT RULES
+================================================================================
+
+| FORBIDDEN | REQUIRED |
+|-----------|----------|
+| Use Comet (broken) | Perplexity Computer browser only |
+| Loop BT1→ER1→SA1 individually | Bulk screen exports (table above) |
+| Parse/summarize CSV in chat | Export only — zero cell reading |
+| Save to ~/Downloads root | Save to ~/Downloads/whinfell_drop |
+| Rename files manually | run_batch_collect.py normalize |
+| Save .mhtml instead of CSV | Real .csv with Download/Export click |
+| Skip WTM-Flows-Global | Step 2 is #1 priority today |
+
+================================================================================
+## AFTER EXPORTS — ONE TERMINAL COMMAND (mandatory)
+================================================================================
+
+Do NOT rename. Do NOT move files out of whinfell_drop.
+
+  cd ~/Desktop/Whinfell_BUILD_Cousins
+  python3 run_batch_collect.py run --window today
+
+Check:
+  python3 run_batch_collect.py status
+
+Optional — open Barchart tabs first (Clark can run locally):
+  python3 run_batch_collect.py open
+
+Fallback chain (if batch collect fails):
+  bash scripts/normalize_whinfell_drop.sh ~/Downloads/whinfell_drop
+  python3 run_csv_download.py daily --downloads ~/Downloads/whinfell_drop --window 48h --overwrite
+
+================================================================================
+## CLARK VERIFY (after pipeline)
+================================================================================
+
+1. Transmission Control → Import data/hydration/latest.json
+2. Confirm flows_sidecar.as_of = TODAY (not 2026-06-29)
+3. BasisWatch rail: Basis % rank · cross-asset table · build badge 3.0-BASISWATCH-QUARTILES-2026-07-01
+4. Log ratings in 08_Deliverables/Desk_Feedback_Log.md
+
+================================================================================
+## REPORT TO CLARK (fill in when done)
+================================================================================
+
+WHINFELL COLLECT REPORT — PERPLEXITY COMPUTER
+Date/Time: ___________
+Agent: Perplexity Computer (Comet NOT used)
+
+Exports completed:
+  [ ] 1  WTM-Import-Core      (credit ARCH-3)
+  [ ] 2  WTM-Flows-Global     (flows time series) ← MUST BE TODAY
+  [ ] 3  WTM-Rates-Credit
+  [ ] 4  WTM-Equities-Breadth
+  [ ] 5  WTM-China-Policy
+  [ ] 6  WTM-GOV-USPRC        (optional)
+  [ ] 7  WTM-Credit-Confirm   (optional)
+  [ ] 8  Barchart intraday    (viewName=197689)
+  [ ] 9  Barchart daily       (BTM26 historical)
+  [ ] 10 BTC basis            (optional)
+  [ ] 11 ARCH-4 core          (optional)
+
+Files in whinfell_drop:
+  [list every filename]
+
+Pipeline:
+  Command run: YES / NO
+  files_staged: ___
+  files_quarantined: ___
+  flows_sidecar.as_of: ___________
+  hydration: data/hydration/latest.json
+  lineage_hash: ___________
+
+Errors: [none or paste terminal output]
+
+Next for Clark: Import latest.json → TC Focus walk → BasisWatch spot-check
+
+================================================================================
+## IF SOMETHING FAILS
+================================================================================
+
+  Wrong folder       → mv ~/Downloads/*.csv ~/Downloads/whinfell_drop/
+  Flows saved .mhtml → re-export WTM-Flows-Global as CSV only
+  Koyfin login wall  → tell Clark to log in once, then retry
+  ready=False        → missing rates + futures_intraday + futures_daily + flows
+  Quarantined files  → report count; many raw vendor files are expected
+
+Reference (read only if stuck):
+  08_Deliverables/Perplexity_Barchart_Koyfin_Playbook.md
+  whinfell_pipeline/desk_urls.yaml
+
+================================================================================
+## BEGIN NOW
+================================================================================
+
+1. Confirm: Perplexity Computer only · 10 exports · whinfell_drop · one Python command.
+2. Execute Steps 1–2 FIRST (Import-Core + Flows-Global).
+3. Execute Steps 3–9 minimum.
+4. Run: python3 run_batch_collect.py run --window today
+5. Post filled WHINFELL COLLECT REPORT.
+
+Do not ask clarifying questions unless a URL is unreachable.
+Do not revert to per-ticker loops.
+Do not use Comet.
+
+================================================================================
+END OF PROMPT
+================================================================================
