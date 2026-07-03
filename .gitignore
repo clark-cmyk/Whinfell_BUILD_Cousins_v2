@@ -1,12 +1,41 @@
+# =============================================================================
+# Whinfell_BUILD_Cousins - Strong .gitignore (per BEST_PRACTICES.md)
+# =============================================================================
+# Goal: Prevent accidental commits of large CSVs, raw data, archives, etc.
+# Always use targeted `git add` (never `git add -A`).
+
+# --- OS / Editor / Python ---
 *.DS_Store
 .DS_Store
+__pycache__/
+*.py[cod]
+*.so
+.Python
+*.swp
+*~
+.ipynb_checkpoints/
+
+# --- Large data / generated artifacts (MUST stay out of git) ---
+staged_raw/
+Archive/
+quarantine/
+repo_cleanup*/
+data/execution/
 _desk_preview_out/
+
+# --- Project-specific junk ---
 NEXTFOUR.md.txt
 08_Deliverables/Whinfell_Transmission_Map_Team_Memo_v1.1.md
 
-# Prior-chunk artifacts (on disk for tests; excluded from 2.2b git delta)
-data/execution/
+# =============================================================================
+# Selective whitelisting for whinfell_pipeline (legacy from phased development)
+# We ignore the directory broadly then explicitly allow the files we want tracked.
+# Only edit this section if you understand the impact on tracked files.
+# =============================================================================
+
 whinfell_pipeline/*
+
+# Core specs and key modules we want tracked
 !whinfell_pipeline/WTM_EXPORT_v2.1_SPEC.md
 !whinfell_pipeline/WTM_EXPORT_v2.2_SPEC.md
 !whinfell_pipeline/node_cockpits.py
@@ -19,16 +48,20 @@ whinfell_pipeline/*
 !whinfell_pipeline/hydration_audit.py
 !whinfell_pipeline/version.py
 !whinfell_pipeline/verify_2_2b_goal.py
+!whinfell_pipeline/verify_phase2_goal.py
+!whinfell_pipeline/verify_2_2_final.py
+
+# Examples (selective)
 !whinfell_pipeline/examples/
 whinfell_pipeline/examples/*
 !whinfell_pipeline/examples/hydration_bundle.json
 !whinfell_pipeline/examples/cockpit_hydration_snippet.json
 !whinfell_pipeline/examples/flows/
+!whinfell_pipeline/examples/staged/
+
+# Tests (selective)
 !whinfell_pipeline/tests/
 whinfell_pipeline/tests/*
-!whinfell_pipeline/staged_csv.py
-!whinfell_pipeline/ingest.py
-!whinfell_pipeline/csv_download.py
 !whinfell_pipeline/tests/html_headless_2_2b.mjs
 !whinfell_pipeline/tests/html_headless_cockpit.mjs
 !whinfell_pipeline/tests/test_transmission_control_cockpit.py
@@ -39,30 +72,14 @@ whinfell_pipeline/tests/*
 !whinfell_pipeline/tests/goal_scratch.py
 !whinfell_pipeline/tests/html_load_check.mjs
 !whinfell_pipeline/tests/playwright_cockpit_capture.mjs
-!whinfell_pipeline/verify_phase2_goal.py
 !whinfell_pipeline/tests/test_transmission_control_2_2b.py
 !whinfell_pipeline/tests/test_staged_2_2c.py
 !whinfell_pipeline/tests/test_csv_download.py
-!whinfell_pipeline/examples/staged/
-!run_csv_download.py
-!whinfell_daily_am.sh
-!whinfell_daily_eod.sh
-!Whinfell_Daily_Launcher.py
-!Whinfell_Daily_AM.command
-!Whinfell_Daily_EOD.command
-!scripts/init_daily_csv.sh
-!scripts/morning_daily.sh
-!whinfell_pipeline/csv_download.py
-!whinfell_pipeline/verify_2_2_final.py
-!whinfell_pipeline/data_dictionary.yaml
-!whinfell_pipeline/data_dictionary.py
-!whinfell_pipeline/collection_manifest.yaml
 !whinfell_pipeline/tests/test_data_dictionary.py
 !whinfell_pipeline/tests/test_master_dictionary_tc.py
 !whinfell_pipeline/tests/test_normalize_dictionary.py
 !whinfell_pipeline/tests/test_operator_naming_alignment.py
 !whinfell_pipeline/tests/test_sync_dictionary_meta.py
-!whinfell_pipeline/desk_chart_links.py
 !whinfell_pipeline/tests/dd_badge_headless.mjs
 !whinfell_pipeline/tests/dd_badge_file_evidence.mjs
 !whinfell_pipeline/tests/generate_phase1_evidence.py
@@ -71,20 +88,39 @@ whinfell_pipeline/tests/*
 !whinfell_pipeline/tests/test_flows_production.py
 !whinfell_pipeline/tests/test_export_contract.py
 !whinfell_pipeline/tests/test_hydration_audit.py
+
+# Core pipeline modules we want tracked
+!whinfell_pipeline/staged_csv.py
+!whinfell_pipeline/ingest.py
+!whinfell_pipeline/csv_download.py
+!whinfell_pipeline/sync_dictionary_meta.py
+!whinfell_pipeline/batch_collect.py
+!whinfell_pipeline/desk_urls.yaml
+!whinfell_pipeline/desk_chart_links.py
 !whinfell_pipeline/desk_live_session.py
+!whinfell_pipeline/desk_operator_confirm.py
+!whinfell_pipeline/data_dictionary.yaml
+!whinfell_pipeline/data_dictionary.py
+!whinfell_pipeline/collection_manifest.yaml
+
+# Top level scripts and deliverables we explicitly allow
+!run_csv_download.py
+!whinfell_daily_am.sh
+!whinfell_daily_eod.sh
+!Whinfell_Daily_Launcher.py
+!Whinfell_Daily_AM.command
+!Whinfell_Daily_EOD.command
+!scripts/init_daily_csv.sh
+!scripts/morning_daily.sh
 !scripts/desk_live_session.sh
 !scripts/ci_verify.sh
 !.github/
 !.github/workflows/
 !.github/workflows/whinfell_verify.yml
-!whinfell_pipeline/sync_dictionary_meta.py
-!whinfell_pipeline/batch_collect.py
-!whinfell_pipeline/desk_urls.yaml
 !08_Deliverables/data_dictionary_meta.js
 !08_Deliverables/data_dictionary_meta.json
 !08_Deliverables/Comet_Browser_Operations_Blueprint.md
 !08_Deliverables/Whinfell_Expanded_Operators_Guide_v1.4.md
-staged_raw/**/*.csv
-!staged_raw/
-!staged_raw/**staged_raw/
-Archive/
+!whinfell_pipeline/desk_chart_links.py  # duplicate safety
+
+# End of file
