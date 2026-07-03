@@ -1,70 +1,113 @@
-# Best Practices for Whinfell Desk Preview + CI
+# Whinfell_BUILD_Cousins Best Practices
 
-This document captures operational best practices for the desk preview deployment (GitHub Pages) and the supporting CI verification workflow.
+**Last Updated**: 2026-07-03  
+**Purpose**: Prevent dirty repo states, CI failures, and deployment issues.
 
-## Desk Preview Publishing
+This document combines low-level repo hygiene with higher-level practices for the desk preview (GitHub Pages) and CI workflows.
+
+## 1. Repo Hygiene
+
+- **Never** `git add -A`. This is the #1 way to accidentally commit gigabytes of CSVs, parquet files, or quarantine data.
+- Maintain a strong `.gitignore`. At minimum it should cover:
+  - `staged_raw/`
+  - `Archive/`
+  - `quarantine/`
+  - `repo_cleanup*/`
+  - `*.DS_Store`
+  - `__pycache__/`
+  - `_desk_preview_out/`
+- Periodically run `git clean -fdx -n` (dry-run first!) to see what would be removed.
+- Large artifacts and raw ingestion data must stay out of the history.
+
+## 2. Git Workflow
+
+- **Always** run `git status -sb` before any commit or publish.
+- Use `git pull --rebase origin main` frequently to keep history clean.
+- Use **targeted** adds only. Example safe pattern:
+
+  ```bash
+  git status -sb
+
+  # Safe targeted add for desk work
+  git add 08_Deliverables/ docs/ scripts/ .github/ README.md BEST_PRACTICES.md
+  git add -u -- . ':!staged_raw' ':!staged_raw/**' ':!Archive' ':!quarantine'
+  ```
+
+- When publishing desk previews, prefer `scripts/publish_desk_preview.sh` (it performs a controlled add internally).
+
+## 3. Desk Preview Publishing
 
 - **Preferred workflow**: Use `scripts/publish_desk_preview.sh` after updating source assets in `08_Deliverables/` (TC HTML, BasisWatch, JS/CSS/JSON) and/or data in `data/`.
   - It runs the build, syncs to `docs/`, stages the right files, commits, pushes, and triggers the Pages deploy.
-  - The script dynamically derives the repo slug from `git remote` (no hard-coded owner/repo names like the old `Whinfell_BUILD_Cousins`).
+  - The script dynamically derives the repo slug from `git remote` (no hard-coded owner/repo names).
 
 - **What gets deployed**:
   - Primary: `main/docs/` (served as GitHub Pages root with `.nojekyll`).
-  - Backup path: the `desk-preview-pages.yml` workflow also publishes the `_desk_preview_out/` artifact.
+  - The `desk-preview-pages.yml` workflow also publishes the `_desk_preview_out/` artifact via GitHub Pages.
 
 - **Triggering the deploy**:
-  - Push to `main` that touches relevant paths automatically runs `.github/workflows/desk-preview-pages.yml`.
-  - Manual: `gh workflow run desk-preview-pages.yml --ref main` or GitHub UI.
+  - Pushes to `main` that touch relevant paths automatically run `.github/workflows/desk-preview-pages.yml`.
+  - Manual trigger: `gh workflow run desk-preview-pages.yml --ref main` or via the GitHub UI.
 
 - **Private access**: See `08_Deliverables/Desk_Preview_Private_Access_Setup.md`.
 
-## CI Verification (`whinfell_verify.yml`)
+## 4. CI Verification (`whinfell_verify.yml`)
 
-- Runs the "Whinfell Verify" workflow **only on changes to pipeline code** (via `paths` filters):
+- The "Whinfell Verify" workflow only runs on changes to pipeline code (via `paths` filters):
   - `whinfell_pipeline/**`
   - `china_policy_track/**`
   - `scripts/ci_verify.sh`
   - `.github/workflows/whinfell_verify.yml`
 
-- This prevents noisy failures on routine desk asset/data publishes (which only touch `docs/`, `08_Deliverables/`, and the Pages workflow).
+  This prevents noisy CI failures on routine desk asset updates and data refreshes.
 
-- **Never** commit hard-coded macOS temp paths. Use:
+- **Never** hard-code macOS temp paths. Use a portable pattern:
+
   ```python
+  import os
   import tempfile
   from pathlib import Path
-  SCRATCH = Path(os.environ.get("GROK_GOAL_SCRATCH",
-      str(Path(tempfile.gettempdir()) / "grok-goal-verify" / "implementer")))
+
+  SCRATCH = Path(
+      os.environ.get(
+          "GROK_GOAL_SCRATCH",
+          str(Path(tempfile.gettempdir()) / "grok-goal-verify" / "implementer"),
+      )
+  )
+  SCRATCH.mkdir(parents=True, exist_ok=True)
   ```
-  The `ci_verify.sh` also seeds the env var with `mktemp`.
 
-- `verify_phase2_goal.py` (and `goal_scratch.py`) are intentionally strict for local goal verification. In CI we use `continue-on-error: true` so a single publish doesn't turn the repo red while still surfacing logs.
+  `scripts/ci_verify.sh` seeds `GROK_GOAL_SCRATCH` using `mktemp`.
 
-## GitHub Actions Hygiene (Node + Deprecations)
+- `verify_phase2_goal.py` is intentionally strict. The workflow uses `continue-on-error: true` so a single publish doesn't turn the whole repo red while still surfacing full logs.
 
-- Always pin to recent major versions that target current Node runtimes:
+## 5. GitHub Actions Hygiene (Node + Deprecations)
+
+- Always use recent major versions that target current Node runtimes:
   - `actions/checkout@v7`
   - `actions/setup-python@v6`
   - `actions/setup-node@v6`
   - `actions/upload-pages-artifact@v5`
   - `actions/deploy-pages@v4`
 
-- Old pins (`@v4`, `@v3`) trigger "Node 20 is being deprecated" warnings (and sometimes force Node 24 compatibility issues).
+- Older pins (`@v4` / `@v3`) produce repeated "Node 20 is being deprecated" warnings.
 
-- When adding new JS steps, prefer `setup-node` explicitly.
+## 6. General Rules
 
-## General Rules
+- Keep workflow `on:` triggers narrow (`paths` / `paths-ignore`) so that documentation, data refreshes, and desk HTML changes don't run heavy Python/Node verification jobs.
+- Keep `publish_desk_preview.sh` and `build_desk_preview.sh` in sync with the file list in `desk-preview-pages.yml`.
+- Intentionally committed data (`data/hydration/`, `data/barchart/`, etc.) exists so the static preview and CI can run without external dependencies.
+- Run `bash scripts/ci_verify.sh` (or the full goal verifier) locally before pushing changes to the pipeline.
+- Changes to `.github/workflows/` should ideally go through a PR.
 
-- Keep workflow triggers narrow (`paths` / `paths-ignore`) so that doc updates, data refreshes, and desk HTML changes don't run expensive or fragile Python/Node verification jobs.
-- `publish_desk_preview.sh` and `build_desk_preview.sh` must be kept in sync with the Pages workflow file list.
-- Data in `data/hydration/`, `data/barchart/`, etc. is intentionally committed so that the static preview + CI hydrate tests can run without external services.
-- Run `bash scripts/ci_verify.sh` (or the full goal verifier) locally **before** pushing pipeline changes.
-- `.github/workflows/` changes themselves should be tested via a PR when possible.
+## 7. Common Pitfalls
 
-## Common Pitfalls
+- `git add -A` or broad adds → massive accidental commits of `staged_raw/`.
+- Hard-coded repo names in publish scripts → broken `gh api` calls.
+- Missing `data/hydration/latest.json` → build falls back to a stub (some tests expect richer content).
+- Running full `verify_phase2_goal.py` on every push → flaky failures due to timestamps, flow status values, and HTML string assertions.
+- Using outdated Actions → persistent Node deprecation noise in logs.
 
-- Hard-coded repo names in publish scripts → broken `gh api` calls on forks/renames.
-- Missing `data/hydration/latest.json` → build produces a stub; some tests expect richer data.
-- Running the full `verify_phase2_goal.py` on every push → flaky failures from timestamps, flow status, and HTML string assertions.
-- Using old Actions → repeated Node deprecation spam in logs.
+---
 
-Update this file when patterns change.
+Update this file whenever new patterns or gotchas are discovered.
