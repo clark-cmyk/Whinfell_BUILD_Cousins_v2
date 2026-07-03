@@ -86,4 +86,5 @@ whinfell_pipeline/tests/*
 !08_Deliverables/Whinfell_Expanded_Operators_Guide_v1.4.md
 staged_raw/**/*.csv
 !staged_raw/
-!staged_raw/**
+!staged_raw/**staged_raw/
+Archive/
