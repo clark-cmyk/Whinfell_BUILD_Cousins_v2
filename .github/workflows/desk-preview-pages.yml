@@ -43,9 +43,12 @@ jobs:
       - name: Verify artifact
         run: |
           test -f _desk_preview_out/index.html
+          test -f _desk_preview_out/desk_china_ladder_models.js
           test -f _desk_preview_out/basis_watch_analytics.js
+          test -f _desk_preview_out/basis_watch_panel.js
           test -f _desk_preview_out/data/hydration/latest.json
           grep -q "Transmission Control" _desk_preview_out/index.html
+          grep -q 'src="desk_china_ladder_models.js"' _desk_preview_out/index.html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5

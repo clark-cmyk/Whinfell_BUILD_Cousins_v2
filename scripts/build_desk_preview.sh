@@ -54,6 +54,17 @@ fi
 date -u +"%Y-%m-%dT%H:%M:%SZ" > "$OUT/BUILD_STAMP.txt"
 grep -o "TC_CONSOLE_BUILD = '[^']*'" "$TC" | head -1 >> "$OUT/BUILD_STAMP.txt" 2>/dev/null || true
 
+for req in desk_china_ladder_models.js basis_watch_analytics.js basis_watch_panel.js basis_watch.css data_dictionary_meta.json; do
+  if [[ ! -f "$OUT/$req" ]]; then
+    echo "build_desk_preview: missing output asset: $OUT/$req" >&2
+    exit 1
+  fi
+done
+if ! grep -q 'src="desk_china_ladder_models.js"' "$OUT/index.html"; then
+  echo "build_desk_preview: index.html missing desk_china_ladder_models.js script tag" >&2
+  exit 1
+fi
+
 echo "build_desk_preview: OK → $OUT"
 echo "  index.html + desk assets + data/hydration/latest.json"
 du -sh "$OUT" | awk '{print "  size:", $1}'

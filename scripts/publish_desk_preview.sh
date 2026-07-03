@@ -51,7 +51,15 @@ else
   echo "publish_desk_preview: install gh CLI to auto-enable Pages on first publish." >&2
 fi
 
+# Actions rebuilds from 08_Deliverables/ — must commit sources, not only docs/
 git add docs/ \
+  08_Deliverables/Whinfell_Transmission_Control.html \
+  08_Deliverables/Whinfell_BasisWatch.html \
+  08_Deliverables/basis_watch.css \
+  08_Deliverables/basis_watch_analytics.js \
+  08_Deliverables/basis_watch_panel.js \
+  08_Deliverables/desk_china_ladder_models.js \
+  08_Deliverables/data_dictionary_meta.json \
   scripts/build_desk_preview.sh \
   scripts/publish_desk_preview.sh \
   .github/workflows/desk-preview-pages.yml \
