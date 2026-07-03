@@ -18,6 +18,13 @@ if [[ -z "$REMOTE" ]]; then
   exit 1
 fi
 
+# Derive owner/repo slug dynamically (supports _v2 etc); fallback for gh Pages calls
+REPO_SLUG=$(echo "$REMOTE" | sed -E 's#^.*github.com[/:]([^/]+/[^/.]+)(\.git)?$#\1#')
+if [[ -z "$REPO_SLUG" ]]; then
+  REPO_SLUG="clark-cmyk/Whinfell_BUILD_Cousins_v2"
+fi
+PAGES_URL="https://${REPO_SLUG%%/*}.github.io/${REPO_SLUG##*/}/"
+
 bash scripts/build_desk_preview.sh
 
 # Pages serves main/docs/ (static preview). Rebuild copies _desk_preview_out → docs/
@@ -27,13 +34,13 @@ touch docs/.nojekyll
 
 # Optional: Actions also deploy gh-pages (backup). Primary share URL uses main/docs/.
 if command -v gh >/dev/null 2>&1; then
-  if ! gh api repos/clark-cmyk/Whinfell_BUILD_Cousins/pages --silent 2>/dev/null; then
+  if ! gh api "repos/${REPO_SLUG}/pages" --silent 2>/dev/null; then
     echo "publish_desk_preview: enabling GitHub Pages (gh-pages branch)…" >&2
-    if gh api -X POST repos/clark-cmyk/Whinfell_BUILD_Cousins/pages \
+    if gh api -X POST "repos/${REPO_SLUG}/pages" \
       --input - <<'EOF' 2>/dev/null; then
 {"build_type":"legacy","source":{"branch":"gh-pages","path":"/"}}
 EOF
-      echo "publish_desk_preview: Pages enabled → https://clark-cmyk.github.io/Whinfell_BUILD_Cousins/" >&2
+      echo "publish_desk_preview: Pages enabled → ${PAGES_URL}" >&2
     else
       echo "publish_desk_preview: WARN — could not auto-enable Pages." >&2
       echo "  Manual: repo → Settings → Pages → Deploy from branch gh-pages / root" >&2
