@@ -32,6 +32,9 @@ rm -rf docs
 cp -R _desk_preview_out docs
 touch docs/.nojekyll
 
+# Note: build now produces a self-contained index.html (all critical JS+CSS inlined)
+# This fixes asset 404s and script execution problems on GitHub Pages project subpaths.
+
 # Optional: Actions also deploy gh-pages (backup). Primary share URL uses main/docs/.
 if command -v gh >/dev/null 2>&1; then
   if ! gh api "repos/${REPO_SLUG}/pages" --silent 2>/dev/null; then

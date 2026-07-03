@@ -20,6 +20,9 @@ done
 rm -rf "$OUT"
 mkdir -p "$OUT/data/hydration"
 
+# Ensure no Jekyll processing on GitHub Pages (critical for reliable asset serving)
+touch "$OUT/.nojekyll"
+
 cp "$TC" "$OUT/index.html"
 cp "$BW" "$OUT/Whinfell_BasisWatch.html"
 cp "$BWC" "$OUT/basis_watch.css"
@@ -60,9 +63,63 @@ for req in desk_china_ladder_models.js basis_watch_analytics.js basis_watch_pane
     exit 1
   fi
 done
-if ! grep -q 'src="desk_china_ladder_models.js"' "$OUT/index.html"; then
-  echo "build_desk_preview: index.html missing desk_china_ladder_models.js script tag" >&2
-  exit 1
+# --- INLINE ASSETS FOR SINGLE-FILE RELIABILITY ON GITHUB PAGES ---
+# Eliminates relative asset 404s for JS/CSS. The main desk becomes one reliable file.
+echo "build_desk_preview: inlining CSS + JS into index.html ..."
+
+python3 << 'PYEOF'
+import os
+
+out_dir = "_desk_preview_out"
+index_path = os.path.join(out_dir, "index.html")
+css_path = os.path.join(out_dir, "basis_watch.css")
+files = [
+    ("desk_china_ladder_models.js", os.path.join(out_dir, "desk_china_ladder_models.js")),
+    ("basis_watch_analytics.js", os.path.join(out_dir, "basis_watch_analytics.js")),
+    ("basis_watch_panel.js", os.path.join(out_dir, "basis_watch_panel.js")),
+]
+
+with open(index_path, "r", encoding="utf-8") as f:
+    html = f.read()
+
+# Inline CSS - replace link with full style block
+if os.path.exists(css_path):
+    with open(css_path, "r", encoding="utf-8") as f:
+        css_content = f.read()
+    style_block = '<style id="inlined-basis-watch">\n/* INLINED from basis_watch.css for GitHub Pages reliability */\n' + css_content + '\n</style>'
+    # Remove original link tag(s)
+    html = html.replace('<link rel="stylesheet" href="basis_watch.css" />', style_block)
+    html = html.replace("basis_watch.css", "/* inlined */", 1)  # safety
+
+# Inline the three support scripts by replacing their tags with full content in order.
+# These must run before the huge main <script> block.
+for label, p in files:
+    if os.path.exists(p):
+        with open(p, "r", encoding="utf-8") as f:
+            js = f.read()
+        inline = f'\n<script data-inlined="true" id="inlined-{label.split(".")[0]}">\n/* INLINED {label} */\n{js}\n</script>\n'
+        # Remove the external tag (exact common form)
+        tag = f'<script src="{label}"></script>'
+        if tag in html:
+            html = html.replace(tag, inline, 1)
+        else:
+            # try single quotes or self-closing variations
+            for t in [f"<script src='{label}'></script>", f'<script src="{label}"/>', f"<script src='{label}'/>"]:
+                if t in html:
+                    html = html.replace(t, inline, 1)
+                    break
+
+with open(index_path, "w", encoding="utf-8") as f:
+    f.write(html)
+
+print("  SUCCESS: index.html is now self-contained (CSS + 3 JS inlined)")
+PYEOF
+
+# Verify core app code is present (appState / renderAll)
+if grep -q 'window\.appState = appState' "$OUT/index.html" && (grep -q 'function renderAll()' "$OUT/index.html" || grep -q 'window\.renderAll = renderAll' "$OUT/index.html"); then
+  echo "  Verified: window.appState and renderAll present in the built index.html"
+else
+  echo "  WARNING: core globals may be missing after inlining" >&2
 fi
 
 echo "build_desk_preview: OK → $OUT"

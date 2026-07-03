@@ -3076,6 +3076,15 @@ window.DICTIONARY_BADGE_DEFAULT = {
 <script>
 /** Whinfell Transmission Control — Phase 2 · Storage v7 (node cockpit navigation) */
 
+console.log('%c[Whinfell DEBUG] Main script block is executing...', 'color: lime; font-size: 12px');
+
+// Early stubs so window.appState / renderAll are always defined even if later code errors.
+// Real values will be set by the normal let/assignment below.
+window.appState = null;
+window.renderAll = null;
+
+try {
+
 const STORAGE_KEY = 'whinfell_transmission_control_v7';
 const LEGACY_KEYS = ['whinfell_transmission_control_v1', 'whinfell_transmission_control_v0', 'whinfell_operator_v1_1'];
 const STATE_VERSION = 7;
@@ -9888,6 +9897,24 @@ window.__rvHorizonEvidenceProbe = function rvHorizonEvidenceProbe(bundle, nodeId
     focusHtml,
   };
 };
+} catch (err) {
+  console.error('%c[Whinfell TC] FATAL SCRIPT CONTENT ERROR (monolith partially initialized)', 'color:#f55;font-weight:bold', err);
+  if (typeof window !== 'undefined') {
+    if (!window.appState) window.appState = { _bootError: String(err && err.message || err), version: 7 };
+    if (typeof window.renderAll !== 'function') window.renderAll = function stubRenderAll(){ console.warn('renderAll stub (boot error)'); };
+  }
+  try {
+    const chk = document.getElementById('js-boot-check');
+    if (chk) {
+      chk.textContent = 'JS BOOT ERROR: ' + String(err && err.message || err).slice(0, 60);
+      chk.style.background = '#3a1a1a';
+      chk.style.color = '#f55';
+      chk.style.borderColor = '#f55';
+      chk.title = 'See console for full stack';
+    }
+    console.log('%c[Whinfell TC] See #js-boot-check + console for details', 'color:#f55;font-size:9px');
+  } catch (_) { /* never throw from error path */ }
+}
 </script>
 </body>
 </html>
