@@ -3881,6 +3881,7 @@ const PROMPTS = [
 ];
 
 let appState = createEmptyState();
+window.appState = appState;
 let preShockSnapshot = null;
 let compareSnapshotId = null;
 let scenarioLoop = { variants: [], lastResults: [] };
@@ -9449,6 +9450,8 @@ function renderAll() {
     WTM_BasisWatch.render(bwState);
   }
 }
+
+window.renderAll = renderAll;
 
 function applyShock(shockId, skipSnapshot) {
   const shock = SHOCKS[shockId];
